@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class ThirdPersonController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Transform Target;
+    public float MouseSensitivity = 10f;
 
-    // Update is called once per frame
-    void Update()
+    private float verticalRotation;
+    private float horizontalRotation;
+
+    void LateUpdate()
     {
-        
+        if (Target == null)
+        {
+            return;
+        }
+
+        transform.position = Target.position;
+
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        verticalRotation -= mouseY * MouseSensitivity;
+        verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
+
+        horizontalRotation += mouseX * MouseSensitivity;
+
+        transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
     }
 }
