@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GPTMOVIMENTO : MonoBehaviour
 {
+    public Camera cam;
     public float velocidadeMovimento = 5f; // Velocidade de movimento do objeto
     public float sensibilidadeMouse = 2f; // Sensibilidade do mouse para rotação
 
@@ -28,6 +29,6 @@ public class GPTMOVIMENTO : MonoBehaviour
         rotationX = Mathf.Clamp(rotationX, -90f, 90f);
 
         transform.Rotate(Vector3.up * mouseX);
-        Camera.main.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
+        cam.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
     }
 }
