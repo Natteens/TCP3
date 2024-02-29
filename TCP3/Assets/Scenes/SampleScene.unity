@@ -307,7 +307,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 11998638}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3233,7 +3233,7 @@ MonoBehaviour:
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 2
   _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatId: 7
   Height: 50
   _layout: 0
   _showGraph: 2
@@ -3828,7 +3828,7 @@ MonoBehaviour:
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 1
   _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatId: 5
   Height: 50
   _layout: 0
   _showGraph: 2
@@ -4345,7 +4345,7 @@ MonoBehaviour:
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 2
   _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatId: 9
   Height: 50
   _layout: 0
   _showGraph: 2
@@ -5212,7 +5212,7 @@ MonoBehaviour:
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 1
   _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatId: 1
   Height: 50
   _layout: 0
   _showGraph: 2
@@ -5291,7 +5291,7 @@ MonoBehaviour:
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 1
   _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatId: 2
   Height: 50
   _layout: 0
   _showGraph: 2
@@ -5970,7 +5970,7 @@ MonoBehaviour:
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 2
   _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatId: 10
   Height: 50
   _layout: 0
   _showGraph: 2
@@ -8289,7 +8289,7 @@ MonoBehaviour:
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 2
   _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatId: 8
   Height: 50
   _layout: 0
   _showGraph: 2
@@ -9174,12 +9174,12 @@ MonoBehaviour:
   BackImage: {fileID: 648458377}
   _statSourceType: 1
   _statId: 1
-  WarnThreshold: 0
-  ErrorThreshold: 0
+  WarnThreshold: Infinity
+  ErrorThreshold: Infinity
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 0
-  _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatSourceType: 1
+  _prevStatId: 1
   HoldPeakTime: 0.1
   DecayTime: 0.25
   MeterMax: 0
@@ -9629,12 +9629,12 @@ MonoBehaviour:
   BackImage: {fileID: 1588881616}
   _statSourceType: 1
   _statId: 0
-  WarnThreshold: 0
-  ErrorThreshold: 0
+  WarnThreshold: Infinity
+  ErrorThreshold: Infinity
   _fusionStats: {fileID: 1645486976}
   CurrentAveraging: 0
-  _prevStatSourceType: 0
-  _prevStatId: -1
+  _prevStatSourceType: 1
+  _prevStatId: 0
   HoldPeakTime: 0.1
   DecayTime: 0.25
   MeterMax: 0
