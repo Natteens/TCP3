@@ -340,8 +340,8 @@ GameObject:
   - component: {fileID: 4462649133773115616}
   - component: {fileID: 6963151282855283756}
   - component: {fileID: 7393279850351284297}
-  - component: {fileID: 4701555361916760248}
   - component: {fileID: 2244086561214690980}
+  - component: {fileID: 8051881220203553282}
   m_Layer: 0
   m_Name: PlayerCapsule
   m_TagString: Untagged
@@ -463,30 +463,8 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 4701555361916760248}
   - {fileID: 2244086561214690980}
---- !u!114 &4701555361916760248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4462649133773115617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncScale: 0
-  SyncParent: 1
-  _interpolationTarget: {fileID: 0}
-  UsePreciseRotation: 0
-  UseRenderSleepThresholds: 1
-  RenderThresholds:
-    UseEnergy: 1
-    Position: 0.01
-    Rotation: 0.01
-    Scale: 0.01
+  - {fileID: 8051881220203553282}
 --- !u!114 &2244086561214690980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,6 +480,22 @@ MonoBehaviour:
   cam: {fileID: 1699100797770067083}
   velocidadeMovimento: 5
   sensibilidadeMouse: 2
+--- !u!114 &8051881220203553282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4462649133773115617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &4462649134736503947
 GameObject:
   m_ObjectHideFlags: 0
