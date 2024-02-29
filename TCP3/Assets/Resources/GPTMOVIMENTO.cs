@@ -15,15 +15,13 @@ public class GPTMOVIMENTO : NetworkBehaviour
     //    // Esconder e travar o cursor do mouse
     //    Cursor.lockState = CursorLockMode.Locked;
     //}
-    public override void Spawned()
-    {
-        if (HasStateAuthority)
-        {
-            cam = Camera.main;
-            cam.GetComponent<ThirdPersonController>().Target = transform;
-        }
-    }
-
+    //public override void Spawned()
+    //{
+    //    if (HasStateAuthority)
+    //    {
+    //        cam.GetComponentInChildren<CinemachineVirtualCamera>().Follow = transform;
+    //    }
+    //}
     public override void FixedUpdateNetwork()
     {
         if (HasStateAuthority == false)
