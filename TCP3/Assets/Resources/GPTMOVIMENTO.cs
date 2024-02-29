@@ -19,9 +19,11 @@ public class GPTMOVIMENTO : NetworkBehaviour
     {
         if (HasStateAuthority)
         {
-            cam.GetComponentInChildren<CinemachineVirtualCamera>().Follow = transform;
+            cam = Camera.main;
+            cam.GetComponent<ThirdPersonController>().Target = transform;
         }
     }
+
     public override void FixedUpdateNetwork()
     {
         if (HasStateAuthority == false)
