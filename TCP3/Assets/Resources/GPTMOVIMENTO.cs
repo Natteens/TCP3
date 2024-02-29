@@ -1,6 +1,8 @@
+using Fusion;
 using UnityEngine;
+using Cinemachine;
 
-public class GPTMOVIMENTO : MonoBehaviour
+public class GPTMOVIMENTO : NetworkBehaviour
 {
     public Camera cam;
     public float velocidadeMovimento = 5f; // Velocidade de movimento do objeto
@@ -13,9 +15,21 @@ public class GPTMOVIMENTO : MonoBehaviour
     //    // Esconder e travar o cursor do mouse
     //    Cursor.lockState = CursorLockMode.Locked;
     //}
-
-    void Update()
+    public override void Spawned()
     {
+        if (HasStateAuthority)
+        {
+            cam = Camera.main;
+            cam.GetComponentInChildren<CinemachineVirtualCamera>().Follow = transform;
+        }
+    }
+    public override void FixedUpdateNetwork()
+    {
+        if (HasStateAuthority == false)
+        {
+            return;
+        }
+
         // Movimento do jogador
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
