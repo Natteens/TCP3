@@ -184,6 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838131ec1b5c56c4a917fc923534ce9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  MouseSensitivity: 10
 --- !u!1 &1637589750055468564
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,10 +491,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SyncScale: 1
+  SyncScale: 0
   SyncParent: 1
   _interpolationTarget: {fileID: 0}
-  UsePreciseRotation: 1
+  UsePreciseRotation: 0
   UseRenderSleepThresholds: 1
   RenderThresholds:
     UseEnergy: 1
