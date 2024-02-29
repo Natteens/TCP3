@@ -19,7 +19,6 @@ public class GPTMOVIMENTO : NetworkBehaviour
     {
         if (HasStateAuthority)
         {
-            cam = Camera.main;
             cam.GetComponentInChildren<CinemachineVirtualCamera>().Follow = transform;
         }
     }
