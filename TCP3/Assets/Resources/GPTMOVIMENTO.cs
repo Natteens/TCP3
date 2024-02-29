@@ -7,11 +7,11 @@ public class GPTMOVIMENTO : MonoBehaviour
 
     private float rotationX = 0f;
 
-    void Start()
-    {
-        // Esconder e travar o cursor do mouse
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+    //void Start()
+    //{
+    //    // Esconder e travar o cursor do mouse
+    //    Cursor.lockState = CursorLockMode.Locked;
+    //}
 
     void Update()
     {

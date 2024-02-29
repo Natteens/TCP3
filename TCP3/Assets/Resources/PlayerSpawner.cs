@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
-public class PlayerSpawner : MonoBehaviour
+public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject PlayerPrefab;
 
-    // Update is called once per frame
-    void Update()
+    public void PlayerJoined(PlayerRef player)
     {
-        
+        if (player == Runner.LocalPlayer)
+        {
+            Runner.Spawn(PlayerPrefab, new Vector3(10, 3, 10), Quaternion.identity);
+        }
     }
 }
