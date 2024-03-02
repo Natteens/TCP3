@@ -1,5 +1,6 @@
 using Cinemachine;
 using Fusion;
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class CamTarget : MonoBehaviour
         {
             GameObject virtualCamera = GameObject.Find("PlayerFollowCamera");
             virtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = PlayerCamRoot;
+
+            GetComponent<ThirdPersonController>().enabled = true;
         }
     }
 }
