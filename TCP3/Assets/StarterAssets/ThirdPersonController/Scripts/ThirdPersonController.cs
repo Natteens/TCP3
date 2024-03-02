@@ -1,6 +1,4 @@
 ﻿ using UnityEngine;
- using Fusion; 
-
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -14,7 +12,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : NetworkBehaviour
+    public class ThirdPersonController : MonoBehaviour
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -106,7 +104,7 @@ namespace StarterAssets
         private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
-        [SerializeField]private GameObject _mainCamera;
+        private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
 
@@ -121,6 +119,16 @@ namespace StarterAssets
 #else
 				return false;
 #endif
+            }
+        }
+
+
+        private void Awake()
+        {
+            // get a reference to our main camera
+            if (_mainCamera == null)
+            {
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
         }
 

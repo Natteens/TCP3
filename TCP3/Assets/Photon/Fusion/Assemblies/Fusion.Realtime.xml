@@ -92,12 +92,6 @@
             Set if the Client should use the Default or Alternative Photon Cloud Ports
             </summary>
         </member>
-        <member name="M:Fusion.Photon.Realtime.FusionRelayClient.LoadPhotonEncryptorType">
-            <summary>
-            Try to load the first implementation of <see cref="T:ExitGames.Client.Photon.Encryption.IPhotonEncryptor"/> found in the current AppDomain
-            </summary>
-            <returns>Type of the first implementation of <see cref="T:ExitGames.Client.Photon.Encryption.IPhotonEncryptor"/> found</returns>
-        </member>
         <member name="M:Fusion.Photon.Realtime.FusionRelayClient.UpdateRoomProperties(System.Collections.Generic.Dictionary{System.String,Fusion.SessionProperty})">
             <summary>
             Change the Custom Properties of the current Room

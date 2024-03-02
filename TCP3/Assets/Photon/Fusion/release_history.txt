@@ -107,20 +107,6 @@ For a more in-depth overview over what changed check: [Coming from Fusion 1.0](h
 - Fixed: All folders ending with `Resources` incorrectly recognized as `Resources` folders, making some of the contained prefabs unspawnable
 - Fixed: "unresolved external symbol" runtime errors if an abstract class deriving from `NetworkBehaviour` has no `[Networked]` properties
 
-## RC4
-
-### Build 809 (Jan 22, 2024)
-
-**What's New**
-
-- StartGameArgs.SessionNameGenerator
-
-**Bug Fixes**
-
-- Fixed: Logs in Release Mode
-- Fixed: Minor details on the Intro Sample
-- Fixed: IPhotonEncryptor Type Auto Load
-
 ## RC3
 
 ### Build 805 (Jan 17, 2024)
