@@ -1613,8 +1613,8 @@ GameObject:
   - component: {fileID: 5242055572820380367}
   - component: {fileID: 3525753811533815903}
   - component: {fileID: 8129894489392059805}
-  - component: {fileID: 8949359393651540984}
   - component: {fileID: -5186421734495937415}
+  - component: {fileID: 8949359393651540984}
   m_Layer: 6
   m_Name: PlayerArmature
   m_TagString: Player
@@ -1894,6 +1894,18 @@ MonoBehaviour:
   SyncSettings: 79
   StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd
   TriggerHashes: 00000000
+--- !u!114 &-5186421734495937415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242055572820380355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2038946961, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8949359393651540984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1907,18 +1919,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCamRoot: {fileID: 453067994476917663}
---- !u!114 &-5186421734495937415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5242055572820380355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2038946961, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5310788194994606096
 GameObject:
   m_ObjectHideFlags: 0
