@@ -7,12 +7,12 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 
     public void PlayerJoined(PlayerRef player)
     {
-        if (!Runner.IsClient)
-        {
-           // if (player == Runner.LocalPlayer)
-          //  {
-                Runner.Spawn(PlayerPrefab, new Vector3(50, 1, 50), Quaternion.identity);
-           // } 
-        }
+       // if (!Runner.IsClient)
+       // {
+           if (player == Runner.LocalPlayer)
+           {
+             Runner.Spawn(PlayerPrefab, new Vector3(50, 1, 50), Quaternion.identity);
+           } 
+       // }
     }
 }
