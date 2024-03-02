@@ -1877,6 +1877,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  _mainCamera: {fileID: 299730899765579113}
 --- !u!114 &2621071470824726579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2028,6 +2029,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 5242055572820380360}
   - {fileID: 8129894489392059805}
   - {fileID: -7770236500034765080}
 --- !u!114 &8129894489392059805
