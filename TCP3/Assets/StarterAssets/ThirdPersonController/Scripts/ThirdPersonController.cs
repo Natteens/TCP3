@@ -133,6 +133,13 @@ namespace StarterAssets
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
         }
+        public override void OnNetworkSpawn()
+        {
+            if (!IsOwner)
+            {
+                Destroy(this);
+            }
+        }
 
         private void Start()
         {
