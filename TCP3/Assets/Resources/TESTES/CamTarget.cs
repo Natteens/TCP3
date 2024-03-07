@@ -1,9 +1,9 @@
 using Cinemachine;
-using Fusion;
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class CamTarget : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public class CamTarget : MonoBehaviour
     {
         NetworkObject thisObject = GetComponent<NetworkObject>();
 
-        if (thisObject.HasStateAuthority)
+        if (thisObject.IsOwner)
         {
             GameObject virtualCamera = GameObject.Find("PlayerFollowCamera");
             virtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = PlayerCamRoot;

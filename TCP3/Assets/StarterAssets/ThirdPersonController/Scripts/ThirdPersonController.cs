@@ -1,6 +1,7 @@
-﻿using Fusion; 
-using UnityEngine;
-#if ENABLE_INPUT_SYSTEM 
+﻿ using UnityEngine;
+using Unity.Netcode;
+
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 

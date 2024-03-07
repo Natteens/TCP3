@@ -1608,13 +1608,11 @@ GameObject:
   - component: {fileID: 1518972827139394051}
   - component: {fileID: 5242055572820380361}
   - component: {fileID: 5242055572820380367}
+  - component: {fileID: 2725089620685738417}
   - component: {fileID: 5242055572820380360}
   - component: {fileID: 2621071470824726579}
   - component: {fileID: 8363706680965732031}
   - component: {fileID: 8949359393651540984}
-  - component: {fileID: 3525753811533815903}
-  - component: {fileID: 8129894489392059805}
-  - component: {fileID: 3367251274883375843}
   m_Layer: 6
   m_Name: PlayerArmature
   m_TagString: Player
@@ -1777,6 +1775,27 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2725089620685738417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242055572820380355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2153121025
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &5242055572820380360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1870,56 +1889,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCamRoot: {fileID: 453067994476917663}
---- !u!114 &3525753811533815903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5242055572820380355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 43388273
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 5242055572820380360}
-  - {fileID: 8129894489392059805}
-  - {fileID: 3367251274883375843}
---- !u!114 &8129894489392059805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5242055572820380355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Animator: {fileID: 1518972827139394051}
-  TotalWords: 5
-  ApplyTiming: 2
-  SyncSettings: 127
-  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd
-  TriggerHashes: 00000000
---- !u!114 &3367251274883375843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5242055572820380355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2038946961, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5310788194994606096
 GameObject:
   m_ObjectHideFlags: 0
