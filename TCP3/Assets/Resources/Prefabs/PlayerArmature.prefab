@@ -1804,7 +1804,6 @@ GameObject:
   - component: {fileID: 5242055572820380360}
   - component: {fileID: 2621071470824726579}
   - component: {fileID: 8363706680965732031}
-  - component: {fileID: 8949359393651540984}
   - component: {fileID: -5337825954081664981}
   - component: {fileID: -6405950587753256643}
   - component: {fileID: 6559169105681666035}
@@ -1983,7 +1982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1383534392
+  GlobalObjectIdHash: 11233187
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -2072,19 +2071,6 @@ MonoBehaviour:
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
---- !u!114 &8949359393651540984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5242055572820380355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86798f33bd9686347b8180b39c4761f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerCamRoot: {fileID: 453067994476917663}
 --- !u!114 &-5337825954081664981
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerSettings : NetworkBehaviour
 {
-    [SerializeField] private TextMeshProUGUI playerName;
-    private NetworkVariable<FixedString128Bytes> networkPlayerName = new NetworkVariable<FixedString128Bytes>("Player: 0", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public TextMeshProUGUI playerName;
 
-    public override void OnNetworkSpawn()
+    // Adicione uma variável para armazenar o nome do jogador
+    private string playerDisplayName;
+
+    // Método para configurar o nome do jogador
+    public void SetPlayerName(string name)
     {
-        networkPlayerName.Value = "Player: " + (OwnerClientId + 1);
-        playerName.text = networkPlayerName.Value.ToString();
+        playerDisplayName = name;
+        UpdatePlayerName();
+    }
+
+    // Método para atualizar o nome do jogador na HUD
+    private void UpdatePlayerName()
+    {
+        if (playerName != null)
+        {
+            playerName.text = playerDisplayName;
+        }
     }
 }
