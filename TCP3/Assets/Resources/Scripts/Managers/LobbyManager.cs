@@ -24,16 +24,9 @@ public class LobbyManager : MonoBehaviour
 
     public GameObject startGameButton;
     public bool startedGame;
-    public List<PlayerInfo> playersInfo = new List<PlayerInfo>();
 
     private static LobbyManager _instance;
     public static LobbyManager Instance => _instance;
-
-    //public struct PlayerInfo
-    //{
-    //    public string playerName;
-    //    public Vector3 spawnPosition;
-    //}
 
     private void Awake()
     {
@@ -51,21 +44,6 @@ public class LobbyManager : MonoBehaviour
     {
         await UnityServices.InitializeAsync();
     }
-
-    
-    // Método para atualizar a lista de informações dos jogadores
-    //private void UpdatePlayersInfo(List<Player> players)
-    //{
-    //    playersInfo.Clear(); // Limpa a lista antes de atualizar
-    //    foreach (var player in players)
-    //    {
-    //        PlayerInfo info = new PlayerInfo();
-    //        info.playerName = player.Data["name"].Value;
-    //        info.spawnPosition = new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f));
-    //        playersInfo.Add(info);
-    //    }
-    //}
-
 
     async Task Authenticate()
     {
@@ -93,10 +71,9 @@ public class LobbyManager : MonoBehaviour
         hostLobby = await Lobbies.Instance.CreateLobbyAsync("lobby", 20, options);
         joinnedLobby = hostLobby;
         Debug.Log("Criou o lobby" + hostLobby.LobbyCode);
-        InvokeRepeating("SendLobbyHeartBeat", 10,10);
+        InvokeRepeating("SendLobbyHeartBeat", 5,5);
         UpdateLobby();
         ShowPlayers();
-       // UpdatePlayersInfo(joinnedLobby.Players);
 
         lobbyCodeText.text = joinnedLobby.LobbyCode;
         introLobby.SetActive(false);
@@ -110,7 +87,6 @@ public class LobbyManager : MonoBehaviour
 
         UpdateLobby();
         ShowPlayers();
-       // UpdatePlayersInfo(joinnedLobby.Players);
 
         if (joinnedLobby.Data["StartGame"].Value != "0")
         {
@@ -147,7 +123,6 @@ public class LobbyManager : MonoBehaviour
         Debug.Log("Entrou no lobby" + joinnedLobby.LobbyCode);
         UpdateLobby();
         ShowPlayers();
-      //  UpdatePlayersInfo(joinnedLobby.Players);
 
         lobbyCodeText.text = joinnedLobby.LobbyCode;
         introLobby.SetActive(false);
@@ -161,6 +136,7 @@ public class LobbyManager : MonoBehaviour
             return;
         await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
         Debug.Log("Atualizou o Lobby");
+        UpdateLobby();
         ShowPlayers();
 
     }
@@ -194,28 +170,9 @@ public class LobbyManager : MonoBehaviour
         return joinCode;
     }
 
-    //public async void StartGame()
-    //{
-    //    string relayCode = await CreateRelay();
-    //    Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinnedLobby.Id, new UpdateLobbyOptions
-    //    {
-    //        Data = new Dictionary<string, DataObject>
-    //        {
-    //            {"StartGame", new DataObject(DataObject.VisibilityOptions.Member, relayCode) }
-    //        }
-    //    });
-    //    joinnedLobby = lobby;
-
-    //    lobbyPanel.SetActive(false);
-
-
-    //}
-
-
-    // -- Teste com outras cenas -- 
-    // No LobbyManager.cs
     public async void StartGame()
     {
+        sceneManager.Instance.LoadGame();
         string relayCode = await CreateRelay();
         Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinnedLobby.Id, new UpdateLobbyOptions
         {
@@ -225,25 +182,18 @@ public class LobbyManager : MonoBehaviour
         }
         });
         joinnedLobby = lobby;
-
-        // Atualiza as informações dos jogadores presentes no lobby
-        // UpdatePlayersInfo(joinnedLobby.Players);
         startedGame = true;
-        // Carrega a cena de gameplay
-        LoadGameSceneAsync();
     }
 
-    private async void LoadGameSceneAsync()
+
+    public void RefreshRoom()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Nathan");
-
-        while (!operation.isDone)
-        {
-            await Task.Yield();
-        }
+        if (hostLobby == null || startedGame)
+            return;
+        Debug.Log("Atualizou o Lobby");
+        UpdateLobby();
+        ShowPlayers();
     }
-
-
 
     async void JoinRelay(string joinCode)
     {
