@@ -13,6 +13,7 @@ using Unity.Netcode;
 using Unity.Networking.Transport.Relay;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.SceneManagement;
+using Unity.Netcode.Transports.UNET;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -172,7 +173,7 @@ public class LobbyManager : MonoBehaviour
 
     public async void StartGame()
     {
-        sceneManager.Instance.LoadGame();
+        GetComponent<sceneManager>().LoadGame();
         string relayCode = await CreateRelay();
         Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinnedLobby.Id, new UpdateLobbyOptions
         {

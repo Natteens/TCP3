@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Unity.Netcode;
 using Cinemachine;
+using UnityEngine.SceneManagement;
+
 
 
 #if ENABLE_INPUT_SYSTEM
@@ -108,7 +110,7 @@ namespace StarterAssets
         private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
-        private GameObject _mainCamera;
+        public GameObject _mainCamera;
         private CinemachineVirtualCamera _cinemachineVirtualCamera;
 
         private const float _threshold = 0.01f;
@@ -127,10 +129,10 @@ namespace StarterAssets
             }
         }
 
+      
 
-        private void Awake()
+        public void Awake()
         {
-            // get a reference to our main camera
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -141,7 +143,7 @@ namespace StarterAssets
             }
         }
 
-        private void Start()
+        public void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
@@ -160,15 +162,32 @@ namespace StarterAssets
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
-            if(IsClient && IsOwner)
+            InitPlayer();
+        }
+
+        public void InitPlayer()
+        {
+            if (IsClient && IsOwner)
             {
                 _playerInput = GetComponent<PlayerInput>();
                 _playerInput.enabled = true;
-                if(_cinemachineVirtualCamera != null)
-                {
-                    _cinemachineVirtualCamera.Follow = transform.GetChild(0);
-                }
-            }     
+                CamTargetChecking();
+            }
+        }
+
+        public void CamTargetChecking()
+        {
+            if (_cinemachineVirtualCamera != null)
+            {
+                _cinemachineVirtualCamera.Follow = transform.GetChild(0);
+            }
+        }
+
+        public void InitializeComponents()
+        {
+            Awake();
+            Start();
+            InitPlayer();
         }
 
         private void Update()

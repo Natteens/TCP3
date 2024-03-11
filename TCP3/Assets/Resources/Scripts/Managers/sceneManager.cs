@@ -8,21 +8,6 @@ public class sceneManager : MonoBehaviour
 {
     public string gameplaySceneName = "Nathan";
 
-    private static sceneManager _instance;
-    public static sceneManager Instance => _instance;
-
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
     public void LoadGame()
     {
         StartCoroutine(LoadGameplayScene());
@@ -35,8 +20,6 @@ public class sceneManager : MonoBehaviour
         {
             yield return null;
         }
-
-       // SpawnPlayer();
     }
 
 
