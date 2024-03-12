@@ -205,6 +205,7 @@ public class LobbyManager : MonoBehaviour
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
         NetworkManager.Singleton.StartClient();
 
+        Debug.Log("Client logou");
        // lobbyPanel.SetActive(false);
     }
 }
