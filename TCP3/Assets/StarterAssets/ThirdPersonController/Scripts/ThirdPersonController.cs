@@ -111,7 +111,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         public GameObject _mainCamera;
-        private CinemachineVirtualCamera _cinemachineVirtualCamera;
+        public CinemachineVirtualCamera _cinemachineVirtualCamera;
 
         private const float _threshold = 0.01f;
 
@@ -128,8 +128,6 @@ namespace StarterAssets
 #endif
             }
         }
-
-      
 
         public void Awake()
         {
@@ -192,6 +190,11 @@ namespace StarterAssets
 
         private void Update()
         {
+            if (_cinemachineVirtualCamera == null && _mainCamera == null)
+            {
+                InitializeComponents();
+            }
+
             if (IsOwner)
             {
                 _hasAnimator = TryGetComponent(out _animator);
