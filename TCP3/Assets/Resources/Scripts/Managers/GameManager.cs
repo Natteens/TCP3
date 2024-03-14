@@ -18,5 +18,4 @@ public class GameManager : Singleton<GameManager>
             DontDestroyOnLoad(gameObject); 
         }
     }
-
 }
