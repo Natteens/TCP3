@@ -34,6 +34,8 @@ namespace StarterAssets
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
 
+        public float Sensitivity = 1f;
+
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
@@ -111,7 +113,8 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         public GameObject _mainCamera;
-        public CinemachineVirtualCamera _cinemachineVirtualCamera;
+        public CinemachineVirtualCamera _PlayerFollowVirtualCamera;
+        public CinemachineVirtualCamera _AimVirtualCamera;
 
         private const float _threshold = 0.01f;
 
@@ -131,14 +134,14 @@ namespace StarterAssets
 
         public void Awake()
         {
-            if (_mainCamera == null)
-            {
+            if (_mainCamera == null)            
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            }
-            if(_cinemachineVirtualCamera == null)
-            {
-                _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
-            }
+
+            if (_PlayerFollowVirtualCamera == null)
+                _PlayerFollowVirtualCamera = GameObject.FindGameObjectWithTag("PlayerFollowCamera").GetComponent<CinemachineVirtualCamera>();
+            
+            if (_AimVirtualCamera == null)
+                _AimVirtualCamera = GameObject.FindGameObjectWithTag("PlayerAimCamera").GetComponent<CinemachineVirtualCamera>();
         }
 
         public void Start()
@@ -175,15 +178,19 @@ namespace StarterAssets
 
         public void CamTargetChecking()
         {
-            if (_cinemachineVirtualCamera != null)
+            if (_PlayerFollowVirtualCamera != null)
             {
-                _cinemachineVirtualCamera.Follow = transform.GetChild(0);
+                _PlayerFollowVirtualCamera.Follow = transform.GetChild(0);
+            }
+            if (_AimVirtualCamera != null)
+            {
+                _AimVirtualCamera.Follow = transform.GetChild(0);
             }
         }
 
         private void Update()
         {
-            if (_cinemachineVirtualCamera == null && _mainCamera == null)
+            if (_PlayerFollowVirtualCamera == null && _mainCamera == null)
             {
                 Awake();
                 Start();
@@ -237,8 +244,8 @@ namespace StarterAssets
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * Sensitivity;
+                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * Sensitivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -426,6 +433,11 @@ namespace StarterAssets
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
+        }
+
+        public void SetSensitivity(float NewSensitivity)
+        {
+            Sensitivity = NewSensitivity;
         }
     }
 }
