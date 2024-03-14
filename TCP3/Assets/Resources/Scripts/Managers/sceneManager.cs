@@ -15,11 +15,13 @@ public class sceneManager : MonoBehaviour
 
     private IEnumerator LoadGameplayScene()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(gameplaySceneName);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(gameplaySceneName, LoadSceneMode.Additive);
         while (!operation.isDone)
         {
             yield return null;
         }
+
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
     }
 
 

@@ -2,7 +2,6 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using StarterAssets;
 
 public class TravelEnterScenes : NetworkBehaviour
 {
@@ -17,16 +16,16 @@ public class TravelEnterScenes : NetworkBehaviour
             if (networkObject != null)
             {
                 // Chama o método para carregar a cena no servidor e no cliente que interagiu
-                LoadSceneForPlayerServerRpc(networkObject.OwnerClientId);
+                LoadSceneForPlayerServerRpc(networkObject.OwnerClientId, dungeonSceneName);
             }
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void LoadSceneForPlayerServerRpc(ulong clientId)
+    private void LoadSceneForPlayerServerRpc(ulong clientId, string sceneName)
     {
         // Notifica todos os clientes para mudar para a cena carregada
-        SwitchSceneClientRpc(dungeonSceneName, clientId);
+        SwitchSceneClientRpc(sceneName, clientId);
     }
 
     [ClientRpc]
@@ -49,9 +48,8 @@ public class TravelEnterScenes : NetworkBehaviour
 
         // Move o objeto do jogador para a nova cena
         NetworkObject playerNetworkObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
-
+        SceneManager.MoveGameObjectToScene(playerNetworkObject.gameObject, SceneManager.GetSceneByName(sceneName));
         // Descarrega a cena anterior
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
     }
-
 }

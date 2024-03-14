@@ -181,18 +181,13 @@ namespace StarterAssets
             }
         }
 
-        public void InitializeComponents()
-        {
-            Awake();
-            Start();
-            InitPlayer();
-        }
-
         private void Update()
         {
             if (_cinemachineVirtualCamera == null && _mainCamera == null)
             {
-                InitializeComponents();
+                Awake();
+                Start();
+                InitPlayer();
             }
 
             if (IsOwner)

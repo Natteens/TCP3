@@ -15,7 +15,8 @@ public struct NetworkString : INetworkSerializable
 
     public override string ToString()
     {
-        return base.ToString(); 
+        return base.ToString();
+        //return info.ToString();
     }
 
     public static implicit operator string(NetworkString s) => s.ToString();
