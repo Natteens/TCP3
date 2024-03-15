@@ -10,7 +10,6 @@ Material:
   m_Name: GridOrange_01_Mat
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
   m_ValidKeywords:
-  - DR_OUTLINE_ON
   - _CELPRIMARYMODE_SINGLE
   - _EMISSION
   - _TEXTUREBLENDINGMODE_MULTIPLY
@@ -23,7 +22,8 @@ Material:
   m_CustomRenderQueue: 2000
   stringTagMap:
     RenderType: Opaque
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - SRPDEFAULTUNLIT
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -131,7 +131,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 0
     - _OutlineDepthOffset: 0
-    - _OutlineEnabled: 1
+    - _OutlineEnabled: 0
     - _OutlineScale: 1
     - _OutlineWidth: 1
     - _OverrideLightmapDir: 0
