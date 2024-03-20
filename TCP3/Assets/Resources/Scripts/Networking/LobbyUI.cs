@@ -84,10 +84,12 @@ public class LobbyUI : MonoBehaviour {
 
     private void Hide() {
         gameObject.SetActive(false);
+        Debug.Log("rodei hide lobbyUI");
     }
 
     private void Show() {
         gameObject.SetActive(true);
+        Debug.Log("rodei show lobbyUI");
     }
 
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using static LobbyManagerCodeMonkey_;
+//using static LobbyManagerCodeMonkey_;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -60,8 +60,9 @@ public class LobbyManager : MonoBehaviour
         };
 
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        playerName = "carlos" + UnityEngine.Random.Range(10, 99);
-        Debug.Log(playerName);
+
+        //playerName = "carlos" + UnityEngine.Random.Range(10, 99);
+        //Debug.Log(playerName);
     }
 
     private void Update()
@@ -114,24 +115,51 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async void CreateLobby(string lobbyName, int maxPlayers, bool isPrivate)
+    /*
+    public async void Authenticate(string playerName)
     {
-        Player player = GetPlayer();
+        this.playerName = playerName;
+        InitializationOptions initializationOptions = new InitializationOptions();
+        initializationOptions.SetProfile(playerName);
 
-        CreateLobbyOptions options = new CreateLobbyOptions
-        {
-            Player = player,
-            IsPrivate = isPrivate,
-            
+        await UnityServices.InitializeAsync(initializationOptions);
+
+        AuthenticationService.Instance.SignedIn += () => {
+            // do nothing
+            Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
+
+            RefreshLobbyList();
         };
 
-        Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+    }
+    */
 
-        joinedLobby = lobby;
+    public async void CreateLobby(string lobbyName, int maxPlayers, bool isPrivate)
+    {
+        try
+        {
+            Player player = GetPlayer();
 
-        OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+            CreateLobbyOptions options = new CreateLobbyOptions
+            {
+                Player = player,
+                IsPrivate = isPrivate,
+            
+            };
 
-        Debug.Log("Created Lobby " + lobby.Name);
+            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
+
+            joinedLobby = lobby;
+
+            OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+
+            Debug.Log("Created Lobby " + lobby.Name);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
     }
 
     public async void RefreshLobbyList()
@@ -201,6 +229,25 @@ public class LobbyManager : MonoBehaviour
             Debug.Log("Entrou no lobby com o codigo: " + lobbyCode);
 
             PrintPlayers(lobby);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    public async void JoinLobby(Lobby lobby)
+    {
+        try
+        {
+            Player player = GetPlayer();
+
+            joinedLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobby.Id, new JoinLobbyByIdOptions
+            {
+                Player = player
+            });
+
+            OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
         }
         catch (LobbyServiceException e)
         {
@@ -284,6 +331,7 @@ public class LobbyManager : MonoBehaviour
     {
         this.playerName = playerName;
 
+
         if (joinedLobby != null)
         {
             try
@@ -304,6 +352,7 @@ public class LobbyManager : MonoBehaviour
                 joinedLobby = lobby;
 
                 OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+
             }
             catch (LobbyServiceException e)
             {
@@ -316,6 +365,7 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            Debug.Log("sai do lobby");
             await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
         }
         catch (LobbyServiceException e)
@@ -328,7 +378,6 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            //Ta kickando o segundo player do lobby aqui! (modificar posteriormente)
             await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, playerId);
         }
         catch (LobbyServiceException e)

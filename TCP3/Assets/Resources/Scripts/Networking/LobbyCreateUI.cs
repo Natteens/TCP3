@@ -14,17 +14,14 @@ public class LobbyCreateUI : MonoBehaviour {
     [SerializeField] private Button lobbyNameButton;
     [SerializeField] private Button publicPrivateButton;
     [SerializeField] private Button maxPlayersButton;
-    //[SerializeField] private Button gameModeButton;
     [SerializeField] private TextMeshProUGUI lobbyNameText;
     [SerializeField] private TextMeshProUGUI publicPrivateText;
     [SerializeField] private TextMeshProUGUI maxPlayersText;
-    //[SerializeField] private TextMeshProUGUI gameModeText;
 
 
     private string lobbyName;
     private bool isPrivate;
     private int maxPlayers;
-    //private LobbyManagerCodeMonkey_.GameMode gameMode;
 
     private void Awake() 
     {
@@ -35,7 +32,6 @@ public class LobbyCreateUI : MonoBehaviour {
                 lobbyName,
                 maxPlayers,
                 isPrivate
-                //gameMode
             );
             Hide();
         });
@@ -68,22 +64,6 @@ public class LobbyCreateUI : MonoBehaviour {
             });
         });
 
-        /*gameModeButton.onClick.AddListener(() => {
-            switch (gameMode) {
-                default:
-                case LobbyManagerCodeMonkey_.GameMode.CaptureTheFlag:
-                    gameMode = LobbyManagerCodeMonkey_.GameMode.Conquest;
-                    break;
-                case LobbyManagerCodeMonkey_.GameMode.Conquest:
-                    gameMode = LobbyManagerCodeMonkey_.GameMode.CaptureTheFlag;
-                    break;
-            }
-        
-
-        UpdateText();
-        });
-        */
-
         Hide();
     }
 
@@ -96,15 +76,20 @@ public class LobbyCreateUI : MonoBehaviour {
 
     public void Hide()
     {
+        Debug.Log("Rodei hide lobbycreateUI");
+
         gameObject.SetActive(false);
     }
 
     public void Show() {
-        gameObject.SetActive(true);
 
+        Debug.Log("Rodei show lobby create UI");
+
+        gameObject.SetActive(true);
         lobbyName = "MinhaSala";
         isPrivate = false;
         maxPlayers = 4;
+
         UpdateText();
     }
 

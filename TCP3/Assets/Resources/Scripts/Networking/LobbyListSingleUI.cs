@@ -10,7 +10,6 @@ public class LobbyListSingleUI : MonoBehaviour {
     
     [SerializeField] private TextMeshProUGUI lobbyNameText;
     [SerializeField] private TextMeshProUGUI playersText;
-    [SerializeField] private TextMeshProUGUI gameModeText;
 
 
     private Lobby lobby;
@@ -18,7 +17,7 @@ public class LobbyListSingleUI : MonoBehaviour {
 
     private void Awake() {
         GetComponent<Button>().onClick.AddListener(() => {
-            LobbyManagerCodeMonkey_.Instance.JoinLobby(lobby);
+            LobbyManager.Instance.JoinLobby(lobby);
         });
     }
 
@@ -27,7 +26,6 @@ public class LobbyListSingleUI : MonoBehaviour {
 
         lobbyNameText.text = lobby.Name;
         playersText.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
-        gameModeText.text = lobby.Data[LobbyManagerCodeMonkey_.KEY_GAME_MODE].Value;
     }
 
 

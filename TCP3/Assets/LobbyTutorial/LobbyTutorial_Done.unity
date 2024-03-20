@@ -2665,7 +2665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 818158579}
-  - component: {fileID: 818158578}
+  - component: {fileID: 818158580}
   m_Layer: 0
   m_Name: LobbyManager
   m_TagString: Untagged
@@ -2673,18 +2673,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &818158578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818158577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a14259dc4bfdeef4db5654c97251127d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &818158579
 Transform:
   m_ObjectHideFlags: 0
@@ -2700,6 +2688,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &818158580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818158577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b8341891ff10e4190e98c21e276913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerLobbySpawnPoint: {fileID: 1144582181}
+  PlayerLobbyPrefab: {fileID: 1144582180}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,12 +3719,7 @@ MonoBehaviour:
   container: {fileID: 517885538}
   lobbyNameText: {fileID: 692929696}
   playerCountText: {fileID: 697043155}
-  gameModeText: {fileID: 1363225968}
-  changeMarineButton: {fileID: 1682054775}
-  changeNinjaButton: {fileID: 2127062502}
-  changeZombieButton: {fileID: 215617590}
   leaveLobbyButton: {fileID: 935551613}
-  changeGameModeButton: {fileID: 1279448330}
 --- !u!1 &1238551660
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,11 +3903,9 @@ MonoBehaviour:
   lobbyNameButton: {fileID: 1960410851}
   publicPrivateButton: {fileID: 78564703}
   maxPlayersButton: {fileID: 1238551662}
-  gameModeButton: {fileID: 28466181}
   lobbyNameText: {fileID: 733439577}
   publicPrivateText: {fileID: 401594857}
   maxPlayersText: {fileID: 1532923140}
-  gameModeText: {fileID: 907874256}
 --- !u!1 &1268227763
 GameObject:
   m_ObjectHideFlags: 0

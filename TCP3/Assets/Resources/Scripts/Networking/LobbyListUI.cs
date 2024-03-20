@@ -10,8 +10,6 @@ public class LobbyListUI : MonoBehaviour {
 
     public static LobbyListUI Instance { get; private set; }
 
-
-
     [SerializeField] private Transform lobbySingleTemplate;
     [SerializeField] private Transform container;
     [SerializeField] private Button refreshButton;
@@ -70,15 +68,18 @@ public class LobbyListUI : MonoBehaviour {
     }
 
     private void CreateLobbyButtonClick() {
+        Debug.Log("Rodei createlobbybtnclick");
         LobbyCreateUI.Instance.Show();
     }
 
     private void Hide() {
         gameObject.SetActive(false);
+        Debug.Log("Rodei hide lobbylistUI");
     }
 
     private void Show() {
         gameObject.SetActive(true);
+        Debug.Log("Rodei show lobbylistUI");
     }
 
 }
