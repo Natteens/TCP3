@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-//using static LobbyManagerCodeMonkey_;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -309,7 +308,6 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    
 
     public async void UpdateLobbyName(string _nome)
     {
@@ -402,6 +400,7 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
     }
+
     public async void DeleteLobby()
     {
         try

@@ -25,10 +25,7 @@ public class LobbyUI : MonoBehaviour {
         playerSingleTemplate.gameObject.SetActive(false);
 
 
-        leaveLobbyButton.onClick.AddListener(() => {
-            LobbyManager.Instance.LeaveLobby();
-        });
-
+        leaveLobbyButton.onClick.AddListener(() => { LobbyManager.Instance.LeaveLobby(); });
     }
 
     private void Start() {

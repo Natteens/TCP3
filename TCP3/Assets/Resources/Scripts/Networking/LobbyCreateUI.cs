@@ -38,7 +38,7 @@ public class LobbyCreateUI : MonoBehaviour {
 
 
         lobbyNameButton.onClick.AddListener(() => {
-            UI_InputWindow.Show_Static("Lobby Name", lobbyName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .,-", 20,
+            UI_InputWindow.Show_Static("Nome da Sala", lobbyName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .,-", 20,
             () => {
                 // Cancel
             },
@@ -54,7 +54,7 @@ public class LobbyCreateUI : MonoBehaviour {
         });
 
         maxPlayersButton.onClick.AddListener(() => {
-            UI_InputWindow.Show_Static("Max Players", maxPlayers,
+            UI_InputWindow.Show_Static("Jogadores", maxPlayers,
             () => {
                 // Cancel
             },
@@ -70,7 +70,7 @@ public class LobbyCreateUI : MonoBehaviour {
     public void UpdateText()
     {
         lobbyNameText.text = lobbyName;
-        publicPrivateText.text = isPrivate ? "Private" : "Public";
+        publicPrivateText.text = isPrivate ? "Privado" : "Publico";
         maxPlayersText.text = maxPlayers.ToString();
     }
 
