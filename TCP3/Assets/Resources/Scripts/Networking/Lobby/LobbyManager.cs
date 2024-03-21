@@ -35,9 +35,6 @@ public class LobbyManager : MonoBehaviour
     private float heartbeatTimer;
     private float lobbyUpdateTimer;
 
-    [SerializeField] private Transform PlayerLobbySpawnPoint;
-    [SerializeField] private GameObject PlayerLobbyPrefab;
-
     private string playerName;
 
     public class LobbyEventArgs : EventArgs
