@@ -35,12 +35,14 @@ public class XPTracker : NetworkBehaviour
 
     public void AddXP(int amount)
     {
+        if (!IsOwner) return;
+
         int previousLevel = XPTranslation.CurrentLevel;
         if (XPTranslation.AddXP(amount))
         {
             OnLevelChanged.Invoke(previousLevel, XPTranslation.CurrentLevel);
-            StartCoroutine(LevelUpVFX());
-            LevelUpClientRPC();
+            StartCoroutine(LevelUpgrading());
+            LevelUpServerRPC();
         }
 
         RefreshDisplays();
@@ -48,14 +50,12 @@ public class XPTracker : NetworkBehaviour
 
     public void SetLevel(int level)
     {
-        if (!IsOwner) return;
         int previousLevel = XPTranslation.CurrentLevel;
         XPTranslation.SetLevel(level);
 
         if (previousLevel != XPTranslation.CurrentLevel)
         {
             OnLevelChanged.Invoke(previousLevel, XPTranslation.CurrentLevel);
-            LevelUpServerRPC();
         }
 
         RefreshDisplays();
@@ -80,18 +80,24 @@ public class XPTracker : NetworkBehaviour
     }
 
     [ServerRpc]
-    void LevelUpServerRPC(ServerRpcParams rpcParams = default)
+    void LevelUpServerRPC()
     {
-        LevelUpClientRPC(rpcParams.Receive.SenderClientId);
+        LevelUpClientRPC();
     }
 
     [ClientRpc]
-    void LevelUpClientRPC(ulong clientId = 0)
+    void LevelUpClientRPC()
     {
-        if (NetworkManager.Singleton.LocalClientId != clientId) return;
-        StartCoroutine(LevelUpVFX());
+        if (!IsOwner)
+            LevelUpVFX();
     }
-    public IEnumerator LevelUpVFX()
+
+    private void LevelUpVFX()
+    {
+        StartCoroutine(LevelUpgrading());
+    }
+
+    public IEnumerator LevelUpgrading()
     {
         onLevelingUpgrade.Invoke();
         yield return new WaitForSeconds(2f);
