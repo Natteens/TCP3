@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4e154bf235e41704bbd6bbc6fd6c63f6, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5d133deeaa66ed445853e946ff25e073, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -245,13 +245,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fogGradient:
     serializedVersion: 2
-    key0: {r: 0.6392157, g: 0.5786166, b: 0.5294118, a: 1}
+    key0: {r: 0.8490566, g: 0.5137255, b: 0.42052332, a: 1}
     key1: {r: 0.5882353, g: 0.2784314, b: 0.20784315, a: 1}
     key2: {r: 0, g: 0.04705883, b: 0.15686275, a: 0}
     key3: {r: 0, g: 0.04705883, b: 0.15686275, a: 0}
     key4: {r: 0.5882353, g: 0.2784314, b: 0.20784315, a: 0}
-    key5: {r: 0.50980395, g: 0.4666667, b: 0.42352945, a: 0}
-    key6: {r: 1, g: 1, b: 1, a: 0}
+    key5: {r: 0.85098046, g: 0.5137255, b: 0.41960785, a: 0}
+    key6: {r: 0.50980395, g: 0.4666667, b: 0.42352945, a: 0}
     key7: {r: 1, g: 1, b: 1, a: 0}
     ctime0: 13107
     ctime1: 16384
@@ -259,7 +259,7 @@ MonoBehaviour:
     ctime3: 45875
     ctime4: 49537
     ctime5: 52428
-    ctime6: 65535
+    ctime6: 53392
     ctime7: 65535
     atime0: 0
     atime1: 65535
@@ -274,19 +274,19 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   ambientGradient:
     serializedVersion: 2
-    key0: {r: 0.5372549, g: 0.39607847, b: 0.25490198, a: 1}
-    key1: {r: 0.6784314, g: 0.3137255, b: 0.20784315, a: 1}
-    key2: {r: 0, g: 0.13725491, b: 0.27450982, a: 0}
-    key3: {r: 0, g: 0.13725491, b: 0.27450982, a: 0}
-    key4: {r: 0.6784314, g: 0.3137255, b: 0.20784315, a: 0}
-    key5: {r: 0.6698113, g: 0.49445978, b: 0.31910822, a: 0}
+    key0: {r: 0.8509804, g: 0.51382875, b: 0.41960782, a: 1}
+    key1: {r: 0.5882353, g: 0.2784314, b: 0.20784315, a: 1}
+    key2: {r: 0, g: 0.04705883, b: 0.15686275, a: 0}
+    key3: {r: 0, g: 0.04705883, b: 0.15686275, a: 0}
+    key4: {r: 0.5882353, g: 0.2784314, b: 0.20784315, a: 0}
+    key5: {r: 0.85098046, g: 0.5137255, b: 0.41960788, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 13107
     ctime1: 16384
     ctime2: 19661
     ctime3: 45875
-    ctime4: 49151
+    ctime4: 49537
     ctime5: 52428
     ctime6: 0
     ctime7: 0
@@ -303,12 +303,12 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   directionLightGradient:
     serializedVersion: 2
-    key0: {r: 0.6784314, g: 0.5428126, b: 0.4117647, a: 1}
+    key0: {r: 0.8509804, g: 0.5137255, b: 0.41960785, a: 1}
     key1: {r: 0.6313726, g: 0.29803923, b: 0.21176472, a: 1}
     key2: {r: 0.003921569, g: 0.043137256, b: 0.13725491, a: 0}
     key3: {r: 0.0072089676, g: 0.052821007, b: 0.16981131, a: 0}
     key4: {r: 0.59607846, g: 0.27058825, b: 0.1764706, a: 0}
-    key5: {r: 0.6784314, g: 0.5411765, b: 0.41176474, a: 0}
+    key5: {r: 0.8509804, g: 0.5137255, b: 0.41960785, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 13107
@@ -332,12 +332,12 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   skyboxTintGradient:
     serializedVersion: 2
-    key0: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+    key0: {r: 0.9150943, g: 0.366901, b: 0.366901, a: 1}
     key1: {r: 0.6784314, g: 0.3137255, b: 0.20784315, a: 1}
     key2: {r: 0, g: 0.04705883, b: 0.09411766, a: 0}
     key3: {r: 0, g: 0.04705883, b: 0.09411766, a: 0}
     key4: {r: 0.6784314, g: 0.3137255, b: 0.20784315, a: 0}
-    key5: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 0}
+    key5: {r: 0.91372555, g: 0.36862746, b: 0.36862746, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 13107
