@@ -5,8 +5,9 @@ using UnityEngine.VFX;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Unity.Netcode;
 
-public class XPTracker : MonoBehaviour
+public class XPTracker : NetworkBehaviour
 {
     public TextMeshProUGUI CurrentLevelText;
     public TextMeshProUGUI CurrentXPText;
@@ -39,6 +40,7 @@ public class XPTracker : MonoBehaviour
         {
             OnLevelChanged.Invoke(previousLevel, XPTranslation.CurrentLevel);
             StartCoroutine(LevelUpVFX());
+            LevelUpClientRPC();
         }
 
         RefreshDisplays();
@@ -46,12 +48,14 @@ public class XPTracker : MonoBehaviour
 
     public void SetLevel(int level)
     {
+        if (!IsOwner) return;
         int previousLevel = XPTranslation.CurrentLevel;
         XPTranslation.SetLevel(level);
 
         if (previousLevel != XPTranslation.CurrentLevel)
         {
             OnLevelChanged.Invoke(previousLevel, XPTranslation.CurrentLevel);
+            LevelUpServerRPC();
         }
 
         RefreshDisplays();
@@ -75,6 +79,18 @@ public class XPTracker : MonoBehaviour
             XPToNextLevelText.text = $"XP To Next Level: At Max";
     }
 
+    [ServerRpc]
+    void LevelUpServerRPC(ServerRpcParams rpcParams = default)
+    {
+        LevelUpClientRPC(rpcParams.Receive.SenderClientId);
+    }
+
+    [ClientRpc]
+    void LevelUpClientRPC(ulong clientId = 0)
+    {
+        if (NetworkManager.Singleton.LocalClientId != clientId) return;
+        StartCoroutine(LevelUpVFX());
+    }
     public IEnumerator LevelUpVFX()
     {
         onLevelingUpgrade.Invoke();
