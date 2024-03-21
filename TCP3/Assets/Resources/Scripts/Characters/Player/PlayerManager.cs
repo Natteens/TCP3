@@ -60,6 +60,7 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         controlador = GetComponent<CharacterController>();
+        InitHUD();
 
         VidaAtual = VidaCheia;
         EstaminaAtual = EstaminaCheia;
@@ -76,6 +77,14 @@ public class PlayerManager : MonoBehaviour
         SistemaDeEstamina();
         SistemaDeFome();
         AplicarBarras();
+    }
+
+    private void InitHUD()
+    {
+        var hud = GameObject.Find("PlayerHUD");
+        BarraVida = hud.transform.GetChild(0).GetChild(1).GetComponent<Image>();
+        BarraEstamina = hud.transform.GetChild(1).GetChild(1).GetComponent<Image>();
+        BarraFome = hud.transform.GetChild(2).GetChild(1).GetComponent<Image>();   
     }
 
     public void LevelUpgrade()
@@ -203,4 +212,5 @@ public class PlayerManager : MonoBehaviour
     {
         VidaAtual += Time.deltaTime *( currentRegenerationHP / 15 )* Mathf.Pow(2.718f, multEuler);
     }
+
 }

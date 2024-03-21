@@ -17,7 +17,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] private float aimSensitivity = 2f;
     [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
     [SerializeField] private float maxRaycastDistance = 100f;
-
+    [SerializeField] XPTracker xp;
     private void Awake()
     {
         player = GetComponent<ThirdPersonController>();
@@ -64,6 +64,12 @@ public class ThirdPersonShooterController : MonoBehaviour
         else
         {
             player._animator.SetLayerWeight(1, Mathf.Lerp(player._animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+        }
+
+        //Teste
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            xp.AddXP(50);
         }
     }
 }

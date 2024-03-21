@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,11 +12,13 @@ public class XPTracker : MonoBehaviour
     public TextMeshProUGUI CurrentXPText;
     public TextMeshProUGUI XPToNextLevelText;
     public TextMeshProUGUI SkillPoints;
-    public Button lvlUp;
+    public VisualEffect VFX_LevelUp;
+
 
     [SerializeField] BaseXPTranslation XPTranslationType;
 
     [SerializeField] UnityEvent<int, int> OnLevelChanged = new UnityEvent<int, int>();
+    public UnityEvent onLevelingUpgrade;
 
     BaseXPTranslation XPTranslation;
 
@@ -27,17 +30,15 @@ public class XPTracker : MonoBehaviour
         CurrentXPText = hud.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
         XPToNextLevelText = hud.transform.GetChild(3).GetChild(2).GetComponent<TextMeshProUGUI>();
         SkillPoints = hud.transform.GetChild(3).GetChild(3).GetComponent<TextMeshProUGUI>();
-        lvlUp = hud.transform.GetChild(4).GetComponent<Button>();
-        lvlUp.onClick.AddListener(() => { AddXP(50); } );
     }
 
-   
     public void AddXP(int amount)
     {
         int previousLevel = XPTranslation.CurrentLevel;
         if (XPTranslation.AddXP(amount))
         {
             OnLevelChanged.Invoke(previousLevel, XPTranslation.CurrentLevel);
+            StartCoroutine(LevelUpVFX());
         }
 
         RefreshDisplays();
@@ -72,5 +73,12 @@ public class XPTracker : MonoBehaviour
             XPToNextLevelText.text = $"XP To Next Level: {XPTranslation.XPRequiredForNextLevel}";
         else
             XPToNextLevelText.text = $"XP To Next Level: At Max";
+    }
+
+    public IEnumerator LevelUpVFX()
+    {
+        onLevelingUpgrade.Invoke();
+        yield return new WaitForSeconds(2f);
+        VFX_LevelUp.Stop();
     }
 }
