@@ -17,6 +17,7 @@ public class LobbyUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI lobbyNameText;
     [SerializeField] private TextMeshProUGUI playerCountText;
     [SerializeField] private Button leaveLobbyButton;
+    [SerializeField] private Button startGameLobbyButton;
 
 
     private void Awake() {
@@ -26,6 +27,7 @@ public class LobbyUI : MonoBehaviour {
 
 
         leaveLobbyButton.onClick.AddListener(() => { LobbyManager.Instance.LeaveLobby(); });
+        startGameLobbyButton.onClick.AddListener(() => { LobbyManager.Instance.StartGame(); });
     }
 
     private void Start() {
