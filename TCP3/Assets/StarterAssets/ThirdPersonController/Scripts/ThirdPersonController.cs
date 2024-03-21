@@ -20,12 +20,10 @@ namespace StarterAssets
 #endif
     public class ThirdPersonController : NetworkBehaviour
     {
-        [Header("Player")]
-        [Tooltip("Move speed of the character in m/s")]
-        public float MoveSpeed = 2.0f;
 
-        [Tooltip("Sprint speed of the character in m/s")]
-        public float SprintSpeed = 5.335f;
+        [Header("Player")]
+    
+        public PlayerManager player;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -41,9 +39,6 @@ namespace StarterAssets
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
         [Space(10)]
-        [Tooltip("The height the player can jump")]
-        public float JumpHeight = 1.2f;
-
         [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
         public float Gravity = -15.0f;
 
@@ -115,6 +110,7 @@ namespace StarterAssets
         public GameObject _mainCamera;
         public CinemachineVirtualCamera _PlayerFollowVirtualCamera;
         public CinemachineVirtualCamera _AimVirtualCamera;
+        private ThirdPersonShooterController _thirdPersonShooterController;
 
         private const float _threshold = 0.01f;
 
@@ -181,10 +177,12 @@ namespace StarterAssets
             if (_PlayerFollowVirtualCamera != null)
             {
                 _PlayerFollowVirtualCamera.Follow = transform.GetChild(0);
+                _PlayerFollowVirtualCamera.LookAt = transform.GetChild(0);
             }
             if (_AimVirtualCamera != null)
             {
                 _AimVirtualCamera.Follow = transform.GetChild(0);
+                _AimVirtualCamera.LookAt= transform.GetChild(0);
             }
         }
 
@@ -260,7 +258,16 @@ namespace StarterAssets
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            float targetSpeed = _input.sprint ? player.GetCurrentSprintSpeed() : player.GetCurrentMoveSpeed();
+
+            if (_input.sprint && targetSpeed == player.GetCurrentSprintSpeed())
+            {
+                player.RunStart();
+            }
+            else
+            {
+                targetSpeed = player.GetCurrentMoveSpeed();
+            }
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -350,7 +357,7 @@ namespace StarterAssets
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
-                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    _verticalVelocity = Mathf.Sqrt(player.GetCurrentJumpHeight() * -2f * Gravity);
 
                     // update animator if using character
                     if (_hasAnimator)
@@ -440,5 +447,7 @@ namespace StarterAssets
         {
             Sensitivity = NewSensitivity;
         }
+
+
     }
 }
