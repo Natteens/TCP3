@@ -13,6 +13,7 @@ using Unity.Services.Relay.Models;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -185,24 +186,40 @@ public class LobbyManager : MonoBehaviour
         {
             try
             {
+                StartCoroutine(LoadGameplayScene());
+
                 Debug.Log("Start game");
 
                 string relayCode = await LobbyRelay.Instance.CreateRelay();
 
-                Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions { 
+                Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+                {
                     Data = new Dictionary<string, DataObject> {
                         { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
                     }
-                
+
                 });
 
                 joinedLobby = lobby;
+
+                
+
             }
             catch (LobbyServiceException e)
             {
                 Debug.Log(e);
             }
         }
+    }
+
+    private IEnumerator LoadGameplayScene() 
+    { 
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Nathan", LoadSceneMode.Additive); 
+
+        while (!operation.isDone) { yield return null; } 
+
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+    
     }
 
     public async void RefreshLobbyList()
@@ -351,7 +368,6 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
     }
-
 
     public async void UpdateLobbyName(string _nome)
     {
