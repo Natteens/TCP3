@@ -3,7 +3,7 @@ using UnityEngine;
 using Unity.Netcode;
 using StarterAssets;
 
-public class ThirdPersonShooterController : MonoBehaviour
+public class ThirdPersonShooterController : NetworkBehaviour
 {
     public GameObject RigtargetPosition;
     private ThirdPersonController player;
@@ -30,7 +30,8 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     private void Update()
     {
-        UpdateAim();
+        if (IsOwner)
+            UpdateAim();
     }
 
     private void UpdateAim()

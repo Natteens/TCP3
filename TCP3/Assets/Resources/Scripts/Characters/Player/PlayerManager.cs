@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using Unity.Netcode;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : NetworkBehaviour
 {
     [Header("Status Base")]
     public StatusBase statusBase;
@@ -72,11 +73,14 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        SistemaDeQueda();
-        SistemaDeVida();
-        SistemaDeEstamina();
-        SistemaDeFome();
-        AplicarBarras();
+        if (IsOwner)
+        {
+            SistemaDeQueda();
+            SistemaDeVida();
+            SistemaDeEstamina();
+            SistemaDeFome();
+            AplicarBarras();
+        }     
     }
 
     private void InitHUD()
