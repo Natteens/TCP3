@@ -22,17 +22,17 @@ public class XPTranslation_Linear : BaseXPTranslation
         CurrentXP += amount;
 
         int newLevel = Mathf.Min(Mathf.FloorToInt(Mathf.Sqrt((CurrentXP - Offset) / Slope)) + 1, LevelCap);
-        bool levelledUp = newLevel > CurrentLevel; 
+        int levelsGained = newLevel - CurrentLevel;
 
-        if (levelledUp)
+        if (levelsGained > 0)
         {
             CurrentLevel = newLevel;
             AtLevelCap = CurrentLevel == LevelCap;
             CurrentXP = 0;
-            SkillPoints++;
+            SkillPoints += levelsGained; // Adiciona pontos de habilidade para cada nível ganho
         }
 
-        return levelledUp;
+        return levelsGained > 0;
     }
 
 

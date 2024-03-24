@@ -70,7 +70,7 @@ public class ThirdPersonShooterController : NetworkBehaviour
         //Teste
         if (Input.GetKeyDown(KeyCode.E))
         {
-            xp.AddXP(50);
+            xp.AddXP(5000);
         }
     }
 }

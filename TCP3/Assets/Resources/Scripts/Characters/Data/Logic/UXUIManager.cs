@@ -2,7 +2,7 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
-public class UXUIManager : NetworkBehaviour
+public class UXUIManager : MonoBehaviour
 {
     public PlayerManager playerManager;
     public TextMeshProUGUI constitutionText;
@@ -48,22 +48,13 @@ public class UXUIManager : NetworkBehaviour
         // Verifica se o nível atual da habilidade é maior que 1
         if (currentLevel > 1)
         {
-            // Calcula o custo total para atualizar a habilidade para o nível atual
-            int totalUpgradeCost = (currentLevel * (currentLevel - 1)) / 2;
-
-            Debug.Log($"Downgrading skill {index}. Current level: {currentLevel}, Total upgrade cost: {totalUpgradeCost}, Current skill points: {playerManager.xpTracker.SkillPoints}");
-
             // Incrementa os pontos de habilidade
-            playerManager.xpTracker.SkillPoints += totalUpgradeCost;
-
-            Debug.Log($"After refund, skill points: {playerManager.xpTracker.SkillPoints}");
+            playerManager.xpTracker.SkillPoints += currentLevel - 1;
 
             // Decrementa o nível da habilidade
             DecrementStatusLevel(index);
         }
     }
-
-
 
     private int GetStatusLevel(int Index)
     {
