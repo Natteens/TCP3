@@ -138,6 +138,7 @@ namespace StarterAssets
             
             if (_AimVirtualCamera == null)
                 _AimVirtualCamera = GameObject.FindGameObjectWithTag("PlayerAimCamera").GetComponent<CinemachineVirtualCamera>();
+
         }
 
         public void Start()
@@ -258,15 +259,11 @@ namespace StarterAssets
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? player.GetCurrentSprintSpeed() : player.GetCurrentMoveSpeed();
+            float targetSpeed = _input.sprint ? player.RunSpeed  : player.WalkSpeed;
 
-            if (_input.sprint && targetSpeed == player.GetCurrentSprintSpeed())
+            if (_input.sprint && targetSpeed == player.RunSpeed)
             {
                 player.RunStart();
-            }
-            else
-            {
-                targetSpeed = player.GetCurrentMoveSpeed();
             }
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
@@ -357,7 +354,7 @@ namespace StarterAssets
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
-                    _verticalVelocity = Mathf.Sqrt(player.GetCurrentJumpHeight() * -2f * Gravity);
+                  _verticalVelocity = Mathf.Sqrt(player.JumpHeight * -2f * Gravity);
 
                     // update animator if using character
                     if (_hasAnimator)

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2b6443fcd2266a4d936ba0f7db281b7, type: 3}
+  m_Name: Player Abilities
+  m_EditorClassIdentifier: 
+  VidaMax: {fileID: 11400000, guid: 58571e8f10502844c92033d4c23c3a64, type: 2}
+  VigorMax: {fileID: 11400000, guid: 16305d3400f7a3e41b0837e23d00dfb6, type: 2}
+  FomeMax: {fileID: 11400000, guid: 4ddd7a4b04ea3aa4e998166acbe9c69b, type: 2}
+  RegenHP: {fileID: 0}
+  RegenStamina: {fileID: 0}
+  JumpHeight: {fileID: 11400000, guid: 0a707813c1fb2d94badd6a4735ab92d9, type: 2}
+  MoveSpeed: {fileID: 11400000, guid: 2357afd9b1c89154f8c0129c6ccecbcf, type: 2}
+  RunSpeed: {fileID: 11400000, guid: 113b2f7245f44884c8322e6e7047913a, type: 2}

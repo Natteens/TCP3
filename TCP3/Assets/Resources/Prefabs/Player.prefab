@@ -1446,23 +1446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92b0f8cc9878a64d9dbeab640309ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusBase: {fileID: 11400000, guid: 6ab4dde1da09298449f0c7a0c688a246, type: 2}
+  StatusBase: {fileID: 11400000, guid: 6ab4dde1da09298449f0c7a0c688a246, type: 2}
   xpTracker: {fileID: 275621209}
-  onLevelUp:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 275621209}
-        m_TargetAssemblyTypeName: XPTracker, Assembly-CSharp
-        m_MethodName: AddXP
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 500
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   onRunStart:
     m_PersistentCalls:
       m_Calls:
@@ -1478,18 +1463,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onRegenLife:
+    m_PersistentCalls:
+      m_Calls: []
+  onRegenStamina:
+    m_PersistentCalls:
+      m_Calls: []
   AlturaQueda: 6
   DanoPorMetro: 5
   BarraVida: {fileID: 0}
   BarraEstamina: {fileID: 0}
   BarraFome: {fileID: 0}
-  VidaCheia: 100
-  EstaminaCheia: 100
-  FomeCheia: 400
-  velocidadeEstamina: 250
   VidaAtual: 0
   EstaminaAtual: 0
   FomeAtual: 0
+  velocidadeEstamina: 250
 --- !u!114 &4416926081852918490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,7 +1581,7 @@ MonoBehaviour:
   aim: 0
   shoot: 0
   analogMovement: 0
-  cursorLocked: 1
+  cursorLocked: 0
   cursorInputForLook: 1
 --- !u!114 &-3302378301071424332
 MonoBehaviour:
@@ -1902,9 +1890,9 @@ MonoBehaviour:
   CurrentLevelText: {fileID: 0}
   CurrentXPText: {fileID: 0}
   XPToNextLevelText: {fileID: 0}
-  SkillPoints: {fileID: 0}
-  VFX_LevelUp: {fileID: 5996886723745001753}
+  SkillPointsText: {fileID: 0}
   XPTranslationType: {fileID: 11400000, guid: 79979a8c10f0667439ac7fe7767d0d33, type: 2}
+  VFX_LevelUp: {fileID: 5996886723745001753}
   OnLevelChanged:
     m_PersistentCalls:
       m_Calls: []

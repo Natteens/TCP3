@@ -9,59 +9,41 @@ using Unity.Netcode;
 public class PlayerManager : NetworkBehaviour
 {
     [Header("Status Base")]
-    public StatusBase statusBase;
+    [Space(10)]
+    public StatusBase StatusBase;
     public XPTracker xpTracker;
 
+
     [Header("Eventos")]
-
-    public UnityEvent onLevelUp;
+    [Space(10)]
     public UnityEvent onRunStart;
+    public UnityEvent onRegenLife;
+    public UnityEvent onRegenStamina;
 
-    // Valores apos o calculo dos stats
-    #region CURRENT STATS
-
-    //Constituição
-    private float currentRegenerationHP = 0.2f;
-    private float currentRegenerationVigor = 0.2f;
-    private float currentReductionFome = 0f;
-    private float currentReductionDamage = 0f;
-
-    // Força     
-    private float currentMeleeDamage = 10f;
-
-    //Agilidade   
-    private float currentReductionRecargaRanged = 0.5f;
-    private float currentReductionCustoVigor = 0.5f;
-    private float currentMoveSpeed = 2f;
-    private float currentSprintSpeed = 5.335f;
-    private float currentJumpHeight = 1.2f;
-
-    // Precisao   
-    private float currentRangedDamage = 20f;
-
-    // Sorte      
-    private float currentLoot = 0f;
-
-
-    #endregion
-
-    // ------- 
     // Controle
-    private CharacterController controlador;
     private float UltimaPosicaoEmY, DistanciaDeQueda;
     public float AlturaQueda = 6, DanoPorMetro = 5;
     public Image BarraVida, BarraEstamina, BarraFome;
-    public float VidaCheia = 100, EstaminaCheia = 100, FomeCheia = 100, velocidadeEstamina = 250;
+    public float FomeCheia => StatusBase.playerAbilities.FomeMax.GetValue(StatusBase.status);
+    public float VidaCheia => StatusBase.playerAbilities.VidaMax.GetValue(StatusBase.status);
+    public float EstaminaCheia => StatusBase.playerAbilities.VidaMax.GetValue(StatusBase.status);
+    public float WalkSpeed => StatusBase.playerAbilities.MoveSpeed.GetValue(StatusBase.status);
+    public float RunSpeed => StatusBase.playerAbilities.RunSpeed.GetValue(StatusBase.status);
+    public float JumpHeight => StatusBase.playerAbilities.JumpHeight.GetValue(StatusBase.status);
     public float VidaAtual, EstaminaAtual, FomeAtual;
+    public float velocidadeEstamina = 250;
+    private CharacterController controlador;
     private bool semEstamina = false;
     private float cronometroFome;
     private float multEuler;
 
-
+    private void Awake()
+    {
+        InitHUD();
+    }
     private void Start()
     {
         controlador = GetComponent<CharacterController>();
-        InitHUD();
 
         VidaAtual = VidaCheia;
         EstaminaAtual = EstaminaCheia;
@@ -69,7 +51,6 @@ public class PlayerManager : NetworkBehaviour
 
         multEuler = ((1 / EstaminaCheia) * EstaminaAtual) * ((1 / FomeCheia) * FomeAtual);
     }
-
 
     void Update()
     {
@@ -88,35 +69,10 @@ public class PlayerManager : NetworkBehaviour
         var hud = GameObject.Find("PlayerHUD");
         BarraVida = hud.transform.GetChild(0).GetChild(1).GetComponent<Image>();
         BarraEstamina = hud.transform.GetChild(1).GetChild(1).GetComponent<Image>();
-        BarraFome = hud.transform.GetChild(2).GetChild(1).GetComponent<Image>();   
+        BarraFome = hud.transform.GetChild(2).GetChild(1).GetComponent<Image>();
+        var uxui = hud.transform.GetChild(4).GetComponent<UXUIManager>();
+        uxui.playerManager = this;
     }
-
-    public void LevelUpgrade()
-    {
-        onLevelUp.Invoke();
-    }
-
-    public void RunStart()
-    {
-        onRunStart.Invoke();
-    }
-
-    #region GetterSkills
-    public float GetCurrentMoveSpeed()
-    {
-        return currentMoveSpeed;
-    }
-
-    public float GetCurrentSprintSpeed()
-    {
-        return currentSprintSpeed;
-    }
-
-    public float GetCurrentJumpHeight()
-    {
-        return currentJumpHeight;
-    }
-    #endregion
 
     // Status
     void SistemaDeQueda()
@@ -138,6 +94,7 @@ public class PlayerManager : NetworkBehaviour
             UltimaPosicaoEmY = 0;
         }
     }
+    
     void SistemaDeFome()
     {
         FomeAtual -= Time.deltaTime;
@@ -161,6 +118,7 @@ public class PlayerManager : NetworkBehaviour
             cronometroFome = 0;
         }
     }
+
     void SistemaDeEstamina()
     {
         if (EstaminaAtual >= EstaminaCheia)
@@ -181,40 +139,52 @@ public class PlayerManager : NetworkBehaviour
             semEstamina = false;
         }
     }
+
     void SistemaDeVida()
     {
         if (VidaAtual >= VidaCheia)
         {
             VidaAtual = VidaCheia;
         }
-        else if (VidaAtual < VidaCheia && VidaAtual > 0)
-        {
-            RegenHP();
-        }
+        //else if (VidaAtual < VidaCheia && VidaAtual > 0)
+        //{
+        //    RegenHP();
+        //}
         else if (VidaAtual <= 0)
         {
             VidaAtual = 0;
             Morreu();
         }
     }
+
     void AplicarBarras()
     {
         BarraVida.fillAmount = ((1 / VidaCheia) * VidaAtual);
         BarraEstamina.fillAmount = ((1 / EstaminaCheia) * EstaminaAtual);
         BarraFome.fillAmount = ((1 / FomeCheia) * FomeAtual);
     }
+
     void Morreu()
     {
         Debug.Log("Morreu por falta de comida");
+    }
+
+    public void RunStart()
+    {
+        onRunStart.Invoke();
     }
 
     public void UseStamina()
     {
         EstaminaAtual -= Time.deltaTime * (velocidadeEstamina / 15) * Mathf.Pow(2.718f, multEuler);
     }
-    public void RegenHP()
+    
+    public void Regen()
     {
-        VidaAtual += Time.deltaTime *( currentRegenerationHP / 15 )* Mathf.Pow(2.718f, multEuler);
+        onRegenLife.Invoke();
     }
 
+
+
+ 
 }
