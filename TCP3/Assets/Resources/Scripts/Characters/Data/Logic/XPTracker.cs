@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Unity.Netcode;
-
+using QFSW.QC;
 public class XPTracker : NetworkBehaviour
 {
     public TextMeshProUGUI CurrentLevelText;
@@ -38,6 +38,7 @@ public class XPTracker : NetworkBehaviour
         SkillPointsText = hud.transform.GetChild(3).GetChild(3).GetComponent<TextMeshProUGUI>();
     }
 
+    [Command]
     public void AddXP(int amount)
     {
         if (!IsOwner) return;
