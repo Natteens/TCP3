@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 3025212458206537426}
   - component: {fileID: 8190138774433433726}
   m_Layer: 0
-  m_Name: LevelUp
+  m_Name: vfx01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1085,7 +1085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2290130069075325259
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6873,13 +6873,14 @@ GameObject:
   - component: {fileID: 7527514002143031903}
   - component: {fileID: 3129706548152285162}
   - component: {fileID: 8872306711348216166}
+  - component: {fileID: 8845788748928168594}
+  - component: {fileID: 6996673695955724174}
   - component: {fileID: 2947912095087268735}
   - component: {fileID: 4139832878832356922}
   - component: {fileID: 5429669656931454667}
   - component: {fileID: 1232806918236960493}
   - component: {fileID: 3647738452402100814}
   - component: {fileID: 5580709411247119171}
-  - component: {fileID: 8845788748928168594}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -7082,9 +7083,9 @@ MonoBehaviour:
       m_Calls: []
   AlturaQueda: 6
   DanoPorMetro: 5
-  BarraVida: {fileID: 0}
-  BarraEstamina: {fileID: 0}
-  BarraFome: {fileID: 0}
+  BarraVida: {fileID: 2290130070974923384}
+  BarraEstamina: {fileID: 2290130070584305987}
+  BarraFome: {fileID: 2290130069372782104}
   VidaAtual: 0
   EstaminaAtual: 0
   FomeAtual: 0
@@ -7136,6 +7137,7 @@ MonoBehaviour:
   _mainCamera: {fileID: 0}
   _PlayerFollowVirtualCamera: {fileID: 0}
   _AimVirtualCamera: {fileID: 0}
+  _MyCanvasHud: {fileID: 2290130069075325260}
 --- !u!114 &7527514002143031903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7194,6 +7196,37 @@ MonoBehaviour:
   analogMovement: 0
   cursorLocked: 0
   cursorInputForLook: 1
+--- !u!114 &8845788748928168594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5156231102937914650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee2fbd26d5f3624a9a3b0359278379d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentLevelText: {fileID: 2290130069294585782}
+  CurrentXPText: {fileID: 2290130070673656482}
+  XPToNextLevelText: {fileID: 2290130070771658316}
+  SkillPointsText: {fileID: 2290130070454013495}
+  XPTranslationType: {fileID: 11400000, guid: 79979a8c10f0667439ac7fe7767d0d33, type: 2}
+  vfxm: {fileID: 6996673695955724174}
+  VFX_LevelUp: {fileID: 3025212458206537426}
+--- !u!114 &6996673695955724174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5156231102937914650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb6ce8e4f38a4b64384b90d68236a071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2947912095087268735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7486,42 +7519,6 @@ MonoBehaviour:
     targetTransform: {fileID: 0}
     radius: 0
     distance: 0
---- !u!114 &8845788748928168594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5156231102937914650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee2fbd26d5f3624a9a3b0359278379d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentLevelText: {fileID: 0}
-  CurrentXPText: {fileID: 0}
-  XPToNextLevelText: {fileID: 0}
-  SkillPointsText: {fileID: 0}
-  XPTranslationType: {fileID: 11400000, guid: 79979a8c10f0667439ac7fe7767d0d33, type: 2}
-  VFX_LevelUp: {fileID: 3025212458206537426}
-  OnLevelChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onLevelingUpgrade:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3025212458206537426}
-        m_TargetAssemblyTypeName: UnityEngine.VFX.VisualEffect, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &5321316066692109401
 GameObject:
   m_ObjectHideFlags: 0
@@ -8536,7 +8533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 200272585
-  InScenePlacedSourceGlobalObjectIdHash: 2283567569
+  InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0

@@ -111,7 +111,7 @@ namespace StarterAssets
         public CinemachineVirtualCamera _PlayerFollowVirtualCamera;
         public CinemachineVirtualCamera _AimVirtualCamera;
         private ThirdPersonShooterController _thirdPersonShooterController;
-
+        public GameObject _MyCanvasHud;
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
@@ -169,6 +169,7 @@ namespace StarterAssets
             {
                 _playerInput = GetComponent<PlayerInput>();
                 _playerInput.enabled = true;
+                _MyCanvasHud.SetActive(true);
                 CamTargetChecking();
             }
         }

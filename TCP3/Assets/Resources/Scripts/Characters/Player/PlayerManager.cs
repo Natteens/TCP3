@@ -37,10 +37,6 @@ public class PlayerManager : NetworkBehaviour
     private float cronometroFome;
     private float multEuler;
 
-    private void Awake()
-    {
-        InitHUD();
-    }
     private void Start()
     {
         controlador = GetComponent<CharacterController>();
@@ -62,16 +58,6 @@ public class PlayerManager : NetworkBehaviour
             SistemaDeFome();
             AplicarBarras();
         }     
-    }
-
-    private void InitHUD()
-    {
-        var hud = GameObject.Find("PlayerHUD");
-        BarraVida = hud.transform.GetChild(0).GetChild(1).GetComponent<Image>();
-        BarraEstamina = hud.transform.GetChild(1).GetChild(1).GetComponent<Image>();
-        BarraFome = hud.transform.GetChild(2).GetChild(1).GetComponent<Image>();
-        var uxui = hud.transform.GetChild(4).GetComponent<UXUIManager>();
-        uxui.playerManager = this;
     }
 
     // Status

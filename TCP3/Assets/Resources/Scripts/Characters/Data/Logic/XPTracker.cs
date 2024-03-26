@@ -7,17 +7,18 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Unity.Netcode;
 using QFSW.QC;
+
 public class XPTracker : NetworkBehaviour
 {
-    public TextMeshProUGUI CurrentLevelText;
-    public TextMeshProUGUI CurrentXPText;
-    public TextMeshProUGUI XPToNextLevelText;
-    public TextMeshProUGUI SkillPointsText;
-    public BaseXPTranslation XPTranslationType;
-    public VisualEffect VFX_LevelUp;
+    [SerializeField]private TextMeshProUGUI CurrentLevelText;
+    [SerializeField]private TextMeshProUGUI CurrentXPText;
+    [SerializeField]private TextMeshProUGUI XPToNextLevelText;
+    [SerializeField]private TextMeshProUGUI SkillPointsText;
+    [SerializeField]private BaseXPTranslation XPTranslationType;
+    [SerializeField]private VFXManager vfxm;
+    [SerializeField]private VisualEffect VFX_LevelUp;
 
-    [SerializeField] UnityEvent<int, int> OnLevelChanged = new UnityEvent<int, int>();
-    public UnityEvent onLevelingUpgrade;
+    UnityEvent<int, int> OnLevelChanged = new UnityEvent<int, int>();
     BaseXPTranslation XPTranslation;
     public int SkillPoints
     {
@@ -29,13 +30,6 @@ public class XPTracker : NetworkBehaviour
     private void Awake()
     {
         XPTranslation = ScriptableObject.Instantiate(XPTranslationType);
-        
-        var hud = GameObject.Find("PlayerHUD");
-
-        CurrentLevelText = hud.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>();
-        CurrentXPText = hud.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
-        XPToNextLevelText = hud.transform.GetChild(3).GetChild(2).GetComponent<TextMeshProUGUI>();
-        SkillPointsText = hud.transform.GetChild(3).GetChild(3).GetComponent<TextMeshProUGUI>();
     }
 
     [Command]
@@ -47,8 +41,7 @@ public class XPTracker : NetworkBehaviour
         if (XPTranslation.AddXP(amount))
         {
             OnLevelChanged.Invoke(previousLevel, XPTranslation.CurrentLevel);
-            StartCoroutine(LevelUpgrading());
-            LevelUpServerRPC();
+            vfxm.PlayVFX(VFX_LevelUp, 2f);
         }
 
         RefreshDisplays();
@@ -88,30 +81,5 @@ public class XPTracker : NetworkBehaviour
             XPToNextLevelText.text = $"XP To Next Level: {XPTranslation.XPRequiredForNextLevel}";
         else
             XPToNextLevelText.text = $"XP To Next Level: At Max";
-    }
-
-    [ServerRpc]
-    void LevelUpServerRPC()
-    {
-        LevelUpClientRPC();
-    }
-
-    [ClientRpc]
-    void LevelUpClientRPC()
-    {
-        if (!IsOwner)
-            LevelUpVFX();
-    }
-
-    private void LevelUpVFX()
-    {
-        StartCoroutine(LevelUpgrading());
-    }
-
-    public IEnumerator LevelUpgrading()
-    {
-        onLevelingUpgrade.Invoke();
-        yield return new WaitForSeconds(2f);
-        VFX_LevelUp.Stop();
     }
 }
