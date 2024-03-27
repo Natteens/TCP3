@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class WriteName : NetworkBehaviour
 {
     private TextMeshProUGUI textname;
+    private string playerName;
 
     private void Awake()
     {
@@ -28,6 +29,9 @@ public class WriteName : NetworkBehaviour
     [ServerRpc]
     private void SetPlayerNameServerRpc(string playername, ServerRpcParams rpcParams = default)
     {
+        // Armazena o nome do jogador
+        playerName = playername;
+
         // Envia o nome do jogador para todos os clientes
         SetPlayerNameClientRpc(playername);
     }
@@ -37,5 +41,11 @@ public class WriteName : NetworkBehaviour
     {
         // Atualiza o nome do jogador no objeto TextMeshProUGUI
         textname.text = playername;
+    }
+
+    private void Start()
+    {
+        // Define o nome do jogador quando o jogo começa
+        textname.text = playerName;
     }
 }
