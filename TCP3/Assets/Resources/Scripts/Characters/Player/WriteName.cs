@@ -10,42 +10,31 @@ using UnityEngine.UI;
 public class WriteName : NetworkBehaviour
 {
     private TextMeshProUGUI textname;
-    private string playerName;
 
-    private void Awake()
+    IEnumerator Start()
     {
         textname = GetComponentInChildren<TextMeshProUGUI>();
-    }
 
-    public override void OnNetworkSpawn()
-    {
-        if (IsOwner)
+        if (IsServer)
         {
-            // Envia o nome do jogador para o servidor
-            SetPlayerNameServerRpc(LobbyManager.Instance.GetName());
+            while (NetworkManager.Singleton.ConnectedClients.Count != LobbyManager.Instance.joinedLobby.Players.Count)
+            {
+                yield return new WaitForSeconds(0.3f);
+            }
+
+            for (int i = 0; i < NetworkManager.Singleton.ConnectedClients.Count; i++)
+            {
+                NetworkManager.Singleton.ConnectedClients[(ulong)i].PlayerObject.GetComponentInChildren<WriteName>().
+                    SetPlayerNameClientRpc(LobbyManager.Instance.joinedLobby.Players[i].Data["PlayerName"].Value);
+            }
         }
-    }
 
-    [ServerRpc]
-    private void SetPlayerNameServerRpc(string playername, ServerRpcParams rpcParams = default)
-    {
-        // Armazena o nome do jogador
-        playerName = playername;
-
-        // Envia o nome do jogador para todos os clientes
-        SetPlayerNameClientRpc(playername);
     }
 
     [ClientRpc]
-    private void SetPlayerNameClientRpc(string playername, ClientRpcParams rpcParams = default)
-    {
-        // Atualiza o nome do jogador no objeto TextMeshProUGUI
+    public void SetPlayerNameClientRpc(string playername)
+    { 
         textname.text = playername;
     }
 
-    private void Start()
-    {
-        // Define o nome do jogador quando o jogo começa
-        textname.text = playerName;
-    }
 }
