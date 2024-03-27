@@ -183,7 +183,9 @@ public class LobbyManager : MonoBehaviour
         {
             try
             {
-                StartCoroutine(LoadGameplayScene());
+                //StartCoroutine(LoadGameplayScene());
+
+                Loader.Load(Loader.Scene.Nathan);
 
                 Debug.Log("Start game");
 
