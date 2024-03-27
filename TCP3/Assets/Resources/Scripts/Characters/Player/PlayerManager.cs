@@ -78,7 +78,7 @@ public class PlayerManager : NetworkBehaviour
             VidaAtual = VidaAtual - DanoPorMetro * DistanciaDeQueda;
             DistanciaDeQueda = 0;
             UltimaPosicaoEmY = 0;
-            vfx.InstantiateAndDestroyVFX(vfxLand, spawnVFX.position, spawnVFX.rotation, lfVFX);
+            vfx.PlayVFX(vfxLand, spawnVFX.position, spawnVFX.rotation, lfVFX);
         }
         if (DistanciaDeQueda < AlturaQueda && controlador.isGrounded)
         {

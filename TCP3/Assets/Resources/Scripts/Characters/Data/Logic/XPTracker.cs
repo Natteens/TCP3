@@ -16,7 +16,7 @@ public class XPTracker : NetworkBehaviour
     [SerializeField]private TextMeshProUGUI SkillPointsText;
     [SerializeField]private BaseXPTranslation XPTranslationType;
     [SerializeField]private VFXManager vfxm;
-    [SerializeField]private VisualEffect VFX_LevelUp;
+    [SerializeField]private GameObject VFX_LevelUp;
 
     UnityEvent<int, int> OnLevelChanged = new UnityEvent<int, int>();
     BaseXPTranslation XPTranslation;
@@ -41,7 +41,7 @@ public class XPTracker : NetworkBehaviour
         if (XPTranslation.AddXP(amount))
         {
             OnLevelChanged.Invoke(previousLevel, XPTranslation.CurrentLevel);
-            vfxm.PlayVFX(VFX_LevelUp, 2f);
+            vfxm.PlayVFX(VFX_LevelUp, transform.position, transform.rotation, 2f);
         }
 
         RefreshDisplays();
