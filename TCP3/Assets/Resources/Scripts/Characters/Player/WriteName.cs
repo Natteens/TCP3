@@ -12,10 +12,13 @@ public class WriteName : NetworkBehaviour
 
     private void Awake()
     {
+        textname = GetComponentInChildren<TextMeshProUGUI>();
+         
+    }
+
+    private void Start()
+    {
         if (IsOwner)
-        {
-            textname = GetComponentInChildren<TextMeshProUGUI>();
             textname.text = LobbyManager.Instance.GetName();
-        }
     }
 }
