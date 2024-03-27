@@ -31,7 +31,7 @@ public class LobbyManager : MonoBehaviour
     public event EventHandler<LobbyEventArgs> OnKickedFromLobby;
 
     private Lobby hostLobby;
-    private Lobby joinedLobby;
+    public Lobby joinedLobby;
     private float heartbeatTimer;
     private float lobbyUpdateTimer;
 

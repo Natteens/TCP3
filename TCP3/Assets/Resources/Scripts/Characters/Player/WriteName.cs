@@ -11,29 +11,31 @@ public class WriteName : NetworkBehaviour
 {
     private TextMeshProUGUI textname;
 
-    // Cria uma NetworkVariable para armazenar o nome do jogador
-    private NetworkVariable<string> playerName = new NetworkVariable<string>();
-
-    private void Awake()
+    IEnumerator Start()
     {
         textname = GetComponentInChildren<TextMeshProUGUI>();
-    }
 
-    public override void OnNetworkSpawn()
-    {
-        if (IsOwner)
+        if (IsServer)
         {
-            // Define a NetworkVariable com o nome do jogador
-            playerName.Value = LobbyManager.Instance.GetName();
+            while (NetworkManager.Singleton.ConnectedClients.Count != LobbyManager.Instance.joinedLobby.Players.Count)
+            {
+                yield return new WaitForSeconds(0.3f);
+            }
+
+            for (int i = 0; i < NetworkManager.Singleton.ConnectedClients.Count; i++)
+            {
+                NetworkManager.Singleton.ConnectedClients[(ulong)i].PlayerObject.GetComponentInChildren<WriteName>().
+                    SetPlayerNameClientRpc(LobbyManager.Instance.joinedLobby.Players[i].Data["PlayerName"].Value);
+            }
         }
+
     }
 
-    private void Start()
-    {
-        // Atualiza o nome do jogador sempre que a NetworkVariable muda
-        playerName.OnValueChanged += (oldValue, newValue) =>
-        {
-            textname.text = newValue;
-        };
+    [ClientRpc]
+    public void SetPlayerNameClientRpc(string playername)
+    { 
+        textname.text = playername;
     }
+
+    
 }
