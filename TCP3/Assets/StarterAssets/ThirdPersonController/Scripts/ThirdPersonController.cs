@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.VFX;
 using Unity.Netcode;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 
 
@@ -112,6 +114,11 @@ namespace StarterAssets
         public CinemachineVirtualCamera _AimVirtualCamera;
         private ThirdPersonShooterController _thirdPersonShooterController;
         public GameObject _MyCanvasHud;
+        private VFXManager vfx;
+        [SerializeField]private GameObject vfxLand;
+        public float lfVFX;
+        [SerializeField] Transform spawnVFX;
+
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
@@ -148,7 +155,7 @@ namespace StarterAssets
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-
+            vfx = GetComponent<VFXManager>();
 
             AssignAnimationIDs();
 
@@ -435,17 +442,16 @@ namespace StarterAssets
 
         private void OnLand(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
-            {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
-            }
+            if (animationEvent.animatorClipInfo.weight > 0.5f)               
+                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);               
+
+            vfx.InstantiateAndDestroyVFX(vfxLand, spawnVFX.position, spawnVFX.rotation, lfVFX);
         }
 
         public void SetSensitivity(float NewSensitivity)
         {
             Sensitivity = NewSensitivity;
         }
-
 
     }
 }

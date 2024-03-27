@@ -36,4 +36,23 @@ public class VFXManager : NetworkBehaviour
         // Para o efeito visual após o tempo especificado
         vfx.Stop();
     }
+
+    #region instanciando o vfx online
+    public void InstantiateAndDestroyVFX(GameObject vfxPrefab, Vector3 position, Quaternion rotation, float duration)
+    {
+        // Instancia o objeto VFX na posição e rotação especificadas
+        GameObject instantiatedVFX = Instantiate(vfxPrefab, position, rotation);
+
+        // Inicia a corrotina para destruir o objeto VFX após a duração especificada
+        StartCoroutine(DestroyVFXAfterDuration(instantiatedVFX, duration));
+    }
+
+    private IEnumerator DestroyVFXAfterDuration(GameObject vfxObject, float duration)
+    {
+        // Aguarda a duração especificada antes de destruir o objeto VFX
+        yield return new WaitForSeconds(duration);
+        Destroy(vfxObject);
+    }
+    #endregion
+
 }
