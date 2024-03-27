@@ -6,14 +6,16 @@ using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WriteName : MonoBehaviour
+public class WriteName : NetworkBehaviour
 {
     private TextMeshProUGUI textname;
 
     private void Awake()
     {
-        textname = GetComponentInChildren<TextMeshProUGUI>();
-        textname.text = LobbyManager.Instance.GetName();
-
+        if (IsOwner)
+        {
+            textname = GetComponentInChildren<TextMeshProUGUI>();
+            textname.text = LobbyManager.Instance.GetName();
+        }
     }
 }
