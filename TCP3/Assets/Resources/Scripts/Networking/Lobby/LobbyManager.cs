@@ -36,7 +36,6 @@ public class LobbyManager : MonoBehaviour
     private float lobbyUpdateTimer;
 
     private string playerName;
-
     public class LobbyEventArgs : EventArgs
     {
         public Lobby lobby;
@@ -50,6 +49,8 @@ public class LobbyManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
         if (Instance != null && Instance != this) { Destroy(this); }
         else { Instance = this; }
     }
@@ -187,7 +188,7 @@ public class LobbyManager : MonoBehaviour
 
                 Loader.Load(Loader.Scene.Nathan);
 
-                Debug.Log("Start game");
+                //Debug.Log("Start game");
 
                 string relayCode = await LobbyRelay.Instance.CreateRelay();
 
@@ -201,14 +202,17 @@ public class LobbyManager : MonoBehaviour
 
                 joinedLobby = lobby;
 
-                
-
             }
             catch (LobbyServiceException e)
             {
                 Debug.Log(e);
             }
         }
+    }
+
+    public string GetName()
+    {
+        return playerName;
     }
 
     private IEnumerator LoadGameplayScene() 
@@ -404,7 +408,7 @@ public class LobbyManager : MonoBehaviour
                 };
 
                 string playerId = AuthenticationService.Instance.PlayerId;
-
+                
                 Lobby lobby = await LobbyService.Instance.UpdatePlayerAsync(joinedLobby.Id, playerId, options);
                 joinedLobby = lobby;
 

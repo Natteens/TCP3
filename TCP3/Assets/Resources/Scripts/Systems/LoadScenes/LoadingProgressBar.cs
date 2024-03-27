@@ -17,7 +17,8 @@ public class LoadingProgressBar : MonoBehaviour
 
     private void Update()
     {
-        image.fillAmount = Loader.GetLoadingProgress();
+        image.fillAmount = Mathf.Lerp(image.fillAmount, Loader.GetLoadingProgress(), 0.25f );
+
         text.text = (Loader.GetLoadingProgress() * 100).ToString() + "%";
     } 
 }

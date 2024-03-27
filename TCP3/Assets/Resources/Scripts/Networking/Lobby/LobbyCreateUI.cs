@@ -76,14 +76,14 @@ public class LobbyCreateUI : MonoBehaviour {
 
     public void Hide()
     {
-        Debug.Log("Rodei hide lobbycreateUI");
+        //Debug.Log("Rodei hide lobbycreateUI");
 
         gameObject.SetActive(false);
     }
 
     public void Show() {
 
-        Debug.Log("Rodei show lobby create UI");
+        //Debug.Log("Rodei show lobby create UI");
 
         gameObject.SetActive(true);
         lobbyName = "MinhaSala";

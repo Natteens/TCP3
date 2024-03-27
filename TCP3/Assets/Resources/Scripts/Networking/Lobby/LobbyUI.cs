@@ -74,21 +74,28 @@ public class LobbyUI : MonoBehaviour {
         Show();
     }
 
-    private void ClearLobby() {
-        foreach (Transform child in container) {
-            if (child == playerSingleTemplate) continue;
-            Destroy(child.gameObject);
-        }
+    private void ClearLobby()
+    {
+        if (container != null)
+        {
+            foreach (Transform child in container)
+            {
+                if (child == playerSingleTemplate) continue;
+
+                if (child.gameObject != null) Destroy(child.gameObject);
+
+            }
+        } 
     }
 
     private void Hide() {
         gameObject.SetActive(false);
-        Debug.Log("rodei hide lobbyUI");
+        //Debug.Log("rodei hide lobbyUI");
     }
 
     private void Show() {
         gameObject.SetActive(true);
-        Debug.Log("rodei show lobbyUI");
+        //Debug.Log("rodei show lobbyUI");
     }
 
 }

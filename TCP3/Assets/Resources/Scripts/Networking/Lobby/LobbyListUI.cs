@@ -68,18 +68,18 @@ public class LobbyListUI : MonoBehaviour {
     }
 
     private void CreateLobbyButtonClick() {
-        Debug.Log("Rodei createlobbybtnclick");
+        //Debug.Log("Rodei createlobbybtnclick");
         LobbyCreateUI.Instance.Show();
     }
 
     private void Hide() {
         gameObject.SetActive(false);
-        Debug.Log("Rodei hide lobbylistUI");
+        //Debug.Log("Rodei hide lobbylistUI");
     }
 
     private void Show() {
         gameObject.SetActive(true);
-        Debug.Log("Rodei show lobbylistUI");
+        //Debug.Log("Rodei show lobbylistUI");
     }
 
 }
