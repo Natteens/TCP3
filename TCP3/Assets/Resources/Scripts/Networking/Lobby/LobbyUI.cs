@@ -55,17 +55,21 @@ public class LobbyUI : MonoBehaviour {
     private void UpdateLobby(Lobby lobby) {
         ClearLobby();
 
-        foreach (Player player in lobby.Players) {
-            Transform playerSingleTransform = Instantiate(playerSingleTemplate, container);
-            playerSingleTransform.gameObject.SetActive(true);
-            LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();
+        foreach (Player player in lobby.Players) 
+        {
+            if (playerSingleTemplate != null && container != null)
+            {
+                Transform playerSingleTransform = Instantiate(playerSingleTemplate, container);
+                playerSingleTransform.gameObject.SetActive(true);
+                LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();
 
-            lobbyPlayerSingleUI.SetKickPlayerButtonVisible(
-                LobbyManager.Instance.IsLobbyHost() &&
-                player.Id != AuthenticationService.Instance.PlayerId // Don't allow kick self
-            );
+                lobbyPlayerSingleUI.SetKickPlayerButtonVisible(
+                    LobbyManager.Instance.IsLobbyHost() &&
+                    player.Id != AuthenticationService.Instance.PlayerId // Don't allow kick self
+                );
 
-            lobbyPlayerSingleUI.UpdatePlayer(player);
+                lobbyPlayerSingleUI.UpdatePlayer(player);
+            }    
         }
 
         lobbyNameText.text = lobby.Name;
@@ -88,12 +92,16 @@ public class LobbyUI : MonoBehaviour {
         } 
     }
 
-    private void Hide() {
+    private void Hide() 
+    {
+        if(gameObject != null)
         gameObject.SetActive(false);
         //Debug.Log("rodei hide lobbyUI");
     }
 
-    private void Show() {
+    private void Show() 
+    {
+        if (gameObject != null)
         gameObject.SetActive(true);
         //Debug.Log("rodei show lobbyUI");
     }
