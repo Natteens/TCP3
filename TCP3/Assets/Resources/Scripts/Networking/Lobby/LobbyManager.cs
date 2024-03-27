@@ -74,7 +74,14 @@ public class LobbyManager : MonoBehaviour
     {
         HandleLobbyHeartbeat();
 
-        if(LobbyUI.Instance != null) HandleLobbyPollForUpdates();
+        if (LobbyUI.Instance != null)
+        {
+            HandleLobbyPollForUpdates();
+        }
+        else
+        {
+            Debug.Log("aaa");
+        }
     }
 
     private async void HandleLobbyPollForUpdates()
