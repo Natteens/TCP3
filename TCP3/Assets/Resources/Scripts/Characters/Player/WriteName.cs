@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
 using Unity.Services.Authentication;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,17 @@ public class WriteName : NetworkBehaviour
 
     private void Start()
     {
-        if (IsOwner)
-            textname.text = LobbyManager.Instance.GetName();
+        if (IsServer)
+        {
+            SetPlayerNameClientRpc(LobbyManager.Instance.GetName());
+        }
+        
+            
+    }
+
+    [ClientRpc]
+    private void SetPlayerNameClientRpc(string playername)
+    {
+        textname.text = playername;
     }
 }
