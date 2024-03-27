@@ -115,9 +115,7 @@ namespace StarterAssets
         private ThirdPersonShooterController _thirdPersonShooterController;
         public GameObject _MyCanvasHud;
         private VFXManager vfx;
-        [SerializeField]private GameObject vfxLand;
-        public float lfVFX;
-        [SerializeField] Transform spawnVFX;
+
 
         private const float _threshold = 0.01f;
 
@@ -445,7 +443,7 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)               
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);               
 
-            vfx.InstantiateAndDestroyVFX(vfxLand, spawnVFX.position, spawnVFX.rotation, lfVFX);
+           // vfx.InstantiateAndDestroyVFX(vfxLand, spawnVFX.position, spawnVFX.rotation, lfVFX);
         }
 
         public void SetSensitivity(float NewSensitivity)

@@ -7122,6 +7122,10 @@ MonoBehaviour:
   EstaminaAtual: 0
   FomeAtual: 0
   velocidadeEstamina: 250
+  vfx: {fileID: 6996673695955724174}
+  lfVFX: 1
+  vfxLand: {fileID: 1947622352994017703, guid: a86c1f2f32ddc6b4fbd8ac9ff64a4245, type: 3}
+  spawnVFX: {fileID: 6398389643516041193}
 --- !u!114 &5156231102937914641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7170,9 +7174,6 @@ MonoBehaviour:
   _PlayerFollowVirtualCamera: {fileID: 0}
   _AimVirtualCamera: {fileID: 0}
   _MyCanvasHud: {fileID: 2290130069075325260}
-  vfxLand: {fileID: 1947622352994017703, guid: a86c1f2f32ddc6b4fbd8ac9ff64a4245, type: 3}
-  lfVFX: 1
-  spawnVFX: {fileID: 6398389643516041193}
 --- !u!114 &7527514002143031903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8580,7 +8581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 0
+  GlobalObjectIdHash: 200272585
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
