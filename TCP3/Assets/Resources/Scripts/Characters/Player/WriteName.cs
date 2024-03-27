@@ -37,5 +37,4 @@ public class WriteName : NetworkBehaviour
         textname.text = playername;
     }
 
-    
 }
