@@ -3,7 +3,7 @@ using UnityEngine;
 using Unity.Netcode;
 using StarterAssets;
 
-public class ThirdPersonShooterController : NetworkBehaviour
+public class ThirdPersonCameraController : NetworkBehaviour
 {
     public GameObject RigtargetPosition;
     private ThirdPersonController player;
@@ -17,7 +17,7 @@ public class ThirdPersonShooterController : NetworkBehaviour
     [SerializeField] private float aimSensitivity = 2f;
     [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
     [SerializeField] private float maxRaycastDistance = 100f;
-    [SerializeField] XPTracker xp;
+
     private void Awake()
     {
         player = GetComponent<ThirdPersonController>();
@@ -52,26 +52,21 @@ public class ThirdPersonShooterController : NetworkBehaviour
         aimCanvas.gameObject.SetActive(isAiming);
         thirdPersonCanvas.gameObject.SetActive(!isAiming);
 
-        if (isAiming)
-        {
-            player._animator.SetLayerWeight(1, Mathf.Lerp(player._animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+        //if (isAiming)
+        //{
+        //    player._animator.SetLayerWeight(1, Mathf.Lerp(player._animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
 
-            //Vector3 aimDirection = (mouseWorldPosition - transform.position).normalized;
-            //aimDirection.y = 0f; // Restringe a direção apenas ao plano horizontal
+        //    Vector3 aimDirection = (mouseWorldPosition - transform.position).normalized;
+        //    aimDirection.y = 0f; // Restringe a direção apenas ao plano horizontal
 
-            //Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 2000f);
-        }
-        else
-        {
-            player._animator.SetLayerWeight(1, Mathf.Lerp(player._animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
-        }
+        //    Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
+        //    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 2000f);
+        //}
+        //else
+        //{
+        //    player._animator.SetLayerWeight(1, Mathf.Lerp(player._animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+        //}
 
-        //Teste
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            xp.AddXP(5000);
-        }
     }
 }
 // rotação esta zuada

@@ -61,7 +61,10 @@ VisualEffect:
         m_Name: lifeTime Flipbook
         m_Overridden: 1
     m_Vector2f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 4, y: 2}
+        m_Name: W and H ground
+        m_Overridden: 1
     m_Vector3f:
       m_Array:
       - m_Value: {x: -0, y: 0, z: 0}
@@ -75,19 +78,43 @@ VisualEffect:
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 10.08134, y: 6.513168, z: 3.5665119, w: 1}
+      - m_Value: {x: 13.459382, y: 6.1278486, z: 0, w: 1}
         m_Name: Flash Color
         m_Overridden: 1
       - m_Value: {x: 3.937255, y: 0.8627451, z: 0, w: 1}
         m_Name: ParticlesColor
         m_Overridden: 1
-      - m_Value: {x: 1, y: 1, z: 1, w: 1}
+      - m_Value: {x: 1, y: 0.19354841, z: 0, w: 1}
         m_Name: Particle Dust Color
+        m_Overridden: 1
+      - m_Value: {x: 0.2462014, y: 0.036889452, z: 0, w: 1}
+        m_Name: Color Smoke 5
+        m_Overridden: 0
+      - m_Value: {x: 0.106000006, y: 0.015478068, z: 0.004346001, w: 1}
+        m_Name: Color Smoke 3
+        m_Overridden: 1
+      - m_Value: {x: 0.1792453, y: 0.030405367, z: 0.010991462, w: 1}
+        m_Name: Color Smoke 2
+        m_Overridden: 1
+      - m_Value: {x: 0.31132078, y: 0.06697296, z: 0.013216442, w: 1}
+        m_Name: Color Smoke 1
         m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 30
+        m_Name: FPS Ground
+        m_Overridden: 1
+      - m_Value: 16
+        m_Name: FPS Air
+        m_Overridden: 1
+      - m_Value: 8
+        m_Name: Max Frames Ground
+        m_Overridden: 1
+      - m_Value: 16
+        m_Name: Max Frames Air
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -129,6 +156,12 @@ VisualEffect:
       m_Array:
       - m_Value: {fileID: 0}
         m_Name: SkinnedMeshRenderer
+        m_Overridden: 1
+      - m_Value: {fileID: 2800000, guid: 0e627b5c36ca40d4e8caed40dd3e2daf, type: 3}
+        m_Name: Flash Texture
+        m_Overridden: 1
+      - m_Value: {fileID: 2800000, guid: aac7c949863557a418c8dffe435b93c4, type: 3}
+        m_Name: Flipbook ground
         m_Overridden: 1
     m_Bool:
       m_Array: []
@@ -184,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1726855279
+  GlobalObjectIdHash: 4100654770
   InScenePlacedSourceGlobalObjectIdHash: 1726855279
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1

@@ -78,10 +78,6 @@ public class LobbyManager : MonoBehaviour
         {
             HandleLobbyPollForUpdates();
         }
-        else
-        {
-            Debug.Log("aaa");
-        }
     }
 
     private async void HandleLobbyPollForUpdates()
@@ -221,16 +217,6 @@ public class LobbyManager : MonoBehaviour
     public string GetName()
     {
         return playerName;
-    }
-
-    private IEnumerator LoadGameplayScene() 
-    { 
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Nathan", LoadSceneMode.Additive); 
-
-        while (!operation.isDone) { yield return null; } 
-
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-    
     }
 
     public async void RefreshLobbyList()

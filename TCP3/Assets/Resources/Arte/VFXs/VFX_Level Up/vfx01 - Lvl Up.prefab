@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366330843685813108}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -57,7 +57,13 @@ VisualEffect:
         m_Name: Height
         m_Overridden: 1
     m_Vector2f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 4, y: 2}
+        m_Name: W and H ground
+        m_Overridden: 1
+      - m_Value: {x: 4, y: 2}
+        m_Name: W and H 1
+        m_Overridden: 1
     m_Vector3f:
       m_Array:
       - m_Value: {x: -0, y: 0, z: 0}
@@ -77,10 +83,28 @@ VisualEffect:
       - m_Value: {x: 3.937255, y: 0.8627451, z: 0, w: 1}
         m_Name: ParticlesColor
         m_Overridden: 1
+      - m_Value: {x: 10.680627, y: 7.958114, z: 0.7958115, w: 1}
+        m_Name: Color 1
+        m_Overridden: 1
+      - m_Value: {x: 4, y: 3.1215687, z: 0, w: 1}
+        m_Name: Color
+        m_Overridden: 1
+      - m_Value: {x: 4, y: 3.827451, z: 0.4392157, w: 1}
+        m_Name: Color 2
+        m_Overridden: 1
+      - m_Value: {x: 4.3327074, y: 0.8358728, z: 0.47005796, w: 1}
+        m_Name: Color 3
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 32
+        m_Name: FPS
+        m_Overridden: 1
+      - m_Value: 8
+        m_Name: Max Frames
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
