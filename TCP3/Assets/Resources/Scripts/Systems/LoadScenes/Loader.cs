@@ -27,7 +27,7 @@ public static class Loader
             //Ten que usar gameobj pq nao da pra startar corotina sem o monobehaviour!
             GameObject loadingGameObject = new GameObject("Loading GameOBJ");
             loadingGameObject.AddComponent<LoadingMonoBehaviour>().StartCoroutine(LoadSceneAsync(scene));
-        };
+        };  
 
         //Carregando a cena de loading 
         SceneManager.LoadScene(Scene.Loading.ToString());
