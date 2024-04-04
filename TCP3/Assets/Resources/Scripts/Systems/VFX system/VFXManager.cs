@@ -1,43 +1,29 @@
 using System.Collections;
 using UnityEngine;
 using Unity.Netcode;
-using UnityEngine.VFX;
 
-public class VFXManager : NetworkBehaviour
+
+public class VFXManager : Singleton<VFXManager>
 {
     // Método principal para reproduzir o VFX
-    public void PlayVFX(VisualEffect vfx, float duration)
+    public void PlayVFX(GameObject vfxPrefab, Vector3 position, Quaternion rotation, float duration)
     {
-        StartCoroutine(PlayVFXCoroutine(vfx, duration));
-        VFXClientRPC(vfx.name, duration);
+        InstantiateAndDestroyVFX(vfxPrefab, position, rotation, duration);
+        VFXClientRPC(vfxPrefab.name, position, rotation, duration);
     }
 
     // RPC para reproduzir o VFX em todos os clientes
     [ClientRpc]
-    private void VFXClientRPC(string vfxName, float duration)
+    private void VFXClientRPC(string vfxName, Vector3 position, Quaternion rotation, float duration)
     {
         // Encontra o objeto do efeito visual com base no nome e reproduz o efeito localmente
-        VisualEffect vfx = GameObject.Find(vfxName)?.GetComponent<VisualEffect>();
+        GameObject vfx = GameObject.Find(vfxName)?.GetComponent<GameObject>();
         if (vfx != null)
         {
-            StartCoroutine(PlayVFXCoroutine(vfx, duration));
+            InstantiateAndDestroyVFX(vfx, position, rotation, duration);
         }
     }
 
-    // Corrotina para reproduzir o efeito visual
-    private IEnumerator PlayVFXCoroutine(VisualEffect vfx, float duration)
-    {
-        // Reproduz o efeito visual
-        vfx.Play();
-
-        // Aguarda o tempo especificado
-        yield return new WaitForSeconds(duration);
-
-        // Para o efeito visual após o tempo especificado
-        vfx.Stop();
-    }
-
-    #region instanciando o vfx online
     public void InstantiateAndDestroyVFX(GameObject vfxPrefab, Vector3 position, Quaternion rotation, float duration)
     {
         // Instancia o objeto VFX na posição e rotação especificadas
@@ -53,6 +39,5 @@ public class VFXManager : NetworkBehaviour
         yield return new WaitForSeconds(duration);
         Destroy(vfxObject);
     }
-    #endregion
 
 }

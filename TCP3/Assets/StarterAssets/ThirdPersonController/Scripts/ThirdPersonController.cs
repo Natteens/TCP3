@@ -153,7 +153,6 @@ namespace StarterAssets
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-            vfx = GetComponent<VFXManager>();
 
             AssignAnimationIDs();
 

@@ -37,7 +37,6 @@ public class PlayerManager : NetworkBehaviour
     private float cronometroFome;
     private float multEuler;
 
-    public VFXManager vfx;
     public float lfVFX = 1f;
     [SerializeField] private GameObject vfxLand;
     [SerializeField] Transform spawnVFX;
@@ -78,7 +77,7 @@ public class PlayerManager : NetworkBehaviour
             VidaAtual = VidaAtual - DanoPorMetro * DistanciaDeQueda;
             DistanciaDeQueda = 0;
             UltimaPosicaoEmY = 0;
-            vfx.InstantiateAndDestroyVFX(vfxLand, spawnVFX.position, spawnVFX.rotation, lfVFX);
+            VFXManager.Instance.PlayVFX(vfxLand, spawnVFX.position, spawnVFX.rotation, lfVFX);
         }
         if (DistanciaDeQueda < AlturaQueda && controlador.isGrounded)
         {
