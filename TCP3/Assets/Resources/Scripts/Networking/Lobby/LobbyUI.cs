@@ -106,4 +106,9 @@ public class LobbyUI : MonoBehaviour {
         //Debug.Log("rodei show lobbyUI");
     }
 
+    public void ControlStartButton(bool set)
+    { 
+        startGameLobbyButton.gameObject.SetActive(set);
+    }
+
 }

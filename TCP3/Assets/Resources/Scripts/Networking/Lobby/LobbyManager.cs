@@ -174,6 +174,11 @@ public class LobbyManager : MonoBehaviour
 
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
 
+            if (IsLobbyHost())
+            {
+                LobbyUI.Instance.ControlStartButton(true);
+            }
+
             Debug.Log("Created Lobby " + lobby.Name);
         }
         catch (LobbyServiceException e)
@@ -285,6 +290,11 @@ public class LobbyManager : MonoBehaviour
             joinedLobby = lobby;
             Debug.Log("Entrou no lobby com o codigo: " + lobbyCode);
 
+            if (!IsLobbyHost())
+            {
+                LobbyUI.Instance.ControlStartButton(false);
+            }
+
             PrintPlayers(lobby);
         }
         catch (LobbyServiceException e)
@@ -305,6 +315,11 @@ public class LobbyManager : MonoBehaviour
             });
 
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+
+            if (!IsLobbyHost())
+            {
+                LobbyUI.Instance.ControlStartButton(false);
+            }
         }
         catch (LobbyServiceException e)
         {
@@ -317,6 +332,11 @@ public class LobbyManager : MonoBehaviour
         try
         {
             await LobbyService.Instance.QuickJoinLobbyAsync();
+
+            if (!IsLobbyHost())
+            {
+                LobbyUI.Instance.ControlStartButton(false);
+            }
         }
         catch (LobbyServiceException e)
         {
