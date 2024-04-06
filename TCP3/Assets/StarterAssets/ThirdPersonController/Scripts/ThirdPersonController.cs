@@ -112,7 +112,6 @@ namespace StarterAssets
         public GameObject _mainCamera;
         public CinemachineVirtualCamera _PlayerFollowVirtualCamera;
         public CinemachineVirtualCamera _AimVirtualCamera;
-        private ThirdPersonCameraController _thirdPersonShooterController;
         public GameObject _MyCanvasHud;
         private VFXManager vfx;
 
@@ -194,12 +193,12 @@ namespace StarterAssets
 
         private void Update()
         {
-            //if (_PlayerFollowVirtualCamera == null && _mainCamera == null)
-            //{
-            //    Awake();
-            //    Start();
-            //    InitPlayer();
-            //}
+            if (_PlayerFollowVirtualCamera == null && _mainCamera == null)
+            {
+                Awake();
+                Start();
+                InitPlayer();
+            }
 
             if (IsOwner)
             {

@@ -6736,7 +6736,6 @@ GameObject:
   - component: {fileID: 5156231102937914646}
   - component: {fileID: 8879617013715714059}
   - component: {fileID: 5156231102937914641}
-  - component: {fileID: 7527514002143031903}
   - component: {fileID: 3129706548152285162}
   - component: {fileID: 8872306711348216166}
   - component: {fileID: 8845788748928168594}
@@ -7006,25 +7005,6 @@ MonoBehaviour:
   _PlayerFollowVirtualCamera: {fileID: 0}
   _AimVirtualCamera: {fileID: 0}
   _MyCanvasHud: {fileID: 2290130069075325260}
---- !u!114 &7527514002143031903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5156231102937914650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c86756d85dd4c2d41a02dd09a19e4393, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RigtargetPosition: {fileID: 3541833039059846534}
-  normalSensitivity: 1
-  aimSensitivity: 0.5
-  aimColliderLayerMask:
-    serializedVersion: 2
-    m_Bits: 9
-  maxRaycastDistance: 100
 --- !u!114 &3129706548152285162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7822,6 +7802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fafe0f705ba54564fbdfa5fcc5203fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textname: {fileID: 677528812189430733}
 --- !u!1 &6311282576388846325
 GameObject:
   m_ObjectHideFlags: 0
