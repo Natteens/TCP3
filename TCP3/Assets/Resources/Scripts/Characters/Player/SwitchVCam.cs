@@ -6,17 +6,16 @@ using Cinemachine;
 
 public class SwitchVCam : MonoBehaviour
 {
-    [SerializeField] private PlayerInputs myInputs;
-    [SerializeField] private int priorityBoostAmount = 10;
-    private CinemachineVirtualCamera vcam;
+    private int priorityBoostAmount = 10;
 
+    [SerializeField] private PlayerInputs myInputs;
+    
+    [SerializeField] private CinemachineVirtualCamera vcam;
     [SerializeField] private Canvas thirdPersonCanvas;
     [SerializeField] private Canvas aimCanvas;
 
     void Start()
     {
-        vcam = GetComponent<CinemachineVirtualCamera>();
-
         if (myInputs != null)
         {
             myInputs.AimAction.performed += _ => StartAim();

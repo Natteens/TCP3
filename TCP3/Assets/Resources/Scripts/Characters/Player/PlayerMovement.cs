@@ -6,32 +6,31 @@ using Unity.Netcode;
 [RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
 public class PlayerMovement : NetworkBehaviour
 {
+    //[SerializeField]
     [BoxGroup("Movement Values")]
-    [SerializeField]
     private float playerSpeed = 2.0f;
-    [BoxGroup("Movement Values")]
+
     [SerializeField]
+    [BoxGroup("Movement Values")]
     private float jumpHeight = 1.0f;
-    [BoxGroup("Movement Values")]
+
     [SerializeField]
+    [BoxGroup("Movement Values")]
     private float gravityValue = -9.81f;
-    [BoxGroup("Movement Values")]
+
     [SerializeField]
+    [BoxGroup("Movement Values")]
     private float rotationSpeed = 5f;
 
-    private CharacterController controller;
+    [SerializeField] private CharacterController controller;
+    [SerializeField] private PlayerInputs myInputs;
+
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
 
-    private PlayerInputs myInputs;
-
-    
-
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
-        myInputs = GetComponent<PlayerInputs>();
         cameraTransform = Camera.main.transform;
     }
 

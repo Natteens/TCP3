@@ -6,10 +6,11 @@ public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private PlayerInputs myInputs;
 
-    [SerializeField] private Transform cameraTransform;
+    
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform barrelTransform;
-    [SerializeField] private Transform bulletParent;
+
+    [SerializeField] private Transform cameraTransform;
     [SerializeField] private float bulletHitMissDistance = 25f;
 
     void Start()
@@ -18,7 +19,7 @@ public class PlayerShoot : MonoBehaviour
 
         if (myInputs != null)
         {
-            myInputs.ShootAction.performed += _ => ShootGun();
+           // myInputs.ShootAction.performed += _ => ShootGun();
         }
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -27,14 +28,16 @@ public class PlayerShoot : MonoBehaviour
 
     private void OnDisable()
     {
-        myInputs.ShootAction.performed -= _ => ShootGun();
+       // myInputs.ShootAction.performed -= _ => ShootGun();
     }
 
+    //
+    /*
     private void ShootGun()
     { 
         RaycastHit hit;
         float gunRange = 200f;
-        GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity, bulletParent);
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity);
         BulletController bulletController = bullet.GetComponent<BulletController>(); //usar interface aq
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, gunRange))
@@ -48,4 +51,5 @@ public class PlayerShoot : MonoBehaviour
             bulletController.Hit = false;
         }
     }
+    */
 }

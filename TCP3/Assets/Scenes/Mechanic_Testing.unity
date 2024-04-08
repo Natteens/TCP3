@@ -5833,10 +5833,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52dca9e0080aed9479dfd35812b8dd51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 2
   jumpHeight: 1
   gravityValue: -9.81
   rotationSpeed: 5
+  controller: {fileID: 1326170006}
+  myInputs: {fileID: 1326170010}
+  lvl: 10
 --- !u!114 &1326170009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7891,7 +7893,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.8146176
+      value: 2.813775
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.y
