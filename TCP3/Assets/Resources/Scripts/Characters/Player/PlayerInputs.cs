@@ -10,13 +10,18 @@ public class PlayerInputs : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction aimAction;
+    private InputAction shootAction;
 
     public InputAction AimAction
     {
         get { return aimAction; }
         set { aimAction = value; }
     }
-
+    public InputAction ShootAction
+    {
+        get { return shootAction; }
+        set { shootAction = value; }
+    }
     public InputAction MoveAction
     {
         get { return moveAction; }
@@ -27,14 +32,16 @@ public class PlayerInputs : MonoBehaviour
         get { return jumpAction; }
         set { jumpAction = value; }
     }
+    
 
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
 
-        moveAction = playerInput.actions["Move"];
-        jumpAction = playerInput.actions["Jump"];
-        aimAction = playerInput.actions["Aim"];
+        moveAction  = playerInput.actions["Move"];
+        jumpAction  = playerInput.actions["Jump"];
+        aimAction   = playerInput.actions["Aim"];
+        shootAction = playerInput.actions["Shoot"];
     }
 
 }

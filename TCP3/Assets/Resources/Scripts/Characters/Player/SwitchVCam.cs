@@ -13,23 +13,21 @@ public class SwitchVCam : MonoBehaviour
     [SerializeField] private Canvas thirdPersonCanvas;
     [SerializeField] private Canvas aimCanvas;
 
-
-
     void Start()
     {
         vcam = GetComponent<CinemachineVirtualCamera>();
-    }
 
-    private void OnEnable()
-    {
-        myInputs.AimAction.performed += _ => StartAim();
-        myInputs.AimAction.canceled += _ => CancelAim();
+        if (myInputs != null)
+        {
+            myInputs.AimAction.performed += _ => StartAim();
+            myInputs.AimAction.canceled += _ => CancelAim();
+        }
     }
 
     private void OnDisable()
     {
         myInputs.AimAction.performed -= _ => StartAim();
-        myInputs.AimAction.canceled -= _ => CancelAim();
+        myInputs.AimAction.canceled  -= _ => CancelAim();
     }
 
     private void StartAim()
