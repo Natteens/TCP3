@@ -5838,7 +5838,6 @@ MonoBehaviour:
   rotationSpeed: 5
   controller: {fileID: 1326170006}
   myInputs: {fileID: 1326170010}
-  lvl: 10
 --- !u!114 &1326170009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5885,10 +5884,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInputs: {fileID: 1326170010}
-  cameraTransform: {fileID: 0}
   bulletPrefab: {fileID: 4442569034788347138, guid: b30c589f0d26c954fa5dd0a0b7b18d2e, type: 3}
   barrelTransform: {fileID: 1614944554}
-  bulletParent: {fileID: 319440127}
+  cameraTransform: {fileID: 0}
   bulletHitMissDistance: 25
 --- !u!1 &1327731487
 GameObject:
@@ -8131,9 +8129,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInputs: {fileID: 1326170010}
-  priorityBoostAmount: 25
+  vcam: {fileID: 1848200915}
   thirdPersonCanvas: {fileID: 428399255}
   aimCanvas: {fileID: 326115014}
+--- !u!114 &1848200915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 1848200901}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848200904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1869944570
 GameObject:
   m_ObjectHideFlags: 0
