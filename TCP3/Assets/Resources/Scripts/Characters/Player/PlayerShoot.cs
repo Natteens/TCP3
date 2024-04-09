@@ -10,8 +10,6 @@ public class PlayerShoot : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(currentGun.GunSpecs.Ammo);
-
         if (myInputs != null)
         {
             myInputs.ShootAction.performed += _ => currentGun.OnShoot();

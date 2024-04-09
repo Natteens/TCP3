@@ -4,41 +4,47 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    [SerializeField] private int Damage = 2;
-    [SerializeField] private GameObject bulletDecal;
-    [SerializeField] private float bulletSpeed = 50f;
-    [SerializeField] private float timeToDestroy = 3f;
+    [SerializeField] private new ParticleSystem particleSystem;
+    [SerializeField] private int damage;
+    [SerializeField] private float fireRate;
 
+    private bool fireCooldown;
+    private List<ParticleCollisionEvent> collisionEvents;
     public Vector3 Target { get; set; }
     public bool Hit { get; set; }
 
-    private void OnEnable()
+    void Start()
     {
-        Destroy(gameObject, timeToDestroy);
+        collisionEvents = new List<ParticleCollisionEvent>();
     }
 
-    void Update()
+    public void Fire()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Target, bulletSpeed * Time.deltaTime);
-        if (!Hit && Vector3.Distance(transform.position, Target) < 0.01f)
-        {
-            Destroy(gameObject);
-        }
+        if (fireCooldown) return;
+        fireCooldown = true;
+        particleSystem.Emit(1);
+        StartCoroutine(StopCooldownAfterTime());
     }
 
-    private void OnTriggerEnter(Collider other)
+    private IEnumerator StopCooldownAfterTime()
     {
-        Vector3 contactPoint = other.transform.position;
+        yield return new WaitForSeconds(fireRate);
+        fireCooldown = false;
+    }
 
-        GameObject.Instantiate(bulletDecal, contactPoint, Quaternion.LookRotation(Vector3.up));
+    void OnParticleCollision(GameObject other)
+    {
+        ParticlePhysicsExtensions.GetCollisionEvents(particleSystem, other, collisionEvents);
 
-        Damageable damageable = other.gameObject.GetComponent<Damageable>();
-        if (damageable != null)
+        for (int i = 0; i < collisionEvents.Count; i++)
         {
-            damageable.ApplyDamage(Damage);
+            var collider = collisionEvents[i].colliderComponent;
+            Damageable damageable = collider.gameObject.GetComponent<Damageable>();
+            if(damageable != null)
+            {
+                damageable.ApplyDamage(damage);
+            }
         }
-
-        Destroy(gameObject);
     }
 
 }
