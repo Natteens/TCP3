@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    [SerializeField] private int Damage = 2;
     [SerializeField] private GameObject bulletDecal;
     [SerializeField] private float bulletSpeed = 50f;
     [SerializeField] private float timeToDestroy = 3f;
@@ -25,10 +26,19 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        ContactPoint contact = other.GetContact(0);
-        GameObject.Instantiate(bulletDecal, contact.point + contact.normal * .0001f, Quaternion.LookRotation(contact.normal));
+        Vector3 contactPoint = other.transform.position;
+
+        GameObject.Instantiate(bulletDecal, contactPoint, Quaternion.LookRotation(Vector3.up));
+
+        Damageable damageable = other.gameObject.GetComponent<Damageable>();
+        if (damageable != null)
+        {
+            damageable.ApplyDamage(Damage);
+        }
+
         Destroy(gameObject);
     }
+
 }
