@@ -3352,11 +3352,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 839526581}
+  - component: {fileID: 839526585}
   - component: {fileID: 839526584}
   - component: {fileID: 839526583}
   - component: {fileID: 839526582}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: GunTeste
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3441,6 +3442,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839526580}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &839526585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839526580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ecae39e4cf8ee4cb36a07b80095289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunSpecs: {fileID: 11400000, guid: 9f49f44a4eec3a74d8ab2f3e00e9e9a2, type: 2}
+  barrelTransform: {fileID: 1614944554}
 --- !u!1 &869142045
 GameObject:
   m_ObjectHideFlags: 0
@@ -5884,10 +5899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInputs: {fileID: 1326170010}
-  bulletPrefab: {fileID: 4442569034788347138, guid: b30c589f0d26c954fa5dd0a0b7b18d2e, type: 3}
-  barrelTransform: {fileID: 1614944554}
-  cameraTransform: {fileID: 0}
-  bulletHitMissDistance: 25
+  currentGun: {fileID: 839526585}
 --- !u!1 &1327731487
 GameObject:
   m_ObjectHideFlags: 0
@@ -7228,7 +7240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1614944554}
   m_Layer: 0
-  m_Name: Barrel
+  m_Name: BarrelTeste
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
