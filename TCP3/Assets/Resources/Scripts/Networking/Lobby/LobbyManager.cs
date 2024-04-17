@@ -195,7 +195,7 @@ public class LobbyManager : MonoBehaviour
             {
                 //StartCoroutine(LoadGameplayScene());
 
-                Loader.Load(Loader.Scene.Nathan);
+                Loader.Load(Loader.Scene.Mechanic_Testing);
 
                 //Debug.Log("Start game");
 

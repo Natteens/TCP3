@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 using Unity.Netcode;
+using Mono.CSharp.yyParser;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -40,6 +42,7 @@ public class PlayerManager : NetworkBehaviour
     public float lfVFX = 1f;
     [SerializeField] private GameObject vfxLand;
     [SerializeField] Transform spawnVFX;
+    [SerializeField] private PlayerInputs myInputs;
 
     private void Start()
     {

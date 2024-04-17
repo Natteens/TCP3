@@ -24,10 +24,11 @@ public class PlayerMovement : NetworkBehaviour
 
     [SerializeField] private CharacterController controller;
     [SerializeField] private PlayerInputs myInputs;
+    [SerializeField] private PlayerManager myManager;
 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private Transform cameraTransform;
+    [SerializeField] private Transform cameraTransform;
 
     private void Awake()
     {
@@ -36,15 +37,11 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        /* Descomentar quando passar pra mult
         if (IsOwner)
         {
+            SetupCamera();
             Movement();
-        }
-        */
-
-        Movement();
-        
+        }      
     }
 
     private void Movement()
@@ -64,6 +61,8 @@ public class PlayerMovement : NetworkBehaviour
         if (myInputs.JumpAction.triggered && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+
+            myManager.EstaminaAtual -= 30;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -72,4 +71,18 @@ public class PlayerMovement : NetworkBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
+
+    private void SetupCamera()
+    {
+        try
+        {
+            if (myInputs != null) { SwitchVCam.Instance.SetInputs(myInputs); }
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log(e);
+            throw;
+        }
+    }
+
 }

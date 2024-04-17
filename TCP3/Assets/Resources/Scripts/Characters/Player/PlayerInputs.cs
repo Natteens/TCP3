@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using Unity.Netcode;
 using Mono.CSharp.yyParser;
 
-public class PlayerInputs : MonoBehaviour
+public class PlayerInputs : NetworkBehaviour
 {
     private PlayerInput playerInput;
     private InputAction moveAction;
@@ -38,10 +38,11 @@ public class PlayerInputs : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
 
-        moveAction  = playerInput.actions["Move"];
-        jumpAction  = playerInput.actions["Jump"];
-        aimAction   = playerInput.actions["Aim"];
+        moveAction = playerInput.actions["Move"];
+        jumpAction = playerInput.actions["Jump"];
+        aimAction = playerInput.actions["Aim"];
         shootAction = playerInput.actions["Shoot"];
+
     }
 
 }

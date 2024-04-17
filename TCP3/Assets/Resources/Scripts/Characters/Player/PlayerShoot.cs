@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : NetworkBehaviour
 {
     [SerializeField] private PlayerInputs myInputs;
     [SerializeField] private Gun currentGun;
@@ -10,18 +11,23 @@ public class PlayerShoot : MonoBehaviour
 
     void Start()
     {
-        if (myInputs != null)
+        if (IsOwner)
         {
-            myInputs.ShootAction.performed += _ => currentGun.OnShoot();
+            if (myInputs != null)
+            {
+                myInputs.ShootAction.performed += _ => currentGun.OnShoot();
+            }
+
+            Cursor.lockState = CursorLockMode.Locked;
         }
-
-        Cursor.lockState = CursorLockMode.Locked;
-
     }
 
     private void OnDisable()
     {
-        myInputs.ShootAction.performed -= _ => currentGun.OnShoot();
+        if (IsOwner)
+        {
+            myInputs.ShootAction.performed -= _ => currentGun.OnShoot();
+        }     
     }
 
 }
