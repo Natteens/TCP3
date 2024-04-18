@@ -11,6 +11,7 @@ public class PlayerInputs : NetworkBehaviour
     private InputAction jumpAction;
     private InputAction aimAction;
     private InputAction shootAction;
+    private InputAction interactAction;
 
     public InputAction AimAction
     {
@@ -32,7 +33,12 @@ public class PlayerInputs : NetworkBehaviour
         get { return jumpAction; }
         set { jumpAction = value; }
     }
-    
+    public InputAction InteractAction
+    {
+        get { return interactAction; }
+        set { interactAction = value; }
+    }
+
 
     void Awake()
     {
@@ -42,6 +48,7 @@ public class PlayerInputs : NetworkBehaviour
         jumpAction = playerInput.actions["Jump"];
         aimAction = playerInput.actions["Aim"];
         shootAction = playerInput.actions["Shoot"];
+        interactAction = playerInput.actions["Interact"];
 
     }
 

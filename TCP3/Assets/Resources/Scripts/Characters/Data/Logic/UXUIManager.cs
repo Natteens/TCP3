@@ -1,15 +1,28 @@
+using System.Collections;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using TMPro;
 
 public class UXUIManager : MonoBehaviour
 {
-    public PlayerManager playerManager;
-    public TextMeshProUGUI constitutionText;
-    public TextMeshProUGUI strengthText;
-    public TextMeshProUGUI agilityText;
-    public TextMeshProUGUI precisionText;
-    public TextMeshProUGUI luckText;
+    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private TextMeshProUGUI constitutionText;
+    [SerializeField] private TextMeshProUGUI strengthText;
+    [SerializeField] private TextMeshProUGUI agilityText;
+    [SerializeField] private TextMeshProUGUI precisionText;
+    [SerializeField] private TextMeshProUGUI luckText;
+
+    //private Popup popup;
+    [SerializeField] private RectTransform collectedFeedback;
+    [SerializeField] private Vector2 originalPosFeedback;
+
+
+    private void Start()
+    {
+        collectedFeedback.GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 0);
+        originalPosFeedback = collectedFeedback.anchoredPosition;
+    }
 
     private void Update()
     {
@@ -120,5 +133,32 @@ public class UXUIManager : MonoBehaviour
 
     }
 
+    void ShowTipMsg(string msg)
+    { 
+        //popup.ShowPopup(msg);
+    }
 
+    IEnumerator CollectedFeedbackMsg(string msg)
+    {
+        TextMeshProUGUI feedbackText = collectedFeedback.GetComponent<TextMeshProUGUI>();
+
+        feedbackText.text = msg;
+
+        feedbackText.color = new Color(1, 1, 1, 1);
+
+        for (float t = 0; t < 1.01f; t+= Time.deltaTime/1.5f)
+        {
+            collectedFeedback.anchoredPosition += Vector2.up * 25 * Time.deltaTime;
+            feedbackText.color = new Color(1, 1, 1, 1 - t);
+            yield return null;
+        }
+
+        feedbackText.color = new Color(1, 1, 1, 0);
+        collectedFeedback.anchoredPosition = originalPosFeedback;
+    }
+
+    public void OnItemCollected(string msg)
+    {
+        StartCoroutine(CollectedFeedbackMsg(msg));
+    }
 }

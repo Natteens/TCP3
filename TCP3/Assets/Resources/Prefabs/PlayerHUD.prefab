@@ -5850,10 +5850,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6997455650015332235}
+  - component: {fileID: 8752931734541477423}
+  - component: {fileID: 6380921243926875525}
   - component: {fileID: 753774395205541956}
   - component: {fileID: 2666424233291356930}
-  - component: {fileID: 6380921243926875525}
-  - component: {fileID: 8752931734541477423}
   m_Layer: 0
   m_Name: Stats
   m_TagString: Untagged
@@ -5886,6 +5886,45 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -356.31592}
   m_SizeDelta: {x: 415.146, y: 432.352}
   m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &8752931734541477423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954014228794547757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8da24d48bc47e478ae18104da96518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  constitutionText: {fileID: 6748536083580589284}
+  strengthText: {fileID: 4221307688578010756}
+  agilityText: {fileID: 2456096718178834124}
+  precisionText: {fileID: 9175850974152042283}
+  luckText: {fileID: 5727203083155491050}
+--- !u!114 &6380921243926875525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954014228794547757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2023431214
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!222 &753774395205541956
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5924,42 +5963,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6380921243926875525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8954014228794547757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2023431214
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &8752931734541477423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8954014228794547757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f8da24d48bc47e478ae18104da96518, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerManager: {fileID: 0}
-  constitutionText: {fileID: 6748536083580589284}
-  strengthText: {fileID: 4221307688578010756}
-  agilityText: {fileID: 2456096718178834124}
-  precisionText: {fileID: 9175850974152042283}
-  luckText: {fileID: 5727203083155491050}
