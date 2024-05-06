@@ -1436,6 +1436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myInputs: {fileID: 3577027709930835666}
   uiManager: {fileID: 5250228261757933501}
+  pManager: {fileID: 3577027709930835669}
 --- !u!114 &3577027709930835669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1472,6 +1473,7 @@ MonoBehaviour:
   vfxLand: {fileID: 0}
   spawnVFX: {fileID: 3577027709930835677}
   myInputs: {fileID: 3577027709930835666}
+  inventory: []
 --- !u!114 &3577027709930835670
 MonoBehaviour:
   m_ObjectHideFlags: 0

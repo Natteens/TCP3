@@ -5,20 +5,25 @@ using UnityEngine;
 enum Fruits
 { 
     Orange,
-    Blueberry,
+    Pineapple,
     Strawberry
 }
 
 
 public class Bush : MonoBehaviour, Interactable
 {
-
-    [SerializeField] private Fruits typeOfFruit;
+    [SerializeField] private BaseItem item;
     [SerializeField] private int quantity;
 
     public string OnInteract()
     {
-        return "+" + quantity.ToString() + " " + typeOfFruit.ToString();
+        //Mensagem
+        return "+" + quantity.ToString() + " " + item.ItemName;
     }
+
+    public bool Giver() { return true; }
+    public BaseItem AddItem() { return item; }
+    public int ItemQuantity() { return quantity; }
+
 
 }

@@ -341,11 +341,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 207617039}
-  - component: {fileID: 207617038}
   - component: {fileID: 207617037}
   - component: {fileID: 207617036}
   - component: {fileID: 207617035}
   - component: {fileID: 207617034}
+  - component: {fileID: 207617040}
   m_Layer: 0
   m_Name: Bush (2)
   m_TagString: Untagged
@@ -432,20 +432,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207617033}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &207617038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207617033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f8e603da33cb004f9ac3b29f0da223c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeOfFruit: 1
-  quantity: 1
 --- !u!4 &207617039
 Transform:
   m_ObjectHideFlags: 0
@@ -461,6 +447,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &207617040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207617033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f8e603da33cb004f9ac3b29f0da223c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: d53c0982c555e364398a6dbd38e99b78, type: 2}
+  quantity: 1
 --- !u!1 &225202766
 GameObject:
   m_ObjectHideFlags: 0
@@ -4697,7 +4697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8e603da33cb004f9ac3b29f0da223c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeOfFruit: 2
+  item: {fileID: 11400000, guid: 4d8e0680b4ce64849ba77a1f88131e5e, type: 2}
   quantity: 1
 --- !u!1 &1175631990
 GameObject:
@@ -9050,7 +9050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8e603da33cb004f9ac3b29f0da223c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeOfFruit: 0
+  item: {fileID: 11400000, guid: bcd613149c0ef414fa96594f0d45b4fc, type: 2}
   quantity: 1
 --- !u!4 &2117454829
 Transform:

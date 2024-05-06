@@ -44,6 +44,10 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] Transform spawnVFX;
     [SerializeField] private PlayerInputs myInputs;
 
+    //Inventario
+    [SerializeField] private List<BaseItem> inventory;
+    public List<BaseItem> Inventory {  get { return inventory; } }
+
     private void Start()
     {
         controlador = GetComponent<CharacterController>();
@@ -65,6 +69,23 @@ public class PlayerManager : NetworkBehaviour
             SistemaDeFome();
             AplicarBarras();
         }     
+    }
+
+    public void AddItem(BaseItem item, int quantity)
+    {
+        for (int i = 0; i < quantity; i++)
+        {
+            inventory.Add(item);
+        }
+    }
+
+    public void RemoveItem(BaseItem item, int quantity)
+    {
+        for (int i = 0; i < quantity; i++)
+        {
+            if(inventory.Contains(item))
+            inventory.Remove(item);
+        }
     }
 
     // Status

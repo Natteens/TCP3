@@ -9,6 +9,7 @@ public class PlayerInteract : MonoBehaviour
     public delegate void ItemCollectedHandler(string msg);
 
     [SerializeField] private UXUIManager uiManager;
+    [SerializeField] private PlayerManager pManager;
 
     public event ItemCollectedHandler ItemCollected;
 
@@ -43,8 +44,14 @@ public class PlayerInteract : MonoBehaviour
             {
                 string name = obj.OnInteract();
 
+                if (obj.Giver() == true) 
+                { 
+                    pManager.AddItem(obj.AddItem(), obj.ItemQuantity() );
+                }
+
                 if (ItemCollected != null)
                 {
+
                     ItemCollected(name);
                 }
             }
