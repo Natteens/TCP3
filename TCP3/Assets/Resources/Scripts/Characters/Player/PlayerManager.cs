@@ -46,6 +46,11 @@ public class PlayerManager : NetworkBehaviour
 
     //Inventario
     [SerializeField] private List<BaseItem> inventory;
+    [SerializeField] private GameObject slotPrefab;
+    [SerializeField] private Transform inventoryContent;
+    [SerializeField] private GameObject inventoryGO;
+    //DEBUGGGG
+    [SerializeField] private bool inventoryGObool = false;
     public List<BaseItem> Inventory {  get { return inventory; } }
 
     private void Start()
@@ -68,6 +73,12 @@ public class PlayerManager : NetworkBehaviour
             SistemaDeEstamina();
             SistemaDeFome();
             AplicarBarras();
+
+            //DEBUG
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                inventoryGO.SetActive(!inventoryGObool);
+            }
         }     
     }
 
@@ -75,7 +86,10 @@ public class PlayerManager : NetworkBehaviour
     {
         for (int i = 0; i < quantity; i++)
         {
+            GameObject _slot =  CreateSlot();
+            _slot.GetComponent<ItemHolder>().UpdateItem(item, quantity);
             inventory.Add(item);
+
         }
     }
 
@@ -86,6 +100,13 @@ public class PlayerManager : NetworkBehaviour
             if(inventory.Contains(item))
             inventory.Remove(item);
         }
+    }
+
+    
+    public GameObject CreateSlot()
+    {
+        GameObject _slot = Instantiate(slotPrefab, inventoryContent);
+        return _slot;
     }
 
     // Status
