@@ -8,7 +8,6 @@ public class ItemHolder : MonoBehaviour
 {
     public BaseItem item;
     public int quantity;
-    [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI itemQuantity;
     [SerializeField] private Image itemSprite;
 
@@ -16,7 +15,6 @@ public class ItemHolder : MonoBehaviour
     {
         item = _item;
         quantity = _quantity;
-        itemName.text = item.ItemName;
         itemSprite.sprite = item.ItemSprite;
     }
 

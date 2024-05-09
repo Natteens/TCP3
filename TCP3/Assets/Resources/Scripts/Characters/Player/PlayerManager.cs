@@ -7,6 +7,7 @@ using TMPro;
 using Unity.Netcode;
 using Mono.CSharp.yyParser;
 using UnityEngine.InputSystem;
+using Mono.CSharp;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -49,8 +50,10 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform inventoryContent;
     [SerializeField] private GameObject inventoryGO;
-    //DEBUGGGG
+
+    //DEBUG
     [SerializeField] private bool inventoryGObool = false;
+
     public List<BaseItem> Inventory {  get { return inventory; } }
 
     private void Start()
@@ -75,10 +78,13 @@ public class PlayerManager : NetworkBehaviour
             AplicarBarras();
 
             //DEBUG
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.I))
             {
-                inventoryGO.SetActive(!inventoryGObool);
+                inventoryGObool = !inventoryGObool;
             }
+
+            inventoryGO.SetActive(inventoryGObool);
+            //debug
         }     
     }
 
@@ -220,7 +226,4 @@ public class PlayerManager : NetworkBehaviour
         onRegenLife.Invoke();
     }
 
-
-
- 
 }
