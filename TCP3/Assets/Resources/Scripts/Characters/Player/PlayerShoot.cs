@@ -18,7 +18,6 @@ public class PlayerShoot : NetworkBehaviour
                 myInputs.ShootAction.performed += _ => currentGun.OnShoot();
             }
 
-            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

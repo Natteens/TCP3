@@ -47,6 +47,8 @@ public class PlayerManager : NetworkBehaviour
 
     //Inventario
     [SerializeField] private List<BaseItem> inventory;
+    [SerializeField] private List<GameObject> slots;
+
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform inventoryContent;
     [SerializeField] private GameObject inventoryGO;
@@ -84,19 +86,52 @@ public class PlayerManager : NetworkBehaviour
             }
 
             inventoryGO.SetActive(inventoryGObool);
-            //debug
-        }     
+
+            switch (inventoryGObool)
+            {
+                case true:
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    break;
+                case false:
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    break;
+            }
+            //DEBUG
+        }
     }
 
     public void AddItem(BaseItem item, int quantity)
     {
-        for (int i = 0; i < quantity; i++)
+        //Não tenho item
+        if (!inventory.Contains(item))
         {
-            GameObject _slot =  CreateSlot();
+            GameObject _slot = CreateSlot();
             _slot.GetComponent<ItemHolder>().UpdateItem(item, quantity);
-            inventory.Add(item);
+            slots.Add(_slot);
 
+            for (int i = 0; i < quantity; i++)
+            {
+                inventory.Add(item);
+            }
+
+            return;
         }
+
+        //Ja Tenho item
+        foreach (GameObject slot in slots)
+        {
+            ItemHolder _slot = slot.GetComponent<ItemHolder>();
+            BaseItem _item = _slot.item;
+            int newQuantity = quantity + _slot.quantity;
+
+            if (_item == item)
+            { 
+              _slot.UpdateItem(item, newQuantity);
+            }
+        }
+            
     }
 
     public void RemoveItem(BaseItem item, int quantity)
