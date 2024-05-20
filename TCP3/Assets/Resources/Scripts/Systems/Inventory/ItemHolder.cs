@@ -53,7 +53,7 @@ public class ItemHolder : MonoBehaviour
     public void Expand()
     {
         slotExpand.SetActive(true);
-        PlayAnim("SlotExpandAnim");
+        slotExpand.GetComponent<Animator>().Play("SlotExpandAnim");
     }
 
     public void Retrait()
@@ -61,10 +61,8 @@ public class ItemHolder : MonoBehaviour
         slotExpand.SetActive(false);
     }
 
-
-
     public void PlayAnim(string anim)
     {
-        slotExpand.GetComponent<Animator>().Play(anim);
+        
     }
 }
