@@ -27,6 +27,4 @@ public class BaseItem : ScriptableObject
     public string ItemDescription { get { return itemDescription; } }
     public Sprite ItemSprite { get { return itemSprite; } } 
     public ItemTemplate Type{ get { return type; } } 
-
-
 }

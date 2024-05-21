@@ -150,6 +150,26 @@ public class PlayerManager : NetworkBehaviour
         return _slot;
     }
 
+    public int ReturnItemQuantity(BaseItem item) 
+    {
+        foreach  (BaseItem _i in inventory)
+        {
+            //Find specific item
+            if (_i == item)
+            {
+                //Search specific item quantity
+                foreach (GameObject slot in slots)
+                {
+                    ItemHolder _slot = slot.GetComponent<ItemHolder>();
+
+                    if (_slot.item == _i) return _slot.quantity;
+                }
+            }
+        }
+
+        return -1;
+    }
+
     // Status
     void SistemaDeQueda()
     {

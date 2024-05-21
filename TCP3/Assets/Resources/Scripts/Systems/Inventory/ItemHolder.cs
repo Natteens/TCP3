@@ -61,8 +61,5 @@ public class ItemHolder : MonoBehaviour
         slotExpand.SetActive(false);
     }
 
-    public void PlayAnim(string anim)
-    {
-        
-    }
+
 }
