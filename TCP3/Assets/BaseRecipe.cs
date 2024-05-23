@@ -22,12 +22,12 @@ public class BaseRecipe : ScriptableObject
 
     [Title("Recipe given Item")]
     [SerializeField] private BaseItem givenItem;
-
+    //
     [Title("Necessary Resources")]
-    [SerializeField] private List<RecipeRequirementSO> requirements;
+    [SerializeField] private Dictionary<int, BaseItem> requirements;
 
     public string RecipeName { get { return recipeName; } }
     public Sprite RecipeSprite { get { return recipeSprite; } }
     public RecipeTemplate Type { get { return type; } }
-    public List<RecipeRequirementSO> Requirements { get { return requirements; } }
+    public Dictionary<int, BaseItem> Requirements { get { return requirements; } }
 }

@@ -23,6 +23,10 @@ public class PlayerManager : NetworkBehaviour
     public UnityEvent onRegenLife;
     public UnityEvent onRegenStamina;
 
+    [Header("Recipes")]
+    [Space(10)]
+    public List<BaseRecipe> recipes;
+
     // Controle
     private float UltimaPosicaoEmY, DistanciaDeQueda;
     public float AlturaQueda = 6, DanoPorMetro = 5;
@@ -44,6 +48,7 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private GameObject vfxLand;
     [SerializeField] Transform spawnVFX;
     [SerializeField] private PlayerInputs myInputs;
+    [SerializeField] private RecipeHead myRecipeHead;
 
     //Inventario
     [SerializeField] private List<BaseItem> inventory;
@@ -168,6 +173,14 @@ public class PlayerManager : NetworkBehaviour
         }
 
         return -1;
+    }
+
+    public void DebugAddRecipe()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            myRecipeHead.CreateRecipe(recipes[0]);
+        }
     }
 
     // Status
