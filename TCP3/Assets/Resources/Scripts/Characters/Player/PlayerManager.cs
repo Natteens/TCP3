@@ -11,6 +11,8 @@ using Mono.CSharp;
 
 public class PlayerManager : NetworkBehaviour
 {
+    [SerializeField] private Managers manager;
+
     [Header("Status Base")]
     [Space(10)]
     public StatusBase StatusBase;
@@ -23,11 +25,8 @@ public class PlayerManager : NetworkBehaviour
     public UnityEvent onRegenLife;
     public UnityEvent onRegenStamina;
 
-    [Header("Recipes")]
-    [Space(10)]
-    public List<BaseRecipe> recipes;
-
     // Controle
+    #region Controls
     private float UltimaPosicaoEmY, DistanciaDeQueda;
     public float AlturaQueda = 6, DanoPorMetro = 5;
     public Image BarraVida, BarraEstamina, BarraFome;
@@ -45,10 +44,11 @@ public class PlayerManager : NetworkBehaviour
     private float multEuler;
 
     public float lfVFX = 1f;
+    #endregion
+
     [SerializeField] private GameObject vfxLand;
     [SerializeField] Transform spawnVFX;
     [SerializeField] private PlayerInputs myInputs;
-    [SerializeField] private RecipeHead myRecipeHead;
 
     //Inventario
     [SerializeField] private List<BaseItem> inventory;
@@ -107,8 +107,11 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    #region Item Methods
     public void AddItem(BaseItem item, int quantity)
     {
+        if (item == null) return;
+
         //Não tenho item
         if (!inventory.Contains(item))
         {
@@ -141,10 +144,29 @@ public class PlayerManager : NetworkBehaviour
 
     public void RemoveItem(BaseItem item, int quantity)
     {
+        if (item == null) return;
+
         for (int i = 0; i < quantity; i++)
         {
-            if(inventory.Contains(item))
-            inventory.Remove(item);
+            if (inventory.Contains(item))
+            {
+                foreach (GameObject slot in slots)
+                {
+                    ItemHolder _slot = slot.GetComponent<ItemHolder>();
+                    BaseItem _item = _slot.item;
+
+                    if (_item == item && ReturnItemQuantity(item) >= 1 + quantity)
+                    {
+                        int newQuantity = quantity - _slot.quantity;
+                        _slot.UpdateItem(item, newQuantity);
+                    }
+                    else
+                    {
+                        inventory.Remove(item);
+                    }
+                }   
+            }
+            
         }
     }
 
@@ -175,15 +197,20 @@ public class PlayerManager : NetworkBehaviour
         return -1;
     }
 
-    public void DebugAddRecipe()
+    public int GetItemCount(BaseItem _item) 
     {
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-        {
-            myRecipeHead.CreateRecipe(recipes[0]);
-        }
-    }
+        int quantidadeNoInventario = inventory.FindAll(item => item == _item).Count;
 
-    // Status
+        if (quantidadeNoInventario > 0)
+        {
+            return ReturnItemQuantity(_item);
+        }
+
+        return 0;
+    }
+    #endregion
+
+    #region Stats Methods
     void SistemaDeQueda()
     {
         if (UltimaPosicaoEmY > transform.position.y && controlador.velocity.y < 0)
@@ -293,5 +320,5 @@ public class PlayerManager : NetworkBehaviour
     {
         onRegenLife.Invoke();
     }
-
+    #endregion
 }

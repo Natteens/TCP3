@@ -8,8 +8,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private PlayerInputs myInputs;
     public delegate void ItemCollectedHandler(string msg);
 
-    [SerializeField] private UXUIManager uiManager;
-    [SerializeField] private PlayerManager pManager;
+    [SerializeField] private Managers manager;
 
     public event ItemCollectedHandler ItemCollected;
 
@@ -19,8 +18,8 @@ public class PlayerInteract : MonoBehaviour
         if(myInputs != null)
         myInputs.InteractAction.performed += _ => TryInteract();
 
-        if (uiManager != null)
-        ItemCollected += uiManager.OnItemCollected;
+        if (manager.m_ui != null)
+        ItemCollected += manager.m_ui.OnItemCollected;
 
     }
 
@@ -33,7 +32,7 @@ public class PlayerInteract : MonoBehaviour
     private void TryInteract()
     {
         Ray ray = GameUtils.CenterOfScreenRay();
-
+        
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
@@ -46,7 +45,9 @@ public class PlayerInteract : MonoBehaviour
 
                 if (obj.Giver() == true) 
                 { 
-                    pManager.AddItem(obj.AddItem(), obj.ItemQuantity() );
+                    manager.m_player.AddItem(obj.AddItem(), obj.ItemQuantity() );
+                    manager.m_craft.UpdateRequirements();
+
                 }
 
                 if (ItemCollected != null)

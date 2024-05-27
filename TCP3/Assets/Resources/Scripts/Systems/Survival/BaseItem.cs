@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-[CreateAssetMenu (menuName = "Item")]
+[CreateAssetMenu(fileName = "NovoItem", menuName = "Itens/BaseItem")]
 public class BaseItem : ScriptableObject
 {
     //Conferir com game designers dps
@@ -27,4 +27,5 @@ public class BaseItem : ScriptableObject
     public string ItemDescription { get { return itemDescription; } }
     public Sprite ItemSprite { get { return itemSprite; } } 
     public ItemTemplate Type{ get { return type; } } 
+
 }

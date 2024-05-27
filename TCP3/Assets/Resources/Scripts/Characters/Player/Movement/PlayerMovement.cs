@@ -24,7 +24,7 @@ public class PlayerMovement : NetworkBehaviour
 
     [SerializeField] private CharacterController controller;
     [SerializeField] private PlayerInputs myInputs;
-    [SerializeField] private PlayerManager myManager;
+    [SerializeField] private Managers manager;
 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
@@ -62,7 +62,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
 
-            myManager.EstaminaAtual -= 30;
+            manager.m_player.EstaminaAtual -= 30;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
