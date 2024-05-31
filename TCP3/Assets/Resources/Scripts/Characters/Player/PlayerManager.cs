@@ -150,8 +150,8 @@ public class PlayerManager : NetworkBehaviour
     {
         if (item == null) return;
 
-        List<GameObject> slotsToRemove = new List<GameObject>(); // Lista temporária para armazenar slots a serem removidos
-        int quantityToRemove = quantity; // Quantidade de itens a serem removidos
+        List<GameObject> slotsToRemove = new List<GameObject>(); 
+        int quantityToRemove = quantity;
 
         for (int i = 0; i < quantityToRemove; i++)
         {
@@ -177,14 +177,13 @@ public class PlayerManager : NetworkBehaviour
                         {
                             slotsToRemove.Add(slot);
                             inventory.Remove(item);
-                            break; // Saia do loop atual para evitar modificação durante a iteração
+                            break; 
                         }      
                     }
                 }
             }
         }
 
-        // Remover slots após a iteração
         foreach (GameObject slotToRemove in slotsToRemove)
         {
             slots.Remove(slotToRemove);
