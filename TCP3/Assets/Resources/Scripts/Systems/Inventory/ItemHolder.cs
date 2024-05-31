@@ -22,6 +22,7 @@ public class ItemHolder : MonoBehaviour
     [SerializeField] private TextMeshProUGUI detailsText;
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemQuantity_detail;
+    private Managers manager;
 
     public void Start()
     {
@@ -61,5 +62,14 @@ public class ItemHolder : MonoBehaviour
         slotExpand.SetActive(false);
     }
 
+    public void SetManager(Managers m)
+    {
+        manager = m;
+    }
+
+    public void DropItem() //colocar int i aqui dps quando for dropar por quant
+    {
+        manager.m_player.RemoveItem(item,1); //mudar aqui pra int i
+    }
 
 }

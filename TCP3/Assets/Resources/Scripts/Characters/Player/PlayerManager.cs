@@ -116,7 +116,9 @@ public class PlayerManager : NetworkBehaviour
         if (!inventory.Contains(item))
         {
             GameObject _slot = CreateSlot();
-            _slot.GetComponent<ItemHolder>().UpdateItem(item, quantity);
+            ItemHolder _slotItemHolder = _slot.GetComponent<ItemHolder>();
+            _slotItemHolder.UpdateItem(item, quantity);
+            _slotItemHolder.SetManager(manager);
             slots.Add(_slot);
 
             for (int i = 0; i < quantity; i++)
@@ -130,6 +132,8 @@ public class PlayerManager : NetworkBehaviour
         //Ja Tenho item
         foreach (GameObject slot in slots)
         {
+            if (slot == null) return;
+
             ItemHolder _slot = slot.GetComponent<ItemHolder>();
             BaseItem _item = _slot.item;
             int newQuantity = quantity + _slot.quantity;
@@ -146,31 +150,49 @@ public class PlayerManager : NetworkBehaviour
     {
         if (item == null) return;
 
-        for (int i = 0; i < quantity; i++)
+        List<GameObject> slotsToRemove = new List<GameObject>(); // Lista temporária para armazenar slots a serem removidos
+        int quantityToRemove = quantity; // Quantidade de itens a serem removidos
+
+        for (int i = 0; i < quantityToRemove; i++)
         {
             if (inventory.Contains(item))
             {
                 foreach (GameObject slot in slots)
                 {
+                    if (slot == null)
+                    {
+                        Debug.Log("Slot nulo!");
+                        return;
+                    }
+
                     ItemHolder _slot = slot.GetComponent<ItemHolder>();
                     BaseItem _item = _slot.item;
 
-                    if (_item == item && ReturnItemQuantity(item) >= 1 + quantity)
+                    if (_item == item)
                     {
-                        int newQuantity = quantity - _slot.quantity;
+                        int newQuantity = _slot.quantity - quantity;
                         _slot.UpdateItem(item, newQuantity);
+
+                        if (newQuantity <= 0)
+                        {
+                            slotsToRemove.Add(slot);
+                            inventory.Remove(item);
+                            break; // Saia do loop atual para evitar modificação durante a iteração
+                        }      
                     }
-                    else
-                    {
-                        inventory.Remove(item);
-                    }
-                }   
+                }
             }
-            
+        }
+
+        // Remover slots após a iteração
+        foreach (GameObject slotToRemove in slotsToRemove)
+        {
+            slots.Remove(slotToRemove);
+            Destroy(slotToRemove);
         }
     }
 
-    
+
     public GameObject CreateSlot()
     {
         GameObject _slot = Instantiate(slotPrefab, inventoryContent);
