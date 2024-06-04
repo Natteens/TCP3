@@ -763,7 +763,7 @@ Transform:
   - {fileID: 3893294197934590021}
   - {fileID: 543450652123130257}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &420996106
 GameObject:
@@ -812,7 +812,7 @@ Transform:
   - {fileID: 948932247}
   - {fileID: 177745404}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &462414367
 GameObject:
@@ -857,7 +857,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &462414371
 MonoBehaviour:
@@ -1596,7 +1596,7 @@ Transform:
   m_Children:
   - {fileID: 1327619677}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1854039962
 GameObject:
@@ -1746,7 +1746,7 @@ Transform:
   - {fileID: 1291647271}
   - {fileID: 205213383}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1910268387
 GameObject:
@@ -1826,6 +1826,63 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!1001 &1924011152
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.209185
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 71.05576
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.86796045
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.49663332
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 59.555
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
+      propertyPath: m_Name
+      value: blocagem-cidade-arido
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e9e768425ce9864abc5d4105dbf9657, type: 3}
 --- !u!1 &2124133467
 GameObject:
   m_ObjectHideFlags: 0
