@@ -1,7 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Cinemachine;
-using StarterAssets;
 using Unity.Netcode;
 
 
