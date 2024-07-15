@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a78acd5557204d499bcf3420fd4ee78, type: 3}
-  m_Name: 
+  m_Name: Pao
   m_EditorClassIdentifier: 
   m_Id: 534a53bb-ec6a-4fb3-ac27-f6401be8d68f
   m_ItemName: Pao
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Prefab: {fileID: 8401674424959301804, guid: 48808a23f118f0f428a279d3a049c9d5, type: 3}
   m_Description: Um pao bem quentinho.
   m_Category: {fileID: 3373809325431580013}
-  m_IsSellable: 1
+  m_IsSellable: 0
   m_BuyPrice: 0
   m_CanBuyBack: 1
   m_BuyCurrency: {fileID: -5383251093286767784}
@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Cooldown: 1
   actions:
   - rid: 7166842473173483522
+  - rid: 7166842473173483523
   references:
     version: 2
     RefIds:
@@ -149,7 +150,16 @@ MonoBehaviour:
       data:
         m_Type: DevionGames.Log
         m_Enabled: 1
-        m_Message: Bread Collected
+        m_Message: Paozinho gostoso!
+    - rid: 7166842473173483523
+      type: {class: RemoveItem, ns: DevionGames.InventorySystem.ItemActions, asm: DevionGames.InventorySystem}
+      data:
+        m_Type: DevionGames.InventorySystem.ItemActions.RemoveItem
+        m_Enabled: 1
+        item: {fileID: -773357002236212069}
+        m_WindowName: Inventory
+        m_Item: {fileID: -773357002236212069}
+        m_Amount: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +197,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4abab319188bac4a8515c585b13ba9d, type: 3}
-  m_Name: 
+  m_Name: None
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 0}
   name: None
