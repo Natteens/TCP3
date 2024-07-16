@@ -11,7 +11,7 @@ public static class Loader
     public enum Scene
     { 
         Nathan, //Cena do jogo
-        Mechanic_Testing, //Cena teste
+        CenaTesteNetwork, //Cena teste
         MainMenu,
         Loading  //Cena de load
     }
