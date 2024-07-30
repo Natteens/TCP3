@@ -174,6 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: -773357002236212069}
+  - {fileID: 7052146524925814501}
   currencies:
   - {fileID: -5383251093286767784}
   raritys: []
@@ -217,6 +218,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unstackEvent: 3
   unstackKeyCode: 304
+--- !u!114 &7052146524925814501
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14be5e3e6cf2204293682bf65bce5dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Id: e444b9fc-bd51-44f6-9fbd-53b2514731ff
+  m_ItemName: Madeira
+  m_UseItemNameAsDisplayName: 1
+  m_DisplayName: New Item
+  m_Icon: {fileID: 21300000, guid: b69b1ca52acfaed43b07c602653a71fd, type: 3}
+  m_Prefab: {fileID: 8050120179880737813, guid: 9c7a32b2c2e150b4a9f6d6d8974a9f40, type: 3}
+  m_Description: Recurso
+  m_Category: {fileID: 3373809325431580013}
+  m_IsSellable: 1
+  m_BuyPrice: 0
+  m_CanBuyBack: 1
+  m_BuyCurrency: {fileID: -5383251093286767784}
+  m_SellPrice: 0
+  m_SellCurrency: {fileID: -5383251093286767784}
+  m_Stack: 1
+  m_MaxStack: 1
+  m_IsDroppable: 1
+  m_DropSound: {fileID: 0}
+  m_OverridePrefab: {fileID: 0}
+  m_IsCraftable: 0
+  m_CraftingDuration: 2
+  m_UseCraftingSkill: 0
+  m_SkillWindow: Skills
+  m_CraftingSkill: {fileID: 0}
+  m_RemoveIngredientsWhenFailed: 0
+  m_MinCraftingSkillValue: 0
+  m_CraftingAnimatorState: Blacksmithy
+  m_CraftingModifier:
+    modifiers: []
+  ingredients: []
+  properties: []
 --- !u!114 &8131117634289094934
 MonoBehaviour:
   m_ObjectHideFlags: 1
