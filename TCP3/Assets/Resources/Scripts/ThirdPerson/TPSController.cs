@@ -19,6 +19,8 @@ public class TPSController : MonoBehaviour
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;
     [SerializeField] private float speedRotate;
+    [SerializeField] private Animator anim;
+
     private void Awake()
     {
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
@@ -51,12 +53,14 @@ public class TPSController : MonoBehaviour
             thirdPersonController.SetRotateOnMove(false);
             Vector3 aimDirection = LookDir(mouseWorldPosition);
             Rotation(aimDirection, 20f);
+            anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
         }
         else
         {
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetRotateOnMove(true);
             thirdPersonController.SetSensitivity(normalSensitivity);
+            anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         }
     }
 
