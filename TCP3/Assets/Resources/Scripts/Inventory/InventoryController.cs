@@ -11,13 +11,21 @@ public class InventoryController : MonoBehaviour
     {
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
+
+        
     }
 
     private void Update()
     {
-        if (Input.anyKey)
-        { 
-            uiInventory.RefreshInventoryItems();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ItemWorld itemWorld = other.GetComponent<ItemWorld>();
+        if (itemWorld != null)
+        {
+            inventory.AddItem(itemWorld.GetItem());
+            itemWorld.DestroySelf();
         }
     }
 
