@@ -17,10 +17,12 @@ public class BulletProjectile : MonoBehaviour
     {
         float speed = 40f;
         bulletRigidbody.velocity = transform.forward * speed;
+        Destroy(gameObject,3f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+<<<<<<< Updated upstream
         if (other.GetComponent<BulletTarget>() != null)
         {
             //hit target
@@ -32,5 +34,9 @@ public class BulletProjectile : MonoBehaviour
             Instantiate(vfxHitRed, transform.position, Quaternion.identity);
         }
         Destroy(this.gameObject);
+=======
+        Instantiate(vfxHitRed, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+>>>>>>> Stashed changes
     }
 }

@@ -11,13 +11,12 @@ public class TPSController : MonoBehaviour
 
     [SerializeField] private float normalSensitivity;
     [SerializeField] private float aimSensitivity;
-    [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
-    [SerializeField] private Transform debugTransform;
     [SerializeField] private Transform spawnBulletPosition;
     [SerializeField] private Transform pfBulletProjectile;
 
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;
+    private AimController aimController;
     [SerializeField] private float speedRotate;
     [SerializeField] private Animator anim;
 
@@ -25,34 +24,39 @@ public class TPSController : MonoBehaviour
     {
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
-    }
-    private void Update()
-    {
-        Vector3 mouseWorldPosition = Raycast();
-        Aim(mouseWorldPosition);
-        Shoot(mouseWorldPosition);
+        aimController = GetComponent<AimController>();
     }
 
-    private void Shoot(Vector3 mouseWorldPosition)
+    private void Update()
+    {
+        Vector3 aimPoint = aimController.GetAimPoint();
+        HandleAiming(aimPoint);
+        HandleShooting(aimPoint);
+    }
+
+    private void HandleShooting(Vector3 aimPoint)
     {
         if (starterAssetsInputs.shoot)
         {
-            Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
-            Rotation(LookDir(mouseWorldPosition), speedRotate);
+            Vector3 aimDir = (aimPoint - spawnBulletPosition.position).normalized;
+            aimController.RotateTowards(aimController.GetLookDirection(aimPoint, transform), transform, speedRotate);
             Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
             starterAssetsInputs.shoot = false;
+
+            // Desenhar linha de depuração para visualizar o trajeto do projétil
+            Debug.DrawLine(spawnBulletPosition.position, spawnBulletPosition.position + aimDir * 10f, Color.yellow, 2f);
         }
     }
 
-    private void Aim(Vector3 mouseWorldPosition)
+    private void HandleAiming(Vector3 aimPoint)
     {
         if (starterAssetsInputs.aim)
         {
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
             thirdPersonController.SetRotateOnMove(false);
-            Vector3 aimDirection = LookDir(mouseWorldPosition);
-            Rotation(aimDirection, 20f);
+            Vector3 aimDirection = aimController.GetLookDirection(aimPoint, transform);
+            aimController.RotateTowards(aimDirection, transform, 20f);
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
         }
         else
@@ -62,33 +66,5 @@ public class TPSController : MonoBehaviour
             thirdPersonController.SetSensitivity(normalSensitivity);
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         }
-    }
-
-    private Vector3 Raycast()
-    {
-        Vector3 mouseWorldPosition = Vector3.zero;
-        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-
-        if (Physics.Raycast(ray, out RaycastHit raycasthit, 999f, aimColliderLayerMask))
-        {
-            mouseWorldPosition = raycasthit.point;
-            debugTransform.position = raycasthit.point;
-        }
-
-        return mouseWorldPosition;
-    }
-
-    private Vector3 LookDir(Vector3 mouseWorldPosition)
-    {
-        Vector3 worldAimTarget = mouseWorldPosition;
-        worldAimTarget.y = transform.position.y;
-        Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
-        return aimDirection;
-    }
-
-    private void Rotation(Vector3 aimDirection, float speed)
-    {
-        transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * speed);
     }
 }
