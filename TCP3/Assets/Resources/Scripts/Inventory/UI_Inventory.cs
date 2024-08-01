@@ -9,8 +9,8 @@ public class UI_Inventory : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform inventoryHolder;
-    private Transform itemSlotContainer;
-    private Transform itemSlotTemplate;
+    [SerializeField] private Transform itemSlotContainer;
+    [SerializeField] private Transform itemSlotTemplate;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryHolder.gameObject.SetActive(!inventoryHolder.gameObject.activeSelf);
         }

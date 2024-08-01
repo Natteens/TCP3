@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 147309354027142560}
   - component: {fileID: 6428341603110077675}
   - component: {fileID: 5161069191191391687}
+  - component: {fileID: 6220346844449874963}
   m_Layer: 0
   m_Name: Survival Building Floor
   m_TagString: Untagged
@@ -163,7 +164,7 @@ MonoBehaviour:
     m_Name: Survival Building Floor
     m_Type: Floor
     m_Thumbnail: {fileID: 2800000, guid: acbbae00ef69840488b87f08cc7b5a0c, type: 3}
-    m_Identifier: fb875e56becf427eb85921a28571fdd0
+    m_Identifier: e544622236214c9d90fcf657963705a7
   m_ModelSettings:
     m_Models:
     - {fileID: 4548131717484032731}
@@ -171,8 +172,8 @@ MonoBehaviour:
     - {fileID: 3762628743711328214}
     m_ModelIndex: 0
     m_ModelBounds:
-      m_Center: {x: -0.009398818, y: 0.020106507, z: 0.00573349}
-      m_Extent: {x: 1.2736073, y: 0.092098, z: 1.2735996}
+      m_Center: {x: -0.009960651, y: 0.022091605, z: 0.0060771704}
+      m_Extent: {x: 1.3497155, y: 0.09760148, z: 1.3497069}
   m_PreviewSettings:
     m_PreviewElevation: 0
     m_PreviewElevationHeight: 1
@@ -222,6 +223,37 @@ MonoBehaviour:
   m_Properties: []
   m_InstancedIndicatorObject: {fileID: 0}
   OnChangedStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6220346844449874963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3086463444991895225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0e453fbfcfbc14fb3c91a1a9a729f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Points:
+  - m_LayerMask:
+      serializedVersion: 2
+      m_Bits: 9
+    m_Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0.1, z: 1.8}
+    m_RequireAnyCollider: 1
+    m_RequireType:
+    - Wall
+  m_IsSleeping: 0
+  m_FallingTime: 5
+  m_CheckStabilityInterval: 1
+  m_CanPlaceOnlyIfStable: 1
+  m_ShowDebugs: 0
+  m_ShowGizmos: 1
+  OnFallingBuildingPartEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &3762628743711328214

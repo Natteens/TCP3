@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ResourceSlotUI : MonoBehaviour
 {
     public Image Icon;
-    public Text Text;
+    public TextMeshProUGUI Text;
 }
