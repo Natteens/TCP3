@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,27 +6,35 @@ using UnityEngine;
 public class InventoryController : MonoBehaviour
 {
     private Inventory inventory;
+    private StarterAssetsInputs starterAssetsInputs;
     [SerializeField] private UI_Inventory uiInventory;
 
     private void Awake()
     {
+        starterAssetsInputs = GetComponent<StarterAssetsInputs>();
+        LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
         inventory = new Inventory();
+        uiInventory.SetPlayer(player);
         uiInventory.SetInventory(inventory);
-
         
+    }
+
+    public void SetItem(Item item)
+    {
+        this.inventory.AddItem(item);
     }
 
     private void Update()
     {
+        VisibilityControl();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void VisibilityControl()
     {
-        ItemWorld itemWorld = other.GetComponent<ItemWorld>();
-        if (itemWorld != null)
+        if (starterAssetsInputs.inventory)
         {
-            inventory.AddItem(itemWorld.GetItem());
-            itemWorld.DestroySelf();
+            uiInventory.CheckVisibility();
+            starterAssetsInputs.inventory = false;
         }
     }
 

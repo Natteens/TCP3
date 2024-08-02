@@ -1,3 +1,4 @@
+using CodeMonkey.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ public class UI_Inventory : MonoBehaviour
     [SerializeField] private Transform inventoryHolder;
     [SerializeField] private Transform itemSlotContainer;
     [SerializeField] private Transform itemSlotTemplate;
+    private LocatePlayer player;
+    private bool isVisible = false;
 
     private void Awake()
     {
@@ -18,19 +21,41 @@ public class UI_Inventory : MonoBehaviour
         itemSlotTemplate = itemSlotContainer.transform.Find("ItemSlotTemplate");
     }
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            inventoryHolder.gameObject.SetActive(!inventoryHolder.gameObject.activeSelf);
-        }
+        inventoryHolder.gameObject.SetActive(isVisible);
     }
+
 
     public void SetInventory(Inventory inventory)
     { 
         this.inventory = inventory;
         inventory.OnItemListChanged += Inventory_OnItemListChanged;
         RefreshInventoryItems();
+    }
+
+    public void CheckVisibility()
+    {
+        switch (isVisible)
+        {
+            case true:
+                Debug.Log("#Desativei o inventario#");
+                isVisible = false;
+                MouseController.DisableMouse();
+                break;
+            case false:
+                Debug.Log("#Ativei o inventario#");
+                isVisible = true;
+                MouseController.ActiveMouse();
+                break;
+        }
+
+        inventoryHolder.gameObject.SetActive(isVisible);
+    }
+
+    public void SetPlayer(LocatePlayer player)
+    { 
+        this.player = player;
     }
 
     private void Inventory_OnItemListChanged(object sender, EventArgs e)
@@ -55,6 +80,17 @@ public class UI_Inventory : MonoBehaviour
     private void ConfigureItemSlot(Item item, RectTransform rect)
     {
         rect.gameObject.SetActive(true);
+        rect.gameObject.GetComponent<Button_UI>().ClickFunc = () => 
+        {
+            //Use item
+        };
+
+        rect.gameObject.GetComponent<Button_UI>().MouseRightClickFunc = () => 
+        {
+            //Drop item
+            inventory.RemoveItem(item);
+            ItemWorld.DropItem(player.GetPosition(), item);
+        };
         Image img = rect.Find("image").GetComponent<Image>();
         TextMeshProUGUI txt = rect.Find("amount").GetComponent<TextMeshProUGUI>();
 
@@ -62,7 +98,7 @@ public class UI_Inventory : MonoBehaviour
         if(img == null) { Debug.LogError("img nao encontrado"); }
 
         img.sprite = item.itemSprite;
-        txt.text = "x" + item.amount.ToString();
+        txt.text = item.amount.ToString();
         Debug.Log(item.itemName + ": x"+ item.amount.ToString());
     }
 }
