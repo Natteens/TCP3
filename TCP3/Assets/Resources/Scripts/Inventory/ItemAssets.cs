@@ -12,5 +12,4 @@ public class ItemAssets : MonoBehaviour
     }
 
     public Transform pfItemWorld;
-
 }

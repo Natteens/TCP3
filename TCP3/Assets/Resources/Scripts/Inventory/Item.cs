@@ -19,7 +19,7 @@ public class Item: ScriptableObject
     public string itemName;
     public Itemtype itemType;
     public Sprite itemSprite;
-    public GameObject itemModel;
+    //public GameObject itemModel;
     public int amount;
 
     public bool IsStackable()

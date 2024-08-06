@@ -20,7 +20,7 @@ public class ItemWorld : MonoBehaviour, Interactable
     public void SetItem(Item item)
     { 
         this.item = item;
-        Instantiate(item.itemModel, transform);
+        //Instantiate(item.itemModel, transform);
     }
 
     public static ItemWorld DropItem(Vector3 dropPosition, Item item)
