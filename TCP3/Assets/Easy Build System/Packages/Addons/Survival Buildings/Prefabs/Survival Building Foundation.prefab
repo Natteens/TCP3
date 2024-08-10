@@ -495,6 +495,7 @@ GameObject:
   - component: {fileID: 7954729196908543690}
   - component: {fileID: 3844305782014605185}
   - component: {fileID: 3166158120294866605}
+  - component: {fileID: 333287298777504107}
   m_Layer: 0
   m_Name: Survival Building Foundation
   m_TagString: Untagged
@@ -639,6 +640,28 @@ MonoBehaviour:
   m_Properties: []
   m_InstancedIndicatorObject: {fileID: 0}
   OnChangedStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &333287298777504107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5096644563572905427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0e453fbfcfbc14fb3c91a1a9a729f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Points: []
+  m_IsSleeping: 0
+  m_FallingTime: 5
+  m_CheckStabilityInterval: 1
+  m_CanPlaceOnlyIfStable: 1
+  m_ShowDebugs: 0
+  m_ShowGizmos: 1
+  OnFallingBuildingPartEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7532856008189043967

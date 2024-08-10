@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2278562227426695440}
   - component: {fileID: 8057882206792892015}
   - component: {fileID: 8177018051603306307}
-  - component: {fileID: 4258723903555525088}
   m_Layer: 0
   m_Name: Survival Building Stair
   m_TagString: Untagged
@@ -183,21 +182,6 @@ MonoBehaviour:
   OnChangedStateEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4258723903555525088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031129664597072957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c08165ce30072044e960de88165a1464, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClearGrassDetails: 1
-  m_ClearGrassRadius: 2
-  m_ShowGizmos: 1
 --- !u!1 &2588093484819794545
 GameObject:
   m_ObjectHideFlags: 0
