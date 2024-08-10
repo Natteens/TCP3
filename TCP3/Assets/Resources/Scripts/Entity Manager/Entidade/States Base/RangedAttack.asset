@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcdc3fed71bac544ba88e25ac9c1bd3, type: 3}
+  m_Name: RangedAttack
+  m_EditorClassIdentifier: 
+  minAttackRange: 1.5
+  maxAttackRange: 4.5
+  projectilePrefab: {fileID: 1595184806073425695, guid: 91af6a503b867c741a775a3351a0440e, type: 3}
+  attackCooldown: 2
+  projectileSpeed: 10
+  projectileDamage: 10
+  projectileRange: 15
