@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad301b392d51a1044aa283facd796096, type: 3}
+  m_Name: cArmaMtoBoa
+  m_EditorClassIdentifier: 
+  recipes:
+  - item: {fileID: 11400000, guid: 1e39ed4d8d8866347a5b50ab8f62083c, type: 2}
+    needQuantity: 10
+  - item: {fileID: 11400000, guid: 96c8da7c64b7beb47a76f41bb4802c72, type: 2}
+    needQuantity: 10
+  - item: {fileID: 11400000, guid: 2cb9a8093b37bd0489367d5ef9904421, type: 2}
+    needQuantity: 5
+  outputItem: {fileID: 11400000, guid: b4851c2741ff6e5419a51034eccce00f, type: 2}

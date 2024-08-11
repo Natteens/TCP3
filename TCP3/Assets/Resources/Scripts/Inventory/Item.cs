@@ -13,10 +13,13 @@ public class Item: ScriptableObject
         Weapon,
         Consumable,
         Resource,
-        Money
+        Money,
+        Module,
+        None
     }
 
     public string itemName;
+    [Multiline] public string itemDescription;
     public Itemtype itemType;
     public Sprite itemSprite;
     //public GameObject itemModel;
@@ -29,6 +32,7 @@ public class Item: ScriptableObject
             default:
             case Itemtype.Weapon:
             case Itemtype.Quest:
+            case Itemtype.Module:
                 return false;
             case Itemtype.Consumable:
             case Itemtype.Resource:

@@ -16,7 +16,6 @@ public class InventoryController : MonoBehaviour
         inventory = new Inventory();
         uiInventory.SetPlayer(player);
         uiInventory.SetInventory(inventory);
-        
     }
 
     public void SetItem(Item item)

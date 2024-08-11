@@ -26,7 +26,6 @@ public class UI_Inventory : MonoBehaviour
         inventoryHolder.gameObject.SetActive(isVisible);
     }
 
-
     public void SetInventory(Inventory inventory)
     { 
         this.inventory = inventory;
@@ -60,6 +59,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void Inventory_OnItemListChanged(object sender, EventArgs e)
     {
+        //Adicionar popUp do item adicionada
         RefreshInventoryItems();
     }
     private void RefreshInventoryItems()
