@@ -1463,73 +1463,73 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Arquivo_Player_Anim(Clone)
+    - name: Player(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: anel
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: apagardps
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: 0.06458632, y: 1.9590014, z: 0.16137984}
       rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
       scale: {x: 2.4822435, y: 2.4822435, z: 2.4822435}
     - name: blusa
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: "bolsa_br\xE7o"
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0.0073371367, y: 0.024089178, z: -0.0019917176}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: bolsa_perna
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: botas
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: calcas
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: chapeu
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: cinto
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: cinto_bala
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: CORPO_OFICIAL.001
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: Fuzil1.001
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: metarig
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
@@ -1631,7 +1631,7 @@ ModelImporter:
     - name: foot.L
       parentName: shin.L
       position: {x: 1.6763806e-10, y: 0.00626751, z: -9.313225e-11}
-      rotation: {x: -0.41554347, y: -0.008658687, z: 0.031193981, w: 0.908997}
+      rotation: {x: -0.4155435, y: -0.008658688, z: 0.031193983, w: 0.90899706}
       scale: {x: 0.9999991, y: 0.9999988, z: 1.0000095}
     - name: heel.02.L
       parentName: foot.L
@@ -1671,7 +1671,7 @@ ModelImporter:
     - name: foot.R
       parentName: shin.R
       position: {x: -3.7252902e-11, y: 0.00626751, z: -1.6763806e-10}
-      rotation: {x: -0.4155427, y: 0.008658295, z: -0.031193398, w: 0.90899736}
+      rotation: {x: -0.41554272, y: 0.0086582955, z: -0.0311934, w: 0.9089974}
       scale: {x: 0.9999997, y: 1.000004, z: 1.0000161}
     - name: heel.02.R
       parentName: foot.R
@@ -1746,7 +1746,7 @@ ModelImporter:
     - name: f_indexController.L
       parentName: hand.L
       position: {x: -0.000430029, y: 0.0013547966, z: 0.0005621992}
-      rotation: {x: 0.29756397, y: -0.6858586, z: 0.0029114208, w: 0.66411245}
+      rotation: {x: 0.29756394, y: -0.6858586, z: 0.0029114205, w: 0.66411245}
       scale: {x: 1.000005, y: 1.0000063, z: 1.0000138}
     - name: f_indexController.L_end
       parentName: f_indexController.L
@@ -2081,7 +2081,7 @@ ModelImporter:
     - name: palm.04.R
       parentName: hand.R
       position: {x: 0.00005290784, y: 0.00025925756, z: -0.00022673621}
-      rotation: {x: -0.022424556, y: 0.6515285, z: -0.16703701, w: 0.7396664}
+      rotation: {x: -0.022424558, y: 0.6515285, z: -0.16703703, w: 0.7396664}
       scale: {x: 1.0000137, y: 1.0000029, z: 0.999996}
     - name: f_pinky.01.R
       parentName: palm.04.R
@@ -2326,7 +2326,7 @@ ModelImporter:
     - name: face_L.002
       parentName: face
       position: {x: -0.00058396143, y: 0.00015918358, z: -0.00069479767}
-      rotation: {x: 0.74238294, y: 0.06782607, z: -0.5710553, w: -0.34374872}
+      rotation: {x: 0.7423829, y: 0.06782607, z: -0.57105523, w: -0.34374872}
       scale: {x: 0.9999996, y: 1.0000035, z: 1.0000002}
     - name: face_L.008
       parentName: face_L.002
@@ -2336,7 +2336,7 @@ ModelImporter:
     - name: face_L.003
       parentName: face_L.008
       position: {x: -0.0000000013411044, y: 0.00047572356, z: 8.0093737e-10}
-      rotation: {x: -0.19879597, y: -0.011718739, z: 0.13012409, w: -0.9712932}
+      rotation: {x: -0.19879599, y: -0.011718739, z: 0.1301241, w: -0.9712932}
       scale: {x: 0.9999931, y: 0.99999344, z: 1.0000193}
     - name: face_L.009
       parentName: face_L.003
@@ -2636,7 +2636,7 @@ ModelImporter:
     - name: lip.B.L.001
       parentName: lip.B.L
       position: {x: 2.8871e-10, y: 0.00016567591, z: -2.4680047e-10}
-      rotation: {x: -0.004505871, y: -0.07908399, z: -0.03949301, w: 0.99607515}
+      rotation: {x: -0.0045058713, y: -0.07908399, z: -0.039493013, w: 0.99607515}
       scale: {x: 1.0000002, y: 1.0000011, z: 0.99999934}
     - name: lip.B.L.001_end
       parentName: lip.B.L.001
@@ -2814,7 +2814,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: olhos.001
-      parentName: Arquivo_Player_Anim(Clone)
+      parentName: Player(Clone)
       position: {x: 0.00000015576552, y: 0, z: 0.11000001}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}

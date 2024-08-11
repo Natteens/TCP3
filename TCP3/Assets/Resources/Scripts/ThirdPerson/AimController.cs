@@ -19,7 +19,7 @@ public class AimController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit raycasthit, maxAimDistance, aimColliderLayerMask))
         {
-            debugTransform.position = raycasthit.point;
+            if (debugTransform != null) { debugTransform.position = raycasthit.point; }
             return raycasthit.point;
         }
         else
