@@ -10,11 +10,12 @@ using UnityEngine.UI;
 public class UI_Craft : MonoBehaviour
 {
     [SerializeField] private CraftInventory craftInventory;
-    [SerializeField] private Transform itemSlotContainer;
-    [SerializeField] private Transform itemSlotTemplate;
+    [SerializeField] private Transform craftSlotContainer;
+    [SerializeField] private Transform craftSlotTemplate;
+
     [SerializeField] private Transform craftExpandedContainer;
-    [SerializeField] private Transform craftExpandedRequirementContainer;
-    [SerializeField] private Transform craftRequirementTemplate;
+    [SerializeField] private Transform requirementsContainer;
+    [SerializeField] private Transform requirementsTemplate;
     private LocatePlayer player;
     private Item.Itemtype actualFilter;
     private bool hasExpanded = false;
@@ -22,12 +23,12 @@ public class UI_Craft : MonoBehaviour
 
     private void Awake()
     {
-        itemSlotContainer = GameObject.Find("CraftSlotContainer").transform;
-        itemSlotTemplate = itemSlotContainer.transform.Find("CraftRecipeTemplate");
+        craftSlotContainer = GameObject.Find("CraftSlotContainer").transform;
+        craftSlotTemplate = craftSlotContainer.transform.Find("CraftSlotTemplate");
 
         craftExpandedContainer = GameObject.Find("CraftExpandContainer").transform;
-        craftExpandedRequirementContainer = craftExpandedContainer.Find("RequirementsContainer");
-        craftRequirementTemplate = craftExpandedRequirementContainer.Find("RequirementsTemplate");
+        requirementsContainer = craftExpandedContainer.Find("RequirementsContainer");
+        requirementsTemplate = requirementsContainer.Find("RequirementsTemplate");
     }
 
     private void Start()
@@ -59,15 +60,15 @@ public class UI_Craft : MonoBehaviour
     {
         if (actualFilter == Item.Itemtype.None)
         {
-            foreach (Transform child in itemSlotContainer)
+            foreach (Transform child in craftSlotContainer)
             {
-                if (child == itemSlotTemplate) continue;
+                if (child == craftSlotTemplate) continue;
                 Destroy(child.gameObject);
             }
 
             foreach (Craft craft in craftInventory.GetcraftList())
             {
-                RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
+                RectTransform itemSlotRectTransform = Instantiate(craftSlotTemplate, craftSlotContainer).GetComponent<RectTransform>();
                 ConfigureCraftSlot(craft, itemSlotRectTransform);
             }
         }
@@ -120,9 +121,9 @@ public class UI_Craft : MonoBehaviour
 
     public void FilterRefresh(Item.Itemtype itemtype)
     {
-        foreach (Transform child in itemSlotContainer)
+        foreach (Transform child in craftSlotContainer)
         {
-            if (child == itemSlotTemplate) continue;
+            if (child == craftSlotTemplate) continue;
             Destroy(child.gameObject);
         }
 
@@ -130,7 +131,7 @@ public class UI_Craft : MonoBehaviour
         {
             if (craft.outputItem.itemType == itemtype)
             {
-                RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
+                RectTransform itemSlotRectTransform = Instantiate(craftSlotTemplate, craftSlotContainer).GetComponent<RectTransform>();
                 ConfigureCraftSlot(craft, itemSlotRectTransform);
             }
         }
@@ -178,19 +179,19 @@ public class UI_Craft : MonoBehaviour
         img.sprite = craft.outputItem.itemSprite;
         txt.text = craft.outputItem.itemDescription; 
 
-        foreach (Transform child in craftExpandedRequirementContainer)
+        foreach (Transform child in requirementsContainer)
         {
-            if(child != null && child != craftRequirementTemplate)
+            if(child != null && child != requirementsTemplate)
             Destroy(child.gameObject);
         }
 
         foreach (Recipe recipe in craft.recipes)
         {
-            if (craftRequirementTemplate == null) craftRequirementTemplate = craftExpandedRequirementContainer.Find("RequirementsTemplate");
+            if (requirementsTemplate == null) requirementsTemplate = requirementsContainer.Find("RequirementsTemplate");
 
-            if (craftRequirementTemplate != null)
+            if (requirementsTemplate != null)
             {
-                RectTransform r = Instantiate(craftRequirementTemplate, craftExpandedRequirementContainer).GetComponent<RectTransform>();
+                RectTransform r = Instantiate(requirementsTemplate, requirementsContainer).GetComponent<RectTransform>();
                 if (r != null)
                 { 
                     r.gameObject.SetActive(true);
