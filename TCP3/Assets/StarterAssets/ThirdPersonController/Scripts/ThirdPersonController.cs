@@ -98,7 +98,9 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
-
+        private int _animIDHorizontal;
+        private int _animIDVertical;
+    
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -177,6 +179,8 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDHorizontal = Animator.StringToHash("Horizontal");
+            _animIDVertical = Animator.StringToHash("Vertical");
         }
 
         public void SetSensitivity(float newSensitivity)
@@ -229,8 +233,8 @@ namespace StarterAssets
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //  float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-            float SprintSpeed = statusComponent.GetStatus(StatusType.Speed);
-            float MoveSpeed = statusComponent.GetStatus(StatusType.Speed) / 2f;
+            float SprintSpeed = statusComponent.GetStatus(StatusType.MoveSpeed);
+            float MoveSpeed = statusComponent.GetStatus(StatusType.MoveSpeed) / 2f;
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
@@ -296,6 +300,8 @@ namespace StarterAssets
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                _animator.SetFloat(_animIDHorizontal, _input.move.x);
+                _animator.SetFloat(_animIDVertical, _input.move.y);
             }
         }
 

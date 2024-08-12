@@ -1,13 +1,13 @@
 ﻿public enum StatusType
 {
     None,
-    Health,
-    Speed,
-    Agility,
-    Attack,
-    Defense,
-    Luck,
-    Cooldown,
-    CriticalChance,
-    SkillSpeed,
+    Health,  // Constituição
+    Defense, // Constituição
+    CooldownAbility, // Destreza
+    CooldownReload, // Destreza
+    GatheringSpeed, // Sobrevivencia
+    Satiaty, // Sobrevivencia
+    CritChance, // Sorte
+    LootChance, // Sorte
+    MoveSpeed,  // None 
 }

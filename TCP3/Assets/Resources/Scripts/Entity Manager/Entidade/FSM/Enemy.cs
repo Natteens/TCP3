@@ -79,7 +79,7 @@ public abstract class Enemy : BaseEntity
 
     public void Movement(Vector2 dir)
     {
-        float speed = statusComponent.GetStatus(StatusType.Speed);
+        float speed = statusComponent.GetStatus(StatusType.MoveSpeed);
         if (IsAlive)
         {
           //  move.Move(dir, speed);
