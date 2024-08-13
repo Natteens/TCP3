@@ -20,9 +20,9 @@ public class LobbyListUI : MonoBehaviour {
         Instance = this;
 
         lobbySingleTemplate.gameObject.SetActive(false);
-
         refreshButton.onClick.AddListener(RefreshButtonClick);
         createLobbyButton.onClick.AddListener(CreateLobbyButtonClick);
+        gameObject.SetActive(false);
     }
 
     private void Start() {

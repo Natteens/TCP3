@@ -12,6 +12,7 @@ public class EditPlayerName : MonoBehaviour {
 
 
     public event EventHandler OnNameChanged;
+    public Transform playerProfileHolder;
 
 
     [SerializeField] private TextMeshProUGUI playerNameText;
@@ -38,6 +39,7 @@ public class EditPlayerName : MonoBehaviour {
         });
 
         playerNameText.text = playerName;
+        playerProfileHolder.gameObject.SetActive(false);
     }
 
     private void Start() {
