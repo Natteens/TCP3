@@ -1,50 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using StarterAssets;
-using UnityEngine.InputSystem;
 
 public class TPSController : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
-
-    [SerializeField] private float normalSensitivity;
-    [SerializeField] private float aimSensitivity;
     [SerializeField] private Transform spawnBulletPosition;
-    [SerializeField] private Transform pfBulletProjectile;
+    [SerializeField] private Transform bulletProjectilePrefab;
+    [SerializeField] private float rotationSpeed = 100f;
 
     private StarterAssetsInputs starterAssetsInputs;
-    private ThirdPersonController thirdPersonController;
-    private AimController aimController;
-    [SerializeField] private float speedRotate;
+    private IsometricAiming aimController;
     [SerializeField] private Animator anim;
 
     private void Awake()
     {
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
-        thirdPersonController = GetComponent<ThirdPersonController>();
-        aimController = GetComponent<AimController>();
+        aimController = GetComponent<IsometricAiming>();
     }
 
     private void Update()
     {
-        Vector3 aimPoint = aimController.GetAimPoint();
-        HandleAiming(aimPoint);
-        HandleShooting(aimPoint);
+        var (success, position) = aimController.GetMousePosition();
+        if (success)
+        {
+            HandleAiming(position);
+            HandleShooting(position);
+        }
+    }
+
+    private void RotateTowardsMouseSmooth(Vector3 aimPoint)
+    {
+        Vector3 aimDirection = (aimPoint - transform.position).normalized;
+        aimDirection.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void RotateTowardsMouseInstant(Vector3 aimPoint)
+    {
+        Vector3 aimDirection = (aimPoint - transform.position).normalized;
+        aimDirection.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
+        transform.rotation = targetRotation;
     }
 
     private void HandleShooting(Vector3 aimPoint)
     {
         if (starterAssetsInputs.shoot)
         {
-            Vector3 aimDir = (aimPoint - spawnBulletPosition.position).normalized;
-            aimController.RotateTowards(aimController.GetLookDirection(aimPoint, transform), transform, speedRotate);
-            Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            // Rotaciona instantaneamente para o ponto de tiro
+            RotateTowardsMouseInstant(aimPoint);
+
+            // Dispara o projétil na direção para onde o personagem está virado
+            Vector3 shootDirection = transform.forward;
+            Instantiate(bulletProjectilePrefab, spawnBulletPosition.position, Quaternion.LookRotation(shootDirection, Vector3.up));
             starterAssetsInputs.shoot = false;
 
-            // Desenhar linha de depuração para visualizar o trajeto do projétil
-            Debug.DrawLine(spawnBulletPosition.position, spawnBulletPosition.position + aimDir * 10f, Color.yellow, 2f);
+            Debug.DrawLine(spawnBulletPosition.position, spawnBulletPosition.position + shootDirection * 10f, Color.yellow, 2f);
         }
     }
 
@@ -52,18 +65,11 @@ public class TPSController : MonoBehaviour
     {
         if (starterAssetsInputs.aim)
         {
-            aimVirtualCamera.gameObject.SetActive(true);
-            thirdPersonController.SetSensitivity(aimSensitivity);
-            thirdPersonController.SetRotateOnMove(false);
-            Vector3 aimDirection = aimController.GetLookDirection(aimPoint, transform);
-            aimController.RotateTowards(aimDirection, transform, 20f);
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+            RotateTowardsMouseSmooth(aimPoint);
         }
         else
         {
-            aimVirtualCamera.gameObject.SetActive(false);
-            thirdPersonController.SetRotateOnMove(true);
-            thirdPersonController.SetSensitivity(normalSensitivity);
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         }
     }
