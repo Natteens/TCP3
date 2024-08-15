@@ -65,12 +65,14 @@ public class Inventory
             if (itemInInventory != null && itemInInventory.amount <= 0)
             {
                 currentSlots--;
+                TooltipScreenSpaceUI.HideTooltip_Static();
                 itemList.Remove(itemInInventory);
             }
         }
         else
         {
             currentSlots--;
+            TooltipScreenSpaceUI.HideTooltip_Static();
             itemList.Remove(item);
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);

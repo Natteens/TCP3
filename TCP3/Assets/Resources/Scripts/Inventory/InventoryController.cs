@@ -16,6 +16,8 @@ public class InventoryController : MonoBehaviour
         inventory = new Inventory();
         uiInventory.SetPlayer(player);
         uiInventory.SetInventory(inventory);
+
+        MouseController.CursorVisibility(false);
     }
 
     public void SetItem(Item item)

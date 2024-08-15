@@ -11,8 +11,9 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private MultiAimConstraint torsoAimConstraint;
     [SerializeField] private TPSController tpsController;
     [SerializeField] private Animator anim;
+    [SerializeField] private LayerMask layer;
     private StarterAssetsInputs input;
-    private IsometricAiming aimController;
+    //private IsometricAiming aimController;
     private float aimWeightChangeSpeed = 5f;
     private int currentAmmo;
     private bool isShooting;
@@ -24,7 +25,7 @@ public class WeaponController : MonoBehaviour
     private void Awake()
     {
         input = GetComponent<StarterAssetsInputs>();
-        aimController = GetComponent<IsometricAiming>();
+        //aimController = GetComponent<IsometricAiming>();
     }
 
     private void Start()
@@ -35,7 +36,7 @@ public class WeaponController : MonoBehaviour
     private void Update()
     {
         HandleInput();
-        var (success, position) = aimController.GetMousePosition();
+        var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)
         {
             HandleAiming(position);

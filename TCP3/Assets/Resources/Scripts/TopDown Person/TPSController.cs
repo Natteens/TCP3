@@ -22,21 +22,23 @@ public class TPSController : MonoBehaviour
     [SerializeField] private float cameraRadius = 5f; // Raio máximo para o movimento da câmera ao mirar
     [SerializeField] private float rotationMultiplier = 2f; // Multiplicador de velocidade da rotação
 
+    [SerializeField] private LayerMask layer; 
+
     private StarterAssetsInputs input;
-    private IsometricAiming aimController;
+    //private IsometricAiming aimController;
     private CinemachineFramingTransposer framingTransposer;
     [SerializeField] private Animator anim;
 
     private void Awake()
     {
         input = GetComponent<StarterAssetsInputs>();
-        aimController = GetComponent<IsometricAiming>();
+        //aimController = GetComponent<IsometricAiming>();
         framingTransposer = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
     private void Update()
     {
-        var (success, position) = aimController.GetMousePosition();
+        var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)
         {
           //  HandleAiming(position);

@@ -40,12 +40,12 @@ public class UI_Inventory : MonoBehaviour
             case true:
                 Debug.Log("#Desativei o inventario#");
                 isVisible = false;
-                MouseController.DisableMouse();
+                MouseController.CursorVisibility(false);
                 break;
             case false:
                 Debug.Log("#Ativei o inventario#");
                 isVisible = true;
-                MouseController.ActiveMouse();
+                MouseController.CursorVisibility(true);
                 break;
         }
 

@@ -24,16 +24,21 @@ public class TooltipScreenSpaceUI : MonoBehaviour
 
     private void Update()
     {
+        FollowMouse();
+    }
+
+    private void FollowMouse()
+    {
         Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
 
         //Fix leaving on right side
         if (anchoredPosition.x + background.rect.width > canvasRectTransform.rect.width)
-        { 
+        {
             anchoredPosition.x = canvasRectTransform.rect.width - background.rect.width;
         }
         //Fix leaving on top side
         if (anchoredPosition.y + background.rect.height > canvasRectTransform.rect.height)
-        { 
+        {
             anchoredPosition.y = canvasRectTransform.rect.height - background.rect.height;
         }
 
