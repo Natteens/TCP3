@@ -195,7 +195,7 @@ public class LobbyManager : MonoBehaviour
             {
                 //StartCoroutine(LoadGameplayScene());
 
-                Loader.Load(Loader.Scene.CenaTesteNetwork); /// TAVA COM A CENA ERRADA EU SO BOTEI UMA ALEATORIA PRA SAIR O ERRO !!! 
+                Loader.Load(Loader.Scene.Katalisya); //Aqui vai a cena do jogo
 
                 //Debug.Log("Start game");
 
