@@ -1,4 +1,5 @@
-﻿ using UnityEngine;
+﻿using Unity.Netcode;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -12,7 +13,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : NetworkBehaviour
     {
         [Header("Player")]
         //[Tooltip("Move speed of the character in m/s")]
@@ -125,15 +126,21 @@ namespace StarterAssets
 
         private void Awake()
         {
+            if (!IsOwner) return;
+
             // get a reference to our main camera
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+
+            Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
+            gameObject.transform.position = spawnpoint;
         }
 
         private void Start()
         {
+            if (!IsOwner) return; 
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
             _animator = GetComponentInChildren<Animator>();
@@ -156,6 +163,7 @@ namespace StarterAssets
 
         private void Update()
         {
+            if (!IsOwner) return;
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -163,6 +171,7 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            if (!IsOwner) return;
             CameraRotation();
         }
 

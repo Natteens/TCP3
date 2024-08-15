@@ -10389,6 +10389,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2145059094678763497, guid: ed0802f572c247f48a2b35e54f5dd72e, type: 3}
+--- !u!1 &752656547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 752656548}
+  m_Layer: 0
+  m_Name: _SPAWNPOINT
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &752656548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752656547}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2630, y: 126, z: 3646}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1030710143}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &758013120 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8452114549976239587, guid: ed0802f572c247f48a2b35e54f5dd72e, type: 3}
@@ -14126,6 +14157,7 @@ Transform:
   - {fileID: 1148665243}
   - {fileID: 21900652}
   - {fileID: 1539770784}
+  - {fileID: 752656548}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19685,7 +19717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000033092023}
+  m_AnchoredPosition: {x: 0, y: 0.00024891892}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783
@@ -21978,7 +22010,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999267
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -29819,6 +29851,10 @@ PrefabInstance:
     - target: {fileID: 2871059819528357750, guid: 2236678088c09f54791cb51fce01f1fc, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034491103493221432, guid: 2236678088c09f54791cb51fce01f1fc, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 460411375
       objectReference: {fileID: 0}
     - target: {fileID: 6066210182003915900, guid: 2236678088c09f54791cb51fce01f1fc, type: 3}
       propertyPath: boneSize
