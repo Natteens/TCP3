@@ -9,12 +9,12 @@ public class Item: ScriptableObject
 {
     public enum Itemtype
     {
-        Quest,
-        Weapon,
-        Consumable,
-        Resource,
-        Money,
-        Module,
+        Missao,
+        Arma,
+        Consumivel,
+        Recurso,
+        Dinheiro,
+        Modulo,
         None
     }
 
@@ -31,13 +31,14 @@ public class Item: ScriptableObject
         switch (itemType)
         {
             default:
-            case Itemtype.Weapon:
-            case Itemtype.Quest:
-            case Itemtype.Module:
+            case Itemtype.Arma:
+            case Itemtype.Missao:
+            case Itemtype.Modulo:
+            case Itemtype.None:
                 return false;
-            case Itemtype.Consumable:
-            case Itemtype.Resource:
-            case Itemtype.Money:
+            case Itemtype.Consumivel:
+            case Itemtype.Recurso:
+            case Itemtype.Dinheiro:
                 return true;
         }
     }

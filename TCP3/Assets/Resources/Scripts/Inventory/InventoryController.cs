@@ -20,7 +20,16 @@ public class InventoryController : MonoBehaviour
 
     public void SetItem(Item item)
     {
-        this.inventory.AddItem(item);
+        if (inventory.CanPickup())
+        {
+            this.inventory.AddItem(item);
+        }
+        else
+        {
+            //colocar msg popup aq
+            Debug.Log("Inventario cheio");
+        }
+        
     }
 
     private void Update()

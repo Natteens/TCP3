@@ -23,7 +23,7 @@ public class InteractController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.TryGetComponent<Interactable>(out var i))
         ControlInteractMessage(true);
     }
 
@@ -35,7 +35,7 @@ public class InteractController : MonoBehaviour
             i.OnInteract(transform);
             starterAssetsInputs.interact = false;
         }
-        else if (i == null){ Debug.LogError("Nao foi encontrado a interface Interactable"); }
+        else if (starterAssetsInputs.interact && i == null){ Debug.LogError("Nao foi encontrado a interface Interactable"); }
     }
 
     private void OnTriggerExit(Collider other)

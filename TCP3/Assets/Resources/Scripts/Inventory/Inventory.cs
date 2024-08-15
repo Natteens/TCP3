@@ -8,6 +8,8 @@ public class Inventory
 {
     public event EventHandler OnItemListChanged; 
     [SerializeField] private List<Item> itemList;
+    [SerializeField] private int maxSlots = 30;
+    [SerializeField] private int currentSlots = 0;
 
     public Inventory()
     { 
@@ -16,6 +18,8 @@ public class Inventory
 
     public void AddItem(Item item)
     {
+        if (CanPickup() == false) return;
+
         if (item.IsStackable())
         {
             bool itemAlreadyInInventory = false;
@@ -32,12 +36,14 @@ public class Inventory
             {
                 //Talvez de merda isso aq mas vamos ver!!
                 item.amount = 1;
+                currentSlots++;
                 itemList.Add(item);
             }
         }
         else
         { 
             itemList.Add(item);
+            currentSlots++;
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -58,11 +64,13 @@ public class Inventory
 
             if (itemInInventory != null && itemInInventory.amount <= 0)
             {
+                currentSlots--;
                 itemList.Remove(itemInInventory);
             }
         }
         else
         {
+            currentSlots--;
             itemList.Remove(item);
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
@@ -72,4 +80,15 @@ public class Inventory
     {
         return itemList;
     }
+
+    public bool CanPickup()
+    {
+        if (currentSlots >= maxSlots)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
 }

@@ -91,6 +91,9 @@ public class UI_Inventory : MonoBehaviour
             inventory.RemoveItem(item);
             ItemWorld.DropItem(player.GetPosition(), item);
         };
+
+        rect.gameObject.GetComponent<ItemTooltip>().SetItem(item);
+
         Image img = rect.Find("image").GetComponent<Image>();
         TextMeshProUGUI txt = rect.Find("amount").GetComponent<TextMeshProUGUI>();
 

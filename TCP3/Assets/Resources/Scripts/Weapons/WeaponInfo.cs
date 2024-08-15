@@ -25,6 +25,15 @@ public class WeaponInfo : Item
 
     private void OnValidate()
     {
-        itemType = Itemtype.Weapon;
+        itemType = Itemtype.Arma;
+
+        string newInfos =     "<color=red>Dano: " + damage.ToString() +
+                              "\nPenetração de Armadura: " + defensePenetration.ToString() +
+                              "\nMunição máxima: " + maxMunition.ToString() +
+                              "\nVelocidade de Recarga: " + reloadSpeed.ToString() +
+                              "\nCadência: " + cadence.ToString() + "</color>";
+
+        itemDescription = newInfos;
     }
+
 }

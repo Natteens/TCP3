@@ -81,21 +81,21 @@ public class UI_Craft : MonoBehaviour
 
     public void FilterConsumable()
     {
-        ClickOnFilter(Item.Itemtype.Consumable);
+        ClickOnFilter(Item.Itemtype.Consumivel);
     }
 
     public void FilterWeapon()
     {
-        ClickOnFilter(Item.Itemtype.Weapon);
+        ClickOnFilter(Item.Itemtype.Arma);
     }
 
     public void FilterResource()
     {
-        ClickOnFilter(Item.Itemtype.Resource);
+        ClickOnFilter(Item.Itemtype.Recurso);
     }
     public void FilterModule()
     {
-        ClickOnFilter(Item.Itemtype.Module);
+        ClickOnFilter(Item.Itemtype.Modulo);
     }
 
     public void ControlExpandedCraft(bool control)
