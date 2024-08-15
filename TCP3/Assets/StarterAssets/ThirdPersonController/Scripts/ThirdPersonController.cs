@@ -98,7 +98,7 @@ namespace StarterAssets
         private int _animIDVertical;
     
 #if ENABLE_INPUT_SYSTEM 
-        private PlayerInput _playerInput;
+        [SerializeField] private PlayerInput _playerInput;
 #endif
         private Animator _animator;
         private StatusComponent statusComponent;
@@ -148,8 +148,11 @@ namespace StarterAssets
             statusComponent = GetComponent<StatusComponent>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM 
-            _playerInput = GetComponent<PlayerInput>();
+#if ENABLE_INPUT_SYSTEM
+            if (IsOwner)
+            {
+                _playerInput.enabled = true; 
+            }
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -287,7 +290,6 @@ namespace StarterAssets
                 _animator.SetFloat(_animIDVertical, localMoveDirection.z);
             }
         }
-
 
         private void JumpAndGravity()
         {
