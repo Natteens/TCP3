@@ -5,8 +5,9 @@ using UnityEngine.Animations;
 using StarterAssets;
 using UnityEngine.Animations.Rigging;
 using Cinemachine;
+using Unity.Netcode;
 
-public class TPSController : MonoBehaviour
+public class TPSController : NetworkBehaviour
 {
     [SerializeField] private Transform aimTransform;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
@@ -32,12 +33,16 @@ public class TPSController : MonoBehaviour
 
     private void Awake()
     {
+        if (!IsOwner) return;
+
         input = GetComponent<StarterAssetsInputs>();
         framingTransposer = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
     private void Update()
     {
+        if (!IsOwner) return;
+
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)
         {

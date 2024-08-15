@@ -134,8 +134,7 @@ namespace StarterAssets
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
 
-            Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
-            gameObject.transform.position = spawnpoint;
+            
         }
 
         private void Start()
@@ -162,6 +161,9 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
+            gameObject.transform.position = spawnpoint;
         }
 
         private void Update()

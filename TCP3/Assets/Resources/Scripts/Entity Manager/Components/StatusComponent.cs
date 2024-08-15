@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Globalization;
+using Unity.Netcode;
 
-public class StatusComponent : SerializedMonoBehaviour
+public class StatusComponent : NetworkBehaviour
 {
     [SerializeField] private EntityStatus baseStatus;
     [SerializeField] private List<StatusEffectData> activeEffects = new List<StatusEffectData>();
@@ -15,13 +17,17 @@ public class StatusComponent : SerializedMonoBehaviour
     public event Action<StatusEffectData> OnEffectApplied;
     public event Action<StatusEffectData> OnEffectRemoved;
 
+    //fazer RPC pra esse script dps
+
     private void Awake()
     {
+        if (!IsOwner) return;
         InitializeStatus();
     }
 
     private void Update()
     {
+        if (!IsOwner) return;
         UpdateEffects();
     }
 

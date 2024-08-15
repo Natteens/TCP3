@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Unity.Netcode;
 
 
-public class HealthComponent : SerializedMonoBehaviour, IHealth
+public class HealthComponent : NetworkBehaviour, IHealth
 {
     [SerializeField] public float MaxHealth { get; private set; }
     [field: SerializeField] public float CurrentHealth { get; private set; }
@@ -20,12 +21,14 @@ public class HealthComponent : SerializedMonoBehaviour, IHealth
 
     private void Awake()
     {
+        if (!IsOwner) return;
         applyDamageAction += TakeDamage;
         applyHealAction += Heal;
     }
 
     private void Start()
     {
+        if (!IsOwner) return;
         InitializeHealth();
     }
 
