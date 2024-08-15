@@ -4816,10 +4816,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 330108342}
+  - component: {fileID: 330108344}
+  - component: {fileID: 330108345}
   - component: {fileID: 330108343}
   m_Layer: 0
   m_Name: GameController
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4852,6 +4854,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pfItemWorld: {fileID: 2496926681426036256, guid: 483984aa6f5549e4a8315f780f686d75, type: 3}
+--- !u!114 &330108344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330108341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1078327801
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &330108345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330108341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5500d8ccef5a3f840b33be424f94e4b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 1578928564}
+  uiInventory: {fileID: 1373709138}
+  uiCraft: {fileID: 2143881656}
 --- !u!1 &335948171 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4002772524669197544, guid: ed0802f572c247f48a2b35e54f5dd72e, type: 3}
@@ -18456,7 +18494,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1151295986}
   m_HandleRect: {fileID: 1151295985}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -19717,7 +19755,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0002217547}
+  m_AnchoredPosition: {x: 0, y: 0.00062558305}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783

@@ -27,7 +27,7 @@ public class TPSController : NetworkBehaviour
 
     [SerializeField] private LayerMask layer;
 
-    private StarterAssetsInputs input;
+    [SerializeField] private StarterAssetsInputs input;
     private CinemachineFramingTransposer framingTransposer;
     [SerializeField] private Animator anim;
 
@@ -35,8 +35,7 @@ public class TPSController : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        input = GetComponent<StarterAssetsInputs>();
-        framingTransposer = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        framingTransposer = GameManager.Instance.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
     private void Update()

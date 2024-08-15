@@ -1,9 +1,10 @@
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class InventoryController : MonoBehaviour
+public class InventoryController : NetworkBehaviour
 {
     private Inventory inventory;
     private StarterAssetsInputs starterAssetsInputs;
@@ -11,6 +12,9 @@ public class InventoryController : MonoBehaviour
 
     private void Awake()
     {
+        if (!IsOwner) return;
+
+        uiInventory = GameManager.Instance.uiInventory;
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
         inventory = new Inventory();
