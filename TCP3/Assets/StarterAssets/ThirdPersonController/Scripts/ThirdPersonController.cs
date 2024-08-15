@@ -127,14 +127,7 @@ namespace StarterAssets
         private void Awake()
         {
             if (!IsOwner) return;
-
-            // get a reference to our main camera
-            if (_mainCamera == null)
-            {
-                _mainCamera = Camera.main.gameObject;
-            }
-
-            
+            _mainCamera = GameManager.Instance.mainCamera.gameObject;
         }
 
         private void Start()

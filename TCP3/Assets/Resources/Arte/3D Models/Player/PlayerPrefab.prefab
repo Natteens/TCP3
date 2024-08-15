@@ -12263,7 +12263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimTransform: {fileID: 0}
   virtualCamera: {fileID: 0}
-  torsoAimConstraint: {fileID: 0}
+  torsoAimConstraint: {fileID: 887844654800065476}
   rotationSpeed: 10
   showGizmos: 1
   maxCameraOffset: 5
@@ -12279,6 +12279,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 8
+  input: {fileID: 8664087164105426176}
   anim: {fileID: 6066210182003915902}
 --- !u!114 &8664087164105426189
 MonoBehaviour:
@@ -12292,41 +12293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de06847979b29484ea77e32d7b783819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentStatus
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[StatusType, Assembly-CSharp],[System.Single,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[StatusType, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
   baseStatus: {fileID: 11400000, guid: fd32e62d7f66e0944af29d3c261fc04a, type: 2}
   activeEffects: []
 --- !u!114 &8664087164105426188
@@ -12341,18 +12307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466943f569509f641bf5ed646bd0e0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: MaxHealth
-      Entry: 4
-      Data: 0
   <CurrentHealth>k__BackingField: 0
 --- !u!114 &8664087164105426227
 MonoBehaviour:

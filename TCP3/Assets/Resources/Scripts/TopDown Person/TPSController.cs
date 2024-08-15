@@ -34,7 +34,7 @@ public class TPSController : NetworkBehaviour
     private void Awake()
     {
         if (!IsOwner) return;
-
+        aimTransform = GameManager.Instance.aimSpheare;
         framingTransposer = GameManager.Instance.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
