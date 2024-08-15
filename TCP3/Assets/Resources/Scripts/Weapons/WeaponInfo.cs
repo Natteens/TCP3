@@ -16,7 +16,6 @@ public class WeaponInfo : Item
     public bool isAutomatic;
     public Vector3 spawnPosition;
     public Transform bulletPrefab;
-    public GameObject weaponModel;  // Modelo da arma
     public List<StatusEffect> effects;
 
     [Header("Animation Configs")]

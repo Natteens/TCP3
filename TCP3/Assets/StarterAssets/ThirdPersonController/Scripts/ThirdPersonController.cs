@@ -16,12 +16,7 @@ namespace StarterAssets
     public class ThirdPersonController : NetworkBehaviour
     {
         [Header("Player")]
-        //[Tooltip("Move speed of the character in m/s")]
-        //public float MoveSpeed = 2.0f;
-
-        //[Tooltip("Sprint speed of the character in m/s")]
-        //public float SprintSpeed = 5.335f;
-
+  
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
@@ -104,7 +99,7 @@ namespace StarterAssets
         private StatusComponent statusComponent;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
-        private GameObject _mainCamera;
+        private GameObject _mainCamera { get; set; }
         private bool _rotateOnMove = true;
 
         private const float _threshold = 0.01f;
@@ -128,13 +123,14 @@ namespace StarterAssets
         {
             if (!IsOwner) return;
             _mainCamera = GameManager.Instance.mainCamera.gameObject;
+           
         }
 
         private void Start()
         {
             if (!IsOwner) return; 
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+            GameManager.Instance.virtualCamera.Follow = CinemachineCameraTarget.transform;
             _animator = GetComponentInChildren<Animator>();
             _hasAnimator = _animator;
             statusComponent = GetComponent<StatusComponent>();

@@ -12195,6 +12195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootCamera: {fileID: 8664087165453625162}
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   Sensitivity: 1
@@ -12261,8 +12262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c490e8d51b093d44a456323633506b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimTransform: {fileID: 0}
-  virtualCamera: {fileID: 0}
   torsoAimConstraint: {fileID: 887844654800065476}
   rotationSpeed: 10
   showGizmos: 1
@@ -12320,6 +12319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f679f62f19e6645976c6a61ad1950a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starterAssetsInputs: {fileID: 8664087164105426176}
   uiInventory: {fileID: 0}
 --- !u!114 &8664087164105426226
 MonoBehaviour:

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 public class SurvivalManager : MonoBehaviour
 {
     [Range(20, 500)]
     public float MaxStamina = 100, MaxHunger = 100, MaxThirsty = 100, StaminaSpeed = 250;
-
     public float CurrentStamina, CurrentHungry, CurrentThirsty;
     private bool WhithoutStamina = false;
     private float HungryTimer, ThirstyTimer;
@@ -26,7 +26,6 @@ public class SurvivalManager : MonoBehaviour
     
     void Start()
     {
-        TryGetComponent(out healthComponent);
         CurrentStamina = MaxStamina;
         CurrentHungry = MaxHunger;
         CurrentThirsty = MaxThirsty;
@@ -133,5 +132,6 @@ public class SurvivalManager : MonoBehaviour
                 break;
         }
     }
+
 }
 

@@ -4816,7 +4816,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 330108342}
-  - component: {fileID: 330108344}
   - component: {fileID: 330108345}
   - component: {fileID: 330108343}
   m_Layer: 0
@@ -4854,27 +4853,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pfItemWorld: {fileID: 2496926681426036256, guid: 483984aa6f5549e4a8315f780f686d75, type: 3}
---- !u!114 &330108344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330108341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1078327801
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &330108345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4893,6 +4871,10 @@ MonoBehaviour:
   uiInventory: {fileID: 1373709138}
   uiCraft: {fileID: 2143881656}
   interactMSG: {fileID: 1001865221}
+  health: {fileID: 876747118}
+  stamina: {fileID: 1595055276}
+  hunger: {fileID: 1826704389}
+  thirsty: {fileID: 213452448}
 --- !u!1 &335948171 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4002772524669197544, guid: ed0802f572c247f48a2b35e54f5dd72e, type: 3}
@@ -19758,7 +19740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00018633374}
+  m_AnchoredPosition: {x: 0, y: 0.00072273344}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783
@@ -22051,7 +22033,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99243
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -29673,7 +29655,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2138973315}
-  - component: {fileID: 2138973316}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -29705,24 +29686,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2138973316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2138973314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fb183d6b77543f42b51facf2d303676, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 876747118}
-  stamina: {fileID: 1595055276}
-  hunger: {fileID: 1826704389}
-  thirsty: {fileID: 213452448}
-  survivalManager: {fileID: 8390003096114198690}
-  healthManager: {fileID: 8390003096114198686}
 --- !u!1 &2141775406 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7964157543444745748, guid: ed0802f572c247f48a2b35e54f5dd72e, type: 3}
@@ -30045,28 +30008,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8664087164105426191, guid: 2236678088c09f54791cb51fce01f1fc, type: 3}
   m_PrefabInstance: {fileID: 887844653839613330}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8390003096114198686 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8664087164105426188, guid: 2236678088c09f54791cb51fce01f1fc, type: 3}
-  m_PrefabInstance: {fileID: 887844653839613330}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 466943f569509f641bf5ed646bd0e0b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8390003096114198690 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8664087164105426224, guid: 2236678088c09f54791cb51fce01f1fc, type: 3}
-  m_PrefabInstance: {fileID: 887844653839613330}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: def5ddd7974d16c4abc41d62f02ce984, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8390003096917678808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8664087165453625162, guid: 2236678088c09f54791cb51fce01f1fc, type: 3}

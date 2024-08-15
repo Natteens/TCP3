@@ -9,8 +9,8 @@ using Unity.Netcode;
 
 public class TPSController : NetworkBehaviour
 {
-    [SerializeField] private Transform aimTransform;
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private Transform aimTransform { get; set; }
+    [SerializeField] private CinemachineVirtualCamera virtualCamera { get; set; }
     [SerializeField] private MultiAimConstraint torsoAimConstraint;
     [SerializeField] private float rotationSpeed = 100f;
     [SerializeField] private bool showGizmos = true; // Exibe os Gizmos no modo de jogo
@@ -33,8 +33,8 @@ public class TPSController : NetworkBehaviour
 
     private void Awake()
     {
-        if (!IsOwner) return;
         aimTransform = GameManager.Instance.aimSpheare;
+        virtualCamera = GameManager.Instance.virtualCamera;
         framingTransposer = GameManager.Instance.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 

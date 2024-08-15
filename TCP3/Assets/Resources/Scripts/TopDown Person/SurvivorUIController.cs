@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class SurvivorUIController : MonoBehaviour
 {
-    public Image health;
-    public Image stamina;
-    public Image hunger;
-    public Image thirsty;
-
+    private Image health, stamina, hunger, thirsty;
     [SerializeField] private SurvivalManager survivalManager;
     [SerializeField] private HealthComponent healthManager;
 
     void Start()
     {
+        health = GameManager.Instance.health;
+        stamina = GameManager.Instance.stamina;
+        hunger = GameManager.Instance.hunger;
+        thirsty = GameManager.Instance.thirsty; 
         survivalManager.OnStatusChanged += UpdateUI;
     }
 

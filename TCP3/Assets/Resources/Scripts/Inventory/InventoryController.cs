@@ -7,13 +7,11 @@ using UnityEngine;
 public class InventoryController : NetworkBehaviour
 {
     private Inventory inventory;
-    private StarterAssetsInputs starterAssetsInputs;
+    [SerializeField] private StarterAssetsInputs starterAssetsInputs;
     [SerializeField] private UI_Inventory uiInventory;
 
     private void Awake()
     {
-        if (!IsOwner) return;
-
         uiInventory = GameManager.Instance.uiInventory;
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         LocatePlayer player = gameObject.GetComponent<LocatePlayer>();

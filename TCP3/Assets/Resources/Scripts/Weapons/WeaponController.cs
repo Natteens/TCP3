@@ -140,7 +140,7 @@ public class WeaponController : MonoBehaviour
     {
         if (currentWeapon != null)
         {
-            Transform weaponTransform = FindWeaponTransform(currentWeapon.weaponModel.name);
+            Transform weaponTransform = FindWeaponTransform(currentWeapon.itemName);
             if (weaponTransform != null)
             {
                 weaponTransform.gameObject.SetActive(false);
@@ -152,7 +152,7 @@ public class WeaponController : MonoBehaviour
     {
         if (currentWeapon != null)
         {
-            Transform weaponTransform = FindWeaponTransform(currentWeapon.weaponModel.name);
+            Transform weaponTransform = FindWeaponTransform(currentWeapon.itemName);
             if (weaponTransform != null)
             {
                 weaponTransform.gameObject.SetActive(true);
