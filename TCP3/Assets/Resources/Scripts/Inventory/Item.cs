@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Item")]
+[CreateAssetMenu(fileName = "Item", menuName = "Item/Create Item")]
 [System.Serializable]
 public class Item: ScriptableObject
 {
@@ -18,12 +18,13 @@ public class Item: ScriptableObject
         None
     }
 
+    [Header("Item Configs")]
     public string itemName;
     [Multiline] public string itemDescription;
     public Itemtype itemType;
     public Sprite itemSprite;
     //public GameObject itemModel;
-    public int amount;
+    [HideInInspector] public int amount = 1;
 
     public bool IsStackable()
     {

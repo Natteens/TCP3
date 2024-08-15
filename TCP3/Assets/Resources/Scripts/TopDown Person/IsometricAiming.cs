@@ -7,7 +7,6 @@ public class IsometricAiming : MonoBehaviour
     #region Editor Settings
 
     [SerializeField] private LayerMask groundMask;
-
     #endregion
     #region Private Fields
 

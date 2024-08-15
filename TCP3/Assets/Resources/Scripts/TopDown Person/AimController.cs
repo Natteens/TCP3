@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AimController : MonoBehaviour
 {
     [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
     [SerializeField] private Transform debugTransform;
+    [SerializeField] private Image aimSprite;
     [SerializeField] private float maxAimDistance = 999f;
     [SerializeField] private Color rayColor = Color.red;
+
 
     public Vector3 GetAimPoint()
     {
@@ -20,6 +23,7 @@ public class AimController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit raycasthit, maxAimDistance, aimColliderLayerMask))
         {
             if (debugTransform != null) { debugTransform.position = raycasthit.point; }
+            if(aimSprite != null) { aimSprite.transform.position = raycasthit.point; }
             return raycasthit.point;
         }
         else
