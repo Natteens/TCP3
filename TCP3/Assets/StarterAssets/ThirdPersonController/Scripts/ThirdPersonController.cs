@@ -252,7 +252,6 @@ namespace StarterAssets
 
             if (_input.move != Vector2.zero)
             {
-                // Ajusta a rotação com base no ângulo da câmera e direção de movimento
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
 
@@ -274,8 +273,9 @@ namespace StarterAssets
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-                _animator.SetFloat(_animIDHorizontal, _input.move.x);
-                _animator.SetFloat(_animIDVertical, _input.move.y);
+                Vector3 localMoveDirection = transform.InverseTransformDirection(targetDirection);
+                _animator.SetFloat(_animIDHorizontal, localMoveDirection.x);
+                _animator.SetFloat(_animIDVertical, localMoveDirection.z);
             }
         }
 

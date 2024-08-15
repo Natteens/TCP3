@@ -10,6 +10,7 @@ public class TPSController : MonoBehaviour
 {
     [SerializeField] private Transform aimTransform;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private MultiAimConstraint torsoAimConstraint;
     [SerializeField] private float rotationSpeed = 100f;
     [SerializeField] private bool showGizmos = true; // Exibe os Gizmos no modo de jogo
     [SerializeField] private float maxCameraOffset = 2f; // Limite máximo para o deslocamento da câmera
@@ -21,18 +22,17 @@ public class TPSController : MonoBehaviour
     [SerializeField] private float zoomSpeed = 2f; // Velocidade do zoom
     [SerializeField] private float cameraRadius = 5f; // Raio máximo para o movimento da câmera ao mirar
     [SerializeField] private float rotationMultiplier = 2f; // Multiplicador de velocidade da rotação
+    [SerializeField] private float aimWeightChangeSpeed = 5f; // Velocidade de mudança de peso do Multi-Aim Constraint
 
-    [SerializeField] private LayerMask layer; 
+    [SerializeField] private LayerMask layer;
 
     private StarterAssetsInputs input;
-    //private IsometricAiming aimController;
     private CinemachineFramingTransposer framingTransposer;
     [SerializeField] private Animator anim;
 
     private void Awake()
     {
         input = GetComponent<StarterAssetsInputs>();
-        //aimController = GetComponent<IsometricAiming>();
         framingTransposer = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
@@ -41,12 +41,10 @@ public class TPSController : MonoBehaviour
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)
         {
-          //  HandleAiming(position);
-          //  HandleShooting(position);
             AimMousePosition(position);
         }
-        RotateCameraY(); 
-        AdjustCamera(); 
+        RotateCameraY();
+        AdjustCamera();
     }
 
     private void AimMousePosition(Vector3 position)
@@ -58,16 +56,12 @@ public class TPSController : MonoBehaviour
     {
         Vector3 aimDirection = (aimPoint - transform.position).normalized;
         aimDirection.y = 0;
+
         Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }
 
-    public void RotateTowardsMouseInstant(Vector3 aimPoint)
-    {
-        Vector3 aimDirection = (aimPoint - transform.position).normalized;
-        aimDirection.y = 0;
-        Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
-        transform.rotation = targetRotation;
+        // Ajuste do peso do Multi-Aim Constraint
+        torsoAimConstraint.weight = Mathf.Lerp(torsoAimConstraint.weight, 1f, Time.deltaTime * aimWeightChangeSpeed);
     }
 
     private void AdjustCamera()

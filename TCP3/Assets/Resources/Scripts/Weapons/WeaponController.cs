@@ -13,7 +13,6 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private LayerMask layer;
     private StarterAssetsInputs input;
-    //private IsometricAiming aimController;
     private float aimWeightChangeSpeed = 5f;
     private int currentAmmo;
     private bool isShooting;
@@ -25,7 +24,6 @@ public class WeaponController : MonoBehaviour
     private void Awake()
     {
         input = GetComponent<StarterAssetsInputs>();
-        //aimController = GetComponent<IsometricAiming>();
     }
 
     private void Start()
@@ -66,29 +64,23 @@ public class WeaponController : MonoBehaviour
 
     private void HandleShooting(Vector3 aimPoint)
     {
+        tpsController.RotateTowardsMouseSmooth(aimPoint);
+
         if (fireRateCounter >= currentWeapon.cadence)
         {
             if (currentAmmo > 0)
             {
-                if (!isShooting)
-                {
-                    isShooting = true;
-                    anim.SetFloat("WeaponState", 4f); // Atualizar animação para "atirando"
-                }
-
-                tpsController.RotateTowardsMouseInstant(aimPoint);
-                Vector3 shootDirection = GetShootDirection();
+                if (!isShooting) isShooting = true;
+                Vector3 shootDirection = GetShootDirection(aimPoint);
                 Instantiate(currentWeapon.bulletPrefab, bulletSpawner.position, Quaternion.LookRotation(shootDirection, Vector3.up));
                 currentAmmo -= currentWeapon.bulletPerShoot;
                 fireRateCounter = 0f;
-
                 OnShoot?.Invoke();
-
                 Debug.DrawLine(bulletSpawner.position, bulletSpawner.position + shootDirection * 10f, Color.yellow, 2f);
             }
             else
             {
-                StartCoroutine(Reload()); // Recarregar se a munição acabar
+                StartCoroutine(Reload()); 
             }
         }
     }
@@ -97,8 +89,8 @@ public class WeaponController : MonoBehaviour
     {
         if (isShooting)
         {
+            anim.SetInteger("WeaponState", input.aim ? 3 : 2); 
             isShooting = false;
-            anim.SetFloat("WeaponState", input.aim ? 3f : 2f); // Voltar ao estado de segurar a arma (não atirando)
         }
     }
 
@@ -107,13 +99,13 @@ public class WeaponController : MonoBehaviour
         if (input.aim)
         {
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
-            anim.SetFloat("WeaponState", 3f); // Aiming com a arma
+            anim.SetInteger("WeaponState", 3);
             tpsController.RotateTowardsMouseSmooth(aimPoint);
         }
         else
         {
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
-            anim.SetFloat("WeaponState", 2f); // Segurando a arma, mas sem mirar
+            anim.SetInteger("WeaponState", 2);
         }
     }
 
@@ -132,7 +124,7 @@ public class WeaponController : MonoBehaviour
 
             anim.SetLayerWeight(1, 1f);
             anim.SetBool("withoutWeapon", false);
-            anim.SetFloat("WeaponState", 1f); // Pegar a arma
+            anim.SetInteger("WeaponState", 1); // Pegar a arma
             anim.SetBool(currentWeapon.animatorParameter, true);
         }
         else
@@ -192,22 +184,20 @@ public class WeaponController : MonoBehaviour
         return input.shoot && fireRateCounter >= currentWeapon.cadence && currentWeapon != null;
     }
 
-    private Vector3 GetShootDirection()
+    private Vector3 GetShootDirection(Vector3 aimPoint)
     {
-        Vector3 shootDirection = tpsController.transform.forward;
-
-        shootDirection += new Vector3(
-            UnityEngine.Random.Range(-currentWeapon.spread, currentWeapon.spread), 0, 0);
-
+        Vector3 shootDirection = (aimPoint - bulletSpawner.position).normalized;
+        shootDirection.y = 0;
+        shootDirection += new Vector3(UnityEngine.Random.Range(-currentWeapon.spread, currentWeapon.spread),0,0);
         return shootDirection.normalized;
     }
 
     private IEnumerator Reload()
     {
-        anim.SetFloat("WeaponState", 5f); // Atualizar animação para "recarregando"
+       // anim.SetInteger("WeaponState", 5); // Atualizar animação para "recarregando"
         yield return new WaitForSeconds(currentWeapon.reloadSpeed);
         currentAmmo = currentWeapon.maxMunition;
-        anim.SetFloat("WeaponState", input.aim ? 3f : 2f); // Voltar ao estado de segurar a arma após recarregar
+        anim.SetInteger("WeaponState", input.aim ? 3 : 2); // Voltar ao estado de segurar a arma após recarregar
     }
 
     private void AdjustTorsoAimWeight()

@@ -21,24 +21,11 @@ public class StarterAssetsInputs : MonoBehaviour
 
 	[Header("Movement Settings")]
     public bool analogMovement;
-
-    [Header("Mouse Cursor Settings")]
-    public bool cursorLocked = true;
-    public bool cursorInputForLook = true;
-
     #endregion
 
     public void OnMove(InputValue value)
 	{
 		MoveInput(value.Get<Vector2>());
-	}
-
-	public void OnLook(InputValue value)
-	{
-		if (cursorInputForLook)
-		{
-			LookInput(value.Get<Vector2>());
-		}
 	}
 
 	public void OnRotate(InputValue value)
@@ -91,11 +78,6 @@ public class StarterAssetsInputs : MonoBehaviour
 		move = newMoveDirection;
 	}
 
-	public void LookInput(Vector2 newLookDirection)
-	{
-		look = newLookDirection;
-	}
-
 	public void RotateInput(Vector2 newRotateDirection)
 	{
 		rotate = newRotateDirection;
@@ -142,14 +124,4 @@ public class StarterAssetsInputs : MonoBehaviour
 		reload = newReloadState;
 	}
 
-
-	private void OnApplicationFocus(bool hasFocus)
-	{
-		SetCursorState(cursorLocked);
-	}
-
-	private void SetCursorState(bool newState)
-	{
-		Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-	}
 }
