@@ -35,7 +35,6 @@ public class LobbyManager : MonoBehaviour
     public Lobby joinedLobby;
     private float heartbeatTimer;
     private float lobbyUpdateTimer;
-    private float lobbyPollTimerMax = 1.1f;
 
     private string playerName;
     public class LobbyEventArgs : EventArgs
@@ -89,6 +88,7 @@ public class LobbyManager : MonoBehaviour
             lobbyUpdateTimer -= Time.deltaTime;
             if (lobbyUpdateTimer < 0f)
             {
+                float lobbyPollTimerMax = UnityEngine.Random.Range(0.2f, 1f);
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
                 joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
@@ -180,7 +180,7 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
 
             joinedLobby = lobby;
-            lobbyPollTimerMax = 1.1f;
+
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
 
             if (IsLobbyHost())
@@ -195,26 +195,18 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
     }
+
     public async void StartGame()
     {
         if (IsLobbyHost())
         {
             try
             {
-                // Timer para aguardar antes de iniciar o jogo (por exemplo, 5 segundos)
-                float timer = 5f;
-                while (timer > 0f)
-                {
-                    lobbyPollTimerMax = .7f;
-                    Debug.Log($"Iniciando o jogo em: {Mathf.Ceil(timer)} segundos...");
-                    await Task.Delay(1000); // Aguarda 1 segundo 
-                    timer -= 1f;
-                }
 
                 Loader.Load(Loader.Scene.Katalisya); //Aqui vai a cena do jogo
 
-                while (Loader.GetLoadingProgress() < 1f)
-                {
+                while (Loader.GetLoadingProgress() < 1f) 
+                { 
                     await Task.Yield();
                 }
 
@@ -223,8 +215,9 @@ public class LobbyManager : MonoBehaviour
                 Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
                 {
                     Data = new Dictionary<string, DataObject> {
-                    { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
-                }
+                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
+                    }
+
                 });
 
                 joinedLobby = lobby;
