@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +8,7 @@ public static class Loader
     private class LoadingMonoBehaviour : MonoBehaviour { }
 
     public enum Scene
-    { 
+    {
         Katalisya, //Cena do jogo
         MainMenu,
         Loading  //Cena de load
@@ -20,16 +19,15 @@ public static class Loader
 
     public static void Load(Scene scene)
     {
-        
-        //Dizendo pro meu callback qual cena desejada
+        // Dizendo pro callback qual cena desejada
         onLoaderCallback = () =>
         {
-            //Ten que usar gameobj pq nao da pra startar corotina sem o monobehaviour!
+            // Criando um GameObject para iniciar a Coroutine
             GameObject loadingGameObject = new GameObject("Loading GameOBJ");
             loadingGameObject.AddComponent<LoadingMonoBehaviour>().StartCoroutine(LoadSceneAsync(scene));
-        };  
+        };
 
-        //Carregando a cena de loading 
+        // Carregando a cena de loading
         SceneManager.LoadScene(Scene.Loading.ToString());
     }
 
@@ -37,11 +35,10 @@ public static class Loader
     {
         yield return null;
 
-        yield return new WaitForSeconds(10f);
+        // Iniciando a operação assíncrona de carregamento
+        loadingAsyncOperation = SceneManager.LoadSceneAsync(scene.ToString());
 
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scene.ToString());
-
-        while (!asyncOperation.isDone)
+        while (!loadingAsyncOperation.isDone)
         {
             yield return null;
         }
@@ -49,20 +46,24 @@ public static class Loader
 
     public static float GetLoadingProgress()
     {
-        if (loadingAsyncOperation != null) { return loadingAsyncOperation.progress; }
-        else { return 1f; }
+        if (loadingAsyncOperation != null)
+        {
+            return loadingAsyncOperation.progress;
+        }
+        else
+        {
+            return 1f;
+        }
     }
 
     public static void LoaderCallback()
     {
-        //trigga depois do primeiro tick de update 
-        //Executando o loadercallback que vai carregar a cena desejada
+        // Triggera após o primeiro tick de update
+        // Executando o loaderCallback que vai carregar a cena desejada
         if (onLoaderCallback != null)
         {
             onLoaderCallback();
             onLoaderCallback = null;
-            
-        } 
+        }
     }
-
 }
