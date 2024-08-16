@@ -88,7 +88,7 @@ public class LobbyManager : MonoBehaviour
             lobbyUpdateTimer -= Time.deltaTime;
             if (lobbyUpdateTimer < 0f)
             {
-                float lobbyPollTimerMax = 0.1f; // Intervalo baixo
+                float lobbyPollTimerMax = 0.5f; // Intervalo baixo
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
                 try
