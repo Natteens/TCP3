@@ -21,20 +21,12 @@ public class ItemWorldSpawner : NetworkBehaviour
     {
         if (currentTime > timeToSpawn)
         {
-            // Chama o RPC no servidor para spawnar o item
-            SpawnItemServerRpc(transform.position, item);
+            ItemWorld.DropItem(transform.position, item);
             currentTime = 0f;
         }
         else
         {
             currentTime += Time.deltaTime;
         }
-    }
-
-    // RPC chamado no servidor para criar o item
-    [ServerRpc]
-    private void SpawnItemServerRpc(Vector3 position, Item item)
-    {
-        ItemWorld.DropItem(position, item);
     }
 }
