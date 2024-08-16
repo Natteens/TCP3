@@ -226,7 +226,7 @@ namespace StarterAssets
         private void Move()
         {
             float SprintSpeed = statusComponent.GetStatus(StatusType.MoveSpeed);
-            float MoveSpeed = statusComponent.GetStatus(StatusType.MoveSpeed) / 1.5f;
+            float MoveSpeed = statusComponent.GetStatus(StatusType.MoveSpeed) / 2f;
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
