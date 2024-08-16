@@ -484,20 +484,20 @@ public class LobbyManager : MonoBehaviour
         {
             if (joinedLobby.Players.Count > 1)
             {
-                Debug.Log("sai do lobby");
+                Debug.Log("Sai do lobby");
                 await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
             }
             else
             {
-                DeleteLobby();
+                await DeleteLobby();
             }
-            
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
     }
+
 
     public async void KickPlayer(string playerId)
     {
@@ -528,15 +528,26 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async void DeleteLobby()
+    public async Task DeleteLobby()
     {
         try
         {
             await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
+            Debug.Log("Lobby excluído com sucesso.");
         }
         catch (LobbyServiceException e)
         {
-            Debug.Log(e);
+            Debug.LogError($"Falha ao excluir o lobby: {e.Message}");
         }
     }
+
+
+    private async void OnApplicationQuit()
+    {
+        if (IsLobbyHost())
+        {
+            await DeleteLobby();
+        }
+    }
+
 }
