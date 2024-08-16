@@ -23,10 +23,22 @@ public class LobbyRelay : MonoBehaviour
     public async Task<string> CreateRelay()
     {
         try
-        { 
+        {
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(LobbyManager.Instance.GetJoinedLobby().MaxPlayers);
 
+            if (allocation == null)
+            {
+                Debug.LogError("Failed to create relay allocation.");
+                return null;
+            }
+
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+
+            if (string.IsNullOrEmpty(joinCode))
+            {
+                Debug.LogError("Failed to get join code.");
+                return null;
+            }
 
             RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
 
@@ -36,12 +48,13 @@ public class LobbyRelay : MonoBehaviour
 
             return joinCode;
         }
-        catch (LobbyServiceException e)
+        catch (RelayServiceException e)
         {
-            Debug.Log(e);
+            Debug.LogError($"RelayServiceException: {e.Message}");
             return null;
         }
     }
+
 
     public async void JoinRelay(string joinCode)
     {
@@ -65,11 +78,12 @@ public class LobbyRelay : MonoBehaviour
                 Debug.LogWarning("Client or server is already running.");
             }
         }
-        catch (LobbyServiceException e)
+        catch (RelayServiceException e)
         {
-            Debug.LogError("Failed to join relay: " + e);
+            Debug.LogError("Failed to join relay: " + e.Message);
         }
     }
+
 
 
 }
