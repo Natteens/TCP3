@@ -89,7 +89,7 @@ public class UI_Inventory : MonoBehaviour
         {
             //Drop item
             inventory.RemoveItem(item);
-            ItemWorld.DropItem(player.GetPosition(), item, ItemAssets.Instance.pfItemWorld);
+            ItemWorld.DropItem(player.GetPosition(), item);
         };
 
         rect.gameObject.GetComponent<ItemTooltip>().SetItem(item);
