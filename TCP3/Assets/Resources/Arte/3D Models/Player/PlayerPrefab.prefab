@@ -12174,7 +12174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 958174083
+  GlobalObjectIdHash: 2665744776
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -12195,7 +12195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootCamera: {fileID: 8664087165453625162}
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   Sensitivity: 1
@@ -12225,7 +12224,6 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 8664087165453625141}
   CameraAngleOverride: 0
   LockCameraPosition: 0
-  _playerInput: {fileID: 8664087164105426183}
 --- !u!114 &8664087164105426176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12292,6 +12290,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de06847979b29484ea77e32d7b783819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: currentStatus
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[StatusType, Assembly-CSharp],[System.Single,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[StatusType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   baseStatus: {fileID: 11400000, guid: fd32e62d7f66e0944af29d3c261fc04a, type: 2}
   activeEffects: []
 --- !u!114 &8664087164105426188
@@ -12434,9 +12467,9 @@ MonoBehaviour:
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 1
-  SyncRotAngleX: 0
+  SyncRotAngleX: 1
   SyncRotAngleY: 1
-  SyncRotAngleZ: 0
+  SyncRotAngleZ: 1
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

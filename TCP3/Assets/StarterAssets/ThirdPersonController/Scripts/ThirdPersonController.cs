@@ -87,7 +87,7 @@ namespace StarterAssets
         private int _animIDVertical;
     
 #if ENABLE_INPUT_SYSTEM 
-        [SerializeField] private PlayerInput _playerInput;
+        private PlayerInput _playerInput;
 #endif
         private Animator _animator;
         private StatusComponent statusComponent;
@@ -137,8 +137,6 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
-            Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
-            gameObject.transform.position = spawnpoint;
 
             if (IsClient && IsOwner)
             {
@@ -150,13 +148,16 @@ namespace StarterAssets
         {
             if (IsClient && IsOwner)
             {
-               _playerInput.enabled = true;
+                _playerInput = GetComponent<PlayerInput>();
+                _playerInput.enabled = true;
+                Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
+                transform.position = spawnpoint;
             }
         }
 
         private void Update()
         {
-            if (!IsOwner) return;
+            if (!IsLocalPlayer) return;
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -164,7 +165,6 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
-            if (!IsOwner) return;
             CameraRotation();
         }
 
@@ -267,8 +267,7 @@ namespace StarterAssets
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
             if (_hasAnimator)
             {

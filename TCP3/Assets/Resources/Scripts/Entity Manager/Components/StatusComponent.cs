@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using System.Globalization;
 using Unity.Netcode;
 
-public class StatusComponent : NetworkBehaviour
+public class StatusComponent : SerializedMonoBehaviour
 {
     [SerializeField] private EntityStatus baseStatus;
     [SerializeField] private List<StatusEffectData> activeEffects = new List<StatusEffectData>();
@@ -21,13 +21,11 @@ public class StatusComponent : NetworkBehaviour
 
     private void Awake()
     {
-        if (!IsOwner) return;
         InitializeStatus();
     }
 
     private void Update()
     {
-        if (!IsOwner) return;
         UpdateEffects();
     }
 
