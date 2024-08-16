@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Unity.Netcode;
 using UnityEngine.Animations.Rigging;
 
-public class WeaponController : MonoBehaviour
+public class WeaponController : NetworkBehaviour
 {
     [SerializeField] private WeaponInfo currentWeapon;
     [SerializeField] private Transform weaponsContainer; // Objeto pai que contém todas as armas
@@ -14,6 +15,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private LayerMask layer;
     private StarterAssetsInputs input;
     private float aimWeightChangeSpeed = 5f;
+    NetworkVariable<float> currentWeight = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private int currentAmmo;
     private bool isShooting;
     private float fireRateCounter;
@@ -33,6 +35,7 @@ public class WeaponController : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return;
         HandleInput();
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)
@@ -203,7 +206,7 @@ public class WeaponController : MonoBehaviour
     private void AdjustTorsoAimWeight()
     {
         float targetWeight = input.aim ? 1f : 0f;
-        float currentWeight = torsoAimConstraint.weight;
-        torsoAimConstraint.weight = Mathf.Lerp(currentWeight, targetWeight, Time.deltaTime * aimWeightChangeSpeed);
+        currentWeight.Value = torsoAimConstraint.weight;
+        torsoAimConstraint.weight = Mathf.Lerp(currentWeight.Value, targetWeight, Time.deltaTime * aimWeightChangeSpeed);
     }
 }
