@@ -91,46 +91,39 @@ public class LobbyManager : MonoBehaviour
                 float lobbyPollTimerMax = 2f;
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
-                try
+                joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+
+                OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+
+                if (!IsPlayerInLobby())
                 {
-                    joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
-                    Debug.Log("Lobby updated successfully.");
+                    // Player foi kickado do lobby
+                    Debug.Log("Kicked from Lobby!");
 
-                    OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+                    OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
 
-                    if (!IsPlayerInLobby())
-                    {
-                        Debug.Log("Kicked from Lobby!");
-
-                        OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-
-                        joinedLobby = null;
-                    }
-
-                    if (joinedLobby.Data[KEY_START_GAME].Value != "0")
-                    {
-                        if (!IsLobbyHost()) // o host ja entrou no relay
-                        {
-                            Loader.Load(Loader.Scene.Loading);
-
-                            while (Loader.GetLoadingProgress() < 1f)
-                            {
-                                await Task.Yield();
-                            }
-
-                            LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
-                        }
-                    }
+                    joinedLobby = null;
                 }
-                catch (LobbyServiceException e)
+
+                if (joinedLobby.Data[KEY_START_GAME].Value != "0")
                 {
-                    Debug.LogError($"Failed to update lobby: {e.Message}");
-                    // Implementar lógica de re-tentativa, se necessário
+                    //Starta o jogo
+                    if (!IsLobbyHost()) // o host ja entrou no relay
+                    {
+                        Loader.Load(Loader.Scene.Loading);
+
+                        // Aguarde até que a cena de loading esteja completamente carregada
+                        while (Loader.GetLoadingProgress() < 1f)
+                        {
+                            await Task.Yield();
+                        }
+
+                        LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
+                    }
                 }
             }
         }
     }
-
 
     //Funcao para manter o lobby ativo
     private async void HandleLobbyHeartbeat()
