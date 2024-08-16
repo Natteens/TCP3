@@ -3,8 +3,9 @@ using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class InteractController : MonoBehaviour
+public class InteractController : NetworkBehaviour
 {
     [SerializeField] private GameObject interactMessage;
     private StarterAssetsInputs starterAssetsInputs;
@@ -24,12 +25,14 @@ public class InteractController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (!IsOwner) return;
         if(other.TryGetComponent<Interactable>(out var i))
         ControlInteractMessage(true);
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if (!IsOwner) return;
         Interactable i = other.GetComponent<Interactable>(); 
         if (starterAssetsInputs.interact && i != null)
         {
