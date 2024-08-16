@@ -4,14 +4,13 @@ using UnityEngine;
 using Unity.Netcode;
 using CodeMonkey.Utils;
 
-
 public class ItemWorld : NetworkBehaviour, Interactable
 {
     public static ItemWorld SpawnItemWorld(Vector3 position, Item item)
     {
         Transform transform = Instantiate(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
         ItemWorld itemWorld = transform.GetComponent<ItemWorld>();
-        itemWorld.GetComponent<NetworkObject>().Spawn();
+        itemWorld.ItemNetwork(true);
         itemWorld.SetItem(item);
 
         return itemWorld;
@@ -40,9 +39,9 @@ public class ItemWorld : NetworkBehaviour, Interactable
     }
 
     public void DestroySelf()
-    { 
-        Destroy(gameObject);
-        GetComponent<NetworkObject>().Despawn();
+    {
+       ItemNetwork(false);
+       Destroy(gameObject);
     }
 
     public void OnInteract(Transform interactor)
@@ -58,6 +57,23 @@ public class ItemWorld : NetworkBehaviour, Interactable
         else
         {
             Debug.LogError("Nao foi encontrado o InventoryController portanto nao rodará o OnInteract");
+        }
+    }
+
+
+    private void ItemNetwork(bool spawn)
+    {
+        NetworkObject prefab = this.GetComponent<NetworkObject>();
+        if (IsServer)
+        {
+            if (spawn)
+            {
+                prefab.Spawn();
+            }
+            else
+            {
+                prefab.Despawn();
+            }
         }
     }
 }
