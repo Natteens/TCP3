@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 using CodeMonkey.Utils;
 
 
-public class ItemWorld : MonoBehaviour, Interactable
+public class ItemWorld : NetworkBehaviour, Interactable
 {
     public static ItemWorld SpawnItemWorld(Vector3 position, Item item)
     {
         Transform transform = Instantiate(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
         ItemWorld itemWorld = transform.GetComponent<ItemWorld>();
+        itemWorld.GetComponent<NetworkObject>().Spawn();
         itemWorld.SetItem(item);
 
         return itemWorld;
@@ -40,6 +42,7 @@ public class ItemWorld : MonoBehaviour, Interactable
     public void DestroySelf()
     { 
         Destroy(gameObject);
+        GetComponent<NetworkObject>().Despawn();
     }
 
     public void OnInteract(Transform interactor)
