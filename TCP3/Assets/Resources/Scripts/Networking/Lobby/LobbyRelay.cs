@@ -47,7 +47,8 @@ public class LobbyRelay : MonoBehaviour
     {
         try
         {
-            // Verifique se o cliente ou o host já estão em execução
+            Debug.Log("Attempting to join relay with join code: " + joinCode);
+
             if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
             {
                 JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
@@ -56,6 +57,7 @@ public class LobbyRelay : MonoBehaviour
 
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
+                Debug.Log("Starting client...");
                 NetworkManager.Singleton.StartClient();
             }
             else
@@ -65,8 +67,9 @@ public class LobbyRelay : MonoBehaviour
         }
         catch (LobbyServiceException e)
         {
-            Debug.Log(e);
+            Debug.LogError("Failed to join relay: " + e);
         }
     }
+
 
 }
