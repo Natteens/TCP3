@@ -440,8 +440,16 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            Debug.Log("sai do lobby");
-            await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
+            if (joinedLobby.Players.Count > 1)
+            {
+                Debug.Log("sai do lobby");
+                await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
+            }
+            else
+            {
+                DeleteLobby();
+            }
+            
         }
         catch (LobbyServiceException e)
         {
