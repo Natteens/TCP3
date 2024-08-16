@@ -11,22 +11,25 @@ public class ItemWorldSpawner : NetworkBehaviour
 
     private void Update()
     {
-        if (IsServer) // Verifica se é o servidor
-        {
-            CountToSpawn();
-        }
+       CountToSpawn();
     }
-
+    
     private void CountToSpawn()
     {
         if (currentTime > timeToSpawn)
         {
-            ItemWorld.DropItem(transform.position, item);
-            currentTime = 0f;
+            SpawnRpc();
         }
         else
         {
             currentTime += Time.deltaTime;
         }
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void SpawnRpc()
+    {
+        ItemWorld.DropItem(transform.position, item);
+        currentTime = 0f;
     }
 }
