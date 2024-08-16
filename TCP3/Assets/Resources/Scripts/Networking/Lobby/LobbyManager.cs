@@ -75,20 +75,22 @@ public class LobbyManager : MonoBehaviour
     {
         HandleLobbyHeartbeat();
 
-        if (LobbyUI.Instance != null)
-        {
+        //if (LobbyUI.Instance != null)
+        //{
             HandleLobbyPollForUpdates();
-        }
+       // }
     }
 
     private async void HandleLobbyPollForUpdates()
     {
         if (joinedLobby != null)
         {
+            // Atualiza o timer
             lobbyUpdateTimer -= Time.deltaTime;
-            if (lobbyUpdateTimer < 0f)
+
+            if (lobbyUpdateTimer <= 0f)
             {
-                float lobbyPollTimerMax = 0.5f; // Intervalo baixo
+                float lobbyPollTimerMax = 1f; // Intervalo baixo
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
                 try
@@ -104,20 +106,20 @@ public class LobbyManager : MonoBehaviour
                     {
                         // Player foi kickado do lobby
                         Debug.Log("Kicked from Lobby!");
-
                         OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-
                         joinedLobby = null;
+
+                        // Volta para o menu principal
+                        LoadMainMenu();
                     }
 
-                    if (joinedLobby.Data[KEY_START_GAME].Value != "0")
+                    if (joinedLobby != null && joinedLobby.Data[KEY_START_GAME].Value != "0")
                     {
                         // Starta o jogo
-                        if (!IsLobbyHost()) // o host ja entrou no relay
+                        if (!IsLobbyHost())
                         {
                             Loader.Load(Loader.Scene.Loading);
 
-                            // Aguarde até que a cena de loading esteja completamente carregada
                             while (Loader.GetLoadingProgress() < 1f)
                             {
                                 await Task.Yield();
@@ -130,8 +132,41 @@ public class LobbyManager : MonoBehaviour
                 catch (Exception ex)
                 {
                     Debug.LogError($"Failed to get lobby update: {ex.Message}");
+
+                    // Volta para o menu principal em caso de erro
+                    LoadMainMenu();
                 }
             }
+        }
+    }
+    //Funcao para manter o lobby ativo
+    private async void HandleLobbyHeartbeat()
+    {
+        if (hostLobby != null)
+        {
+            heartbeatTimer -= Time.deltaTime;
+
+            if (heartbeatTimer <= 0f)
+            {
+                float heartbeatTimerMax = 15f;
+                heartbeatTimer = heartbeatTimerMax;
+
+                await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
+            }
+        }
+    }
+
+
+    private async void LoadMainMenu()
+    {
+        // Carregar a cena do menu principal
+        Debug.Log("Voltando para o menu principal.");
+        Loader.Load(Loader.Scene.MainMenu);
+
+        // Aguarde até que a cena do menu principal esteja completamente carregada
+        while (Loader.GetLoadingProgress() < 1f)
+        {
+            await Task.Yield();
         }
     }
 
@@ -155,23 +190,6 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-
-    //Funcao para manter o lobby ativo
-    private async void HandleLobbyHeartbeat()
-    {
-        if (hostLobby != null)
-        {
-            heartbeatTimer -= Time.deltaTime;
-
-            if (heartbeatTimer < 0f)
-            {
-                float heartbeatTimerMax = 15;
-                heartbeatTimer = heartbeatTimerMax;
-
-                await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
-            }
-        }
-    }
 
     /*
     public async void Authenticate(string playerName)
@@ -246,7 +264,7 @@ public class LobbyManager : MonoBehaviour
                 Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
                 {
                     Data = new Dictionary<string, DataObject> {
-                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
+                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Public, relayCode)}
                     }
 
                 });
@@ -498,7 +516,6 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-
     public async void KickPlayer(string playerId)
     {
         try
@@ -540,7 +557,6 @@ public class LobbyManager : MonoBehaviour
             Debug.LogError($"Falha ao excluir o lobby: {e.Message}");
         }
     }
-
 
     private async void OnApplicationQuit()
     {
