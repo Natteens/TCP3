@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9085115868893628733}
   - component: {fileID: -668795896061946277}
   - component: {fileID: -510551066598746014}
+  - component: {fileID: 419569249335281030}
   m_Layer: 9
   m_Name: pfItemWorld
   m_TagString: Untagged
@@ -78,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1189224152
+  GlobalObjectIdHash: 2594046713
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -112,6 +113,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3108772, y: 0.39719206, z: 0.37656665}
   m_Center: {x: 0.022454977, y: 0.031021021, z: 0.0044306517}
+--- !u!114 &419569249335281030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8799921598094876616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1001 &5137276521403497367
 PrefabInstance:
   m_ObjectHideFlags: 0
