@@ -35,6 +35,7 @@ public class LobbyManager : MonoBehaviour
     public Lobby joinedLobby;
     private float heartbeatTimer;
     private float lobbyUpdateTimer;
+    private float lobbyPollTimerMax = 1.1f;
 
     private string playerName;
     public class LobbyEventArgs : EventArgs
@@ -88,7 +89,6 @@ public class LobbyManager : MonoBehaviour
             lobbyUpdateTimer -= Time.deltaTime;
             if (lobbyUpdateTimer < 0f)
             {
-                float lobbyPollTimerMax = 1.1f;
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
                 joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
@@ -180,7 +180,7 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
 
             joinedLobby = lobby;
-
+            lobbyPollTimerMax = 1.1f;
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
 
             if (IsLobbyHost())
@@ -205,8 +205,9 @@ public class LobbyManager : MonoBehaviour
                 float timer = 5f;
                 while (timer > 0f)
                 {
+                    lobbyPollTimerMax = .7f;
                     Debug.Log($"Iniciando o jogo em: {Mathf.Ceil(timer)} segundos...");
-                    await Task.Delay(1000); // Aguarda 1 segundo
+                    await Task.Delay(1000); // Aguarda 1 segundo 
                     timer -= 1f;
                 }
 
