@@ -38,6 +38,10 @@ public class TPSController : NetworkBehaviour
         aimTransform = GameManager.Instance.aimSpheare;
         virtualCamera = GameManager.Instance.virtualCamera;
         framingTransposer = GameManager.Instance.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        var sourceObjects = torsoAimConstraint.data.sourceObjects;
+        var newSource = new WeightedTransform(aimTransform, 1f);
+        sourceObjects.Add(newSource);
+        torsoAimConstraint.data.sourceObjects = sourceObjects;
     }
 
     private void Update()
