@@ -64,6 +64,16 @@ public class LobbyRelay : MonoBehaviour
 
             if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
             {
+                // Carregue a cena de loading
+                Loader.Load(Loader.Scene.Loading);
+
+                // Aguarde até que a cena de loading esteja completamente carregada
+                while (Loader.GetLoadingProgress() < 1f)
+                {
+                    await Task.Yield();
+                }
+
+                // Tente conectar ao relay
                 JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
                 RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
@@ -72,6 +82,9 @@ public class LobbyRelay : MonoBehaviour
 
                 Debug.Log("Starting client...");
                 NetworkManager.Singleton.StartClient();
+
+                // Carregue a cena do jogo após a conexão bem-sucedida
+                Loader.Load(Loader.Scene.Katalisya);
             }
             else
             {
