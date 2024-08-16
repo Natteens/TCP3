@@ -35,7 +35,8 @@ public class LobbyManager : MonoBehaviour
     public Lobby joinedLobby;
     private float heartbeatTimer;
     private float lobbyUpdateTimer;
-
+    private const int MaxReconnectAttempts = 5;
+    private const float ReconnectDelay = 1f;
     private string playerName;
     public class LobbyEventArgs : EventArgs
     {
@@ -75,30 +76,26 @@ public class LobbyManager : MonoBehaviour
     {
         HandleLobbyHeartbeat();
 
-        if (LobbyUI.Instance != null)
-        {
-          HandleLobbyPollForUpdates();
-        }
+       if (LobbyUI.Instance != null)
+       {
+         HandleLobbyPollForUpdates();
+       }
     }
 
     private async void HandleLobbyPollForUpdates()
     {
         if (joinedLobby != null)
         {
-            // Atualiza o timer
-            lobbyUpdateTimer -= Time.deltaTime;
+            float lobbyPollTimerMax = 1f; // Intervalo baixo
+            lobbyUpdateTimer = lobbyPollTimerMax;
 
-            if (lobbyUpdateTimer <= 0f)
+            int attempts = 0;
+
+            while (attempts < MaxReconnectAttempts)
             {
-                float lobbyPollTimerMax = 1f; // Intervalo baixo
-                lobbyUpdateTimer = lobbyPollTimerMax;
-
                 try
                 {
-                    joinedLobby = await RetryOnFailure(async () =>
-                    {
-                        return await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
-                    });
+                    joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
 
                     OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
 
@@ -106,20 +103,21 @@ public class LobbyManager : MonoBehaviour
                     {
                         // Player foi kickado do lobby
                         Debug.Log("Kicked from Lobby!");
-                        OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-                        joinedLobby = null;
 
-                        // Volta para o menu principal
-                        LoadMainMenu();
+                        OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+
+                        joinedLobby = null;
+                        return;
                     }
 
-                    if (joinedLobby != null && joinedLobby.Data[KEY_START_GAME].Value != "0")
+                    if (joinedLobby.Data[KEY_START_GAME].Value != "0")
                     {
                         // Starta o jogo
-                        if (!IsLobbyHost())
+                        if (!IsLobbyHost()) // o host ja entrou no relay
                         {
                             Loader.Load(Loader.Scene.Loading);
 
+                            // Aguarde até que a cena de loading esteja completamente carregada
                             while (Loader.GetLoadingProgress() < 1f)
                             {
                                 await Task.Yield();
@@ -128,17 +126,25 @@ public class LobbyManager : MonoBehaviour
                             LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                         }
                     }
+                    return; // Sucesso, sai do loop
                 }
                 catch (Exception ex)
                 {
                     Debug.LogError($"Failed to get lobby update: {ex.Message}");
-
-                    // Volta para o menu principal em caso de erro
-                    LoadMainMenu();
+                    attempts++;
+                    if (attempts >= MaxReconnectAttempts)
+                    {
+                        Debug.LogError("Max reconnect attempts reached. Returning to main menu.");
+                        LoadMainMenu();
+                        return;
+                    }
+                    await Task.Delay((int)(ReconnectDelay * 1000)); // Atraso antes da próxima tentativa
                 }
             }
         }
     }
+
+
     //Funcao para manter o lobby ativo
     private async void HandleLobbyHeartbeat()
     {
@@ -169,27 +175,6 @@ public class LobbyManager : MonoBehaviour
             await Task.Yield();
         }
     }
-
-    private async Task<T> RetryOnFailure<T>(Func<Task<T>> operation, int maxRetries = 5, int delayMilliseconds = 1000)
-    {
-        int retryCount = 0;
-        while (true)
-        {
-            try
-            {
-                return await operation();
-            }
-            catch (Exception)
-            {
-                if (++retryCount >= maxRetries)
-                    throw;
-
-                await Task.Delay(delayMilliseconds);
-                delayMilliseconds *= 2; // Exponential backoff
-            }
-        }
-    }
-
 
     /*
     public async void Authenticate(string playerName)
