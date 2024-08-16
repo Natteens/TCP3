@@ -11,14 +11,18 @@ public class ItemWorldSpawner : NetworkBehaviour
 
     private void Update()
     {
-       CountToSpawn();
+        if (IsServer) // Certifique-se de que o código é executado apenas no servidor
+        {
+            CountToSpawn();
+        }
     }
-    
+
     private void CountToSpawn()
     {
         if (currentTime > timeToSpawn)
         {
-            SpawnRpc();
+            SpawnItemServerRpc(transform.position, item.name); // Envia o nome ou ID do item
+            currentTime = 0f;
         }
         else
         {
@@ -26,10 +30,11 @@ public class ItemWorldSpawner : NetworkBehaviour
         }
     }
 
-    [Rpc(SendTo.Everyone)]
-    private void SpawnRpc()
+    [ServerRpc]
+    private void SpawnItemServerRpc(Vector3 position, string itemName)
     {
-        ItemWorld.DropItem(transform.position, item);
-        currentTime = 0f;
+        // Procure o item pelo nome ou ID
+       // Item item = ItemDatabase.Instance.GetItemByName(itemName); // Implemente o ItemDatabase para buscar o item
+        ItemWorld.DropItem(position, item);
     }
 }
