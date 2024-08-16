@@ -19,9 +19,9 @@ public class LobbyCreateUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI maxPlayersText;
 
 
-    private string lobbyName;
-    private bool isPrivate;
-    private int maxPlayers;
+    private string lobbyName = "Nova Sala";
+    private bool isPrivate = false;
+    private int maxPlayers = 4;
 
     private void Awake() 
     {
@@ -38,7 +38,7 @@ public class LobbyCreateUI : MonoBehaviour {
 
 
         lobbyNameButton.onClick.AddListener(() => {
-            UI_InputWindow.Show_Static("Nome da Sala", lobbyName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .123456789,-", 20,
+            UI_InputWindow.Show_Static("Nome da Sala", lobbyName, "abcdefghiçjklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .123456789,-", 20,
             () => {
                 // Cancel
             },
