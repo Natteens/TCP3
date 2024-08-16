@@ -88,7 +88,7 @@ public class LobbyManager : MonoBehaviour
             lobbyUpdateTimer -= Time.deltaTime;
             if (lobbyUpdateTimer < 0f)
             {
-                float lobbyPollTimerMax = 0.6f;
+                float lobbyPollTimerMax = 1.1f;
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
                 joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
@@ -110,6 +110,13 @@ public class LobbyManager : MonoBehaviour
                     //Starta o jogo
                     if (!IsLobbyHost()) // o host ja entrou no relay
                     {
+                        Loader.Load(Loader.Scene.Katalisya); //Aqui vai a cena do jogo
+
+                        while (Loader.GetLoadingProgress() < 1f)
+                        {
+                            await Task.Yield();
+                        }
+
                         LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
                 }
