@@ -88,42 +88,73 @@ public class LobbyManager : MonoBehaviour
             lobbyUpdateTimer -= Time.deltaTime;
             if (lobbyUpdateTimer < 0f)
             {
-                float lobbyPollTimerMax = 2f;
+                float lobbyPollTimerMax = 0.1f; // Intervalo baixo
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
-                joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
-
-                OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-
-                if (!IsPlayerInLobby())
+                try
                 {
-                    // Player foi kickado do lobby
-                    Debug.Log("Kicked from Lobby!");
-
-                    OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-
-                    joinedLobby = null;
-                }
-
-                if (joinedLobby.Data[KEY_START_GAME].Value != "0")
-                {
-                    //Starta o jogo
-                    if (!IsLobbyHost()) // o host ja entrou no relay
+                    joinedLobby = await RetryOnFailure(async () =>
                     {
-                        Loader.Load(Loader.Scene.Loading);
+                        return await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+                    });
 
-                        // Aguarde até que a cena de loading esteja completamente carregada
-                        while (Loader.GetLoadingProgress() < 1f)
-                        {
-                            await Task.Yield();
-                        }
+                    OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
 
-                        LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
+                    if (!IsPlayerInLobby())
+                    {
+                        // Player foi kickado do lobby
+                        Debug.Log("Kicked from Lobby!");
+
+                        OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+
+                        joinedLobby = null;
                     }
+
+                    if (joinedLobby.Data[KEY_START_GAME].Value != "0")
+                    {
+                        // Starta o jogo
+                        if (!IsLobbyHost()) // o host ja entrou no relay
+                        {
+                            Loader.Load(Loader.Scene.Loading);
+
+                            // Aguarde até que a cena de loading esteja completamente carregada
+                            while (Loader.GetLoadingProgress() < 1f)
+                            {
+                                await Task.Yield();
+                            }
+
+                            LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Failed to get lobby update: {ex.Message}");
                 }
             }
         }
     }
+
+    private async Task<T> RetryOnFailure<T>(Func<Task<T>> operation, int maxRetries = 5, int delayMilliseconds = 1000)
+    {
+        int retryCount = 0;
+        while (true)
+        {
+            try
+            {
+                return await operation();
+            }
+            catch (Exception)
+            {
+                if (++retryCount >= maxRetries)
+                    throw;
+
+                await Task.Delay(delayMilliseconds);
+                delayMilliseconds *= 2; // Exponential backoff
+            }
+        }
+    }
+
 
     //Funcao para manter o lobby ativo
     private async void HandleLobbyHeartbeat()
