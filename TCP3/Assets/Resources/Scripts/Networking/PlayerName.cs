@@ -7,8 +7,7 @@ using Unity.Collections; // Necessário para FixedString
 
 public class PlayerName : NetworkBehaviour
 {
-    // Usando FixedString64Bytes para serializar o nome do jogador
-    private NetworkVariable<FixedString64Bytes> playersName = new NetworkVariable<FixedString64Bytes>();
+    private NetworkVariable<FixedString64Bytes> playersName = new NetworkVariable<FixedString64Bytes>(writePerm: NetworkVariableWritePermission.Server);
 
     private bool overlaySet = false;
 
@@ -16,15 +15,18 @@ public class PlayerName : NetworkBehaviour
     {
         if (IsOwner && IsLocalPlayer)
         {
-            // Defina o nome do jogador com base no LobbyManager
-            string name = LobbyManager.Instance.GetName() != null ? LobbyManager.Instance.GetName() : $"Player {OwnerClientId}";
-
-            // Atualize o valor da variável de rede com o nome do jogador
-            playersName.Value = name;
+            // Solicita ao servidor para definir o nome do jogador
+            SetPlayerNameServerRpc(LobbyManager.Instance.GetName() ?? $"Player {OwnerClientId}");
         }
 
         // Defina o overlay com o nome sincronizado
         SetOverlay();
+    }
+
+    [ServerRpc]
+    private void SetPlayerNameServerRpc(string name)
+    {
+        playersName.Value = name;
     }
 
     public void SetOverlay()
