@@ -47,17 +47,26 @@ public class LobbyRelay : MonoBehaviour
     {
         try
         {
-            JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+            // Verifique se o cliente ou o host já estão em execução
+            if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
+            {
+                JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-            RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
+                RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
 
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
-            NetworkManager.Singleton.StartClient();
+                NetworkManager.Singleton.StartClient();
+            }
+            else
+            {
+                Debug.LogWarning("Client or server is already running.");
+            }
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
     }
+
 }
