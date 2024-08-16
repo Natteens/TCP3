@@ -35,8 +35,7 @@ public class LobbyManager : MonoBehaviour
     public Lobby joinedLobby;
     private float heartbeatTimer;
     private float lobbyUpdateTimer;
-    private const int MaxReconnectAttempts = 5;
-    private const float ReconnectDelay = 1f;
+
     private string playerName;
     public class LobbyEventArgs : EventArgs
     {
@@ -76,74 +75,47 @@ public class LobbyManager : MonoBehaviour
     {
         HandleLobbyHeartbeat();
 
-       if (LobbyUI.Instance != null)
-       {
-         HandleLobbyPollForUpdates();
-       }
+        if (LobbyUI.Instance != null)
+        {
+            HandleLobbyPollForUpdates();
+        }
     }
 
     private async void HandleLobbyPollForUpdates()
     {
         if (joinedLobby != null)
         {
-            float lobbyPollTimerMax = 1f; // Intervalo baixo
-            lobbyUpdateTimer = lobbyPollTimerMax;
-
-            int attempts = 0;
-
-            while (attempts < MaxReconnectAttempts)
+            lobbyUpdateTimer -= Time.deltaTime;
+            if (lobbyUpdateTimer < 0f)
             {
-                try
+                float lobbyPollTimerMax = 1.1f;
+                lobbyUpdateTimer = lobbyPollTimerMax;
+
+                joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+
+                OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+
+                if (!IsPlayerInLobby())
                 {
-                    joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+                    // Player foi kickado do lobby
+                    Debug.Log("Kicked from Lobby!");
 
-                    OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+                    OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
 
-                    if (!IsPlayerInLobby())
-                    {
-                        // Player foi kickado do lobby
-                        Debug.Log("Kicked from Lobby!");
-
-                        OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-
-                        joinedLobby = null;
-                        return;
-                    }
-
-                    if (joinedLobby.Data[KEY_START_GAME].Value != "0")
-                    {
-                        // Starta o jogo
-                        if (!IsLobbyHost()) // o host ja entrou no relay
-                        {
-                            Loader.Load(Loader.Scene.Loading);
-
-                            // Aguarde até que a cena de loading esteja completamente carregada
-                            while (Loader.GetLoadingProgress() < 1f)
-                            {
-                                await Task.Yield();
-                            }
-
-                            LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
-                        }
-                    }
-                    return; // Sucesso, sai do loop
+                    joinedLobby = null;
                 }
-                catch (Exception ex)
+
+                if (joinedLobby.Data[KEY_START_GAME].Value != "0")
                 {
-                    Debug.LogError($"Failed to get lobby update: {ex.Message}");
-                    attempts++;
-                    if (attempts >= MaxReconnectAttempts)
+                    //Starta o jogo
+                    if (!IsLobbyHost()) // o host ja entrou no relay
                     {
-                        Debug.LogError("Max reconnect attempts reached. Returning to main menu.");
-                        LoadMainMenu();
-                        return;
+                        LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
-                    await Task.Delay((int)(ReconnectDelay * 1000)); // Atraso antes da próxima tentativa
                 }
             }
         }
     }
-
 
     //Funcao para manter o lobby ativo
     private async void HandleLobbyHeartbeat()
@@ -152,27 +124,13 @@ public class LobbyManager : MonoBehaviour
         {
             heartbeatTimer -= Time.deltaTime;
 
-            if (heartbeatTimer <= 0f)
+            if (heartbeatTimer < 0f)
             {
-                float heartbeatTimerMax = 15f;
+                float heartbeatTimerMax = 15;
                 heartbeatTimer = heartbeatTimerMax;
 
                 await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
             }
-        }
-    }
-
-
-    private async void LoadMainMenu()
-    {
-        // Carregar a cena do menu principal
-        Debug.Log("Voltando para o menu principal.");
-        Loader.Load(Loader.Scene.MainMenu);
-
-        // Aguarde até que a cena do menu principal esteja completamente carregada
-        while (Loader.GetLoadingProgress() < 1f)
-        {
-            await Task.Yield();
         }
     }
 
@@ -249,7 +207,7 @@ public class LobbyManager : MonoBehaviour
                 Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
                 {
                     Data = new Dictionary<string, DataObject> {
-                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Public, relayCode)}
+                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
                     }
 
                 });
@@ -487,13 +445,14 @@ public class LobbyManager : MonoBehaviour
         {
             if (joinedLobby.Players.Count > 1)
             {
-                Debug.Log("Sai do lobby");
+                Debug.Log("sai do lobby");
                 await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
             }
             else
             {
-                await DeleteLobby();
+                DeleteLobby();
             }
+            
         }
         catch (LobbyServiceException e)
         {
@@ -530,25 +489,15 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async Task DeleteLobby()
+    public async void DeleteLobby()
     {
         try
         {
             await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
-            Debug.Log("Lobby excluído com sucesso.");
         }
         catch (LobbyServiceException e)
         {
-            Debug.LogError($"Falha ao excluir o lobby: {e.Message}");
+            Debug.Log(e);
         }
     }
-
-    private async void OnApplicationQuit()
-    {
-        if (IsLobbyHost())
-        {
-            await DeleteLobby();
-        }
-    }
-
 }
