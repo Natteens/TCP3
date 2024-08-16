@@ -11,6 +11,8 @@ public class PlayerName : NetworkBehaviour
 
     private bool overlaySet = false;
 
+    private TextMeshProUGUI localPlayerOverlay;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner && IsLocalPlayer)
@@ -31,8 +33,11 @@ public class PlayerName : NetworkBehaviour
 
     public void SetOverlay()
     {
-        var localPlayerOverlay = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        localPlayerOverlay.text = playersName.Value.ToString();
+        localPlayerOverlay = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        if (localPlayerOverlay != null)
+        {
+            localPlayerOverlay.text = playersName.Value.ToString();
+        }
     }
 
     void Update()
@@ -42,5 +47,10 @@ public class PlayerName : NetworkBehaviour
             SetOverlay();
             overlaySet = true;
         }
+    }
+
+    void LateUpdate()
+    {
+       transform.rotation = Camera.main.transform.rotation;   
     }
 }
