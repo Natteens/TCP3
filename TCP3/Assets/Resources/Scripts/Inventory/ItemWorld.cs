@@ -6,44 +6,62 @@ using CodeMonkey.Utils;
 
 public class ItemWorld : NetworkBehaviour, Interactable
 {
-    public static ItemWorld SpawnItemWorld(Vector3 position, Item item)
+    // Método para criar e configurar um ItemWorld com sincronização de rede
+    public static void SpawnItemWorld(Vector3 position, Item item)
     {
-        Transform transform = Instantiate(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
-        ItemWorld itemWorld = transform.GetComponent<ItemWorld>();
-        itemWorld.ItemNetwork(true);
-        itemWorld.SetItem(item);
-
-        return itemWorld;
+        if (NetworkManager.Singleton.IsServer) // Verifica se é o servidor
+        {
+            Transform transform = Instantiate(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
+            ItemWorld itemWorld = transform.GetComponent<ItemWorld>();
+            itemWorld.SetItem(item);
+            itemWorld.InitializeNetwork();
+        }
     }
 
     private Item item;
 
+    // Configuração do item
     public void SetItem(Item item)
-    { 
+    {
         this.item = item;
-        //Instantiate(item.itemModel, transform);
+        // Instantiate(item.itemModel, transform);
     }
 
-    public static ItemWorld DropItem(Vector3 dropPosition, Item item)
+    // Método para criar e lançar o item
+    public static void DropItem(Vector3 dropPosition, Item item)
     {
         Vector3 randomDir = UtilsClass.GetRandomDir();
         Vector3 randomDirX = new Vector3(Random.Range(-.5f, .5f), 1.5f);
-        ItemWorld itemWorld = SpawnItemWorld(dropPosition + randomDirX * .5f, item);
-        itemWorld.GetComponent<Rigidbody>().AddForce(randomDir * .5f, ForceMode.Impulse);
-        return itemWorld;
+        if (NetworkManager.Singleton.IsServer) // Verifica se é o servidor
+        {
+            ItemWorld itemWorld = Instantiate(ItemAssets.Instance.pfItemWorld, dropPosition + randomDirX * .5f, Quaternion.identity).GetComponent<ItemWorld>();
+            itemWorld.SetItem(item);
+            itemWorld.InitializeNetwork();
+            Rigidbody rb = itemWorld.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddForce(randomDir * .5f, ForceMode.Impulse);
+            }
+        }
     }
 
-    public Item GetItem() 
-    { 
+    // Obter o item
+    public Item GetItem()
+    {
         return item;
     }
 
+    // Destruir o item
     public void DestroySelf()
     {
-       ItemNetwork(false);
-       Destroy(gameObject);
+        if (IsServer) // Verifica se é o servidor
+        {
+            ItemNetwork(false);
+        }
+        Destroy(gameObject);
     }
 
+    // Interagir com o item
     public void OnInteract(Transform interactor)
     {
         InventoryController i = interactor.gameObject.GetComponent<InventoryController>();
@@ -52,29 +70,42 @@ public class ItemWorld : NetworkBehaviour, Interactable
         {
             i.SetItem(item);
             DestroySelf();
-            interactor.gameObject.GetComponent<InteractController>().ControlInteractMessage(false);
+            InteractController interactController = interactor.gameObject.GetComponent<InteractController>();
+            if (interactController != null)
+            {
+                interactController.ControlInteractMessage(false);
+            }
         }
         else
         {
-            Debug.LogError("Nao foi encontrado o InventoryController portanto nao rodará o OnInteract");
+            Debug.LogError("Não foi encontrado o InventoryController, portanto não rodará o OnInteract");
         }
     }
 
+    // Inicializar a sincronização de rede
+    private void InitializeNetwork()
+    {
+        NetworkObject networkObject = GetComponent<NetworkObject>();
+        if (networkObject != null)
+        {
+            networkObject.Spawn(); // Chama Spawn apenas no servidor
+        }
+    }
 
+    // Configurar o estado de rede
     private void ItemNetwork(bool spawn)
     {
-        NetworkObject prefab = this.GetComponent<NetworkObject>();
-        if (IsServer)
+        NetworkObject networkObject = GetComponent<NetworkObject>();
+        if (networkObject != null)
         {
             if (spawn)
             {
-                prefab.Spawn();
+                networkObject.Spawn(); // Chama Spawn apenas no servidor
             }
             else
             {
-                prefab.Despawn();
+                networkObject.Despawn(); // Chama Despawn apenas no servidor
             }
         }
     }
 }
-
