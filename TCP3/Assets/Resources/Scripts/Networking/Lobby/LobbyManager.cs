@@ -88,84 +88,42 @@ public class LobbyManager : MonoBehaviour
             lobbyUpdateTimer -= Time.deltaTime;
             if (lobbyUpdateTimer < 0f)
             {
-                float lobbyPollTimerMax = 1.1f + UnityEngine.Random.Range(0f, 0.3f); // Adiciona uma variação aleatória
+                float lobbyPollTimerMax = 1.1f;
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
-                try
+                joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+
+                OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+
+                if (!IsPlayerInLobby())
                 {
-                    joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+                    // Player foi kickado do lobby
+                    Debug.Log("Kicked from Lobby!");
 
-                    OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+                    OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
 
-                    if (!IsPlayerInLobby())
+                    joinedLobby = null;
+                }
+
+                if (joinedLobby.Data[KEY_START_GAME].Value != "0")
+                {
+                    //Starta o jogo
+                    if (!IsLobbyHost()) // o host ja entrou no relay
                     {
-                        // Player foi kickado do lobby
-                        Debug.Log("Kicked from Lobby!");
-                        OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-                        joinedLobby = null;
-                        return; // Sai da função se o jogador foi kickado
-                    }
+                        Loader.Load(Loader.Scene.Loading);
 
-                    if (joinedLobby.Data[KEY_START_GAME].Value != "0")
-                    {
-                        if (!IsLobbyHost()) // o host já entrou no relay
+                        // Aguarde até que a cena de loading esteja completamente carregada
+                        while (Loader.GetLoadingProgress() < 1f)
                         {
-                            await TryJoinGameWithFallback(joinedLobby.Data[KEY_START_GAME].Value);
+                            await Task.Yield();
                         }
-                    }
-                }
-                catch (LobbyServiceException e)
-                {
-                    if (e.ErrorCode == 429) // TooManyRequests
-                    {
-                        Debug.LogWarning("Too many requests. Reduzindo a frequência de polling.");
-                        lobbyUpdateTimer *= 2; // Temporariamente aumenta o tempo de polling
-                    }
-                    else
-                    {
-                        Debug.LogError($"Erro ao atualizar lobby: {e}");
+
+                        LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
                 }
             }
         }
     }
-
-    private async Task TryJoinGameWithFallback(string relayCode)
-    {
-        const int maxRetries = 3;
-        int attempts = 0;
-        bool joinedSuccessfully = false;
-
-        while (attempts < maxRetries && !joinedSuccessfully)
-        {
-            attempts++;
-            Loader.Load(Loader.Scene.Loading);
-
-            // Aguarda até que a cena de loading esteja completamente carregada
-            while (Loader.GetLoadingProgress() < 1f)
-            {
-                await Task.Yield();
-            }
-
-            try
-            {
-                LobbyRelay.Instance.JoinRelay(relayCode);
-                joinedSuccessfully = true;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"Falha ao entrar no jogo na tentativa {attempts}. Erro: {ex.Message}");
-                await Task.Delay(500); // Espera meio segundo antes de tentar novamente
-            }
-        }
-
-        if (!joinedSuccessfully)
-        {
-            Debug.LogError("Não foi possível entrar no jogo após várias tentativas.");
-            // Lógica adicional de fallback, como notificar o jogador ou tentar reconectar ao lobby
-        }
-    }
-
 
     //Funcao para manter o lobby ativo
     private async void HandleLobbyHeartbeat()
@@ -237,18 +195,25 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
     }
-
     public async void StartGame()
     {
         if (IsLobbyHost())
         {
             try
             {
+                // Timer para aguardar antes de iniciar o jogo (por exemplo, 5 segundos)
+                float timer = 5f;
+                while (timer > 0f)
+                {
+                    Debug.Log($"Iniciando o jogo em: {Mathf.Ceil(timer)} segundos...");
+                    await Task.Delay(1000); // Aguarda 1 segundo
+                    timer -= 1f;
+                }
 
                 Loader.Load(Loader.Scene.Katalisya); //Aqui vai a cena do jogo
 
-                while (Loader.GetLoadingProgress() < 1f) 
-                { 
+                while (Loader.GetLoadingProgress() < 1f)
+                {
                     await Task.Yield();
                 }
 
@@ -257,9 +222,8 @@ public class LobbyManager : MonoBehaviour
                 Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
                 {
                     Data = new Dictionary<string, DataObject> {
-                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
-                    }
-
+                    { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
+                }
                 });
 
                 joinedLobby = lobby;
