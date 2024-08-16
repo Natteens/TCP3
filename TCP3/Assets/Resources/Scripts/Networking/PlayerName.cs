@@ -6,27 +6,31 @@ using TMPro;
 
 public class PlayerName : NetworkBehaviour
 {
-    private NetworkVariable<NetworkString> playersName = new NetworkVariable<NetworkString>();
+    private string playersName;
     private bool overlaySet = false;
 
     public override void OnNetworkSpawn()
     {
-        if(IsServer)
+        if (LobbyManager.Instance.GetName() != null)
         {
-            playersName.Value = $"{LobbyManager.Instance.GetName()}";
+            playersName = $"{LobbyManager.Instance.GetName()}";
+        }
+        else
+        {
+            playersName = $"Player {OwnerClientId}";
         }
     }
 
     public void SetOverlay()
     {
         var localPlayerOverlay = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        localPlayerOverlay.text = playersName.Value;
+        localPlayerOverlay.text = playersName;
     }
 
 
     void Update()
     {
-        if (!overlaySet && !string.IsNullOrEmpty(playersName.Value))
+        if (!overlaySet && !string.IsNullOrEmpty(playersName))
         { 
             SetOverlay();
             overlaySet = true;
