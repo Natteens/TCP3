@@ -110,6 +110,14 @@ public class LobbyManager : MonoBehaviour
                     //Starta o jogo
                     if (!IsLobbyHost()) // o host ja entrou no relay
                     {
+                        Loader.Load(Loader.Scene.Loading);
+
+                        // Aguarde até que a cena de loading esteja completamente carregada
+                        while (Loader.GetLoadingProgress() < 1f)
+                        {
+                            await Task.Yield();
+                        }
+
                         LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
                 }

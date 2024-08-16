@@ -9,10 +9,10 @@ public class LoaderCallback : MonoBehaviour
 
     private void Update()
     {
-        //if (isFirstUpdate)
-      //  { 
+        if (isFirstUpdate)
+        { 
             isFirstUpdate = false;
             Loader.LoaderCallback();
-       // }
+        }
     }
 }
