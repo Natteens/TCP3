@@ -59,8 +59,16 @@ public static class Loader
         //Executando o loadercallback que vai carregar a cena desejada
         if (onLoaderCallback != null)
         {
-            onLoaderCallback();
-            onLoaderCallback = null;
+            GameObject loadingGameObject = new GameObject("Loading Scene");
+            loadingGameObject.AddComponent<LoadingMonoBehaviour>().StartCoroutine(WaitToLoad());
         } 
+    }
+
+    private static IEnumerator WaitToLoad()
+    {
+        yield return new WaitForSeconds(10f);
+
+        onLoaderCallback();
+        onLoaderCallback = null;
     }
 }

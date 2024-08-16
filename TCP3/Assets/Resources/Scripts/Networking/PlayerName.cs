@@ -11,14 +11,17 @@ public class PlayerName : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (LobbyManager.Instance.GetName() != null)
+        if (IsOwner && IsLocalPlayer)
         {
-            playersName = $"{LobbyManager.Instance.GetName()}";
-        }
-        else
-        {
-            playersName = $"Player {OwnerClientId}";
-        }
+            if (LobbyManager.Instance.GetName() != null)
+            {
+                playersName = $"{LobbyManager.Instance.GetName()}";
+            }
+            else
+            {
+                playersName = $"Player {OwnerClientId}";
+            }
+        }   
     }
 
     public void SetOverlay()
