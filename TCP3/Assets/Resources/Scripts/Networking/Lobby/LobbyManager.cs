@@ -14,6 +14,7 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -195,6 +196,11 @@ public class LobbyManager : MonoBehaviour
             {
 
                 Loader.Load(Loader.Scene.Katalisya); //Aqui vai a cena do jogo
+
+                while (Loader.GetLoadingProgress() < 1f) 
+                { 
+                    await Task.Yield();
+                }
 
                 string relayCode = await LobbyRelay.Instance.CreateRelay();
 

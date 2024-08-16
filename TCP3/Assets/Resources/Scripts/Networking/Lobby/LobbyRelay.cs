@@ -32,8 +32,6 @@ public class LobbyRelay : MonoBehaviour
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
-            while (Loader.GetLoadingProgress() < 1f) { Debug.Log("Aguardando carregar"); }
-
             NetworkManager.Singleton.StartHost();
 
             return joinCode;
