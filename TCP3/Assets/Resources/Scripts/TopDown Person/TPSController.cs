@@ -11,6 +11,7 @@ public class TPSController : NetworkBehaviour
 {
     [SerializeField] private Transform aimTransform { get; set; }
     [SerializeField] private CinemachineVirtualCamera virtualCamera { get; set; }
+    [SerializeField] private Camera Mcam { get; set; }
     [SerializeField] private MultiAimConstraint torsoAimConstraint;
     [SerializeField] private float rotationSpeed = 100f;
     [SerializeField] private bool showGizmos = true; // Exibe os Gizmos no modo de jogo
@@ -33,6 +34,7 @@ public class TPSController : NetworkBehaviour
 
     private void Awake()
     {
+        Mcam = GameManager.Instance.mainCamera;
         aimTransform = GameManager.Instance.aimSpheare;
         virtualCamera = GameManager.Instance.virtualCamera;
         framingTransposer = GameManager.Instance.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
@@ -40,9 +42,7 @@ public class TPSController : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsOwner) return;
-
-        var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
+        var (success, position) = MouseController.GetMousePosition(Mcam, layer);
         if (success)
         {
             AimMousePosition(position);

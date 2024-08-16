@@ -1,18 +1,12 @@
 ﻿using Unity.Netcode;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
-#endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
 
 namespace StarterAssets
 {
-    [RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM 
-    [RequireComponent(typeof(PlayerInput))]
-#endif
     public class ThirdPersonController : NetworkBehaviour
     {
         [Header("Player")]
@@ -99,7 +93,7 @@ namespace StarterAssets
         private StatusComponent statusComponent;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
-        private GameObject _mainCamera { get; set; }
+        private GameObject _mainCamera;
         private bool _rotateOnMove = true;
 
         private const float _threshold = 0.01f;
@@ -121,38 +115,43 @@ namespace StarterAssets
 
         private void Awake()
         {
-            if (!IsOwner) return;
-            _mainCamera = GameManager.Instance.mainCamera.gameObject;
-           
+            if (_mainCamera == null)
+            {
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+            }
         }
 
         private void Start()
         {
-            if (!IsOwner) return; 
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            GameManager.Instance.virtualCamera.Follow = CinemachineCameraTarget.transform;
+           
             _animator = GetComponentInChildren<Animator>();
             _hasAnimator = _animator;
             statusComponent = GetComponent<StatusComponent>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM
-            if (IsOwner)
-            {
-                _playerInput.enabled = true; 
-            }
-#else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-#endif
 
             AssignAnimationIDs();
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
-
             Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
             gameObject.transform.position = spawnpoint;
+
+            if (IsClient && IsOwner)
+            {
+                GameManager.Instance.virtualCamera.Follow = CinemachineCameraTarget.transform;
+            }       
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsClient && IsOwner)
+            {
+               _playerInput.enabled = true;
+            }
         }
 
         private void Update()
@@ -255,8 +254,7 @@ namespace StarterAssets
 
             if (_input.move != Vector2.zero)
             {
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                                  _mainCamera.transform.eulerAngles.y;
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
 
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);

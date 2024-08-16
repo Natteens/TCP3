@@ -15,6 +15,7 @@ public class InteractController : MonoBehaviour
         //ignora colisao entre layer 6 (Player) e 11 (ItemDrop)
         Physics.IgnoreLayerCollision(6, 11);
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
+        interactMessage = GameManager.Instance.interactMSG;
     }
 
     public void ControlInteractMessage(bool request)

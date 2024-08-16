@@ -11,8 +11,6 @@ public class CraftController : NetworkBehaviour
 
     private void Awake()
     {
-        if (!IsOwner) return;
-
         uiCraft = GameManager.Instance.uiCraft;
         LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
         inventory = new CraftInventory();
