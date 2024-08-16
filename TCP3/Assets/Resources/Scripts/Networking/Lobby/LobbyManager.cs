@@ -193,11 +193,8 @@ public class LobbyManager : MonoBehaviour
         {
             try
             {
-                //StartCoroutine(LoadGameplayScene());
 
                 Loader.Load(Loader.Scene.Katalisya); //Aqui vai a cena do jogo
-
-                //Debug.Log("Start game");
 
                 string relayCode = await LobbyRelay.Instance.CreateRelay();
 
