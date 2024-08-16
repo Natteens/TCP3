@@ -82,9 +82,6 @@ public class LobbyRelay : MonoBehaviour
 
                 Debug.Log("Starting client...");
                 NetworkManager.Singleton.StartClient();
-
-                // Carregue a cena do jogo após a conexão bem-sucedida
-                Loader.Load(Loader.Scene.Katalisya);
             }
             else
             {
