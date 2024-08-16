@@ -44,6 +44,7 @@ public class InteractController : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!IsOwner) return;
         ControlInteractMessage(false);
     }
 }
