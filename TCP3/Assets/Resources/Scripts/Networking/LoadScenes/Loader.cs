@@ -31,14 +31,14 @@ public static class Loader
 
         //Carregando a cena de loading 
         SceneManager.LoadScene(Scene.Loading.ToString());
-
     }
 
     private static IEnumerator LoadSceneAsync(Scene scene)
     {
         yield return null;
 
-        
+        yield return new WaitForSeconds(10f);
+
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scene.ToString());
 
         while (!asyncOperation.isDone)
@@ -59,16 +59,10 @@ public static class Loader
         //Executando o loadercallback que vai carregar a cena desejada
         if (onLoaderCallback != null)
         {
-            GameObject loadingGameObject = new GameObject("Loading Scene");
-            loadingGameObject.AddComponent<LoadingMonoBehaviour>().StartCoroutine(WaitToLoad());
+            onLoaderCallback();
+            onLoaderCallback = null;
+            
         } 
     }
 
-    private static IEnumerator WaitToLoad()
-    {
-        yield return new WaitForSeconds(10f);
-
-        onLoaderCallback();
-        onLoaderCallback = null;
-    }
 }
