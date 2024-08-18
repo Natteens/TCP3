@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using Unity.Netcode;
 
-public class SurvivalManager : MonoBehaviour
+public enum TIPO
+{
+    Comida,
+    Bebida,
+    Vida,
+    Energia
+}
+
+public class SurvivalManager : NetworkBehaviour
 {
     [Range(20, 500)]
     public float MaxStamina = 100, MaxHunger = 100, MaxThirsty = 100, StaminaSpeed = 250;
@@ -14,14 +23,6 @@ public class SurvivalManager : MonoBehaviour
     [SerializeField] private HealthComponent healthComponent;
     public event Action OnStatusChanged;
 
-    [HideInInspector]
-    public enum TIPO
-    {
-        Comida,
-        Bebida,
-        Vida,
-        Energia
-    }
     private TIPO TipoDoItem;
     
     void Start()
@@ -34,6 +35,7 @@ public class SurvivalManager : MonoBehaviour
 
     void Update()
     {
+        if (!IsOwner) return;
         Stamina();
         Hungry();
         Thirsty();

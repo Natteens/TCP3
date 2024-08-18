@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class LocatePlayer : MonoBehaviour
+public class LocatePlayer : NetworkBehaviour
 {
-    //Script para dar a referencia do jogador
+    // Método para obter a posição do jogador (sincronizado)
     public Vector3 GetPosition()
     {
-        return gameObject.transform.position;
+        return transform.position;
     }
 }

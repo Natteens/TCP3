@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using Unity.Netcode;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Item/Create Item")]
 [System.Serializable]
-public class Item: ScriptableObject
+public class Item : ScriptableObject, INetworkSerializable
 {
     public enum Itemtype
     {
@@ -23,7 +21,6 @@ public class Item: ScriptableObject
     [Multiline] public string itemDescription;
     public Itemtype itemType;
     public Sprite itemSprite;
-    //public GameObject itemModel;
     [HideInInspector] public int amount = 1;
 
     public bool IsStackable()
@@ -43,4 +40,11 @@ public class Item: ScriptableObject
         }
     }
 
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref itemType);
+        serializer.SerializeValue(ref itemName);
+        serializer.SerializeValue(ref itemDescription);
+        serializer.SerializeValue(ref amount);
+    }
 }

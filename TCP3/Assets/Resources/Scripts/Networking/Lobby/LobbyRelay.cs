@@ -61,23 +61,18 @@ public class LobbyRelay : MonoBehaviour
         try
         {
             Debug.Log("Attempting to join relay with join code: " + joinCode);
+  
+            JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-            if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
-            {
-                // Carregue a cena de loading
-                JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+            RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
 
-                RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
-                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+            Debug.Log("Starting client...");
+            NetworkManager.Singleton.StartClient();
 
-                Debug.Log("Starting client...");
-                NetworkManager.Singleton.StartClient();
-            }
-            else
-            {
-                Debug.LogWarning("Client or server is already running.");
-            }
+            Debug.LogWarning("Client or server is already running.");
+            
         }
         catch (RelayServiceException e)
         {

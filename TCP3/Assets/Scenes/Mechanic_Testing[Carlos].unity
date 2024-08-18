@@ -6750,6 +6750,7 @@ GameObject:
   - component: {fileID: 242347920}
   - component: {fileID: 242347906}
   - component: {fileID: 242347905}
+  - component: {fileID: 242347921}
   m_Layer: 6
   m_Name: 'Player '
   m_TagString: Player
@@ -6853,6 +6854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f679f62f19e6645976c6a61ad1950a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starterAssetsInputs: {fileID: 0}
   uiInventory: {fileID: 2011445574}
 --- !u!114 &242347910
 MonoBehaviour:
@@ -6866,18 +6868,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466943f569509f641bf5ed646bd0e0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: MaxHealth
-      Entry: 4
-      Data: 0
   <CurrentHealth>k__BackingField: 0
 --- !u!114 &242347911
 MonoBehaviour:
@@ -6941,7 +6931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimTransform: {fileID: 2132757975}
-  virtualCamera: {fileID: 1443832445}
+  torsoAimConstraint: {fileID: 0}
   rotationSpeed: 10
   showGizmos: 1
   maxCameraOffset: 5
@@ -6953,9 +6943,11 @@ MonoBehaviour:
   zoomSpeed: 2
   cameraRadius: 5
   rotationMultiplier: 100
+  aimWeightChangeSpeed: 5
   layer:
     serializedVersion: 2
     m_Bits: 8
+  input: {fileID: 0}
   anim: {fileID: 925198019}
 --- !u!114 &242347914
 MonoBehaviour:
@@ -6981,8 +6973,6 @@ MonoBehaviour:
   interact: 0
   reload: 0
   analogMovement: 0
-  cursorLocked: 0
-  cursorInputForLook: 0
 --- !u!114 &242347915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7207,6 +7197,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactMessage: {fileID: 754828200}
+--- !u!114 &242347921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242347903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 800947763
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!64 &242773291
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8770,7 +8781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000031603686}
+  m_AnchoredPosition: {x: 0, y: 0.00068616314}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &336478321
@@ -23560,6 +23571,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasRectTransform: {fileID: 446233504}
+  background: {fileID: 803922767}
+  textMeshPro: {fileID: 490869211}
   padding: {x: 10, y: 10}
 --- !u!1 &1093124400
 GameObject:
@@ -25444,7 +25457,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: a68191ce3d75c63438a6226c13347325, type: 2}
   timeToSpawn: 5
-  currentTime: 0
 --- !u!23 &1186065585
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30440,17 +30452,6 @@ PrefabInstance:
     - {fileID: 2070925442191277752, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
     - {fileID: 2070925442191277753, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
---- !u!114 &1443832445 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
-  m_PrefabInstance: {fileID: 1443832444}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1443832446 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
@@ -34115,7 +34116,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 30e1d5b53ebcc904ab682999b4d16500, type: 2}
   timeToSpawn: 5
-  currentTime: 0
 --- !u!23 &1635800566
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -39104,7 +39104,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 2cb9a8093b37bd0489367d5ef9904421, type: 2}
   timeToSpawn: 5
-  currentTime: 0
 --- !u!23 &1935073333
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -41052,10 +41051,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb183d6b77543f42b51facf2d303676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 1792634529}
-  stamina: {fileID: 1676565130}
-  hunger: {fileID: 1017204312}
-  thirsty: {fileID: 1151500121}
   survivalManager: {fileID: 242347908}
   healthManager: {fileID: 242347910}
 --- !u!1 &2071134627
@@ -41878,8 +41873,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2071134629}
   m_HandleRect: {fileID: 2071134628}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999696
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

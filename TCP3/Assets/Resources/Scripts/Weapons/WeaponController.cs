@@ -29,12 +29,25 @@ public class WeaponController : NetworkBehaviour
 
     private void Start()
     {
+        StartingWeaponRpc();
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void StartingWeaponRpc()
+    {
         EquipWeapon(currentWeapon);
     }
 
     private void Update()
     {
+        WeaponUpdateRpc();
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void WeaponUpdateRpc()
+    {
         if (!IsOwner) return;
+
         HandleInput();
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)

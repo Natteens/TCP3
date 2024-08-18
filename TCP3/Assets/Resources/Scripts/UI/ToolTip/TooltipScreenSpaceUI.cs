@@ -8,16 +8,16 @@ public class TooltipScreenSpaceUI : MonoBehaviour
     public static TooltipScreenSpaceUI Instance { get; private set; }
 
     [SerializeField] private RectTransform canvasRectTransform;
-    private RectTransform myRectTransform;
-    private RectTransform background;
-    private TextMeshProUGUI textMeshPro;
+    [SerializeField] private RectTransform background;
+    [SerializeField] private TextMeshProUGUI textMeshPro;
     [SerializeField] private Vector2 padding;
+    private RectTransform myRectTransform;
     private void Awake()
     {
         Instance = this;
         myRectTransform = transform.GetComponent<RectTransform>();
-        background = transform.Find("background").GetComponent<RectTransform>();
-        textMeshPro = transform.Find("text").GetComponent<TextMeshProUGUI>();
+        //background = transform.Find("background").GetComponent<RectTransform>();
+        //textMeshPro = transform.Find("text").GetComponent<TextMeshProUGUI>();
 
         HideTooltip();
     }

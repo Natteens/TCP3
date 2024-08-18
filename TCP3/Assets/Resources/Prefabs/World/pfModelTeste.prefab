@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4324182622165854025}
   - component: {fileID: 4324182622165854024}
   - component: {fileID: 4324182622165854027}
-  - component: {fileID: 3937741301410582864}
+  - component: {fileID: 2333616794356154280}
   m_Layer: 11
   m_Name: pfModelTeste
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4324182622165854037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.2, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4324182622165854037}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6992266682927715334, guid: c0f9663d008afd143bd47400039df110, type: 3}
 --- !u!23 &4324182622165854027
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62,7 +62,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bcf02e10e105745ce9ac07869c402f07, type: 2}
+  - {fileID: 2100000, guid: 37cb86735cad2f543b3bbe8a0a78a34e, type: 2}
+  - {fileID: 2100000, guid: bbebd961d833c3a4f81d55f40e6e1d6c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3937741301410582864
+--- !u!65 &2333616794356154280
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,5 +96,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.24734184, y: 0.3816852, z: 0.23842263}
-  m_Center: {x: 0.02278164, y: -0.8091581, z: -0.020396933}
+  m_Size: {x: 0.54342335, y: 0.27594578, z: 0.53521323}
+  m_Center: {x: 0.0027297437, y: 0.085317284, z: 0.11531448}

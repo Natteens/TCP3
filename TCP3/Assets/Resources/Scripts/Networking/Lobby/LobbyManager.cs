@@ -15,6 +15,7 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -91,32 +92,51 @@ public class LobbyManager : MonoBehaviour
                 float lobbyPollTimerMax = 1.1f;
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
-                joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+                var updatedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+
+                if (updatedLobby != null && updatedLobby.Data.ContainsKey("ChatMessage"))
+                {
+                    string chatMessage = updatedLobby.Data["ChatMessage"].Value;
+
+                    // Verifica se a mensagem não é vazia
+                    if (!string.IsNullOrEmpty(chatMessage))
+                    {
+                        ChatManager.Instance.ReceiveChatMessage(chatMessage);
+
+                        // Limpa a mensagem do lobby após processar
+                        var updateLobbyOptions = new UpdateLobbyOptions
+                        {
+                            Data = new Dictionary<string, DataObject>
+                        {
+                            { "ChatMessage", new DataObject(DataObject.VisibilityOptions.Member, "") }
+                        }
+                        };
+
+                        try
+                        {
+                            joinedLobby = await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, updateLobbyOptions);
+                        }
+                        catch (LobbyServiceException e)
+                        {
+                            Debug.LogError(e);
+                        }
+                    }
+                }
 
                 OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
 
                 if (!IsPlayerInLobby())
                 {
-                    // Player foi kickado do lobby
                     Debug.Log("Kicked from Lobby!");
-
                     OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-
                     joinedLobby = null;
                 }
 
                 if (joinedLobby.Data[KEY_START_GAME].Value != "0")
                 {
-                    //Starta o jogo
-                    if (!IsLobbyHost()) // o host ja entrou no relay
+                    if (!IsLobbyHost())
                     {
-                        Loader.Load(Loader.Scene.Katalisya); //Aqui vai a cena do jogo
-
-                        while (Loader.GetLoadingProgress() < 1f)
-                        {
-                            await Task.Yield();
-                        }
-
+                        await LoadingGameScreen();
                         LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
                 }
@@ -133,7 +153,7 @@ public class LobbyManager : MonoBehaviour
 
             if (heartbeatTimer < 0f)
             {
-                float heartbeatTimerMax = 15;
+                float heartbeatTimerMax = 5f; // valor que estava antes era 15f
                 heartbeatTimer = heartbeatTimerMax;
 
                 await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
@@ -201,13 +221,7 @@ public class LobbyManager : MonoBehaviour
         {
             try
             {
-
-                Loader.Load(Loader.Scene.Katalisya); //Aqui vai a cena do jogo
-
-                while (Loader.GetLoadingProgress() < 1f) 
-                { 
-                    await Task.Yield();
-                }
+                await LoadingGameScreen();
 
                 string relayCode = await LobbyRelay.Instance.CreateRelay();
 
@@ -226,6 +240,16 @@ public class LobbyManager : MonoBehaviour
             {
                 Debug.Log(e);
             }
+        }
+    }
+
+    private static async Task LoadingGameScreen()
+    {
+        Loader.Load(Loader.Scene.Katalisya);
+
+        while (Loader.GetLoadingProgress() < 1f)
+        {
+            await Task.Yield();
         }
     }
 
@@ -479,16 +503,32 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async void MigrateLobbyHost()
+    public async void MigrateLobbyHost() // atualizei pra q passe o host.
     {
         try
         {
-            hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
+            // Verifica se há mais de um jogador no lobby (além do host atual)
+            if (joinedLobby.Players.Count > 1)
             {
-                //Ta dando o host pro segundo player do lobby aqui! (modificar posteriormente)
-                HostId = joinedLobby.Players[1].Id
-            });
-            joinedLobby = hostLobby;
+                // Encontra o próximo jogador após o host atual
+                Player nextHost = joinedLobby.Players.FirstOrDefault(player => player.Id != joinedLobby.HostId);
+
+                if (nextHost != null)
+                {
+                    // Atualiza o lobby para definir o novo host
+                    hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
+                    {
+                        HostId = nextHost.Id
+                    });
+
+                    joinedLobby = hostLobby;
+                }
+            }
+            else
+            {
+                // Se não houver outros jogadores, deleta o lobby
+                DeleteLobby();
+            }
         }
         catch (LobbyServiceException e)
         {
@@ -498,13 +538,56 @@ public class LobbyManager : MonoBehaviour
 
     public async void DeleteLobby()
     {
+        if (hostLobby != null)
+        {
+            try
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(hostLobby.Id);
+                hostLobby = null;
+                joinedLobby = null;
+                OnLeftLobby?.Invoke(this, EventArgs.Empty);
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
+    }
+
+    public async void SendLobbyChatMessage(string message)
+    {
+        if (joinedLobby == null)
+        {
+            Debug.LogWarning("Not in a lobby.");
+            return;
+        }
+
+        string playerName = GetName();
+
+        string fullMessage = playerName + " > " + message;
+
+        Debug.Log(fullMessage);
+
+        var updateLobbyOptions = new UpdateLobbyOptions
+        {
+            Data = new Dictionary<string, DataObject>
+        {
+            { "ChatMessage", new DataObject(DataObject.VisibilityOptions.Member, fullMessage) }
+        }
+        };
+
         try
         {
-            await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
+            joinedLobby = await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, updateLobbyOptions);
         }
         catch (LobbyServiceException e)
         {
-            Debug.Log(e);
+            Debug.LogError(e);
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        DeleteLobby();
     }
 }

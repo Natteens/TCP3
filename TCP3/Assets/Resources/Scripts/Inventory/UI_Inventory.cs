@@ -88,6 +88,7 @@ public class UI_Inventory : MonoBehaviour
         rect.gameObject.GetComponent<Button_UI>().MouseRightClickFunc = () => 
         {
             //Drop item
+            Debug.Log(item);
             inventory.RemoveItem(item);
             ItemWorld.DropItem(player.GetPosition(), item);
         };

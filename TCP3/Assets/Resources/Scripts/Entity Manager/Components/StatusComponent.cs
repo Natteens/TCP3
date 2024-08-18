@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using System.Globalization;
 using Unity.Netcode;
 
-public class StatusComponent : SerializedMonoBehaviour
+public class StatusComponent : NetworkBehaviour
 {
     [SerializeField] private EntityStatus baseStatus;
     [SerializeField] private List<StatusEffectData> activeEffects = new List<StatusEffectData>();

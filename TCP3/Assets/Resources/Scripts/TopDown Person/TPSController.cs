@@ -9,7 +9,7 @@ using Unity.Netcode;
 
 public class TPSController : NetworkBehaviour
 {
-    [SerializeField] private Transform aimTransform { get; set; }
+    [SerializeField] private Transform aimTransform;
     [SerializeField] private CinemachineVirtualCamera virtualCamera { get; set; }
     [SerializeField] private Camera Mcam { get; set; }
     [SerializeField] private MultiAimConstraint torsoAimConstraint;
@@ -35,13 +35,8 @@ public class TPSController : NetworkBehaviour
     private void Awake()
     {
         Mcam = GameManager.Instance.mainCamera;
-        aimTransform = GameManager.Instance.aimSpheare;
         virtualCamera = GameManager.Instance.virtualCamera;
         framingTransposer = GameManager.Instance.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
-        var sourceObjects = torsoAimConstraint.data.sourceObjects;
-        var newSource = new WeightedTransform(aimTransform, 1f);
-        sourceObjects.Add(newSource);
-        torsoAimConstraint.data.sourceObjects = sourceObjects;
     }
 
     private void Update()

@@ -1,7 +1,3 @@
-using Mono.CSharp;
-using StarterAssets;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
@@ -9,42 +5,49 @@ public class InteractController : NetworkBehaviour
 {
     [SerializeField] private GameObject interactMessage;
     private StarterAssetsInputs starterAssetsInputs;
-
+    private Interactable currentInteractable; // Armazena o objeto atual que pode ser interagido
 
     private void Awake()
     {
-        //ignora colisao entre layer 6 (Player) e 11 (ItemDrop)
-        Physics.IgnoreLayerCollision(6, 11);
+        Physics.IgnoreLayerCollision(6, 11); // Ignora colisão entre layer 6 (Player) e 11 (ItemDrop)
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         interactMessage = GameManager.Instance.interactMSG;
     }
 
     public void ControlInteractMessage(bool request)
-    { 
+    {
         interactMessage.SetActive(request);
     }
+
+    private void Update()
+    {
+        // Verifica se o jogador pressionou o botão de interação
+        if (starterAssetsInputs.interact && currentInteractable != null)
+        {
+            currentInteractable.OnInteract(transform);
+            starterAssetsInputs.interact = false;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!IsOwner) return;
-        if(other.TryGetComponent<Interactable>(out var i))
-        ControlInteractMessage(true);
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (!IsOwner) return;
-        Interactable i = other.GetComponent<Interactable>(); 
-        if (starterAssetsInputs.interact && i != null)
+        if (other.TryGetComponent<Interactable>(out var interactable))
         {
-            i.OnInteract(transform);
-            starterAssetsInputs.interact = false;
+            currentInteractable = interactable; // Armazena o objeto que pode ser interagido
+            ControlInteractMessage(true); // Mostra a mensagem de interação
         }
-        else if (starterAssetsInputs.interact && i == null){ Debug.LogError("Nao foi encontrado a interface Interactable"); }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!IsOwner) return;
-        ControlInteractMessage(false);
+
+        if (other.TryGetComponent<Interactable>(out var interactable) && interactable == currentInteractable)
+        {
+            currentInteractable = null; // Limpa o objeto atual quando o jogador sai da área de interação
+            ControlInteractMessage(false); // Esconde a mensagem de interação
+        }
     }
 }
