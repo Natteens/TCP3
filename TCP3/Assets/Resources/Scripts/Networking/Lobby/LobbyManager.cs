@@ -36,6 +36,7 @@ public class LobbyManager : MonoBehaviour
     public Lobby joinedLobby;
     private float heartbeatTimer;
     private float lobbyUpdateTimer;
+    private float refreshLobbyListTimer = 5f;
 
     private string playerName;
     public class LobbyEventArgs : EventArgs
@@ -74,6 +75,7 @@ public class LobbyManager : MonoBehaviour
 
     private void Update()
     {
+      //  HandleRefreshLobbyList();
         HandleLobbyHeartbeat();
 
         if (LobbyUI.Instance != null)
@@ -92,59 +94,36 @@ public class LobbyManager : MonoBehaviour
                 float lobbyPollTimerMax = 1.1f;
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
-                var updatedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+                joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
 
-                if (updatedLobby != null && updatedLobby.Data.ContainsKey("ChatMessage"))
-                {
-                    string chatMessage = updatedLobby.Data["ChatMessage"].Value;
-
-                    // Verifica se a mensagem não é vazia
-                    if (!string.IsNullOrEmpty(chatMessage))
-                    {
-                        ChatManager.Instance.ReceiveChatMessage(chatMessage);
-
-                        // Limpa a mensagem do lobby após processar
-                        var updateLobbyOptions = new UpdateLobbyOptions
-                        {
-                            Data = new Dictionary<string, DataObject>
-                        {
-                            { "ChatMessage", new DataObject(DataObject.VisibilityOptions.Member, "") }
-                        }
-                        };
-
-                        try
-                        {
-                            joinedLobby = await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, updateLobbyOptions);
-                        }
-                        catch (LobbyServiceException e)
-                        {
-                            Debug.LogError(e);
-                        }
-                    }
-                }
-
-                OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+                OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby }); 
 
                 if (!IsPlayerInLobby())
                 {
+                    // Player foi kickado do lobby
                     Debug.Log("Kicked from Lobby!");
+
                     OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+
                     joinedLobby = null;
                 }
 
                 if (joinedLobby.Data[KEY_START_GAME].Value != "0")
                 {
-                    if (!IsLobbyHost())
+                    //Starta o jogo
+                    if (!IsLobbyHost()) // o host ja entrou no relay
                     {
                         await LoadingGameScreen();
+
                         LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
+
                     }
+                    joinedLobby = null;
                 }
             }
         }
     }
 
-    //Funcao para manter o lobby ativo
     private async void HandleLobbyHeartbeat()
     {
         if (hostLobby != null)
@@ -153,7 +132,7 @@ public class LobbyManager : MonoBehaviour
 
             if (heartbeatTimer < 0f)
             {
-                float heartbeatTimerMax = 5f; // valor que estava antes era 15f
+                float heartbeatTimerMax = 15; // valor que estava antes era 15f
                 heartbeatTimer = heartbeatTimerMax;
 
                 await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
@@ -258,6 +237,21 @@ public class LobbyManager : MonoBehaviour
         return playerName;
     }
 
+    private void HandleRefreshLobbyList()
+    {
+        if (UnityServices.State == ServicesInitializationState.Initialized && AuthenticationService.Instance.IsSignedIn)
+        {
+            refreshLobbyListTimer -= Time.deltaTime;
+            if (refreshLobbyListTimer < 0f)
+            {
+                float refreshLobbyListTimerMax = 5f;
+                refreshLobbyListTimer = refreshLobbyListTimerMax;
+
+                RefreshLobbyList();
+            }
+        }
+    }
+
     public async void RefreshLobbyList()
     {
         try
@@ -280,7 +274,7 @@ public class LobbyManager : MonoBehaviour
                     field: QueryOrder.FieldOptions.Created)
             };
 
-            QueryResponse lobbyListQueryResponse = await Lobbies.Instance.QueryLobbiesAsync();
+            QueryResponse lobbyListQueryResponse = await Lobbies.Instance.QueryLobbiesAsync(options);
 
             OnLobbyListChanged?.Invoke(this, new OnLobbyListChangedEventArgs { lobbyList = lobbyListQueryResponse.Results });
         }
@@ -551,38 +545,6 @@ public class LobbyManager : MonoBehaviour
             {
                 Debug.Log(e);
             }
-        }
-    }
-
-    public async void SendLobbyChatMessage(string message)
-    {
-        if (joinedLobby == null)
-        {
-            Debug.LogWarning("Not in a lobby.");
-            return;
-        }
-
-        string playerName = GetName();
-
-        string fullMessage = playerName + " > " + message;
-
-        Debug.Log(fullMessage);
-
-        var updateLobbyOptions = new UpdateLobbyOptions
-        {
-            Data = new Dictionary<string, DataObject>
-        {
-            { "ChatMessage", new DataObject(DataObject.VisibilityOptions.Member, fullMessage) }
-        }
-        };
-
-        try
-        {
-            joinedLobby = await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, updateLobbyOptions);
-        }
-        catch (LobbyServiceException e)
-        {
-            Debug.LogError(e);
         }
     }
 

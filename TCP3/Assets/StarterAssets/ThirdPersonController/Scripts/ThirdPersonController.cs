@@ -91,6 +91,7 @@ namespace StarterAssets
 #endif
         private Animator _animator;
         private StatusComponent statusComponent;
+        private SurvivalManager survivalManager;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
@@ -129,6 +130,7 @@ namespace StarterAssets
             _animator = GetComponentInChildren<Animator>();
             _hasAnimator = _animator;
             statusComponent = GetComponent<StatusComponent>();
+            survivalManager = GetComponent<SurvivalManager>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 
@@ -227,7 +229,7 @@ namespace StarterAssets
         {
             float SprintSpeed = statusComponent.GetStatus(StatusType.MoveSpeed);
             float MoveSpeed = statusComponent.GetStatus(StatusType.MoveSpeed) / 2f;
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            float targetSpeed = _input.sprint && survivalManager.UseStamina() ? SprintSpeed : MoveSpeed;
 
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 

@@ -21,11 +21,12 @@ public class InteractController : NetworkBehaviour
 
     private void Update()
     {
-        // Verifica se o jogador pressionou o botão de interação
         if (starterAssetsInputs.interact && currentInteractable != null)
         {
-            currentInteractable.OnInteract(transform);
+            currentInteractable?.OnInteract(transform);
             starterAssetsInputs.interact = false;
+            currentInteractable = null;
+            ControlInteractMessage(false);
         }
     }
 

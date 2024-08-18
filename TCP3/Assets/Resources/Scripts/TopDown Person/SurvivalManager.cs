@@ -35,7 +35,6 @@ public class SurvivalManager : NetworkBehaviour
 
     void Update()
     {
-        if (!IsOwner) return;
         Stamina();
         Hungry();
         Thirsty();
@@ -108,16 +107,24 @@ public class SurvivalManager : NetworkBehaviour
         {
             WhithoutStamina = false;
         }
-        if (Input.GetKey(KeyCode.LeftShift) && !WhithoutStamina)
-        {
-            CurrentStamina -= Time.deltaTime * (StaminaSpeed / 15) * Mathf.Pow(2.718f, multEuler);
-        }
         StatusChanged();
     }  
     void StatusChanged()
     {
         OnStatusChanged?.Invoke();
     }
+
+    public bool UseStamina()
+    {
+        float multEuler = ((1 / MaxStamina) * CurrentStamina) * ((1 / MaxHunger) * CurrentHungry);
+        if (!WhithoutStamina)
+        {
+            CurrentStamina -= Time.deltaTime * (StaminaSpeed / 15) * Mathf.Pow(2.718f, multEuler);
+            return true;
+        }
+        return false;
+    }
+
 
     public void IncreaseStats(TIPO type,float QuantoRepor)
     {

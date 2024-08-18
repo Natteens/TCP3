@@ -6,63 +6,49 @@ using TMPro;
 
 public class ChatManager : NetworkBehaviour
 {
-    public static ChatManager Instance;
+    public static ChatManager Singleton;
 
     [SerializeField] ChatMessage chatMessagePrefab;
     [SerializeField] CanvasGroup chatContent;
     [SerializeField] TMP_InputField chatInput;
-    [SerializeField] float messageCooldown = 1f;
-    private float cooldownTimer = 0f;
+
+    public string playerName;
 
     void Awake() 
-    { ChatManager.Instance = this; }
+    { ChatManager.Singleton = this; }
 
     void Update() 
     {
-        if (cooldownTimer > 0f)
+        if(Input.GetKeyDown(KeyCode.Return))
         {
-            cooldownTimer -= Time.deltaTime;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            SendMessage();
+            SendChatMessage(chatInput.text, playerName);
+            chatInput.text = "";
         }
     }
 
-    public void SendMessage()
-    {
-        if (CanSendMessage())
-        {
-            string message = chatInput.text;
-            if (!string.IsNullOrWhiteSpace(message))
-            {
-                SendChatMessageInLobby(message);
-                chatInput.text = "";
-                cooldownTimer = messageCooldown;
-            }
-        }
-    }
+    public void SendChatMessage(string _message, string _fromWho = null)
+    { 
+        if(string.IsNullOrWhiteSpace(_message)) return;
 
-    public void SendChatMessageInLobby(string _message)
-    {
-        if (string.IsNullOrWhiteSpace(_message)) return;
-        LobbyManager.Instance.SendLobbyChatMessage(_message);
+        string S = _fromWho + " > " +  _message;
+        SendChatMessageServerRpc(S); 
     }
-
-    public void AddMessage(string msg)
+   
+    void AddMessage(string msg)
     {
         ChatMessage CM = Instantiate(chatMessagePrefab, chatContent.transform);
         CM.SetText(msg);
     }
 
-    public void ReceiveChatMessage(string message)
+    [ServerRpc(RequireOwnership = false)]
+    void SendChatMessageServerRpc(string message)
     {
-        ChatManager.Instance.AddMessage(message);
+        ReceiveChatMessageClientRpc(message);
     }
 
-    private bool CanSendMessage()
+    [ClientRpc]
+    void ReceiveChatMessageClientRpc(string message)
     {
-        return cooldownTimer <= 0f;
+        ChatManager.Singleton.AddMessage(message);
     }
 }

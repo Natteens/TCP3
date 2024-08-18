@@ -12439,6 +12439,7 @@ GameObject:
   - component: {fileID: 8664087164105426189}
   - component: {fileID: 8664087164105426188}
   - component: {fileID: 8664087164105426224}
+  - component: {fileID: 8050093423248114255}
   - component: {fileID: 8664087164105426227}
   - component: {fileID: 8664087164105426226}
   - component: {fileID: 8664087164105426228}
@@ -12814,6 +12815,20 @@ MonoBehaviour:
   CurrentHungry: 0
   CurrentThirsty: 0
   healthComponent: {fileID: 8664087164105426188}
+--- !u!114 &8050093423248114255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664087164105426190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb183d6b77543f42b51facf2d303676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  survivalManager: {fileID: 8664087164105426224}
+  healthManager: {fileID: 8664087164105426188}
 --- !u!114 &8664087164105426227
 MonoBehaviour:
   m_ObjectHideFlags: 0
