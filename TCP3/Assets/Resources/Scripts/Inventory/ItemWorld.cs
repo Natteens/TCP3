@@ -29,7 +29,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
         else
         {
             // Caso contrário, chama o ServerRpc para processar a interação no servidor
-            OnInteractServerRpc(NetworkObject.NetworkObjectId, interactor.GetComponent<NetworkObject>().NetworkObjectId);
+            OnInteractClientRpc(NetworkObject.NetworkObjectId, interactor.GetComponent<NetworkObject>().NetworkObjectId);
         }
     }
 
@@ -123,8 +123,8 @@ public class ItemWorld : NetworkBehaviour, Interactable
         Destroy(gameObject);
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void OnInteractServerRpc(ulong itemNetworkObjectId, ulong interactorNetworkObjectId)
+    [ClientRpc(RequireOwnership = false)]
+    private void OnInteractClientRpc(ulong itemNetworkObjectId, ulong interactorNetworkObjectId)
     {
         NetworkObject itemNetworkObject = NetworkManager.Singleton.SpawnManager.SpawnedObjects[itemNetworkObjectId];
         NetworkObject interactorNetworkObject = NetworkManager.Singleton.SpawnManager.SpawnedObjects[interactorNetworkObjectId];
