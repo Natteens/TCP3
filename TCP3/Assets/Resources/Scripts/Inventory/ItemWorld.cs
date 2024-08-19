@@ -85,7 +85,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void DropItemServerRpc(Vector3 position, Item item)
     {
         Vector3 finalDropPosition = VariablePosition(position);
@@ -123,7 +123,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
         Destroy(gameObject);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void OnInteractServerRpc(ulong itemNetworkObjectId, ulong interactorNetworkObjectId)
     {
         NetworkObject itemNetworkObject = NetworkManager.Singleton.SpawnManager.SpawnedObjects[itemNetworkObjectId];
