@@ -112,7 +112,7 @@ public class LobbyManager : MonoBehaviour
 
                         LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
-                   // joinedLobby = null;
+                    joinedLobby = null;
                    // OnGameStarted?.Invoke(this, EventArgs.Empty);
                 }
             }
