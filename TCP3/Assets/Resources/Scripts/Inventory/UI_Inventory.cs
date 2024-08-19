@@ -91,6 +91,7 @@ public class UI_Inventory : MonoBehaviour
                     {
                         SurvivalManager manager = player.gameObject.GetComponent<SurvivalManager>();
                         manager.IncreaseStats(consumable);
+                        inventory.RemoveItem(item);
                     }
                     else { Debug.LogWarning("CASTING NAO ESTA FUNCIONANDO"); }
                     break;
