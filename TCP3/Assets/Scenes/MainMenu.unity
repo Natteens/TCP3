@@ -5237,7 +5237,7 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 49c066e87c3d53648b878ca516e7a9cf, type: 2}
     TickRate: 60
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
@@ -6768,6 +6768,7 @@ MonoBehaviour:
   chatMessagePrefab: {fileID: 3105236472809020981, guid: 93ae903013dcc1b4a9c00886df922b73, type: 3}
   chatContent: {fileID: 1760456069718365217}
   chatInput: {fileID: 249069285016608661}
+  playerName: 
 --- !u!114 &3200642867754514448
 MonoBehaviour:
   m_ObjectHideFlags: 0
