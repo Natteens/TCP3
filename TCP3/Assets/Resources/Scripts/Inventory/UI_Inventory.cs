@@ -80,12 +80,25 @@ public class UI_Inventory : MonoBehaviour
     private void ConfigureItemSlot(Item item, RectTransform rect)
     {
         rect.gameObject.SetActive(true);
-        rect.gameObject.GetComponent<Button_UI>().ClickFunc = () => 
+        rect.gameObject.GetComponent<Button_UI>().ClickFunc = () =>
         {
-            //Use item
+            //Use Item
+            switch (item.itemType)
+            {
+                case Item.Itemtype.Consumivel:
+                    Consumable consumable = item as Consumable;
+                    if (consumable != null)
+                    {
+                        SurvivalManager manager = player.gameObject.GetComponent<SurvivalManager>();
+                        manager.IncreaseStats(consumable);
+                        inventory.RemoveItem(item);
+                    }
+                    else { Debug.LogWarning("CASTING NAO ESTA FUNCIONANDO"); }
+                    break;
+            }
         };
 
-        rect.gameObject.GetComponent<Button_UI>().MouseRightClickFunc = () => 
+        rect.gameObject.GetComponent<Button_UI>().MouseRightClickFunc = () =>
         {
             //Drop item
             Debug.Log(item);
@@ -98,11 +111,11 @@ public class UI_Inventory : MonoBehaviour
         Image img = rect.Find("image").GetComponent<Image>();
         TextMeshProUGUI txt = rect.Find("amount").GetComponent<TextMeshProUGUI>();
 
-        if(txt == null) { Debug.LogError("txt nao encontrado"); }
-        if(img == null) { Debug.LogError("img nao encontrado"); }
+        if (txt == null) { Debug.LogError("txt nao encontrado"); }
+        if (img == null) { Debug.LogError("img nao encontrado"); }
 
         img.sprite = item.itemSprite;
         txt.text = item.amount.ToString();
-        Debug.Log(item.itemName + ": x"+ item.amount.ToString());
+        Debug.Log(item.itemName + ": x" + item.amount.ToString());
     }
 }
