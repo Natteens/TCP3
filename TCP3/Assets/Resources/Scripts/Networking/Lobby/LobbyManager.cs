@@ -31,7 +31,7 @@ public class LobbyManager : MonoBehaviour
     public event EventHandler<LobbyEventArgs> OnJoinedLobby;
     public event EventHandler<LobbyEventArgs> OnJoinedLobbyUpdate;
     public event EventHandler<LobbyEventArgs> OnKickedFromLobby;
-    public event EventHandler OnGameStarted;
+   // public event EventHandler OnGameStarted;
 
     private Lobby hostLobby;
     public Lobby joinedLobby;
@@ -76,13 +76,9 @@ public class LobbyManager : MonoBehaviour
 
     private void Update()
     {
-      //  HandleRefreshLobbyList();
-        HandleLobbyHeartbeat();
-
-        if (LobbyUI.Instance != null)
-        {
-            HandleLobbyPollForUpdates();
-        }
+      HandleRefreshLobbyList();
+      HandleLobbyHeartbeat();
+      HandleLobbyPollForUpdates();
     }
 
     private async void HandleLobbyPollForUpdates()
@@ -101,7 +97,6 @@ public class LobbyManager : MonoBehaviour
 
                 if (!IsPlayerInLobby())
                 {
-                    // Player foi kickado do lobby
                     Debug.Log("Kicked from Lobby!");
 
                     OnKickedFromLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
@@ -111,16 +106,14 @@ public class LobbyManager : MonoBehaviour
 
                 if (joinedLobby.Data[KEY_START_GAME].Value != "0")
                 {
-                    //Starta o jogo
-                    if (!IsLobbyHost()) // o host ja entrou no relay
+                    if (!IsLobbyHost())
                     {
                         await LoadingGameScreen();
 
                         LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
-
                     }
-                    joinedLobby = null;
-                    OnGameStarted?.Invoke(this, EventArgs.Empty);
+                   // joinedLobby = null;
+                   // OnGameStarted?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -134,33 +127,13 @@ public class LobbyManager : MonoBehaviour
 
             if (heartbeatTimer < 0f)
             {
-                float heartbeatTimerMax = 15; // valor que estava antes era 15f
+                float heartbeatTimerMax = 15;
                 heartbeatTimer = heartbeatTimerMax;
 
                 await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
             }
         }
     }
-
-    /*
-    public async void Authenticate(string playerName)
-    {
-        this.playerName = playerName;
-        InitializationOptions initializationOptions = new InitializationOptions();
-        initializationOptions.SetProfile(playerName);
-
-        await UnityServices.InitializeAsync(initializationOptions);
-
-        AuthenticationService.Instance.SignedIn += () => {
-            // do nothing
-            Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
-
-            RefreshLobbyList();
-        };
-
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
-    }
-    */
 
     public async void CreateLobby(string lobbyName, int maxPlayers, bool isPrivate)
     {
@@ -503,19 +476,16 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async void MigrateLobbyHost() // atualizei pra q passe o host.
+    public async void MigrateLobbyHost()
     {
         try
         {
-            // Verifica se há mais de um jogador no lobby (além do host atual)
             if (joinedLobby.Players.Count > 1)
             {
-                // Encontra o próximo jogador após o host atual
                 Player nextHost = joinedLobby.Players.FirstOrDefault(player => player.Id != joinedLobby.HostId);
 
                 if (nextHost != null)
                 {
-                    // Atualiza o lobby para definir o novo host
                     hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
                     {
                         HostId = nextHost.Id
@@ -526,7 +496,6 @@ public class LobbyManager : MonoBehaviour
             }
             else
             {
-                // Se não houver outros jogadores, deleta o lobby
                 DeleteLobby();
             }
         }

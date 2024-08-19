@@ -15,13 +15,6 @@ public class GameManager : Singleton<GameManager>
 
     public Image health, stamina, hunger, thirsty;
 
-    private NetworkVariable<int> joinedPlayers = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
-
-    private NetworkVariable<int> maxPlayers = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    private NetworkVariable<bool> hasAssigned = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    private List<NetworkClient> playerList;
-
-
     private void Awake()
     {
         if (Instance != this)
@@ -34,21 +27,4 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void Start()
-    {
-        maxPlayers.Value = LobbyManager.Instance.GetJoinedLobby().MaxPlayers;
-
-        if (IsServer)
-        {
-            playerList = (List<NetworkClient>)NetworkManager.Singleton.ConnectedClientsList;
-        }
-
-    }
-
-    private void Update()
-    {
-        if (!IsServer) return;
-        joinedPlayers.Value = NetworkManager.Singleton.ConnectedClients.Count;
-    }
 }
-// adicionei o start e o update pra tester se precisarmos ja tao ai 
