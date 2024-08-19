@@ -5,13 +5,7 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using Unity.Netcode;
 
-public enum TIPO
-{
-    Comida,
-    Bebida,
-    Vida,
-    Energia
-}
+
 
 public class SurvivalManager : NetworkBehaviour
 {
@@ -22,8 +16,6 @@ public class SurvivalManager : NetworkBehaviour
     private float HungryTimer, ThirstyTimer;
     [SerializeField] private HealthComponent healthComponent;
     public event Action OnStatusChanged;
-
-    private TIPO TipoDoItem;
     
     void Start()
     {
@@ -126,20 +118,21 @@ public class SurvivalManager : NetworkBehaviour
     }
 
 
-    public void IncreaseStats(TIPO type,float QuantoRepor)
+    public void IncreaseStats(Consumable consumable)
     {
-        switch (TipoDoItem)
+        switch (consumable.type)
         {
-            case TIPO.Comida:
-                CurrentHungry += QuantoRepor;
+            case ConsumableType.Fome:
+                CurrentHungry += consumable.restoreAmount;
                 break;
-            case TIPO.Bebida:
-                CurrentThirsty += QuantoRepor;
+            case ConsumableType.Sede:
+                CurrentThirsty += consumable.restoreAmount;
                 break;
-            case TIPO.Energia:
-                CurrentStamina += QuantoRepor;
+            case ConsumableType.Energia:
+                CurrentStamina += consumable.restoreAmount;
                 break;
         }
+        Debug.Log("Foi");
     }
 
 }
