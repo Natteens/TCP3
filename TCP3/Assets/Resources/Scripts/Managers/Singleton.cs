@@ -1,7 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
 {
     private static T _instance;
 

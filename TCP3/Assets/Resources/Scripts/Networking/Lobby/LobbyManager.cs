@@ -31,6 +31,7 @@ public class LobbyManager : MonoBehaviour
     public event EventHandler<LobbyEventArgs> OnJoinedLobby;
     public event EventHandler<LobbyEventArgs> OnJoinedLobbyUpdate;
     public event EventHandler<LobbyEventArgs> OnKickedFromLobby;
+    public event EventHandler OnGameStarted;
 
     private Lobby hostLobby;
     public Lobby joinedLobby;
@@ -119,6 +120,7 @@ public class LobbyManager : MonoBehaviour
 
                     }
                     joinedLobby = null;
+                    OnGameStarted?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -468,14 +470,18 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            if (joinedLobby.Players.Count > 1)
+            if (joinedLobby != null)
             {
-                Debug.Log("sai do lobby");
-                await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
-            }
-            else
-            {
-                DeleteLobby();
+                if (joinedLobby.Players.Count > 1)
+                {
+                    Debug.Log("sai do lobby");
+                    await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
+                    joinedLobby = null;
+                }
+                else
+                {
+                    DeleteLobby();
+                } 
             }
             
         }

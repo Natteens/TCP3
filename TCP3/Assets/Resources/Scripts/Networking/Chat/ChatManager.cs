@@ -21,6 +21,7 @@ public class ChatManager : NetworkBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Return))
         {
+            string playerName = LobbyManager.Instance.GetName();
             SendChatMessage(chatInput.text, playerName);
             chatInput.text = "";
         }

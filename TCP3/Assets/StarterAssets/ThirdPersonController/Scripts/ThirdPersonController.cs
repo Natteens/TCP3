@@ -152,9 +152,9 @@ namespace StarterAssets
             {
                 _playerInput = GetComponent<PlayerInput>();
                 _playerInput.enabled = true;
-                Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
-                transform.position = spawnpoint;
             }
+            Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
+            transform.position = spawnpoint;
         }
 
         private void Update()

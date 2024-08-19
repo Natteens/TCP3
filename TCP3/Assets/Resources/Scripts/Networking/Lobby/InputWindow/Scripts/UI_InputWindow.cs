@@ -10,16 +10,16 @@ public class UI_InputWindow : MonoBehaviour {
 
     private static UI_InputWindow instance;
 
-    private Button_UI okBtn;
-    private Button_UI cancelBtn;
+    [SerializeField] private Button_UI okBtn;
+    [SerializeField] private Button_UI cancelBtn;
     private TextMeshProUGUI titleText;
     private TMP_InputField inputField;
 
     private void Awake() {
         instance = this;
 
-        okBtn = transform.Find("okBtn").GetComponent<Button_UI>();
-        cancelBtn = transform.Find("cancelBtn").GetComponent<Button_UI>();
+       // okBtn = transform.Find("okBtn").GetComponent<Button_UI>();
+       // cancelBtn = transform.Find("cancelBtn").GetComponent<Button_UI>();
         titleText = transform.Find("titleText").GetComponent<TextMeshProUGUI>();
         inputField = transform.Find("inputField").GetComponent<TMP_InputField>();
 
