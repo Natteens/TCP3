@@ -1,47 +1,50 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum gameScenes
+{
+    Katalisya, //Cena do jogo
+    MainMenu,
+    Loading  //Cena de load
+}
+
 public static class Loader
 {
-    private class LoadingMonoBehaviour : MonoBehaviour { }
-
-    public enum Scene
-    {
-        Katalisya, //Cena do jogo
-        MainMenu,
-        Loading  //Cena de load
-    }
-
     private static Action onLoaderCallback;
     private static AsyncOperation loadingAsyncOperation;
 
-    public static void Load(Scene scene)
+    public static void Load(gameScenes scene)
     {
         // Dizendo pro callback qual cena desejada
-        onLoaderCallback = () =>
+        onLoaderCallback = async () =>
         {
-            // Criando um GameObject para iniciar a Coroutine
-            GameObject loadingGameObject = new GameObject("Loading GameOBJ");
-            loadingGameObject.AddComponent<LoadingMonoBehaviour>().StartCoroutine(LoadSceneAsync(scene));
+           await LoadSceneAsync(scene);
         };
 
         // Carregando a cena de loading
-        SceneManager.LoadScene(Scene.Loading.ToString());
+        SceneManager.LoadScene(gameScenes.Loading.ToString());
     }
 
-    private static IEnumerator LoadSceneAsync(Scene scene)
+    public static async Task LoadSceneAsync(gameScenes scene)
     {
-        yield return null;
+        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(scene.ToString());
+        loadingOperation.allowSceneActivation = false;
 
-        // Iniciando a operação assíncrona de carregamento
-        loadingAsyncOperation = SceneManager.LoadSceneAsync(scene.ToString());
-
-        while (!loadingAsyncOperation.isDone)
+        while (!loadingOperation.isDone)
         {
-            yield return null;
+            if (loadingOperation.progress >= 0.9f)
+            {
+                onLoaderCallback?.Invoke();
+                break;
+            }
+            await Task.Yield();
         }
+
+        await Task.Delay(1000); 
+        loadingOperation.allowSceneActivation = true;
     }
 
     public static float GetLoadingProgress()
@@ -58,8 +61,6 @@ public static class Loader
 
     public static void LoaderCallback()
     {
-        // Triggera após o primeiro tick de update
-        // Executando o loaderCallback que vai carregar a cena desejada
         if (onLoaderCallback != null)
         {
             onLoaderCallback();

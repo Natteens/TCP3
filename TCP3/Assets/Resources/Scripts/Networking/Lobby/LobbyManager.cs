@@ -88,7 +88,7 @@ public class LobbyManager : MonoBehaviour
             lobbyUpdateTimer -= Time.deltaTime;
             if (lobbyUpdateTimer < 0f)
             {
-                float lobbyPollTimerMax = 1.1f;
+                float lobbyPollTimerMax = 5f;
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
                 joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
@@ -108,7 +108,7 @@ public class LobbyManager : MonoBehaviour
                 {
                     if (!IsLobbyHost())
                     {
-                        await LoadingGameScreen();
+                        LoadingGameScreen();
 
                         LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
@@ -130,7 +130,14 @@ public class LobbyManager : MonoBehaviour
                 float heartbeatTimerMax = 15;
                 heartbeatTimer = heartbeatTimerMax;
 
-                await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
+                try
+                {
+                    await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
+                }
+                catch (LobbyServiceException e)
+                {
+                    Debug.LogError($"Failed to send heartbeat: {e.Message}");
+                }
             }
         }
     }
@@ -175,7 +182,7 @@ public class LobbyManager : MonoBehaviour
         {
             try
             {
-                await LoadingGameScreen();
+                LoadingGameScreen();
 
                 string relayCode = await LobbyRelay.Instance.CreateRelay();
 
@@ -197,14 +204,9 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    private static async Task LoadingGameScreen()
+    private void LoadingGameScreen()
     {
-        Loader.Load(Loader.Scene.Katalisya);
-
-        while (Loader.GetLoadingProgress() < 1f)
-        {
-            await Task.Yield();
-        }
+        Loader.Load(gameScenes.Katalisya);
     }
 
     public string GetName()

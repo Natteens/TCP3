@@ -121,6 +121,8 @@ namespace StarterAssets
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
             }
+
+            DontDestroyOnLoad(this);
         }
 
         private void Start()
@@ -148,6 +150,7 @@ namespace StarterAssets
 
         public override void OnNetworkSpawn()
         {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != gameScenes.Katalisya.ToString()) return;
             if (IsClient && IsOwner)
             {
                 _playerInput = GetComponent<PlayerInput>();
@@ -155,6 +158,7 @@ namespace StarterAssets
             }
             Vector3 spawnpoint = GameObject.Find("_SPAWNPOINT").transform.position;
             transform.position = spawnpoint;
+            DontDestroyOnLoad(this);
         }
 
         private void Update()
