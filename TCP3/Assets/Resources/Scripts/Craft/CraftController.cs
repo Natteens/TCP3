@@ -9,6 +9,9 @@ public class CraftController : NetworkBehaviour
     private CraftInventory inventory;
     [SerializeField] private UI_Craft uiCraft;
 
+    //DEBUG
+    public List<Craft> debugcrafts;
+
     private void Awake()
     {
         uiCraft = GameManager.Instance.uiCraft;
@@ -16,6 +19,15 @@ public class CraftController : NetworkBehaviour
         inventory = new CraftInventory();
         uiCraft.SetPlayer(player);
         uiCraft.SetCraftInventory(inventory);
+    }
+
+    private void Update()
+    {
+        //DEBUG
+        if (Input.GetKeyDown(KeyCode.K))
+        { 
+            foreach (Craft craft in debugcrafts) { SetCraft(craft); }
+        }
     }
 
     public void SetCraft(Craft craft)
