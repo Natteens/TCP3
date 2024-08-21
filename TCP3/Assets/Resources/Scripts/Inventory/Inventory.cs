@@ -145,7 +145,7 @@ public class Inventory
             return SearchItem(item).amount;
         }
 
-        return -1;
+        return 0;
     }
 
 }

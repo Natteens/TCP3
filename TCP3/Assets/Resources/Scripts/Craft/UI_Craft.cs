@@ -16,6 +16,7 @@ public class UI_Craft : MonoBehaviour
     [SerializeField] private Transform craftExpandedContainer;
     [SerializeField] private Transform requirementsContainer;
     [SerializeField] private Transform requirementsTemplate;
+    [SerializeField] private UI_CreateCraft bttCreateCraft;
     private LocatePlayer player;
     private Item.Itemtype actualFilter;
     private bool hasExpanded = false;
@@ -167,6 +168,7 @@ public class UI_Craft : MonoBehaviour
 
     private void ConfigureExpandedCraft(Craft craft)
     {
+        bttCreateCraft.currentCraft = craft;
         Image img = craftExpandedContainer.Find("image").GetComponent<Image>();
         TextMeshProUGUI txt = craftExpandedContainer.Find("infotxt").GetComponent<TextMeshProUGUI>();
         bool isSameCraft = craft.outputItem.itemDescription == txt.text && craft.outputItem.itemSprite == img.sprite;
@@ -217,7 +219,7 @@ public class UI_Craft : MonoBehaviour
 
         int actualQuantity = player.GetComponent<InventoryController>().CountItem(recipe.item);
 
-        if (actualQuantity == recipe.needQuantity)
+        if (actualQuantity >= recipe.needQuantity)
         {
             txt.text = "<color=green>" + actualQuantity.ToString() + "/" + recipe.needQuantity + "</color>";
         }
