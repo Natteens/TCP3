@@ -1073,8 +1073,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953c70e3290e18d4fbecfaafeaf9b1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentItemToCreate: {fileID: 0}
+  currentCraft: {fileID: 0}
   uiInventory: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &138580696
 GameObject:
   m_ObjectHideFlags: 0
@@ -11959,7 +11960,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000021456935}
+  m_AnchoredPosition: {x: 0, y: 0.0009111313}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783
@@ -13143,7 +13144,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99972624
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -17874,6 +17875,7 @@ MonoBehaviour:
   craftExpandedContainer: {fileID: 241033838}
   requirementsContainer: {fileID: 708351154}
   requirementsTemplate: {fileID: 2058105960}
+  bttCreateCraft: {fileID: 138325145}
 --- !u!1 &2147317413
 GameObject:
   m_ObjectHideFlags: 0
