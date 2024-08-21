@@ -16,16 +16,13 @@ public static class Loader
     private static Action onLoaderCallback;
     private static AsyncOperation loadingAsyncOperation;
 
-    public static void Load(gameScenes scene)
+    public static async Task Load(gameScenes scene)
     {
-        // Dizendo pro callback qual cena desejada
-        onLoaderCallback = async () =>
-        {
-           await LoadSceneAsync(scene);
-        };
-
-        // Carregando a cena de loading
         SceneManager.LoadScene(gameScenes.Loading.ToString());
+
+        await Task.Yield();
+
+        await LoadSceneAsync(scene);
     }
 
     public static async Task LoadSceneAsync(gameScenes scene)

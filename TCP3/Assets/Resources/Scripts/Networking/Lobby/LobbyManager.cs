@@ -88,7 +88,7 @@ public class LobbyManager : MonoBehaviour
             lobbyUpdateTimer -= Time.deltaTime;
             if (lobbyUpdateTimer < 0f)
             {
-                float lobbyPollTimerMax = 5f;
+                float lobbyPollTimerMax = 1.2f;
                 lobbyUpdateTimer = lobbyPollTimerMax;
 
                 joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
@@ -108,7 +108,7 @@ public class LobbyManager : MonoBehaviour
                 {
                     if (!IsLobbyHost())
                     {
-                        LoadingGameScreen();
+                       await LoadingGameScreen();
 
                         LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
@@ -182,7 +182,7 @@ public class LobbyManager : MonoBehaviour
         {
             try
             {
-                LoadingGameScreen();
+               await LoadingGameScreen();
 
                 string relayCode = await LobbyRelay.Instance.CreateRelay();
 
@@ -204,9 +204,9 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    private void LoadingGameScreen()
+    private async Task LoadingGameScreen()
     {
-        Loader.Load(gameScenes.Katalisya);
+       await Loader.Load(gameScenes.Katalisya);
     }
 
     public string GetName()
