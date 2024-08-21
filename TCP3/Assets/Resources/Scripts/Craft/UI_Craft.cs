@@ -60,6 +60,7 @@ public class UI_Craft : MonoBehaviour
     {
         if (actualFilter == Item.Itemtype.None)
         {
+            ControlExpandedCraft(false);
             foreach (Transform child in craftSlotContainer)
             {
                 if (child == craftSlotTemplate) continue;
@@ -213,6 +214,18 @@ public class UI_Craft : MonoBehaviour
         if (img == null) Debug.Log("deu bosta");
 
         img.sprite = recipe.item.itemSprite;
-        txt.text = "0" + "/" + recipe.needQuantity; //mudar pra quantia do jogador
+
+        int actualQuantity = player.GetComponent<InventoryController>().CountItem(recipe.item);
+
+        if (actualQuantity == recipe.needQuantity)
+        {
+            txt.text = "<color=green>" + actualQuantity.ToString() + "/" + recipe.needQuantity + "</color>";
+        }
+        else
+        {
+            txt.text = "<color=red>" + actualQuantity.ToString() + "/" + recipe.needQuantity + "</color>";
+        }
+        
     }
+
 }

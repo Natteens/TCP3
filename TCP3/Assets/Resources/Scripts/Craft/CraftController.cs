@@ -35,4 +35,5 @@ public class CraftController : NetworkBehaviour
         this.inventory.AddCraft(craft);
     }
 
+    
 }

@@ -36,6 +36,38 @@ public class InventoryController : NetworkBehaviour
         
     }
 
+    public void RemoveItemByAmount(Item item, int amount)
+    {
+        this.inventory.RemoveItemByAmount(item, amount);
+    }
+
+    public int CountItem(Item item)
+    {
+        return this.inventory.CountItem(item);
+    }
+
+    public bool CanCraft(Craft craft)
+    {
+        int needConfirms = craft.recipes.Count;
+        int currentConfirms = 0;
+
+        foreach (Recipe recipe in craft.recipes)
+        {
+            if(recipe.needQuantity == CountItem(recipe.item))
+                currentConfirms++;
+        }
+
+        if (needConfirms == currentConfirms)
+        {
+            return true;
+        }
+
+        Debug.Log("precisava:" + needConfirms.ToString());
+        Debug.Log("obteve:" + currentConfirms.ToString());
+        return false;
+    }
+
+
     private void Update()
     {
         VisibilityControl();

@@ -33,6 +33,11 @@ public class UI_Inventory : MonoBehaviour
         RefreshInventoryItems();
     }
 
+    public LocatePlayer GetPlayer()
+    {
+        return player;
+    }
+
     public void CheckVisibility()
     {
         switch (isVisible)

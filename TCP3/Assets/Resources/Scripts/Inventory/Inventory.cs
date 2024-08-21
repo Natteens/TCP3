@@ -78,6 +78,30 @@ public class Inventory
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
+    public void RemoveItemByAmount(Item item, int amount)
+    {
+        if (HasItem(item))
+        {
+            foreach (Item _item in GetItemList())
+            {
+                if (_item == item)
+                {
+                    for (int i = 0; i < amount; i++)
+                    {
+                        RemoveItem(item);
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            Debug.Log("Inventario sem esse item");
+        }
+
+    }
+
+
     public List<Item> GetItemList() 
     {
         return itemList;
@@ -91,6 +115,37 @@ public class Inventory
         }
 
         return true;
+    }
+
+    public bool HasItem(Item item)
+    { 
+        foreach (Item inventoryItem in itemList)
+        {
+            if (inventoryItem == item) { return true; }
+        }
+
+        return false;
+    }
+
+    public Item SearchItem(Item item)
+    {
+
+        foreach (Item inventoryItem in itemList)
+        {
+            if (inventoryItem == item) { return inventoryItem; }
+        }
+        
+        return null;
+    }
+
+    public int CountItem(Item item)
+    {
+        if (HasItem(item))
+        {
+            return SearchItem(item).amount;
+        }
+
+        return -1;
     }
 
 }
