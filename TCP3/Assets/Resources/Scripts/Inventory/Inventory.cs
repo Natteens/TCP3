@@ -6,13 +6,13 @@ using UnityEngine;
 [System.Serializable]
 public class Inventory
 {
-    public event EventHandler OnItemListChanged; 
+    public event EventHandler OnItemListChanged;
     [SerializeField] private List<Item> itemList;
     [SerializeField] private int maxSlots = 30;
     [SerializeField] private int currentSlots = 0;
 
     public Inventory()
-    { 
+    {
         itemList = new List<Item>();
     }
 
@@ -23,7 +23,7 @@ public class Inventory
         if (item.IsStackable())
         {
             bool itemAlreadyInInventory = false;
-            foreach (Item inventoryItem in itemList) 
+            foreach (Item inventoryItem in itemList)
             {
                 if (inventoryItem.itemType == item.itemType)
                 {
@@ -41,14 +41,14 @@ public class Inventory
             }
         }
         else
-        { 
+        {
             itemList.Add(item);
             currentSlots++;
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RemoveItem(Item item) 
+    public void RemoveItem(Item item)
     {
         if (item.IsStackable())
         {
@@ -78,7 +78,31 @@ public class Inventory
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public List<Item> GetItemList() 
+    public void RemoveItemByAmount(Item item, int amount)
+    {
+        if (HasItem(item))
+        {
+            foreach (Item _item in GetItemList())
+            {
+                if (_item == item)
+                {
+                    for (int i = 0; i < amount; i++)
+                    {
+                        RemoveItem(item);
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            Debug.Log("Inventario sem esse item");
+        }
+
+    }
+
+
+    public List<Item> GetItemList()
     {
         return itemList;
     }
@@ -91,6 +115,37 @@ public class Inventory
         }
 
         return true;
+    }
+
+    public bool HasItem(Item item)
+    {
+        foreach (Item inventoryItem in itemList)
+        {
+            if (inventoryItem == item) { return true; }
+        }
+
+        return false;
+    }
+
+    public Item SearchItem(Item item)
+    {
+
+        foreach (Item inventoryItem in itemList)
+        {
+            if (inventoryItem == item) { return inventoryItem; }
+        }
+
+        return null;
+    }
+
+    public int CountItem(Item item)
+    {
+        if (HasItem(item))
+        {
+            return SearchItem(item).amount;
+        }
+
+        return -1;
     }
 
 }

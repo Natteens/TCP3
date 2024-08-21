@@ -19,7 +19,7 @@ public class UI_Craft : MonoBehaviour
     private LocatePlayer player;
     private Item.Itemtype actualFilter;
     private bool hasExpanded = false;
-  
+
 
     private void Awake()
     {
@@ -60,6 +60,7 @@ public class UI_Craft : MonoBehaviour
     {
         if (actualFilter == Item.Itemtype.None)
         {
+            ControlExpandedCraft(false);
             foreach (Transform child in craftSlotContainer)
             {
                 if (child == craftSlotTemplate) continue;
@@ -72,11 +73,11 @@ public class UI_Craft : MonoBehaviour
                 ConfigureCraftSlot(craft, itemSlotRectTransform);
             }
         }
-        else 
+        else
         {
             FilterRefresh(actualFilter);
         }
-     
+
     }
 
     public void FilterConsumable()
@@ -165,24 +166,24 @@ public class UI_Craft : MonoBehaviour
     }
 
     private void ConfigureExpandedCraft(Craft craft)
-    { 
+    {
         Image img = craftExpandedContainer.Find("image").GetComponent<Image>();
         TextMeshProUGUI txt = craftExpandedContainer.Find("infotxt").GetComponent<TextMeshProUGUI>();
         bool isSameCraft = craft.outputItem.itemDescription == txt.text && craft.outputItem.itemSprite == img.sprite;
 
-        if (isSameCraft && !hasExpanded) 
+        if (isSameCraft && !hasExpanded)
         {
             ControlExpandedCraft(false);
             return;
         }
 
         img.sprite = craft.outputItem.itemSprite;
-        txt.text = craft.outputItem.itemDescription; 
+        txt.text = craft.outputItem.itemDescription;
 
         foreach (Transform child in requirementsContainer)
         {
-            if(child != null && child != requirementsTemplate)
-            Destroy(child.gameObject);
+            if (child != null && child != requirementsTemplate)
+                Destroy(child.gameObject);
         }
 
         foreach (Recipe recipe in craft.recipes)
@@ -193,10 +194,10 @@ public class UI_Craft : MonoBehaviour
             {
                 RectTransform r = Instantiate(requirementsTemplate, requirementsContainer).GetComponent<RectTransform>();
                 if (r != null)
-                { 
+                {
                     r.gameObject.SetActive(true);
                     ConfigureRecipe(recipe, r);
-                } 
+                }
             }
             else
             {
@@ -213,6 +214,18 @@ public class UI_Craft : MonoBehaviour
         if (img == null) Debug.Log("deu bosta");
 
         img.sprite = recipe.item.itemSprite;
-        txt.text = "0" + "/" + recipe.needQuantity; //mudar pra quantia do jogador
+
+        int actualQuantity = player.GetComponent<InventoryController>().CountItem(recipe.item);
+
+        if (actualQuantity == recipe.needQuantity)
+        {
+            txt.text = "<color=green>" + actualQuantity.ToString() + "/" + recipe.needQuantity + "</color>";
+        }
+        else
+        {
+            txt.text = "<color=red>" + actualQuantity.ToString() + "/" + recipe.needQuantity + "</color>";
+        }
+
     }
+
 }

@@ -27,10 +27,15 @@ public class UI_Inventory : MonoBehaviour
     }
 
     public void SetInventory(Inventory inventory)
-    { 
+    {
         this.inventory = inventory;
         inventory.OnItemListChanged += Inventory_OnItemListChanged;
         RefreshInventoryItems();
+    }
+
+    public LocatePlayer GetPlayer()
+    {
+        return player;
     }
 
     public void CheckVisibility()
@@ -53,7 +58,7 @@ public class UI_Inventory : MonoBehaviour
     }
 
     public void SetPlayer(LocatePlayer player)
-    { 
+    {
         this.player = player;
     }
 
