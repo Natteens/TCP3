@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Item/Create Item")]
 [System.Serializable]
@@ -20,7 +21,7 @@ public class Item : ScriptableObject, INetworkSerializable
     public string itemName;
     [Multiline] public string itemDescription;
     public Itemtype itemType;
-    public Sprite itemSprite;
+    [PreviewField(100, ObjectFieldAlignment.Center)] public Sprite itemSprite;
     [HideInInspector] public int amount = 1;
 
     public bool IsStackable()
