@@ -122,6 +122,12 @@ public class StatusComponent : NetworkBehaviour
         }
     }
 
+    public void UpdateStatus(Dictionary<StatusType, float> newStatus)
+    {
+        currentStatus = newStatus;
+        OnStatusChanged?.Invoke(currentStatus);
+    }
+
     private void ApplyModifier(StatusType type, float value)
     {
         if (currentStatus.ContainsKey(type))
