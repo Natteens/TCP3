@@ -10,6 +10,7 @@ public class UI_Inventory : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform inventoryHolder;
     [SerializeField] private Transform inventorySlotContainer;
+    [SerializeField] private List<GameObject> Slots;
     [SerializeField] private GameObject itemSlotPrefab; 
     private LocatePlayer player;
     private bool isVisible = false;
@@ -17,6 +18,10 @@ public class UI_Inventory : MonoBehaviour
     private void Start()
     {
         inventoryHolder.gameObject.SetActive(isVisible);
+        for (int i = 0; i < inventory.maxSlots; i++)
+        {
+
+        }
     }
 
     public void SetInventory(Inventory inventory)
@@ -65,29 +70,10 @@ public class UI_Inventory : MonoBehaviour
     {
         // Obter a lista de itens do inventário
         List<Item> itemList = inventory.GetItemList();
+        
 
-        // Iterar sobre os slots no container de slots
-        for (int i = 0; i < inventorySlotContainer.childCount; i++)
-        {
-            Transform slot = inventorySlotContainer.GetChild(i);
 
-            // Se o slot já tiver um item, continuamos para o próximo slot
-            if (slot.childCount > 0)
-            {
-                continue;
-            }
-
-            // Se o slot não tiver um item, verificamos se há um item correspondente na lista de itens
-            if (i < itemList.Count)
-            {
-                Item item = itemList[i];
-                GameObject itemObj = Instantiate(itemSlotPrefab, slot);
-                RectTransform slotRect = itemObj.GetComponent<RectTransform>();
-                ConfigureItemSlot(item, slotRect);
-            }
-        }
     }
-
 
     private void ConfigureItemSlot(Item item, RectTransform rect)
     {
