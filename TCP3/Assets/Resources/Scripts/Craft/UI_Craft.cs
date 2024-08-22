@@ -166,7 +166,7 @@ public class UI_Craft : MonoBehaviour
         Debug.Log("receita nova: " + craft.outputItem.itemName);
     }
 
-    private void ConfigureExpandedCraft(Craft craft)
+    public void ConfigureExpandedCraft(Craft craft)
     {
         bttCreateCraft.currentCraft = craft;
         Image img = craftExpandedContainer.Find("image").GetComponent<Image>();

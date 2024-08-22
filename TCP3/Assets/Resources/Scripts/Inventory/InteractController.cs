@@ -23,10 +23,11 @@ public class InteractController : NetworkBehaviour
     {
         if (starterAssetsInputs.interact && currentInteractable != null)
         {
-            currentInteractable?.OnInteract(transform);
+            // Processa a interação e desativa a interação com o item imediatamente
+            currentInteractable.OnInteract(transform);
             starterAssetsInputs.interact = false;
-            currentInteractable = null;
-            ControlInteractMessage(false);
+            currentInteractable = null; // Limpa o objeto atual
+            ControlInteractMessage(false); // Esconde a mensagem de interação
         }
     }
 
@@ -36,7 +37,8 @@ public class InteractController : NetworkBehaviour
 
         if (other.TryGetComponent<Interactable>(out var interactable))
         {
-            currentInteractable = interactable; // Armazena o objeto que pode ser interagido
+            // Armazena o objeto que pode ser interagido
+            currentInteractable = interactable;
             ControlInteractMessage(true); // Mostra a mensagem de interação
         }
     }
@@ -47,7 +49,8 @@ public class InteractController : NetworkBehaviour
 
         if (other.TryGetComponent<Interactable>(out var interactable) && interactable == currentInteractable)
         {
-            currentInteractable = null; // Limpa o objeto atual quando o jogador sai da área de interação
+            // Limpa o objeto atual quando o jogador sai da área de interação
+            currentInteractable = null;
             ControlInteractMessage(false); // Esconde a mensagem de interação
         }
     }

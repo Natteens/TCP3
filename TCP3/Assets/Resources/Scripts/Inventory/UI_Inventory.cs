@@ -46,10 +46,12 @@ public class UI_Inventory : MonoBehaviour
                 Debug.Log("#Desativei o inventario#");
                 isVisible = false;
                 MouseController.CursorVisibility(false);
+                TooltipScreenSpaceUI.HideTooltip_Static();
                 break;
             case false:
                 Debug.Log("#Ativei o inventario#");
                 isVisible = true;
+                GameManager.Instance.uiCraft.ControlExpandedCraft(false);
                 MouseController.CursorVisibility(true);
                 break;
         }
@@ -67,7 +69,7 @@ public class UI_Inventory : MonoBehaviour
         //Adicionar popUp do item adicionada
         RefreshInventoryItems();
     }
-    private void RefreshInventoryItems()
+    public void RefreshInventoryItems()
     {
         foreach (Transform child in itemSlotContainer)
         {

@@ -14,8 +14,8 @@ public class InventoryController : NetworkBehaviour
     {
         uiInventory = GameManager.Instance.uiInventory;
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
-        LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
         inventory = new Inventory();
+        LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
         uiInventory.SetPlayer(player);
         uiInventory.SetInventory(inventory);
 
@@ -27,6 +27,7 @@ public class InventoryController : NetworkBehaviour
         if (inventory.CanPickup())
         {
             this.inventory.AddItem(item);
+            Debug.Log("Adicionando item!");
         }
         else
         {
@@ -48,23 +49,18 @@ public class InventoryController : NetworkBehaviour
 
     public bool CanCraft(Craft craft)
     {
-        int needConfirms = craft.recipes.Count;
-        int currentConfirms = 0;
-
         foreach (Recipe recipe in craft.recipes)
         {
-            if (recipe.needQuantity == CountItem(recipe.item))
-                currentConfirms++;
+            // Verifica se a quantidade do item no inventário é suficiente para o craft
+            if (CountItem(recipe.item) < recipe.needQuantity)
+            {
+                Debug.Log("Item insuficiente: " + recipe.item.itemName);
+                return false;
+            }
         }
 
-        if (needConfirms == currentConfirms)
-        {
-            return true;
-        }
-
-        Debug.Log("precisava:" + needConfirms.ToString());
-        Debug.Log("obteve:" + currentConfirms.ToString());
-        return false;
+        // Se passar por todas as verificações, significa que pode craftar
+        return true;
     }
 
 

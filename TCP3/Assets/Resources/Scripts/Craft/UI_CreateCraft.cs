@@ -16,16 +16,40 @@ public class UI_CreateCraft : MonoBehaviour
 
     public void CreateItem()
     {
+        if (player == null) player = uiInventory.GetPlayer();
+
         InventoryController inventory = player.GetComponent<InventoryController>();
+
+        if (currentCraft == null)
+        {
+            Debug.LogError("Craft não setado!");
+            return;
+        }
 
         if (inventory.CanCraft(currentCraft))
         {
-            inventory.SetItem(currentCraft.outputItem);
+            // Garante que o item a ser adicionado seja uma nova instância, evitando problemas de referência
+            Item craftedItem = ScriptableObject.Instantiate(currentCraft.outputItem);
+            inventory.SetItem(craftedItem);
 
+            GameManager.Instance.uiInventory.RefreshInventoryItems();
+
+            // Remove os itens necessários do inventário
             foreach (Recipe recipe in currentCraft.recipes)
             {
                 inventory.RemoveItemByAmount(recipe.item, recipe.needQuantity);
             }
+
+            // Caso você tenha uma função que atualize o texto expandido, chame ela aqui
+            UI_Craft craftUI = GameManager.Instance.uiCraft;
+            if (craftUI != null)
+            {
+                craftUI.ConfigureExpandedCraft(currentCraft); // Atualiza o texto expandido
+            }
+
+            return;
         }
+
+        Debug.LogError("Não estou permitido a craftar!");
     }
 }

@@ -18,35 +18,41 @@ public class Inventory
 
     public void AddItem(Item item)
     {
-        if (CanPickup() == false) return;
+        if (!CanPickup()) return;
 
         if (item.IsStackable())
         {
             bool itemAlreadyInInventory = false;
             foreach (Item inventoryItem in itemList)
             {
-                if (inventoryItem.itemType == item.itemType)
+                // Verifica se o item no inventário é o mesmo (não apenas o tipo, mas o próprio item)
+                if (inventoryItem.itemType == item.itemType
+                    && inventoryItem.itemName == item.itemName
+                    && inventoryItem.itemSprite == item.itemSprite
+                   )
                 {
                     inventoryItem.amount += 1;
                     itemAlreadyInInventory = true;
+                    break;
                 }
             }
 
             if (!itemAlreadyInInventory)
             {
-                //Talvez de merda isso aq mas vamos ver!!
-                item.amount = 1;
+                item.amount = 1; // Define a quantidade para 1 quando o item não está no inventário
                 currentSlots++;
                 itemList.Add(item);
             }
         }
         else
         {
-            itemList.Add(item);
             currentSlots++;
+            itemList.Add(item);
         }
+
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
+
 
     public void RemoveItem(Item item)
     {
@@ -55,18 +61,25 @@ public class Inventory
             Item itemInInventory = null;
             foreach (Item inventoryItem in itemList)
             {
-                if (inventoryItem.itemType == item.itemType)
+                if (inventoryItem.itemType == item.itemType
+                    && inventoryItem.itemName == item.itemName
+                    && inventoryItem.itemSprite == item.itemSprite
+                   )
                 {
-                    inventoryItem.amount -= 1;
                     itemInInventory = inventoryItem;
+                    itemInInventory.amount -= 1;
+                    break;
                 }
             }
 
-            if (itemInInventory != null && itemInInventory.amount <= 0)
+            if (itemInInventory != null)
             {
-                currentSlots--;
-                TooltipScreenSpaceUI.HideTooltip_Static();
-                itemList.Remove(itemInInventory);
+                if (itemInInventory.amount <= 0)
+                {
+                    currentSlots--;
+                    TooltipScreenSpaceUI.HideTooltip_Static();
+                    itemList.Remove(itemInInventory);
+                }
             }
         }
         else
@@ -75,31 +88,42 @@ public class Inventory
             TooltipScreenSpaceUI.HideTooltip_Static();
             itemList.Remove(item);
         }
+
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
+
     public void RemoveItemByAmount(Item item, int amount)
+{
+    // Verifica se o item está no inventário
+    if (HasItem(item))
     {
-        if (HasItem(item))
+        Item _itemInInventory = SearchItem(item);
+        if (_itemInInventory != null && _itemInInventory.amount >= amount)
         {
-            foreach (Item _item in GetItemList())
+            _itemInInventory.amount -= amount;
+
+            // Se a quantidade chegar a zero ou menos, remova o item do inventário
+            if (_itemInInventory.amount <= 0)
             {
-                if (_item == item)
-                {
-                    for (int i = 0; i < amount; i++)
-                    {
-                        RemoveItem(item);
-                    }
-                }
+                currentSlots--;
+                itemList.Remove(_itemInInventory);
+                TooltipScreenSpaceUI.HideTooltip_Static();
             }
 
+            // Notifica a UI sobre a mudança no inventário
+            OnItemListChanged?.Invoke(this, EventArgs.Empty);
         }
         else
         {
-            Debug.Log("Inventario sem esse item");
+            Debug.LogWarning("Quantidade insuficiente para remover");
         }
-
     }
+    else
+    {
+        Debug.LogWarning("Inventário não contém este item");
+    }
+}
 
 
     public List<Item> GetItemList()
