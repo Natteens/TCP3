@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using Sirenix.OdinInspector;
+using System;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Item/Create Item")]
 [System.Serializable]
@@ -22,7 +23,25 @@ public class Item : ScriptableObject, INetworkSerializable
     [Multiline] public string itemDescription;
     public Itemtype itemType;
     [PreviewField(100, ObjectFieldAlignment.Center)] public Sprite itemSprite;
-    [HideInInspector] public int amount = 1;
+    [ReadOnly] public int amount = 1;
+    [ReadOnly] public string uniqueID; // Novo campo uniqueID
+
+    private void OnEnable()
+    {
+        // Gera um ID único baseado em um GUID
+        uniqueID = GenerateUniqueID();
+    }
+
+    private void OnValidate()
+    {
+        amount = 1;
+    }
+
+    private string GenerateUniqueID()
+    {
+        // Combina um GUID com um hash das propriedades principais do item
+        return Guid.NewGuid().ToString("N") + "_" + itemName.GetHashCode() + "_" + itemType.GetHashCode();
+    }
 
     public bool IsStackable()
     {
@@ -47,5 +66,6 @@ public class Item : ScriptableObject, INetworkSerializable
         serializer.SerializeValue(ref itemName);
         serializer.SerializeValue(ref itemDescription);
         serializer.SerializeValue(ref amount);
+        serializer.SerializeValue(ref uniqueID); // Serialize uniqueID
     }
 }

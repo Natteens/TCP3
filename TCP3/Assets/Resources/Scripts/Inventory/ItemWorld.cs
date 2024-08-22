@@ -9,6 +9,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
     // Método para definir o item
     public void SetItem(Item item)
     {
+        if (item.amount <= 0) item.amount = 1;
         this.item = item;
     }
 

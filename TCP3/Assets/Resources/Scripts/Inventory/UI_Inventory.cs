@@ -7,20 +7,20 @@ using UnityEngine.UI;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using System.Linq;
 using Unity.VisualScripting;
+using Unity.Services.Lobbies.Models;
 
 public class UI_Inventory : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform inventoryHolder;
-    [SerializeField] private Transform inventorySlotContainer;
-    [SerializeField] private Transform[] Slots;
-    [SerializeField] private GameObject itemSlotPrefab; 
+    [SerializeField] private RectTransform[] Slots;
+    [SerializeField] private GameObject itemSlotPrefab;
     private LocatePlayer player;
-    private bool isVisible = false;
+    public bool isVisible = false;
 
     private void Start()
     {
-        inventoryHolder.gameObject.SetActive(isVisible);
+        inventoryHolder.gameObject.SetActive(false);
         RefreshInventoryItems();
     }
 
@@ -31,35 +31,39 @@ public class UI_Inventory : MonoBehaviour
         RefreshInventoryItems();
     }
 
-    public LocatePlayer GetPlayer()
+    public void UpdateItemPosition(int oldIndex, int newIndex)
     {
-        return player;
-    }
+        List<Item> itemList = inventory.GetItemList();
 
-    public void CheckVisibility()
-    {
-        isVisible = !isVisible;
-
-        if (isVisible)
+        // Verifique se os índices estão dentro dos limites válidos
+        if (oldIndex >= 0 && oldIndex < itemList.Count && newIndex >= 0 && newIndex < Slots.Length)
         {
-            //Debug.Log("#Ativei o inventario#");
-            GameManager.Instance.uiCraft.ControlExpandedCraft(false);
-            MouseController.CursorVisibility(true);
-        }
-        else
-        {
-            //Debug.Log("#Desativei o inventario#");
-            MouseController.CursorVisibility(false);
-            TooltipScreenSpaceUI.HideTooltip_Static();
-        }
+            Item item = itemList[oldIndex];
 
-        inventoryHolder.gameObject.SetActive(isVisible);
-    }
+            // Remove o item da posição antiga
+            itemList[oldIndex] = null;
 
-    public void SetPlayer(LocatePlayer player)
-    {
-        this.player = player;
+            // Se o novo índice está dentro dos limites da lista
+            if (newIndex < itemList.Count)
+            {
+                if (itemList[newIndex] != null)
+                {
+                    SwapItemsInList(itemList, oldIndex, newIndex);   
+                }
+
+                itemList[newIndex] = item;
+            }
+            else
+            {
+                // Se o novo índice está fora dos limites da lista, adicione o item na última posição
+                itemList.Add(item);
+            }
+
+            // Atualize a interface do usuário
+            RefreshInventoryItems();
+        }
     }
+    public Inventory GetInventory() { return inventory; }
 
     private void Inventory_OnItemListChanged(object sender, EventArgs e)
     {
@@ -68,21 +72,29 @@ public class UI_Inventory : MonoBehaviour
 
     public void RefreshInventoryItems()
     {
-        // Obter a lista de itens do inventário
         List<Item> itemList = inventory.GetItemList();
-       
-        // Preencher os slots com itens disponíveis
-        for (int i = 0; i < itemList.Count && i < Slots.Length; i++)
+
+        for (int i = 0; i < Slots.Length; i++)
         {
-            ConfigureItemSlot(itemList[i], Slots[i]);
+            if (i < itemList.Count && itemList[i] != null)
+            {
+                ConfigureItemSlot(itemList[i], Slots[i]);
+            }
+            else
+            {
+                if (Slots[i].childCount > 0)
+                {
+                    ClearSlot(Slots[i].GetChild(Slots[i].childCount - 1).GetComponent<RectTransform>());
+                }
+            }
         }
     }
 
-    private void ConfigureItemSlot(Item item, Transform rect)
+    private void ConfigureItemSlot(Item item, RectTransform rect)
     {
         if (rect.childCount > 0)
         {
-            ClearSlot(rect.GetChild(rect.childCount - 1).gameObject);
+            ClearSlot(rect.GetChild(rect.childCount - 1).GetComponent<RectTransform>());
         }
 
         GameObject instance = Instantiate(itemSlotPrefab, rect);
@@ -146,10 +158,47 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    private void ClearSlot(GameObject obj)
+    private void ClearSlot(RectTransform obj)
     {
-        Debug.Log("destruindo slot:" + obj.name);
-        Destroy(obj);
+        Destroy(obj.gameObject);
     }
 
+    public LocatePlayer GetPlayer()
+    {
+        return player;
+    }
+    public void SetPlayer(LocatePlayer player)
+    {
+        this.player = player;
+    }
+
+    public void CheckVisibility()
+    {
+        isVisible = !isVisible;
+
+        if (isVisible)
+        {
+            //Debug.Log("#Ativei o inventario#");
+            GameManager.Instance.uiCraft.ControlExpandedCraft(false);
+            MouseController.CursorVisibility(true);
+        }
+        else
+        {
+            //Debug.Log("#Desativei o inventario#");
+            MouseController.CursorVisibility(false);
+            TooltipScreenSpaceUI.HideTooltip_Static();
+        }
+
+        inventoryHolder.gameObject.SetActive(isVisible);
+    }
+
+    public void SwapItemsInList<T>(List<T> list, int indexA, int indexB)
+    {
+        if (indexA != indexB && indexA >= 0 && indexB >= 0 && indexA < list.Count && indexB < list.Count)
+        {
+            T temp = list[indexA];
+            list[indexA] = list[indexB];
+            list[indexB] = temp;
+        }
+    }
 }

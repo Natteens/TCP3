@@ -2,6 +2,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [System.Serializable]
 public class Inventory
@@ -13,7 +14,7 @@ public class Inventory
 
     public Inventory()
     {
-        itemList = new List<Item>();
+        itemList = new List<Item>(new Item[maxSlots]);
     }
 
     public void AddItem(Item item)
@@ -22,109 +23,91 @@ public class Inventory
 
         if (item.IsStackable())
         {
-            bool itemAlreadyInInventory = false;
-            foreach (Item inventoryItem in itemList)
+            // Tenta encontrar um item igual para acumular
+            for (int i = 0; i < itemList.Count; i++)
             {
-                // Verifica se o item no inventário é o mesmo (não apenas o tipo, mas o próprio item)
-                if (inventoryItem.itemType == item.itemType
-                    && inventoryItem.itemName == item.itemName
-                    && inventoryItem.itemSprite == item.itemSprite
-                   )
+                if (itemList[i] != null && itemList[i].uniqueID == item.uniqueID)
                 {
-                    inventoryItem.amount += 1;
-                    itemAlreadyInInventory = true;
-                    break;
+                    itemList[i].amount += 1;
+                    OnItemListChanged?.Invoke(this, EventArgs.Empty);
+                    return;
                 }
             }
+        }
 
-            if (!itemAlreadyInInventory)
+        // Encontra o primeiro slot vazio e coloca o item lá
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i] == null)
             {
-                item.amount = 1; // Define a quantidade para 1 quando o item não está no inventário
+                itemList[i] = item;
                 slotsWithItem++;
-                itemList.Add(item);
+                OnItemListChanged?.Invoke(this, EventArgs.Empty);
+                return;
             }
         }
-        else
-        {
-            slotsWithItem++;
-            itemList.Add(item);
-        }
-
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
-
 
     public void RemoveItem(Item item)
     {
-        if (item.IsStackable())
-        {
-            Item itemInInventory = null;
-            foreach (Item inventoryItem in itemList)
-            {
-                if (inventoryItem.itemType == item.itemType
-                    && inventoryItem.itemName == item.itemName
-                    && inventoryItem.itemSprite == item.itemSprite
-                   )
-                {
-                    itemInInventory = inventoryItem;
-                    itemInInventory.amount -= 1;
-                    break;
-                }
-            }
+        TooltipScreenSpaceUI.HideTooltip_Static();
 
-            if (itemInInventory != null)
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i] != null && itemList[i].uniqueID == item.uniqueID)
             {
-                if (itemInInventory.amount <= 0)
+                if (itemList[i].IsStackable())
                 {
+                    itemList[i].amount -= 1;
+                    if (itemList[i].amount <= 0)
+                    {
+                        itemList[i] = null;
+                        slotsWithItem--;
+                    }
+                }
+                else
+                {
+                    itemList[i] = null;
                     slotsWithItem--;
-                    TooltipScreenSpaceUI.HideTooltip_Static();
-                    itemList.Remove(itemInInventory);
                 }
+                OnItemListChanged?.Invoke(this, EventArgs.Empty);
+                return;
             }
         }
-        else
-        {
-            slotsWithItem--;
-            TooltipScreenSpaceUI.HideTooltip_Static();
-            itemList.Remove(item);
-        }
-
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
-
 
     public void RemoveItemByAmount(Item item, int amount)
-{
-    // Verifica se o item está no inventário
-    if (HasItem(item))
     {
-        Item _itemInInventory = SearchItem(item);
-        if (_itemInInventory != null && _itemInInventory.amount >= amount)
+        TooltipScreenSpaceUI.HideTooltip_Static();
+        // Verifica se o item está no inventário
+        if (HasItem(item))
         {
-            _itemInInventory.amount -= amount;
-
-            // Se a quantidade chegar a zero ou menos, remova o item do inventário
-            if (_itemInInventory.amount <= 0)
+            Item _itemInInventory = SearchItem(item);
+            if (_itemInInventory != null && _itemInInventory.amount >= amount)
             {
-                slotsWithItem--;
-                itemList.Remove(_itemInInventory);
-                TooltipScreenSpaceUI.HideTooltip_Static();
-            }
+                _itemInInventory.amount -= amount;
 
-            // Notifica a UI sobre a mudança no inventário
-            OnItemListChanged?.Invoke(this, EventArgs.Empty);
+                // Se a quantidade chegar a zero ou menos, remova o item do inventário
+                if (_itemInInventory.amount <= 0)
+                {
+                    slotsWithItem--;
+                    itemList.Remove(_itemInInventory);
+                    TooltipScreenSpaceUI.HideTooltip_Static();
+                }
+
+                // Notifica a UI sobre a mudança no inventário
+                OnItemListChanged?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                Debug.LogWarning("Quantidade insuficiente para remover");
+            }
         }
         else
         {
-            Debug.LogWarning("Quantidade insuficiente para remover");
+            Debug.LogWarning("Inventário não contém este item");
         }
     }
-    else
-    {
-        Debug.LogWarning("Inventário não contém este item");
-    }
-}
-
 
     public List<Item> GetItemList()
     {
@@ -133,43 +116,22 @@ public class Inventory
 
     public bool CanPickup()
     {
-        if (slotsWithItem >= maxSlots)
-        {
-            return false;
-        }
-
-        return true;
+        return slotsWithItem < maxSlots;
     }
 
     public bool HasItem(Item item)
     {
-        foreach (Item inventoryItem in itemList)
-        {
-            if (inventoryItem == item) { return true; }
-        }
-
-        return false;
+        return itemList.Any(i => i != null && i.uniqueID == item.uniqueID);
     }
 
     public Item SearchItem(Item item)
     {
-
-        foreach (Item inventoryItem in itemList)
-        {
-            if (inventoryItem == item) { return inventoryItem; }
-        }
-
-        return null;
+        return itemList.FirstOrDefault(i => i != null && i.uniqueID == item.uniqueID);
     }
 
     public int CountItem(Item item)
     {
-        if (HasItem(item))
-        {
-            return SearchItem(item).amount;
-        }
-
-        return 0;
+        var foundItem = SearchItem(item);
+        return foundItem != null ? foundItem.amount : 0;
     }
-
 }

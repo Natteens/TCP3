@@ -24,6 +24,7 @@ public class WeaponInfo : Item
 
     private void OnValidate()
     {
+        amount = 1;
         itemType = Itemtype.Arma;
 
         string newInfos =     "<color=red>Dano: " + damage.ToString() +

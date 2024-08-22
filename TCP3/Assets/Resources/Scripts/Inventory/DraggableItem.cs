@@ -7,14 +7,17 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 {
     public Item item;
     [HideInInspector] public Transform parentAfterDrag;
+    [HideInInspector] public int originalItemIndex;
     public Image image;
     private Color originalColor;
     public float dragAlpha = 0.5f;
     public Transform ItemContainer;
+    private UI_Inventory uiInventory;
 
     public void Start()
     {
         ItemContainer = GameObject.Find("ItemSlotContainer").transform;
+        uiInventory = FindObjectOfType<UI_Inventory>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -22,23 +25,17 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (item != null)
         {
             parentAfterDrag = transform.parent;
+            originalItemIndex = parentAfterDrag.GetSiblingIndex(); // Guarda a posição original na lista de itens
             transform.SetParent(ItemContainer);
-            transform.SetAsLastSibling(); 
+            transform.SetAsLastSibling();
 
             if (image != null)
             {
-                originalColor = image.color; // Guarda a cor original
+                originalColor = image.color;
                 Color color = image.color;
-                color.a = dragAlpha; // Define a nova transparência
+                color.a = dragAlpha;
                 image.color = color;
                 image.raycastTarget = false;
-            }
-
-            // Ajustar a posição para que o item arrastado fique visível
-            RectTransform rectTransform = transform as RectTransform;
-            if (rectTransform != null)
-            {
-                rectTransform.anchoredPosition = eventData.position / rectTransform.lossyScale.x;
             }
         }
     }
@@ -47,22 +44,26 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (item != null)
         {
-            transform.position = Input.mousePosition; // Move o item arrastado com o mouse
+            transform.position = Input.mousePosition;
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-
-        transform.SetParent(parentAfterDrag);
-      
-
-        transform.localPosition = Vector3.zero;
-
-        if (image != null)
+        if (item != null)
         {
-            image.color = originalColor; // Restaura a cor original
-            image.raycastTarget = true;
+            transform.SetParent(parentAfterDrag);
+            transform.localPosition = Vector3.zero;
+
+            if (image != null)
+            {
+                image.color = originalColor;
+                image.raycastTarget = true;
+            }
+
+            // Atualizar a lista de itens no inventário
+            int newSlotIndex = parentAfterDrag.GetSiblingIndex();
+            uiInventory.UpdateItemPosition(originalItemIndex, newSlotIndex);
         }
     }
 
