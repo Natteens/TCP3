@@ -25,8 +25,8 @@ public class InteractController : NetworkBehaviour
         {
             // Processa a interação e desativa a interação com o item imediatamente
             currentInteractable.OnInteract(transform);
-            starterAssetsInputs.interact = false;
             currentInteractable = null; // Limpa o objeto atual
+            starterAssetsInputs.interact = false;
             ControlInteractMessage(false); // Esconde a mensagem de interação
         }
     }

@@ -6,58 +6,63 @@ using UnityEngine.UI;
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Item item;
-    public RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
-    private Canvas canvas;
-    private Vector2 originalPosition;
-    private Image draggedImage;
-    private Transform originalParent;
+    [HideInInspector] public Transform parentAfterDrag;
+    public Image image;
+    private Color originalColor;
+    public float dragAlpha = 0.5f;
+    public Transform ItemContainer;
 
-    private void Awake()
+    public void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();
-        canvas = GetComponentInParent<Canvas>();
+        ItemContainer = GameObject.Find("ItemSlotContainer").transform;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (item != null)
         {
-            originalPosition = rectTransform.anchoredPosition;
-            originalParent = transform.parent;
+            parentAfterDrag = transform.parent;
+            transform.SetParent(ItemContainer);
+            transform.SetAsLastSibling(); 
 
-            // Criar uma imagem fantasma para seguir o mouse
-            draggedImage = new GameObject("DraggedImage").AddComponent<Image>();
-            draggedImage.transform.SetParent(canvas.transform);
-            draggedImage.sprite = gameObject.transform.Find("image").GetComponent<Image>().sprite;
-            draggedImage.raycastTarget = false;
-            draggedImage.rectTransform.sizeDelta = rectTransform.sizeDelta;
+            if (image != null)
+            {
+                originalColor = image.color; // Guarda a cor original
+                Color color = image.color;
+                color.a = dragAlpha; // Define a nova transparência
+                image.color = color;
+                image.raycastTarget = false;
+            }
 
-            canvasGroup.alpha = 0.6f; // Reduzir a opacidade do item original para indicar que está sendo arrastado
+            // Ajustar a posição para que o item arrastado fique visível
+            RectTransform rectTransform = transform as RectTransform;
+            if (rectTransform != null)
+            {
+                rectTransform.anchoredPosition = eventData.position / rectTransform.lossyScale.x;
+            }
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (item != null && draggedImage != null)
+        if (item != null)
         {
-            draggedImage.rectTransform.position = Input.mousePosition; // Fazer a imagem fantasma seguir o mouse
+            transform.position = Input.mousePosition; // Move o item arrastado com o mouse
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (draggedImage != null)
-        {
-            Destroy(draggedImage.gameObject); // Destruir a imagem fantasma
-        }
 
-        canvasGroup.alpha = 1f; // Restaurar a opacidade do item original
+        transform.SetParent(parentAfterDrag);
+      
 
-        if (eventData.pointerEnter == null || !eventData.pointerEnter.CompareTag("InventorySlot"))
+        transform.localPosition = Vector3.zero;
+
+        if (image != null)
         {
-            rectTransform.anchoredPosition = originalPosition; // Retornar à posição original se não for solto em um slot válido
+            image.color = originalColor; // Restaura a cor original
+            image.raycastTarget = true;
         }
     }
 
@@ -66,7 +71,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         item = newItem;
 
         Image img = GetComponent<Image>();
-        TextMeshProUGUI txt = transform.Find("amount").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI txt = img.GetComponentInChildren<TextMeshProUGUI>();
 
         if (img != null && txt != null)
         {

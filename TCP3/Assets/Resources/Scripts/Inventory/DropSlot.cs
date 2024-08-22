@@ -6,20 +6,32 @@ public class DropSlot : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         DraggableItem draggedItem = eventData.pointerDrag.GetComponent<DraggableItem>();
-        DraggableItem thisSlotItem = GetComponentInChildren<DraggableItem>();
 
         if (draggedItem != null)
         {
-            if (thisSlotItem != null && thisSlotItem != draggedItem)
+            // Verifica se o slot de destino já tem um item
+            if (transform.childCount > 0)
             {
-                Item tempItem = thisSlotItem.item;
-                thisSlotItem.SetItem(draggedItem.item);
-                draggedItem.SetItem(tempItem);
+                DraggableItem existingItem = transform.GetChild(0).GetComponent<DraggableItem>();
+
+                // Troca os itens entre os slots
+                Transform originalParent = draggedItem.parentAfterDrag;
+                draggedItem.transform.SetParent(transform);
+                draggedItem.transform.localPosition = Vector3.zero;
+
+                existingItem.transform.SetParent(originalParent);
+                existingItem.transform.localPosition = Vector3.zero;
+
+                // Atualiza as referências dos pais
+                draggedItem.parentAfterDrag = transform;
+                existingItem.parentAfterDrag = originalParent;
             }
-            else if (thisSlotItem == null)
+            else
             {
-                draggedItem.transform.SetParent(transform, false);
-                draggedItem.rectTransform.anchoredPosition = Vector2.zero;
+                // Se o slot de destino estiver vazio, move o item para o novo slot
+                draggedItem.parentAfterDrag = transform;
+                draggedItem.transform.SetParent(transform); // Define o novo parent imediatamente
+                draggedItem.transform.localPosition = Vector3.zero; // Reseta a posição local
             }
         }
     }

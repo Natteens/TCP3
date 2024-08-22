@@ -9,36 +9,14 @@ public class UI_Inventory : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform inventoryHolder;
-    [SerializeField] private Transform itemSlotContainer;
-    [SerializeField] private Transform itemSlotTemplate;
-    private List<RectTransform> itemSlots; // Lista de todos os slots criados
+    [SerializeField] private Transform inventorySlotContainer;
+    [SerializeField] private GameObject itemSlotPrefab; 
     private LocatePlayer player;
     private bool isVisible = false;
-
-    private void Awake()
-    {
-        itemSlotContainer = GameObject.Find("ItemSlotContainer").transform;
-        itemSlotTemplate = itemSlotContainer.transform.Find("ItemSlotTemplate");
-        itemSlots = new List<RectTransform>();
-
-        InitializeSlots();
-    }
 
     private void Start()
     {
         inventoryHolder.gameObject.SetActive(isVisible);
-    }
-
-    private void InitializeSlots()
-    {
-        // Criar 30 slots vazios ao iniciar
-        for (int i = 0; i < 30; i++)
-        {
-            RectTransform slotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
-            slotRectTransform.gameObject.SetActive(true);
-            itemSlots.Add(slotRectTransform);
-            ClearSlot(slotRectTransform); // Limpar visualmente o slot
-        }
     }
 
     public void SetInventory(Inventory inventory)
@@ -85,19 +63,31 @@ public class UI_Inventory : MonoBehaviour
 
     public void RefreshInventoryItems()
     {
-        // Limpar todos os slots antes de preencher novamente
-        foreach (RectTransform slot in itemSlots)
-        {
-            ClearSlot(slot);
-        }
-
-        // Preencher slots com itens do inventário
+        // Obter a lista de itens do inventário
         List<Item> itemList = inventory.GetItemList();
-        for (int i = 0; i < itemList.Count; i++)
+
+        // Iterar sobre os slots no container de slots
+        for (int i = 0; i < inventorySlotContainer.childCount; i++)
         {
-            ConfigureItemSlot(itemList[i], itemSlots[i]);
+            Transform slot = inventorySlotContainer.GetChild(i);
+
+            // Se o slot já tiver um item, continuamos para o próximo slot
+            if (slot.childCount > 0)
+            {
+                continue;
+            }
+
+            // Se o slot não tiver um item, verificamos se há um item correspondente na lista de itens
+            if (i < itemList.Count)
+            {
+                Item item = itemList[i];
+                GameObject itemObj = Instantiate(itemSlotPrefab, slot);
+                RectTransform slotRect = itemObj.GetComponent<RectTransform>();
+                ConfigureItemSlot(item, slotRect);
+            }
         }
     }
+
 
     private void ConfigureItemSlot(Item item, RectTransform rect)
     {
@@ -146,8 +136,8 @@ public class UI_Inventory : MonoBehaviour
         // Configurar a tooltip do item
         rect.gameObject.GetComponent<ItemTooltip>().SetItem(item);
 
-        Image img = rect.Find("image").GetComponent<Image>();
-        TextMeshProUGUI txt = rect.Find("amount").GetComponent<TextMeshProUGUI>();
+        Image img = rect.GetComponent<Image>();
+        TextMeshProUGUI txt = rect.GetComponentInChildren<TextMeshProUGUI>();
 
         if (img != null && txt != null)
         {
@@ -164,12 +154,11 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-
     private void ClearSlot(RectTransform rect)
     {
         // Limpar a imagem e texto do slot
-        Image img = rect.Find("image").GetComponent<Image>();
-        TextMeshProUGUI txt = rect.Find("amount").GetComponent<TextMeshProUGUI>();
+        Image img = rect.GetComponent<Image>();
+        TextMeshProUGUI txt = rect.GetComponentInChildren<TextMeshProUGUI>();
 
         if (img != null) img.sprite = null;
         if (txt != null) txt.text = "";
