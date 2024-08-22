@@ -47,11 +47,8 @@ public class InteractController : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (other.TryGetComponent<Interactable>(out var interactable) && interactable == currentInteractable)
-        {
-            // Limpa o objeto atual quando o jogador sai da área de interação
-            currentInteractable = null;
-            ControlInteractMessage(false); // Esconde a mensagem de interação
-        }
+        currentInteractable = null;
+        ControlInteractMessage(false); 
+    
     }
 }

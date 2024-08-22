@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     public UI_Inventory uiInventory;
     public UI_Craft uiCraft;
     public GameObject interactMSG;
+    public GameObject HarvestHolder;
 
     public Image health, stamina, hunger, thirsty;
 
