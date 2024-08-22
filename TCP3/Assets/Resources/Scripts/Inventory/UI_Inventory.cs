@@ -4,13 +4,16 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class UI_Inventory : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform inventoryHolder;
     [SerializeField] private Transform inventorySlotContainer;
-    [SerializeField] private List<GameObject> Slots;
+    [SerializeField] private Transform[] Slots;
     [SerializeField] private GameObject itemSlotPrefab; 
     private LocatePlayer player;
     private bool isVisible = false;
@@ -18,10 +21,7 @@ public class UI_Inventory : MonoBehaviour
     private void Start()
     {
         inventoryHolder.gameObject.SetActive(isVisible);
-        for (int i = 0; i < inventory.maxSlots; i++)
-        {
-
-        }
+        RefreshInventoryItems();
     }
 
     public void SetInventory(Inventory inventory)
@@ -70,14 +70,24 @@ public class UI_Inventory : MonoBehaviour
     {
         // Obter a lista de itens do inventário
         List<Item> itemList = inventory.GetItemList();
-        
-
-
+       
+        // Preencher os slots com itens disponíveis
+        for (int i = 0; i < itemList.Count && i < Slots.Length; i++)
+        {
+            ConfigureItemSlot(itemList[i], Slots[i]);
+        }
     }
 
-    private void ConfigureItemSlot(Item item, RectTransform rect)
+    private void ConfigureItemSlot(Item item, Transform rect)
     {
-        rect.gameObject.GetComponent<Button_UI>().ClickFunc = () =>
+        if (rect.childCount > 0)
+        {
+            ClearSlot(rect.GetChild(rect.childCount - 1).gameObject);
+        }
+
+        GameObject instance = Instantiate(itemSlotPrefab, rect);
+
+        instance.GetComponent<Button_UI>().ClickFunc = () =>
         {
             // Use Item
             if (item != null)
@@ -101,7 +111,7 @@ public class UI_Inventory : MonoBehaviour
             }
         };
 
-        rect.gameObject.GetComponent<Button_UI>().MouseRightClickFunc = () =>
+        instance.GetComponent<Button_UI>().MouseRightClickFunc = () =>
         {
             // Drop item
             if (item != null)
@@ -112,18 +122,14 @@ public class UI_Inventory : MonoBehaviour
         };
 
         // Configurar o item arrastável
-        DraggableItem draggableItem = rect.GetComponent<DraggableItem>();
-        if (draggableItem == null)
-        {
-            draggableItem = rect.gameObject.AddComponent<DraggableItem>();
-        }
+        DraggableItem draggableItem = instance.GetComponent<DraggableItem>();
         draggableItem.SetItem(item);
 
         // Configurar a tooltip do item
-        rect.gameObject.GetComponent<ItemTooltip>().SetItem(item);
+        instance.GetComponent<ItemTooltip>().SetItem(item);
 
-        Image img = rect.GetComponent<Image>();
-        TextMeshProUGUI txt = rect.GetComponentInChildren<TextMeshProUGUI>();
+        Image img = instance.GetComponent<Image>();
+        TextMeshProUGUI txt = instance.GetComponentInChildren<TextMeshProUGUI>();
 
         if (img != null && txt != null)
         {
@@ -140,21 +146,10 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    private void ClearSlot(RectTransform rect)
+    private void ClearSlot(GameObject obj)
     {
-        // Limpar a imagem e texto do slot
-        Image img = rect.GetComponent<Image>();
-        TextMeshProUGUI txt = rect.GetComponentInChildren<TextMeshProUGUI>();
-
-        if (img != null) img.sprite = null;
-        if (txt != null) txt.text = "";
-
-        // Limpar o item do DraggableItem
-        DraggableItem draggableItem = rect.GetComponent<DraggableItem>();
-        if (draggableItem != null)
-        {
-            draggableItem.SetItem(null);
-        }
+        Debug.Log("destruindo slot:" + obj.name);
+        Destroy(obj);
     }
 
 }

@@ -9,7 +9,7 @@ public class Inventory
     public event EventHandler OnItemListChanged;
     [SerializeField] private List<Item> itemList;
     [SerializeField] private int maxSlots = 30;
-    [SerializeField] private int currentSlots = 0;
+    [SerializeField] private int slotsWithItem = 0;
 
     public Inventory()
     {
@@ -40,13 +40,13 @@ public class Inventory
             if (!itemAlreadyInInventory)
             {
                 item.amount = 1; // Define a quantidade para 1 quando o item não está no inventário
-                currentSlots++;
+                slotsWithItem++;
                 itemList.Add(item);
             }
         }
         else
         {
-            currentSlots++;
+            slotsWithItem++;
             itemList.Add(item);
         }
 
@@ -76,7 +76,7 @@ public class Inventory
             {
                 if (itemInInventory.amount <= 0)
                 {
-                    currentSlots--;
+                    slotsWithItem--;
                     TooltipScreenSpaceUI.HideTooltip_Static();
                     itemList.Remove(itemInInventory);
                 }
@@ -84,7 +84,7 @@ public class Inventory
         }
         else
         {
-            currentSlots--;
+            slotsWithItem--;
             TooltipScreenSpaceUI.HideTooltip_Static();
             itemList.Remove(item);
         }
@@ -106,7 +106,7 @@ public class Inventory
             // Se a quantidade chegar a zero ou menos, remova o item do inventário
             if (_itemInInventory.amount <= 0)
             {
-                currentSlots--;
+                slotsWithItem--;
                 itemList.Remove(_itemInInventory);
                 TooltipScreenSpaceUI.HideTooltip_Static();
             }
@@ -133,7 +133,7 @@ public class Inventory
 
     public bool CanPickup()
     {
-        if (currentSlots >= maxSlots)
+        if (slotsWithItem >= maxSlots)
         {
             return false;
         }
