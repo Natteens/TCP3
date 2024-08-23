@@ -38,7 +38,7 @@ public class EnemySettings : MonoBehaviour
         //statusComponent = GetComponent<StatusComponent>();
         mainCamera = Camera.main;
 
-      //  ApplyLevelScaling();
+        ApplyLevelScaling();
         UpdateNameAndLevelUI();
     }
 
@@ -54,18 +54,22 @@ public class EnemySettings : MonoBehaviour
     [Button("Aplicar Nível e Atualizar UI", ButtonSizes.Large)]
     private void ApplyLevelScaling()
     {
-        // Modifica os status com base no nível e nos multiplicadores configurados
-        Dictionary<StatusType, float> newStatus = new Dictionary<StatusType, float>();
+        Dictionary<StatusType, float> currentStats = statusComponent.currentStatus;
 
-        // Exemplo de aplicação de modificadores: Vida, Ataque, Defesa
-        float health = level * healthMultiplier;
-        float defense = level * defenseMultiplier;
+        float healthModifier = level * healthMultiplier;
+        float defenseModifier = level * defenseMultiplier;
 
-        newStatus[StatusType.Health] = health;
-        newStatus[StatusType.Defense] = defense;
+        if (currentStats.ContainsKey(StatusType.Health))
+        {
+            currentStats[StatusType.Health] = currentStats[StatusType.Health] + healthModifier; 
+        }
 
-        // Atualiza os status usando o método público do StatusComponent
-        statusComponent.UpdateStatus(newStatus);
+        if (currentStats.ContainsKey(StatusType.Defense))
+        {
+            currentStats[StatusType.Defense] = currentStats[StatusType.Defense] + defenseModifier;
+        }
+
+        statusComponent.UpdateStatus(currentStats);
     }
 
     private void UpdateNameAndLevelUI()

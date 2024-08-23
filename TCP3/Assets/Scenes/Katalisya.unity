@@ -2335,11 +2335,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Name
---- !u!1 &324697667 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8954243456720646937, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
-  m_PrefabInstance: {fileID: 2065426451}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &326860283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11785,7 +11780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5499563502231192920, guid: fa01536c03228ff48b52e5090640842a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -372.5
+      value: -372.35
       objectReference: {fileID: 0}
     - target: {fileID: 5499563502231192920, guid: fa01536c03228ff48b52e5090640842a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12930,7 +12925,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000722757}
+  m_AnchoredPosition: {x: 0, y: 0.000023566043}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783
@@ -13776,37 +13771,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464643070}
   m_CullTransparentMesh: 1
---- !u!1 &1464951902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1464951903}
-  m_Layer: 0
-  m_Name: FirePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1464951903
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464951902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2065426452}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1467967864
 GameObject:
   m_ObjectHideFlags: 0
@@ -14140,7 +14104,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.99994475
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18432,10 +18396,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: pfEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 8954243456720646937, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 8954243456720646942, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -18481,32 +18441,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8954243456720646943, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954243456720646943, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
       propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8954243456720646943, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954243456720647008, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
-      propertyPath: obstacles.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954243456720647014, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
-      propertyPath: <CurrentHealth>k__BackingField
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 8954243456720647009, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8954243456720647009, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
     - target: {fileID: 8954243456720647015, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1010383153
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954243456720647015, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 3883123480
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
@@ -18515,47 +18459,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8954243456720646942, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
   m_PrefabInstance: {fileID: 2065426451}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2065426453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324697667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30df2221b84bf414cbef520291a3eed2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectors:
-  - {fileID: 11400000, guid: 52c0969013e41e24bacf516340cfa586, type: 2}
-  - {fileID: 11400000, guid: 0ac62a8925456b344b74527fc82a1e75, type: 2}
-  steeringBehaviours:
-  - {fileID: 11400000, guid: 28fbfc1d9615ac147bbc858a0cfe84bd, type: 2}
-  - {fileID: 11400000, guid: 89622f18ab057ae46b86636e202cdd8a, type: 2}
-  contextSolver: {fileID: 11400000, guid: 70e39c1b0f781bf4eb3feb4ad1536d63, type: 2}
-  _aiData: {fileID: 2065426454}
-  detectionDelay: 0.05
-  detectionRange: 15
-  hasIncreasedDetectionRange: 1
-  showGizmos: 1
-  firePoint: {fileID: 1464951903}
-  attackCollider: {fileID: 0}
-  enemyEffect: {fileID: 0}
-  idle: {fileID: 11400000, guid: 4184bd3688ce5724dbcdc21a65ba55a7, type: 2}
-  chase: {fileID: 11400000, guid: 076ca20f56237e542bea7cfe89fdcf5d, type: 2}
-  attack: {fileID: 11400000, guid: cd0c6edd4ea449f43b8a192c70bf352c, type: 2}
---- !u!114 &2065426454 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8954243456720647008, guid: 561cc8f5800f2724cb2e7e4a33229ca9, type: 3}
-  m_PrefabInstance: {fileID: 2065426451}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324697667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56adfafa375598f41923445708bbe08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2086263715
 GameObject:
   m_ObjectHideFlags: 0
