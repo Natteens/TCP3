@@ -41,7 +41,6 @@ public class HealthComponent : NetworkBehaviour, IHealth
 
     private void HandleStatusChanged(Dictionary<StatusType, float> currentStatus)
     {
-        if (!IsOwner) return;
         if (currentStatus.TryGetValue(StatusType.Health, out var health))
         {
             MaxHealth = health;
@@ -61,7 +60,7 @@ public class HealthComponent : NetworkBehaviour, IHealth
 
     public void TakeDamage(float amount)
     {
-        if (!IsAlive || !IsOwner) return;
+        if (!IsAlive) return;
         CurrentHealth -= amount;
         OnTakeDamage?.Invoke(amount);
         CurrentHealth = (CurrentHealth <= 0) ? 0 : CurrentHealth;
@@ -70,7 +69,7 @@ public class HealthComponent : NetworkBehaviour, IHealth
 
     public void Heal(float amount)
     {
-        if (!IsAlive || !IsOwner) return;
+        if (!IsAlive) return;
         CurrentHealth += amount;
         CurrentHealth = (CurrentHealth >= MaxHealth) ? MaxHealth : CurrentHealth;
         OnHeal?.Invoke(amount);
@@ -79,14 +78,13 @@ public class HealthComponent : NetworkBehaviour, IHealth
 
     public void Die()
     {
-        if (!IsAlive || !IsOwner) return;
-        OnDeath?.Invoke();
         CurrentHealth = (CurrentHealth <= 0) ? 0 : CurrentHealth;
+        OnDeath?.Invoke();
     }
 
     public void Revive()
     {
-        if (!IsAlive || !IsOwner) return;
+        if (!IsAlive) return;
         CurrentHealth = MaxHealth;
         OnRevive?.Invoke();
     }

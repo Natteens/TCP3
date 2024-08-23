@@ -11,11 +11,6 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        if (healthComponent == null)
-        {
-            healthComponent = GetComponentInParent<HealthComponent>();
-        }
-
         mainCamera = Camera.main;
 
         // Assina os eventos de dano e cura do HealthComponent
