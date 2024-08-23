@@ -15,7 +15,7 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
     {
         foreach (Collider obstacleCollider in aiData.obstacles)
         {
-            Vector2 directionToObstacle
+            Vector3 directionToObstacle
                 = obstacleCollider.ClosestPoint(aiData.transform.position) - aiData.transform.position;
             float distanceToObstacle = directionToObstacle.magnitude;
 
@@ -25,12 +25,12 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
                 ? 1
                 : (radius - distanceToObstacle) / radius;
 
-            Vector2 directionToObstacleNormalized = directionToObstacle.normalized;
+            Vector3 directionToObstacleNormalized = directionToObstacle.normalized;
 
             //Add obstacle parameters to the danger array
-            for (int i = 0; i < Directions.eightDirections.Count; i++)
+            for (int i = 0; i < Directions.allDirections.Count; i++)
             {
-                float result = Vector2.Dot(directionToObstacleNormalized, Directions.eightDirections[i]);
+                float result = Vector3.Dot(directionToObstacleNormalized, Directions.allDirections[i]);
 
                 float valueToPutIn = result * weight;
 
@@ -56,7 +56,7 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
                 {
                     Gizmos.DrawRay(
                         aiData.transform.position,
-                        Directions.eightDirections[i] * dangersResultTemp[i]*2
+                        Directions.allDirections[i] * dangersResultTemp[i]*2
                         );
                 }
             }
@@ -68,14 +68,24 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
 
 public static class Directions
 {
-    public static List<Vector3> eightDirections = new List<Vector3>{
-            new Vector3(0,0,1).normalized,
-            new Vector3(0,0,-1).normalized,
-            new Vector3(1,0,0).normalized,
-            new Vector3(-1,0,0).normalized,
-            new Vector3(-1,0,1).normalized,
-            new Vector3(-1,0,-1).normalized,
-            new Vector3(1,0,-1).normalized,
-            new Vector3(1,0,1).normalized,
-        };
+    // Direções ajustadas para vetores 3D, incluindo inclinações para cima
+    public static List<Vector3> allDirections = new List<Vector3>
+    {
+        new Vector3(0, 0, 1).normalized,      // Para frente
+        new Vector3(0, 0, -1).normalized,     // Para trás
+        new Vector3(1, 0, 0).normalized,      // Direita
+        new Vector3(-1, 0, 0).normalized,     // Esquerda
+        new Vector3(-1, 0, 1).normalized,     // Frente-Esquerda
+        new Vector3(-1, 0, -1).normalized,    // Trás-Esquerda
+        new Vector3(1, 0, -1).normalized,     // Trás-Direita
+        new Vector3(1, 0, 1).normalized,      // Frente-Direita
+        new Vector3(0, 1, 0.5f).normalized,   // Para cima-frente
+        new Vector3(0, 1, -0.5f).normalized,  // Para cima-trás
+        new Vector3(0.5f, 1, 0).normalized,   // Para cima-direita
+        new Vector3(-0.5f, 1, 0).normalized,  // Para cima-esquerda
+        new Vector3(0.5f, 1, 0.5f).normalized,// Para cima-frente-direita
+        new Vector3(-0.5f, 1, 0.5f).normalized,// Para cima-frente-esquerda
+        new Vector3(0.5f, 1, -0.5f).normalized,// Para cima-trás-direita
+        new Vector3(-0.5f, 1, -0.5f).normalized // Para cima-trás-esquerda
+    };
 }

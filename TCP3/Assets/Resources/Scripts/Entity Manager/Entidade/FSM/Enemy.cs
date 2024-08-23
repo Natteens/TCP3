@@ -19,7 +19,7 @@ public abstract class Enemy : BaseEntity
     [Header("States Configs")]
     [field: SerializeField] private bool showGizmos;
     [field: SerializeField] public Transform firePoint;
-    [field: SerializeField] public Collider2D attackCollider;
+    [field: SerializeField] public Collider attackCollider;
     [field: SerializeField] public StatusEffect enemyEffect;
 
     [Space(10f)]
@@ -80,14 +80,7 @@ public abstract class Enemy : BaseEntity
     public void Movement(Vector2 dir)
     {
         float speed = statusComponent.GetStatus(StatusType.MoveSpeed);
-        if (IsAlive)
-        {
-          //  move.Move(dir, speed);
-        }
-        else
-        {
-         //   move.Move(Vector2.zero, speed);
-        }
+        
     }
 
     private void PerformDetection()

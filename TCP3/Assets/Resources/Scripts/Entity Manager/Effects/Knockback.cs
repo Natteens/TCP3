@@ -8,14 +8,14 @@ public class Knockback : MonoBehaviour
     [SerializeField] private float knockBackTime = .2f;
     [SerializeField] private float knockBackThrust = 10f;
 
-    private Rigidbody2D rb;
-    private Vector2 knockBackDirection;
+    private Rigidbody rb;
+    private Vector3 knockBackDirection;
     private bool isKinematic;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        isKinematic = rb.bodyType == RigidbodyType2D.Kinematic;
+        rb = GetComponent<Rigidbody>();
+        isKinematic = rb.isKinematic;
     }
 
     public void GetKnockedBack(Transform damageSource)
@@ -29,7 +29,7 @@ public class Knockback : MonoBehaviour
         }
         else
         {
-            rb.AddForce(knockBackDirection * rb.mass, ForceMode2D.Impulse);
+            rb.AddForce(knockBackDirection * rb.mass, ForceMode.Impulse);
             StartCoroutine(KnockRoutineDynamic());
         }
     }
@@ -51,7 +51,7 @@ public class Knockback : MonoBehaviour
     private IEnumerator KnockRoutineDynamic()
     {
         yield return new WaitForSeconds(knockBackTime);
-        rb.velocity = Vector2.zero;
+        rb.velocity = Vector3.zero;
         GettingKnockedBack = false;
     }
 }

@@ -15,10 +15,8 @@ public class TPSController : NetworkBehaviour
     [SerializeField] private MultiAimConstraint torsoAimConstraint;
     [SerializeField] private float rotationSpeed = 100f;
     [SerializeField] private bool showGizmos = true; // Exibe os Gizmos no modo de jogo
-    [SerializeField] private float maxCameraOffset = 2f; // Limite máximo para o deslocamento da câmera
     [SerializeField] private float cameraOffsetSpeed = 5f; // Velocidade de transição do offset
     [SerializeField] private float cameraDistanceAiming = 23f; // Distância da câmera ao mirar
-    [SerializeField] private float cameraDistanceDefault = 18f; // Distância da câmera sem mirar
     [SerializeField] private float minZoomDistance = 15f; // Distância mínima do zoom
     [SerializeField] private float maxZoomDistance = 19.5f; // Distância máxima do zoom
     [SerializeField] private float zoomSpeed = 2f; // Velocidade do zoom
@@ -89,7 +87,7 @@ public class TPSController : NetworkBehaviour
         else
         {
             // Quando o jogador não está mirando, ajusta o zoom com base no input
-            if (Mathf.Abs(zoomInput) > 0.1f && input.move == Vector2.zero)
+            if (Mathf.Abs(zoomInput) > 0.1f)
             {
                 float zoomAmount = zoomInput * zoomSpeed;
                 float targetZoom = Mathf.Clamp(currentZoomHeight - zoomAmount, minZoomDistance, maxZoomDistance);

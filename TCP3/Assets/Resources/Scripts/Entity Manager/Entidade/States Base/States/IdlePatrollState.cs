@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections;
 
 [CreateAssetMenu(fileName = "IdlePatrolState", menuName = "Enemy/States/Idle Patrol State")]
-public class IdlePatrolState : EnemyIdleStateSOBase
+public class IdlePatrollState : EnemyIdleStateSOBase
 {
     [SerializeField] private float patrolRadius = 5f;
     [SerializeField] private float patrolPointReachThreshold = 0.5f;
     [SerializeField] private float maxPatrolTime = 3f;
 
-    private Vector2 patrolPoint;
+    private Vector3 patrolPoint;
     private float patrolTimer;
 
     public override void DoEnterLogic()
@@ -28,10 +28,10 @@ public class IdlePatrolState : EnemyIdleStateSOBase
     {
         base.DoPhysicsLogic();
 
-        Vector2 moveDirection = (patrolPoint - (Vector2)enemy.transform.position).normalized;
+        Vector3 moveDirection = (patrolPoint - enemy.transform.position).normalized;
         enemy.Movement(moveDirection);
 
-        float distanceToPatrolPoint = Vector2.Distance(enemy.transform.position, patrolPoint);
+        float distanceToPatrolPoint = Vector3.Distance(enemy.transform.position, patrolPoint);
         patrolTimer -= Time.deltaTime;
 
         if (distanceToPatrolPoint <= patrolPointReachThreshold || patrolTimer <= 0)
@@ -48,7 +48,9 @@ public class IdlePatrolState : EnemyIdleStateSOBase
 
     private void ChoosePatrolPoint()
     {
-        Vector2 randomDirection = Random.insideUnitCircle * patrolRadius;
-        patrolPoint = enemy.transform.position + new Vector3(randomDirection.x, 0f, 0);
+        // Generate a random point within the patrol radius in 3D space
+        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
+        randomDirection.y = 0; // Keep the patrol on the ground plane, assuming y is up
+        patrolPoint = enemy.transform.position + randomDirection;
     }
 }
