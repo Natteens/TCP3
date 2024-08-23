@@ -12,7 +12,7 @@ public class SeekBehaviour : SteeringBehaviour
     bool reachedLastTarget = true;
 
     //gizmo parameters
-    private Vector2 targetPositionCached;
+    private Vector3 targetPositionCached;
     private float[] interestsTemp;
 
     public override (float[] danger, float[] interest) GetSteering(float[] danger, float[] interest, AIData aiData)
@@ -30,9 +30,8 @@ public class SeekBehaviour : SteeringBehaviour
             {
                 reachedLastTarget = false;
                 aiData.currentTarget = aiData.targets.OrderBy
-                    (target => Vector2.Distance(target.position, aiData.transform.position)).FirstOrDefault();
+                    (target => Vector3.Distance(target.position, aiData.transform.position)).FirstOrDefault();
             }
-
         }
 
         //cache the last position only if we still see the target (if the targets collection is not empty)
@@ -40,7 +39,7 @@ public class SeekBehaviour : SteeringBehaviour
             targetPositionCached = aiData.currentTarget.position;
 
         //First check if we have reached the target
-        if (Vector2.Distance(aiData.transform.position, targetPositionCached) < targetRechedThreshold)
+        if (Vector3.Distance(aiData.transform.position, targetPositionCached) < targetRechedThreshold)
         {
             reachedLastTarget = true;
             aiData.currentTarget = null;
@@ -48,10 +47,10 @@ public class SeekBehaviour : SteeringBehaviour
         }
 
         //If we havent yet reached the target do the main logic of finding the interest directions
-        Vector2 directionToTarget = (targetPositionCached - (Vector2)aiData.transform.position);
+        Vector3 directionToTarget = (targetPositionCached - aiData.transform.position);
         for (int i = 0; i < interest.Length; i++)
         {
-            float result = Vector2.Dot(directionToTarget.normalized, Directions.eightDirections[i]);
+            float result = Vector3.Dot(directionToTarget.normalized, Directions.eightDirections[i]);
 
             //accept only directions at the less than 90 degrees to the target direction
             if (result > 0)
@@ -61,7 +60,6 @@ public class SeekBehaviour : SteeringBehaviour
                 {
                     interest[i] = valueToPutIn;
                 }
-
             }
         }
         interestsTemp = interest;
@@ -74,18 +72,15 @@ public class SeekBehaviour : SteeringBehaviour
 
         if (interestsTemp != null)
         {
-            if (interestsTemp != null)
+            Gizmos.color = Color.green;
+            for (int i = 0; i < interestsTemp.Length; i++)
             {
-                Gizmos.color = Color.green;
-                for (int i = 0; i < interestsTemp.Length; i++)
-                {
-                    Gizmos.DrawRay(aiData.transform.position, Directions.eightDirections[i] * interestsTemp[i] * 2);
-                }
-                if (reachedLastTarget == false)
-                {
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawSphere(targetPositionCached, 0.1f);
-                }
+                Gizmos.DrawRay(aiData.transform.position, Directions.eightDirections[i] * interestsTemp[i] * 2);
+            }
+            if (reachedLastTarget == false)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere(targetPositionCached, 0.1f);
             }
         }
     }

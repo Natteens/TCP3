@@ -12,19 +12,26 @@ public class TargetDetector : Detector
 
     public override void Detect(AIData aiData)
     {
-        Collider2D playerCollider = 
-            Physics2D.OverlapCircle(aiData.transform.position, targetDetectionRange, playerLayerMask);
+        // Use Physics.OverlapSphere instead of Physics2D.OverlapCircle for 3D detection
+        Collider[] playerColliders = Physics.OverlapSphere(aiData.transform.position, targetDetectionRange, playerLayerMask);
 
-        if (playerCollider != null)
+        if (playerColliders.Length > 0)
         {
-            Vector2 direction = (playerCollider.transform.position - aiData.transform.position).normalized;
-            RaycastHit2D hit = 
-                Physics2D.Raycast(aiData.transform.position, direction, targetDetectionRange, obstaclesLayerMask);
+            Transform playerTransform = playerColliders[0].transform;
+            Vector3 direction = (playerTransform.position - aiData.transform.position).normalized;
 
-            if (hit.collider != null && (playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
+            // Use Physics.Raycast for 3D raycasting
+            if (Physics.Raycast(aiData.transform.position, direction, out RaycastHit hit, targetDetectionRange, obstaclesLayerMask))
             {
-                Debug.DrawRay(aiData.transform.position, direction * targetDetectionRange, Color.magenta);
-                colliders = new List<Transform>() { playerCollider.transform };
+                if ((playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
+                {
+                    Debug.DrawRay(aiData.transform.position, direction * targetDetectionRange, Color.magenta);
+                    colliders = new List<Transform>() { playerTransform };
+                }
+                else
+                {
+                    colliders = null;
+                }
             }
             else
             {
@@ -35,6 +42,7 @@ public class TargetDetector : Detector
         {
             colliders = null;
         }
+
         aiData.targets = colliders;
     }
 
@@ -44,6 +52,7 @@ public class TargetDetector : Detector
 
         if (colliders == null)
             return;
+
         Gizmos.color = Color.magenta;
         foreach (var item in colliders)
         {

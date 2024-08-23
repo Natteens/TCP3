@@ -13,10 +13,10 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
 
     public override (float[] danger, float[] interest) GetSteering(float[] danger, float[] interest, AIData aiData)
     {
-        foreach (Collider2D obstacleCollider in aiData.obstacles)
+        foreach (Collider obstacleCollider in aiData.obstacles)
         {
             Vector2 directionToObstacle
-                = obstacleCollider.ClosestPoint(aiData.transform.position) - (Vector2)aiData.transform.position;
+                = obstacleCollider.ClosestPoint(aiData.transform.position) - aiData.transform.position;
             float distanceToObstacle = directionToObstacle.magnitude;
 
             //calculate weight based on the distance Enemy<--->Obstacle
@@ -68,14 +68,14 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
 
 public static class Directions
 {
-    public static List<Vector2> eightDirections = new List<Vector2>{
-            new Vector2(0,1).normalized,
-            new Vector2(1,1).normalized,
-            new Vector2(1,0).normalized,
-            new Vector2(1,-1).normalized,
-            new Vector2(0,-1).normalized,
-            new Vector2(-1,-1).normalized,
-            new Vector2(-1,0).normalized,
-            new Vector2(-1,1).normalized
+    public static List<Vector3> eightDirections = new List<Vector3>{
+            new Vector3(0,0,1).normalized,
+            new Vector3(0,0,-1).normalized,
+            new Vector3(1,0,0).normalized,
+            new Vector3(-1,0,0).normalized,
+            new Vector3(-1,0,1).normalized,
+            new Vector3(-1,0,-1).normalized,
+            new Vector3(1,0,-1).normalized,
+            new Vector3(1,0,1).normalized,
         };
 }

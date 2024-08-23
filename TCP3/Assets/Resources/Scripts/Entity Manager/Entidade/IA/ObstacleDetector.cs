@@ -11,11 +11,11 @@ public class ObstacleDetector : Detector
     [SerializeField]
     private LayerMask layerMask;
 
-    private Collider2D[] colliders;
+    private Collider[] colliders;
 
     public override void Detect(AIData aiData)
     {
-        colliders = Physics2D.OverlapCircleAll(aiData.transform.position, detectionRadius, layerMask);
+        colliders = Physics.OverlapSphere(aiData.transform.position, detectionRadius, layerMask);
         aiData.obstacles = colliders;
     }
 
@@ -24,7 +24,7 @@ public class ObstacleDetector : Detector
         if (colliders != null)
         {
             Gizmos.color = Color.red;
-            foreach (Collider2D obstacleCollider in colliders)
+            foreach (Collider obstacleCollider in colliders)
             {
                 Gizmos.DrawSphere(obstacleCollider.transform.position, 0.2f);
             }
