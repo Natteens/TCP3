@@ -77,10 +77,12 @@ public abstract class Enemy : BaseEntity
         stateMachine.ChangeState(newState);
     }
 
-    public void Movement(Vector2 dir)
+    public void Movement(Vector3 dir)
     {
         float speed = statusComponent.GetStatus(StatusType.MoveSpeed);
-        
+        Debug.Log(speed);
+        Debug.Log(dir);
+        MoveAndRotate(dir, speed);
     }
 
     private void PerformDetection()

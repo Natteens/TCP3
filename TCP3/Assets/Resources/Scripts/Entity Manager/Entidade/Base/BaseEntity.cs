@@ -63,4 +63,17 @@ public abstract class BaseEntity : MonoBehaviour
         coll.enabled = true;
         anim.SetTrigger("Revive");
     }
+
+    public void MoveAndRotate(Vector3 dir, float speed)
+    {
+        Vector3 normalizedDirection = dir.normalized;
+        Vector3 movement = normalizedDirection * speed;
+        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+        if (normalizedDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(normalizedDirection);
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * speed));
+        }
+        Debug.Log("moveAndRotate");
+    }
 }

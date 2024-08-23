@@ -38,7 +38,7 @@ public class EnemySettings : MonoBehaviour
         //statusComponent = GetComponent<StatusComponent>();
         mainCamera = Camera.main;
 
-        ApplyLevelScaling();
+      //  ApplyLevelScaling();
         UpdateNameAndLevelUI();
     }
 

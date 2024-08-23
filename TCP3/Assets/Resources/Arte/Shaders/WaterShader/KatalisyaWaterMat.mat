@@ -35,9 +35,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _Absorption_Coefficient: 1
-    - _DistanceDepth: 10
+    - _DistanceDepth: 55
     - _FoamAmount: 1.5
-    - _FoamCutOff: 2
+    - _FoamCutOff: 1
     - _FoamScale: 10
     - _FoamSpeed: 1
     - _QueueControl: 0
@@ -47,7 +47,7 @@ Material:
     - _RefractionStrength: 1
     m_Colors:
     - _AbsorptionColor: {r: 0, g: 0.35900047, b: 0.41509432, a: 1}
-    - _DeepWater: {r: 0, g: 0.0034575195, b: 0.3301887, a: 0.9137255}
+    - _DeepWater: {r: 0.14204343, g: 0.14664172, b: 0.5283019, a: 0.9137255}
     - _FoamColor: {r: 0.46524566, g: 0.8018868, b: 0.70025927, a: 0.50980395}
     - _Water_Color: {r: 0, g: 0.8627448, b: 1, a: 0.70980394}
   m_BuildTextureStacks: []

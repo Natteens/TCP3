@@ -28,6 +28,7 @@ public class IdlePatrollState : EnemyIdleStateSOBase
     {
         base.DoPhysicsLogic();
 
+        Debug.Log("Movimentando");
         Vector3 moveDirection = (patrolPoint - enemy.transform.position).normalized;
         enemy.Movement(moveDirection);
 
