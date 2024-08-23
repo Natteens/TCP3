@@ -21,6 +21,8 @@ public class Inventory
     {
         if (!CanPickup()) return;
 
+        FeedbackManager.Instance.FeedbackItem(item);
+
         if (item.IsStackable())
         {
             // Tenta encontrar um item igual para acumular

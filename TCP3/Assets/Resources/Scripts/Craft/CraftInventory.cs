@@ -23,6 +23,7 @@ public class CraftInventory
         }
         if (!alreadyHave)
         {
+            FeedbackManager.Instance.FeedbackCraft(Craft);
             craftList.Add(Craft);
             OncraftListChanged?.Invoke(this, EventArgs.Empty);
         }
