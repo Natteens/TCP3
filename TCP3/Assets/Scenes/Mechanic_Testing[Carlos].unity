@@ -1643,7 +1643,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1001865224}
-  - {fileID: 1610220833}
   m_Father: {fileID: 1725228397}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4607,15 +4606,47 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 664500192108465889, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.25
+      value: 1345
+      objectReference: {fileID: 0}
+    - target: {fileID: 664500192108465889, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 522.75
       objectReference: {fileID: 0}
     - target: {fileID: 664500192108465889, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.6
+      value: 1929.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 664500192108465889, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 664500192108465889, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 664500192108465889, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 664500192108465889, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 664500192108465894, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 664500192108465894, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
+      propertyPath: far clip plane
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 664500192108465894, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
+      propertyPath: near clip plane
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 664500192108465894, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
+      propertyPath: orthographic size
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 664500192119889633, guid: b3c4b016d35c17b478ecf1efa3906049, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -6729,56 +6760,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5763945790272045072, guid: 8d9203bc05af6f24e8495c3a8e44e2f0, type: 3}
   m_PrefabInstance: {fileID: 1575681386}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1610220832
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1610220833}
-  - component: {fileID: 1610220834}
-  m_Layer: 5
-  m_Name: FeedbackMsgHolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1610220833
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610220832}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 342954911}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -600.005, y: 94.21101}
-  m_SizeDelta: {x: -1199.99, y: -491.57797}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1610220834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610220832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6eb463178f971e4c962e322a96e1a22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pfFeedbackMsg: {fileID: 759858694491886173, guid: 2d3480b1d888e5d46a6c2156acf8208a, type: 3}
 --- !u!1001 &1610388925
 PrefabInstance:
   m_ObjectHideFlags: 0

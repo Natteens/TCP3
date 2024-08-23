@@ -14,7 +14,6 @@ public class FeedbackManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        FeedbackText("CabeloDoSerpa");
     }
 
     public void FeedbackItem(Item item)

@@ -9,8 +9,8 @@ public class FeedbackLogic : MonoBehaviour
 {
     public TextMeshProUGUI myText;
     public Image myImage;
-    private float duration = 5f;
-    private float moveDistance = 100f;
+    private float duration = 1.5f;
+    private float moveDistance = 200f;
 
     private void Start()
     {
@@ -35,6 +35,7 @@ public class FeedbackLogic : MonoBehaviour
     public void UpLogic()
     {
         GetComponent<RectTransform>().DOAnchorPosY(myText.rectTransform.anchoredPosition.y + moveDistance, duration);
-        myText.DOFade(0f, duration).OnComplete(() => myText.gameObject.SetActive(false));
+        myImage.DOFade(0f, duration);
+        myText.DOFade(0f, duration).OnComplete(() => Destroy(gameObject));
     }
 }
