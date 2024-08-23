@@ -79,13 +79,5 @@ public static class Directions
         new Vector3(-1, 0, -1).normalized,    // Trás-Esquerda
         new Vector3(1, 0, -1).normalized,     // Trás-Direita
         new Vector3(1, 0, 1).normalized,      // Frente-Direita
-        new Vector3(0, 1, 0.5f).normalized,   // Para cima-frente
-        new Vector3(0, 1, -0.5f).normalized,  // Para cima-trás
-        new Vector3(0.5f, 1, 0).normalized,   // Para cima-direita
-        new Vector3(-0.5f, 1, 0).normalized,  // Para cima-esquerda
-        new Vector3(0.5f, 1, 0.5f).normalized,// Para cima-frente-direita
-        new Vector3(-0.5f, 1, 0.5f).normalized,// Para cima-frente-esquerda
-        new Vector3(0.5f, 1, -0.5f).normalized,// Para cima-trás-direita
-        new Vector3(-0.5f, 1, -0.5f).normalized // Para cima-trás-esquerda
     };
 }

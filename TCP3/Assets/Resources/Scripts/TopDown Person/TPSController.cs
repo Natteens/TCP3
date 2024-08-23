@@ -37,6 +37,11 @@ public class TPSController : NetworkBehaviour
         framingTransposer = GameManager.Instance.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
+    public override void OnNetworkSpawn()
+    {
+        virtualCamera.transform.rotation = Quaternion.Euler(30, 0, 0);
+    }
+
     private void Update()
     {
         var (success, position) = MouseController.GetMousePosition(Mcam, layer);
