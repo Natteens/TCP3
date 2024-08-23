@@ -5095,8 +5095,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549463391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2537.5, y: 104, z: 4392.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 3104, y: 104, z: 3640}
+  m_LocalScale: {x: 452.03857, y: 452.03857, z: 452.03857}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1030710143}
@@ -5136,7 +5136,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a5a9d2ee8947dd74d9a1a1bd114e5061, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9297,6 +9297,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KatalisyaWater
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: af251994b1c40f84bb47ec60af500172, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af251994b1c40f84bb47ec60af500172, type: 3}
 --- !u!4 &1016486201 stripped
@@ -12174,8 +12178,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1151295986}
   m_HandleRect: {fileID: 1151295985}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14098,7 +14102,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1787074373}
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
