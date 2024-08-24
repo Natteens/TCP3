@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProjectileMover : MonoBehaviour
 {
+    public float Damage; 
     public float speed = 15f;
     public float hitOffset = 0f;
     public bool UseFirePointRotation;
@@ -12,6 +13,9 @@ public class ProjectileMover : MonoBehaviour
     public GameObject flash;
     private Rigidbody rb;
     public GameObject[] Detached;
+    public LayerMask Layer;
+
+    public void InitializeProjectile(int amount) { Damage = amount; }
 
     void Start()
     {
@@ -34,6 +38,7 @@ public class ProjectileMover : MonoBehaviour
         Destroy(gameObject,5);
 	}
 
+
     void FixedUpdate ()
     {
 		if (speed != 0)
@@ -43,7 +48,6 @@ public class ProjectileMover : MonoBehaviour
         }
 	}
 
-    //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
     void OnCollisionEnter(Collision collision)
     {
         //Lock all axes movement and rotation
@@ -61,9 +65,17 @@ public class ProjectileMover : MonoBehaviour
             else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
             else { hitInstance.transform.LookAt(contact.point + contact.normal); }
 
+            if ((Layer & (1 << collision.gameObject.layer)) != 0)
+            {
+                Debug.Log("Colidiu com: " + collision.gameObject.name);
+                collision.gameObject.GetComponent<HealthComponent>().TakeDamage(Damage);
+            }
+
             var hitPs = hitInstance.GetComponent<ParticleSystem>();
+
             if (hitPs != null)
             {
+                
                 Destroy(hitInstance, hitPs.main.duration);
             }
             else

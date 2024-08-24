@@ -87,7 +87,8 @@ public class WeaponController : NetworkBehaviour
             {
                 if (!isShooting) isShooting = true;
                 Vector3 shootDirection = GetShootDirection(aimPoint);
-                Instantiate(currentWeapon.bulletPrefab, bulletSpawner.position, Quaternion.LookRotation(shootDirection, Vector3.up));
+                var projectile = Instantiate(currentWeapon.bulletPrefab, bulletSpawner.position, Quaternion.LookRotation(shootDirection, Vector3.up));
+                projectile.GetComponent<ProjectileMover>().InitializeProjectile((int)currentWeapon.damage);
                 currentAmmo -= currentWeapon.bulletPerShoot;
                 fireRateCounter = 0f;
                 OnShoot?.Invoke();
