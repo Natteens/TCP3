@@ -15,6 +15,7 @@ public class UI_Inventory : MonoBehaviour
     [SerializeField] private Transform inventoryHolder;
     [SerializeField] private RectTransform[] Slots;
     [SerializeField] private GameObject itemSlotPrefab;
+    [SerializeField] private SlotExpandController expandController;
     private LocatePlayer player;
     public bool isVisible = false;
 
@@ -101,36 +102,41 @@ public class UI_Inventory : MonoBehaviour
 
         instance.GetComponent<Button_UI>().ClickFunc = () =>
         {
-            // Use Item
-            if (item != null)
+            expandController.Setup(item);
+
+            if (item != null && item.itemType == Item.Itemtype.Consumivel)
             {
-                switch (item.itemType)
-                {
-                    case Item.Itemtype.Consumivel:
-                        Consumable consumable = item as Consumable;
-                        if (consumable != null)
-                        {
-                            SurvivalManager manager = player.gameObject.GetComponent<SurvivalManager>();
-                            manager.IncreaseStats(consumable);
-                            inventory.RemoveItem(item);
-                        }
-                        else
-                        {
-                            Debug.LogWarning("CASTING NAO ESTA FUNCIONANDO");
-                        }
-                        break;
-                }
+                expandController.hasUse = true;
             }
+
+            expandController.ActiveItemButton();
+            expandController.Expand();
+            // Use Item
+            //if (item != null)
+            //{
+            //    switch (item.itemType)
+            //    {
+            //        case Item.Itemtype.Consumivel:
+            //            Consumable consumable = item as Consumable;
+            //            if (consumable != null)
+            //            {
+            //                SurvivalManager manager = player.gameObject.GetComponent<SurvivalManager>();
+            //                manager.IncreaseStats(consumable);
+            //                inventory.RemoveItem(item);
+            //            }
+            //            break;
+            //    }
+            //}
         };
 
         instance.GetComponent<Button_UI>().MouseRightClickFunc = () =>
         {
             // Drop item
-            if (item != null)
-            {
-                inventory.RemoveItem(item);
-                ItemWorld.DropItem(player.GetPosition(), item);
-            }
+            //if (item != null)
+            //{
+            //    inventory.RemoveItem(item);
+            //    ItemWorld.DropItem(player.GetPosition(), item);
+            //}
         };
 
         // Configurar o item arrastável
@@ -180,6 +186,8 @@ public class UI_Inventory : MonoBehaviour
         {
             //Debug.Log("#Ativei o inventario#");
             GameManager.Instance.uiCraft.ControlExpandedCraft(false);
+            expandController.Squeeze();
+            expandController.Clean();
             MouseController.CursorVisibility(true);
         }
         else

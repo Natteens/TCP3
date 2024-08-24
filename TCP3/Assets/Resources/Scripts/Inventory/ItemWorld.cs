@@ -6,12 +6,18 @@ using EasyBuildSystem.Packages.Addons.AdvancedBuilding;
 public class ItemWorld : NetworkBehaviour, Interactable
 {
     private Item item;
-
+    private int amount;
     // Método para definir o item
     public void SetItem(Item item)
     {
         if (item.amount <= 0) item.amount = 1;
         this.item = item;
+        SetAmount(item.amount);
+    }
+
+    public void SetAmount(int i)
+    {
+        amount = i;
     }
 
     // Método para obter o item
@@ -41,7 +47,10 @@ public class ItemWorld : NetworkBehaviour, Interactable
         InteractController interact = interactor.GetComponent<InteractController>();
         if (inventory != null)
         {
-            inventory.SetItem(item);
+            Item giveItem = item;
+            giveItem.amount = amount;
+            inventory.SetItem(giveItem);
+            amount = 0;
             interact.RemoveThisInteractable(this);
             DestroySelf();
 
@@ -70,7 +79,6 @@ public class ItemWorld : NetworkBehaviour, Interactable
             networkObject.Spawn(); // Sincroniza o objeto com todos os clientes
         }
     }
-
 
     public static void DropItem(Vector3 dropPosition, Item item)
     {
