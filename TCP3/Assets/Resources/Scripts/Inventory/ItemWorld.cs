@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using CodeMonkey.Utils;
+using EasyBuildSystem.Packages.Addons.AdvancedBuilding;
 
 public class ItemWorld : NetworkBehaviour, Interactable
 {
@@ -37,10 +38,13 @@ public class ItemWorld : NetworkBehaviour, Interactable
     private void ProcessInteraction(Transform interactor)
     {
         InventoryController inventory = interactor.GetComponent<InventoryController>();
+        InteractController interact = interactor.GetComponent<InteractController>();
         if (inventory != null)
         {
             inventory.SetItem(item);
+            interact.RemoveThisInteractable(this);
             DestroySelf();
+
             InteractController interactController = interactor.GetComponent<InteractController>();
             if (interactController != null)
             {
@@ -115,12 +119,14 @@ public class ItemWorld : NetworkBehaviour, Interactable
     {
         if (IsServer)
         {
-            NetworkObject networkObject = GetComponent<NetworkObject>();
-            if (networkObject != null)
+
+            if (TryGetComponent<NetworkObject>(out var networkObject))
             {
                 networkObject.Despawn();
             }
+            
         }
+
         Destroy(gameObject);
     }
 

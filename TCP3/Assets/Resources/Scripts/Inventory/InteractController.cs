@@ -1,15 +1,19 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections.Generic;
 
 public class InteractController : NetworkBehaviour
 {
     [SerializeField] private GameObject interactMessage;
     private StarterAssetsInputs starterAssetsInputs;
-    private Interactable currentInteractable; // Armazena o objeto atual que pode ser interagido
+
+    // Tornar visíveis no Inspector
+    private Interactable currentInteractable;
+    private List<Interactable> interactables = new List<Interactable>();
 
     private void Awake()
     {
-        Physics.IgnoreLayerCollision(6, 11); // Ignora colisão entre layer 6 (Player) e 11 (ItemDrop)
+        Physics.IgnoreLayerCollision(6, 11);
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         interactMessage = GameManager.Instance.interactMSG;
     }
@@ -19,27 +23,57 @@ public class InteractController : NetworkBehaviour
         interactMessage.SetActive(request);
     }
 
-    private void Update()
-    {
-        if (starterAssetsInputs.interact && currentInteractable != null)
-        {
-            // Processa a interação e desativa a interação com o item imediatamente
-            currentInteractable.OnInteract(transform);
-            currentInteractable = null; // Limpa o objeto atual
-            starterAssetsInputs.interact = false;
-            ControlInteractMessage(false); // Esconde a mensagem de interação
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (!IsOwner) return;
 
         if (other.TryGetComponent<Interactable>(out var interactable))
         {
-            // Armazena o objeto que pode ser interagido
-            currentInteractable = interactable;
-            ControlInteractMessage(true); // Mostra a mensagem de interação
+            interactables.Add(interactable);
+            if (currentInteractable == null)
+            {
+                currentInteractable = interactable;
+                ControlInteractMessage(true);
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!IsOwner) return;
+
+        // Verifica se o currentInteractable ainda é válido
+        if (currentInteractable == null || interactables.Contains(currentInteractable) == false)
+        {
+            // Remove objetos destruídos ou inexistentes da lista
+            interactables.RemoveAll(item => item == null);
+
+            // Atualiza o currentInteractable
+            if (interactables.Count > 0)
+            {
+                currentInteractable = interactables[0];
+                ControlInteractMessage(true);
+            }
+            else
+            {
+                ControlInteractMessage(false);
+                return;
+            }
+        }
+
+        // Verifica se o jogador pressionou o botão de interação
+        if (starterAssetsInputs.interact && currentInteractable != null)
+        {
+            starterAssetsInputs.interact = false;
+            currentInteractable.OnInteract(transform);
+
+
+            // Remove o objeto interagido da lista, caso tenha sido destruído
+            interactables.Remove(currentInteractable);
+
+            // Atualiza o currentInteractable
+            currentInteractable = interactables.Count > 0 ? interactables[0] : null;
+            ControlInteractMessage(currentInteractable != null);
         }
     }
 
@@ -47,8 +81,27 @@ public class InteractController : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        currentInteractable = null;
-        ControlInteractMessage(false); 
-    
+        if (currentInteractable != null)
+        {
+            interactables.Remove(currentInteractable);
+            currentInteractable = interactables.Count > 0 ? interactables[0] : null;
+            ControlInteractMessage(currentInteractable != null);
+        }
+        
+    }
+
+    public void RemoveThisInteractable(Interactable interactable)
+    {
+        if (interactables.Contains(interactable))
+        {
+            interactables.Remove(interactable);
+
+            // Atualiza o currentInteractable se o objeto que saiu for o atual
+            if (currentInteractable == interactable)
+            {
+                currentInteractable = interactables.Count > 0 ? interactables[0] : null;
+                ControlInteractMessage(currentInteractable != null);
+            }
+        }
     }
 }

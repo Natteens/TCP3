@@ -7,16 +7,16 @@ using UnityEngine.UI; // Importa a biblioteca Odin
 
 public class ResourceSpot : MonoBehaviour, Interactable
 {
-    [Title("Item Settings")] // Adiciona um título para o grupo de variáveis
-    [SerializeField, Required] // Garante que o campo seja obrigatório
-    [InlineEditor(InlineEditorObjectFieldModes.Boxed)] // Permite editar o objeto no inspector
+    [Title("Item Settings")] 
+    [SerializeField, Required] 
+    [InlineEditor(InlineEditorObjectFieldModes.Boxed)] 
     public Item item;
 
     [Title("Harvest Settings")]
-    [Range(1f, 10f)] // Limita o intervalo de valores da variável no inspector
+    [Range(1f, 10f)] 
     public float baseTimeToHarvest;
 
-    [ShowInInspector, ReadOnly] // Mostra a variável no inspector, mas torna-a somente leitura
+    [ShowInInspector, ReadOnly] 
     private float maxTime;
 
     [ShowInInspector, ReadOnly]
@@ -42,6 +42,7 @@ public class ResourceSpot : MonoBehaviour, Interactable
     {
         isHarvesting = true;
         GameManager.Instance.HarvestHolder.SetActive(true);
+        GameManager.Instance.interactMSG.SetActive(false);
     }
 
     public void CancelHarvesting()
@@ -53,12 +54,13 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
     public void Countdown()
     {
+        GameManager.Instance.interactMSG.SetActive(false);
         if (currentTime > maxTime)
         {
             GameManager.Instance.uiInventory.GetPlayer().GetComponent<InventoryController>().SetItem(item);
             currentTime = 0f;
-            isHarvesting = false;
-            GameManager.Instance.HarvestHolder.SetActive(false);
+            //isHarvesting = false;
+            //GameManager.Instance.HarvestHolder.SetActive(false);
         }
         else
         {
@@ -75,6 +77,7 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
     private void OnTriggerExit(Collider other)
     {
+        other.GetComponent<InteractController>().RemoveThisInteractable(this);
         CancelHarvesting();
     }
 }
