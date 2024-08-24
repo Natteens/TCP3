@@ -102,6 +102,7 @@ public class SlotExpandController : MonoBehaviour
             GameManager.Instance.uiInventory.GetInventory().RemoveItem(selectedItem);
             ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), selectedItem);
             Clean();
+            Squeeze();
         }
     }
 
@@ -122,6 +123,7 @@ public class SlotExpandController : MonoBehaviour
                 manager.IncreaseStats(consumable);
                 GameManager.Instance.uiInventory.GetInventory().RemoveItem(selectedItem);
                 Clean();
+                Squeeze();
             }
         }
     }
