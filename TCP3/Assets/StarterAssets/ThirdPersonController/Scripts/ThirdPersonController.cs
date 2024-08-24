@@ -135,7 +135,6 @@ namespace StarterAssets
             survivalManager = GetComponent<SurvivalManager>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-
             AssignAnimationIDs();
 
             // reset our timeouts on start
@@ -150,7 +149,6 @@ namespace StarterAssets
 
         public override void OnNetworkSpawn()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != gameScenes.Katalisya.ToString()) return;
             if (IsClient && IsOwner)
             {
                 _playerInput = GetComponent<PlayerInput>();

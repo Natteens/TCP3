@@ -6586,9 +6586,8 @@ GameObject:
   - component: {fileID: 549463392}
   - component: {fileID: 549463395}
   - component: {fileID: 549463394}
-  - component: {fileID: 549463396}
   - component: {fileID: 549463397}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6660,28 +6659,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549463391}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &549463396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549463391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4e9cfc422481824baa2212d798925e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waterDensity: 1
-  floatStrength: 1
-  dragInWater: 1.5
-  angularDragInWater: 1
-  layer:
-    serializedVersion: 2
-    m_Bits: 3136
-  additionalLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!65 &549463397
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6693,8 +6670,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 30.39483, z: 1}
+  m_Center: {x: 0, y: -14.697417, z: 0}
 --- !u!1001 &549788881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9272,7 +9249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752656547}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2672, y: 129, z: 4399}
+  m_LocalPosition: {x: 2672, y: 140.14, z: 4399}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15002,7 +14979,7 @@ TerrainCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201717147}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ac57923cd6e2e68458d9967d17c0f3a4, type: 2}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 78041d2a4c4374f4db8f45ab83156164, type: 2}
   m_EnableTreeColliders: 1
@@ -15338,7 +15315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1225744741
 Transform:
   m_ObjectHideFlags: 0
@@ -16627,7 +16604,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00093942514}
+  m_AnchoredPosition: {x: 0, y: 0.000083922976}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783
@@ -17888,7 +17865,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999523
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
