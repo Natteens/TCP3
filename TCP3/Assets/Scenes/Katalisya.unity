@@ -6683,14 +6683,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 549463391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8064783c1f91b104ba024ceaafaac6c2, type: 3}
+  m_Script: {fileID: 11500000, guid: e4e9cfc422481824baa2212d798925e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   waterDensity: 1
-  floatStrength: 2
+  floatStrength: 1
+  dragInWater: 1.5
+  angularDragInWater: 1
   layer:
     serializedVersion: 2
-    m_Bits: 3392
+    m_Bits: 3136
+  additionalLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &549788881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9268,7 +9273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752656547}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2672, y: 129, z: 3638}
+  m_LocalPosition: {x: 2672, y: 129, z: 4399}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16623,7 +16628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000005218753}
+  m_AnchoredPosition: {x: 0, y: -0.000006128637}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783
@@ -17883,8 +17888,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1787074373}
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999956
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
