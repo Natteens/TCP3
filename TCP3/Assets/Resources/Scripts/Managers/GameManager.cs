@@ -1,9 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
-using Mono.CSharp;
 using Cinemachine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -16,16 +14,18 @@ public class GameManager : Singleton<GameManager>
 
     public Image health, stamina, hunger, thirsty;
 
+    [Header("Day/Night Cycle")]
+    public bool isNight;
+
     private void Awake()
     {
         if (Instance != this)
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
         else
         {
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
     }
-
 }
