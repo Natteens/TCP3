@@ -19,11 +19,8 @@ public class DayNightCycle : NetworkBehaviour
 
     private void Start()
     {
-        if (IsServer)
-        {
-            timeOfDay = 0;
-            InvokeRepeating(nameof(UpdateDayNightCycle), 0f, 1f);
-        }
+         timeOfDay = 0;
+         InvokeRepeating(nameof(UpdateDayNightCycle), 0f, 1f);
     }
 
     private void UpdateDayNightCycle()

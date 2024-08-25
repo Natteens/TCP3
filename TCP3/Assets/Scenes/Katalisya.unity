@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589245, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.18222857, g: 0.22793216, b: 0.30735606, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1910,14 +1910,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142925532}
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.025612101, y: -0.55996233, z: 0.5700011, w: 0.600737}
+  m_LocalPosition: {x: -2258, y: 2000, z: -2000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1853323304}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 42, y: -60, z: 62}
 --- !u!114 &142925534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1952,8 +1952,8 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 179
+  m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -2069,15 +2069,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1.0953175
-      outSlope: 1.0953175
+      inSlope: 0.39859858
+      outSlope: 0.39859858
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.07117884
+      outWeight: 0.087346524
     - serializedVersion: 3
-      time: 0.998291
-      value: 0.5306587
+      time: 1.008667
+      value: 0.2928505
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2087,7 +2087,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  dayDuration: 600
+  dayDuration: 10
   transitionDuration: 5
 --- !u!1 &168078387
 GameObject:
