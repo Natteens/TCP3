@@ -35,6 +35,10 @@ public class Item : ScriptableObject, INetworkSerializable
 
         if (string.IsNullOrEmpty(uniqueID))
             uniqueID = GenerateUniqueID();  
+        if (amount > 1)
+        {
+            amount = 1;
+        }
     }
 
     public void Initialize(Item item)

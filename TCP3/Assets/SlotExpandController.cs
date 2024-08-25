@@ -48,7 +48,7 @@ public class SlotExpandController : MonoBehaviour
     {
         Squeeze();
         slider.onValueChanged.AddListener(UpdateSliderAmount);
-        sliderAmount.text = "0";
+        sliderAmount.text = "1";
         selectSlot = null;
     }
 
@@ -66,17 +66,15 @@ public class SlotExpandController : MonoBehaviour
             return;
         }
 
-        Item newItem = ScriptableObject.CreateInstance<Item>();
-        newItem.Initialize(item);
-        selectedItem = newItem;
-        
+        selectedItem = item;
+
         itemName.text = selectedItem.itemName;
         itemDesc.text = selectedItem.itemDescription;
         itemImage.sprite = selectedItem.itemSprite;
 
         sliderMaxAmount = selectedItem.amount;
         slider.maxValue = sliderMaxAmount;
-        sliderAmount.text = "0";
+        sliderAmount.text = "1";
 
         if (selectSlot != null) saveColorSlot = selectSlot.GetComponentInChildren<Image>().color;
         if (selectSlot != null) selectSlot.GetComponentInChildren<Image>().color = Color.red;
@@ -85,8 +83,8 @@ public class SlotExpandController : MonoBehaviour
     public void Clean()
     {
         selectedItem = null;
-        slider.value = 0;
-        sliderAmount.text = "0";
+        slider.value = 1;
+        sliderAmount.text = "1";
         if(selectSlot != null) selectSlot.GetComponentInChildren<Image>().color = saveColorSlot;
         selectSlot = null;
     }
@@ -127,10 +125,8 @@ public class SlotExpandController : MonoBehaviour
 
         if (selectedItem != null)
         {
-            Item newInstance = ScriptableObject.CreateInstance<Item>();
-            newInstance.Initialize(selectedItem);
-            GameManager.Instance.uiInventory.GetInventory().RemoveItem(newInstance);
-            ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), newInstance);
+            GameManager.Instance.uiInventory.GetInventory().RemoveItem(selectedItem);
+            ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), selectedItem);
             Clean();
             Squeeze();
         }
@@ -151,9 +147,7 @@ public class SlotExpandController : MonoBehaviour
             {
                 SurvivalManager manager = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<SurvivalManager>();
                 manager.IncreaseStats(consumable);
-                Item newInstance = ScriptableObject.CreateInstance<Item>();
-                newInstance.Initialize(selectedItem);
-                GameManager.Instance.uiInventory.GetInventory().RemoveItem(newInstance);
+                GameManager.Instance.uiInventory.GetInventory().RemoveItem(selectedItem);
                 Clean();
                 Squeeze();
             }
@@ -174,7 +168,6 @@ public class SlotExpandController : MonoBehaviour
     {
         bool isConsumable = selectedItem.itemType == Item.Itemtype.Consumivel;
         Debug.Log("SelecAmount:" + selectedItem.itemName);
-        Debug.Log("SelecAmount:" + selectedItem);
 
         if (selectedItem == null)
         {
@@ -194,10 +187,8 @@ public class SlotExpandController : MonoBehaviour
                     manager.IncreaseStats(consumable);
                     int amount = int.Parse(sliderAmount.text);
 
-                    Item newInstance = ScriptableObject.CreateInstance<Item>();
-                    newInstance.Initialize(selectedItem);
-                    Debug.Log("Debug em SelectAmount:" + newInstance.itemName);
-                    GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(newInstance, amount);
+                    Debug.Log("Debug em SelectAmount:" + selectedItem.itemName);
+                    GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amount);
                     Clean();
                     return;
                 }   
@@ -209,11 +200,9 @@ public class SlotExpandController : MonoBehaviour
             if (selectedItem != null)
             {
                 int amount = int.Parse(sliderAmount.text);
-                Item newInstance = ScriptableObject.CreateInstance<Item>();
-                newInstance.Initialize(selectedItem);
 
-                GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(newInstance,amount);
-                ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), newInstance);
+                GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem,amount);
+                ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), selectedItem);
                 Clean();
                 return;
             }

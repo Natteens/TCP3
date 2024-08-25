@@ -11,7 +11,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
     public void SetItem(Item item)
     {
         // Cria uma nova instância do item para evitar problemas de referência compartilhada
-        Item newItem = ScriptableObject.CreateInstance<Item>();
+        Item newItem = (Item)ScriptableObject.CreateInstance(item.GetType());
         newItem.Initialize(item);
         this.item = newItem;
 
@@ -45,7 +45,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
         if (inventory != null)
         {
             // Cria uma nova instância do item para garantir que estamos manipulando uma cópia
-            Item giveItem = ScriptableObject.CreateInstance<Item>();
+            Item giveItem = (Item)ScriptableObject.CreateInstance(item.GetType());
             giveItem.Initialize(item);
             inventory.SetItem(giveItem);
             interact.RemoveThisInteractable(this);
@@ -103,7 +103,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
         var itemWorld = itemWorldInstance.GetComponent<ItemWorld>();
 
         // Cria uma nova instância do item no servidor para evitar compartilhamento de referência
-        Item newItem = ScriptableObject.CreateInstance<Item>();
+        Item newItem = (Item)ScriptableObject.CreateInstance(item.GetType());
         newItem.Initialize(item);
         itemWorld.SetItem(newItem);
 
@@ -127,10 +127,8 @@ public class ItemWorld : NetworkBehaviour, Interactable
     {
         if (IsServer)
         {
-            if (TryGetComponent<NetworkObject>(out var networkObject))
-            {
-                networkObject.Despawn();
-            }
+            NetworkObject netObj = GetComponent<NetworkObject>();
+            netObj.Despawn();
         }
 
         Destroy(gameObject);

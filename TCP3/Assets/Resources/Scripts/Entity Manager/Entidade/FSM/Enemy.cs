@@ -80,8 +80,6 @@ public abstract class Enemy : BaseEntity
     public void Movement(Vector3 dir)
     {
         float speed = statusComponent.GetStatus(StatusType.MoveSpeed);
-        Debug.Log(speed);
-        Debug.Log(dir);
         MoveAndRotate(dir, speed);
     }
 

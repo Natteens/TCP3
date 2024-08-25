@@ -23,8 +23,7 @@ public class Inventory
 
         FeedbackManager.Instance.FeedbackItem(item);
 
-        // Cria uma nova instância do item para garantir que estamos manipulando uma cópia
-        Item newItem = ScriptableObject.CreateInstance<Item>();
+        Item newItem = ScriptableUtility.Clone(item);
         newItem.Initialize(item);
 
         if (newItem.IsStackable())

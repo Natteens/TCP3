@@ -12,7 +12,6 @@ public class Consumable : Item
 
     private void OnValidate()
     {
-        amount = 1;
         itemType = Itemtype.Consumivel;
 
         string newInfos = "<color=red>Restaura " + restoreAmount.ToString() + " de " + type.ToString() + "</color>";
