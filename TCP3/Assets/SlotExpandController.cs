@@ -87,6 +87,7 @@ public class SlotExpandController : MonoBehaviour
         sliderAmount.text = "1";
         if(selectSlot != null) selectSlot.GetComponentInChildren<Image>().color = saveColorSlot;
         selectSlot = null;
+        Squeeze();
     }
 
     public void ActiveItemButton()
@@ -184,8 +185,11 @@ public class SlotExpandController : MonoBehaviour
                 if (consumable != null)
                 {
                     SurvivalManager manager = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<SurvivalManager>();
-                    manager.IncreaseStats(consumable);
                     int amount = int.Parse(sliderAmount.text);
+                    for (int i = 0; i < amount; i++)
+                    {
+                        manager.IncreaseStats(consumable); 
+                    }
 
                     Debug.Log("Debug em SelectAmount:" + selectedItem.itemName);
                     GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amount);

@@ -17,15 +17,12 @@ public class Inventory
         itemList = new List<Item>(new Item[maxSlots]);
     }
 
-    public void AddItem(Item item)
+    public void AddItem(Item newItem)
     {
         if (!CanPickup()) return;
 
-        FeedbackManager.Instance.FeedbackItem(item);
-
-        Item newItem = ScriptableUtility.Clone(item);
-        newItem.Initialize(item);
-
+        FeedbackManager.Instance.FeedbackItem(newItem);
+        
         if (newItem.IsStackable())
         {
             // Tenta encontrar um item igual para acumular

@@ -10,11 +10,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
     // Método para definir o item
     public void SetItem(Item item)
     {
-        // Cria uma nova instância do item para evitar problemas de referência compartilhada
-        Item newItem = (Item)ScriptableObject.CreateInstance(item.GetType());
-        newItem.Initialize(item);
-        this.item = newItem;
-
+        this.item = item;
     }
 
     // Método para obter o item
@@ -44,10 +40,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
         InteractController interact = interactor.GetComponent<InteractController>();
         if (inventory != null)
         {
-            // Cria uma nova instância do item para garantir que estamos manipulando uma cópia
-            Item giveItem = (Item)ScriptableObject.CreateInstance(item.GetType());
-            giveItem.Initialize(item);
-            inventory.SetItem(giveItem);
+            inventory.SetItem(item);
             interact.RemoveThisInteractable(this);
             DestroySelf();
 
@@ -63,7 +56,6 @@ public class ItemWorld : NetworkBehaviour, Interactable
         }
     }
 
-    // Método para instanciar e sincronizar um item no mundo
     public static void SpawnItemWorld(Vector3 position, Item item)
     {
         Vector3 finalDropPosition = VariablePosition(position);
@@ -103,9 +95,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
         var itemWorld = itemWorldInstance.GetComponent<ItemWorld>();
 
         // Cria uma nova instância do item no servidor para evitar compartilhamento de referência
-        Item newItem = (Item)ScriptableObject.CreateInstance(item.GetType());
-        newItem.Initialize(item);
-        itemWorld.SetItem(newItem);
+        itemWorld.SetItem(item);
 
         NetworkObject networkObject = itemWorldInstance.GetComponent<NetworkObject>();
         if (networkObject != null)

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public static class ScriptableUtility
+public static class ScriptableObjectUtility
 {
     public static T Clone<T>(T original) where T : ScriptableObject
     {

@@ -26,12 +26,15 @@ public class InventoryController : NetworkBehaviour
     {
         if (inventory.CanPickup())
         {
-            this.inventory.AddItem(item);
+            Item newItem = ScriptableObjectUtility.Clone(item);
+            newItem.Initialize(item);
+            this.inventory.AddItem(newItem);
             Debug.Log("Adicionando item!");
         }
         else
         {
             //colocar msg popup aq
+            FeedbackManager.Instance.FeedbackText("Inventario cheio!");
             Debug.Log("Inventario cheio");
         }
 

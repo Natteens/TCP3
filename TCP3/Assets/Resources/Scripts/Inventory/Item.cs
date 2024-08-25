@@ -35,7 +35,7 @@ public class Item : ScriptableObject, INetworkSerializable
 
         if (string.IsNullOrEmpty(uniqueID))
             uniqueID = GenerateUniqueID();  
-        if (amount > 1)
+        if (amount > 1 || amount <= 0)
         {
             amount = 1;
         }
@@ -48,7 +48,10 @@ public class Item : ScriptableObject, INetworkSerializable
         this.itemType = item.itemType;
         this.itemSprite = item.itemSprite;
         this.amount = item.amount;
+        Debug.Log(amount);
         this.uniqueID = item.uniqueID;
+        if (amount < 1) amount = 1;
+        Debug.Log(amount);
     }
 
     private string GenerateUniqueID()
