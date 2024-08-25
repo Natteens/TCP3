@@ -206,7 +206,7 @@ public class LobbyManager : MonoBehaviour
 
     private async Task LoadingGameScreen()
     {
-       await Loader.Load(gameScenes.Katalisya);
+       await Loader.Load(gameScenes.teste); // VOLTAR PRA CENA DE KATALISIA
     }
 
     public string GetName()

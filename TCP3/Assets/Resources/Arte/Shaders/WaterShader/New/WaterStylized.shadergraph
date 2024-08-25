@@ -10,9 +10,6 @@
             "m_Id": "03a2049d6b314f92939ab794b1c12205"
         },
         {
-            "m_Id": "65c1789996624e00bfc35538737bfce3"
-        },
-        {
             "m_Id": "7d4dc32cbc5c4d56a93395ebe37dec9a"
         },
         {
@@ -44,12 +41,6 @@
         },
         {
             "m_Id": "80b2218b7dd14c29bd0c17f79aab8c10"
-        },
-        {
-            "m_Id": "6829d7b2088e47c89fdc8c697f7bb98d"
-        },
-        {
-            "m_Id": "ad286ce5619a47dcaf237f70739e8d56"
         }
     ],
     "m_Keywords": [],
@@ -63,9 +54,6 @@
         },
         {
             "m_Id": "3e2ba98b0c2e49348ecf3b6ff483a9f4"
-        },
-        {
-            "m_Id": "8b0488e6dffb4f91a04f560a1f7ac660"
         }
     ],
     "m_Nodes": [
@@ -1187,6 +1175,9 @@
         },
         {
             "m_Id": "829663e29d5e4593969b161cffb0cf81"
+        },
+        {
+            "m_Id": "80b2218b7dd14c29bd0c17f79aab8c10"
         }
     ]
 }
@@ -1546,33 +1537,6 @@
 }
 
 {
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "65c1789996624e00bfc35538737bfce3",
-    "m_Guid": {
-        "m_GuidSerialized": "429df010-d19a-47db-8bfb-4348d08288af"
-    },
-    "m_Name": "Flow Speed",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Flow Speed",
-    "m_DefaultReferenceName": "_Flow_Speed",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 0.0,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "65ec0957cea3426e8f691b804c9000c6",
@@ -1627,33 +1591,6 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": 0.05000000074505806,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "6829d7b2088e47c89fdc8c697f7bb98d",
-    "m_Guid": {
-        "m_GuidSerialized": "46123b22-4f9f-4e88-a724-a8b2bd4dd9df"
-    },
-    "m_Name": "Flow Size Texture",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Flow Size Texture",
-    "m_DefaultReferenceName": "_Flow_Size_Texture",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 2.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -1912,27 +1849,6 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.CategoryData",
-    "m_ObjectId": "8b0488e6dffb4f91a04f560a1f7ac660",
-    "m_Name": "Feel Water",
-    "m_ChildObjectList": [
-        {
-            "m_Id": "80b2218b7dd14c29bd0c17f79aab8c10"
-        },
-        {
-            "m_Id": "6829d7b2088e47c89fdc8c697f7bb98d"
-        },
-        {
-            "m_Id": "ad286ce5619a47dcaf237f70739e8d56"
-        },
-        {
-            "m_Id": "65c1789996624e00bfc35538737bfce3"
-        }
-    ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
     "m_ObjectId": "8e0ca83443ad49c9a4088060d38c9f23",
     "m_Name": "",
     "m_ChildObjectList": []
@@ -2186,33 +2102,6 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "ad286ce5619a47dcaf237f70739e8d56",
-    "m_Guid": {
-        "m_GuidSerialized": "85b90ea9-6cb6-400f-88ba-8c0cbfb2f900"
-    },
-    "m_Name": "Flow Strength",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Flow Strength",
-    "m_DefaultReferenceName": "_Flow_Strength",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 0.007499999832361937,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
 }
 
 {

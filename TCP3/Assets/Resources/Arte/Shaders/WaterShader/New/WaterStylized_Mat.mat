@@ -47,23 +47,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Choppness: 0.2
+    - _Choppness: 0.25
     - _Flow_Size_Texture: 41
     - _Flow_Speed: 5
     - _Flow_Strength: 38.2
-    - _FoamAmount: 1.8
-    - _FoamCutOut: 1
+    - _FoamAmount: 1.525
+    - _FoamCutOut: 1.035
     - _FoamNoiseScale: 25
     - _FoamScale: 100
-    - _FoamSpeed: 0.02
+    - _FoamSpeed: 0.025
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RefrectionScale: 39.68
-    - _RefrectionSpeed: 0.02
-    - _RefrectionStrength: 14.8
-    - _WaterDepth: 35
+    - _RefrectionScale: 3.51
+    - _RefrectionSpeed: 1
+    - _RefrectionStrength: 0.15
+    - _WaterDepth: 50
     m_Colors:
-    - _DeepWaterColor: {r: 0.033506505, g: 0, b: 0.645, a: 0.28235295}
-    - _FoamColor: {r: 0.8584906, g: 0.7905697, b: 0.6924617, a: 0.8235294}
-    - _ShallowWaterColor: {r: 0.24474901, g: 0.79214287, b: 0.9433962, a: 0.33333334}
+    - _DeepWaterColor: {r: 0.36078432, g: 0.45213884, b: 0.62352943, a: 0.28235295}
+    - _FoamColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 0.8235294}
+    - _ShallowWaterColor: {r: 0.4269313, g: 0.69805694, b: 0.7735849, a: 0.33333334}
   m_BuildTextureStacks: []

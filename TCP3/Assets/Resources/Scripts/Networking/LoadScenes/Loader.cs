@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public enum gameScenes
 {
+    teste,
     Katalisya, //Cena do jogo
     MainMenu,
     Loading  //Cena de load
