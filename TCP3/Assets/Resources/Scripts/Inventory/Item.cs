@@ -88,6 +88,7 @@ public class Item : ScriptableObject, INetworkSerializable
         serializer.SerializeValue(ref itemName);
         serializer.SerializeValue(ref itemDescription);
         serializer.SerializeValue(ref amount);
-        serializer.SerializeValue(ref uniqueID); // Serialize uniqueID
+        Debug.Log("Serialized amount: " + amount);
+        serializer.SerializeValue(ref uniqueID);
     }
 }

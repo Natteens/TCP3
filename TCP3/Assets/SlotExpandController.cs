@@ -65,8 +65,9 @@ public class SlotExpandController : MonoBehaviour
             Debug.LogError("Item passado para Setup é nulo!");
             return;
         }
-
+        Debug.Log(item.amount);
         selectedItem = item;
+        Debug.Log(selectedItem.amount);
 
         itemName.text = selectedItem.itemName;
         itemDesc.text = selectedItem.itemDescription;
@@ -118,16 +119,19 @@ public class SlotExpandController : MonoBehaviour
     {
         if (selectedItem.amount > 1)
         {
-            Debug.Log("Expandindo:" + selectedItem.itemName);
-            Debug.Log("Expandindo:" + selectedItem);
             ActiveSelectAmount();
             return;
         }
 
         if (selectedItem != null)
         {
-            GameManager.Instance.uiInventory.GetInventory().RemoveItem(selectedItem);
-            ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), selectedItem);
+            int amountToDrop = 1;
+            Item itemToDrop = ScriptableObjectUtility.Clone(selectedItem);
+            itemToDrop.amount = amountToDrop;
+
+            ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop);
+            GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amountToDrop);
+
             Clean();
             Squeeze();
         }
@@ -205,8 +209,16 @@ public class SlotExpandController : MonoBehaviour
             {
                 int amount = int.Parse(sliderAmount.text);
 
-                GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem,amount);
-                ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), selectedItem);
+                // Crie uma cópia do item antes de alterar o valor
+                Item itemToDrop = ScriptableObjectUtility.Clone(selectedItem);
+                itemToDrop.amount = amount;
+
+                // Dropa a cópia do item com o valor atualizado
+                ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop);
+
+                // Remove a quantidade correta do inventário
+                GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amount);
+
                 Clean();
                 return;
             }

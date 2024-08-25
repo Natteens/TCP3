@@ -87,16 +87,20 @@ public class Inventory
             Item _itemInInventory = SearchItem(item);
             if (_itemInInventory != null && _itemInInventory.amount >= amount)
             {
-                _itemInInventory.amount -= amount;
-
-                // Se a quantidade chegar a zero ou menos, remova o item do inventário
-                if (_itemInInventory.amount <= 0)
+                
+                for (int i = 0; i < amount; i++)
                 {
-                    slotsWithItem--;
-                    itemList.Remove(_itemInInventory);
-                    TooltipScreenSpaceUI.HideTooltip_Static();
-                }
+                    _itemInInventory.amount -= 1;
 
+                    if (_itemInInventory.amount <= 0)
+                    {
+                        slotsWithItem--;
+                        itemList.Remove(_itemInInventory);
+                        TooltipScreenSpaceUI.HideTooltip_Static();
+                        break;
+                    }
+                }
+                
                 // Notifica a UI sobre a mudança no inventário
                 OnItemListChanged?.Invoke(this, EventArgs.Empty);
             }

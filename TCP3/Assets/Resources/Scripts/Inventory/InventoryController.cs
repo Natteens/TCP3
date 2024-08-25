@@ -28,16 +28,13 @@ public class InventoryController : NetworkBehaviour
         {
             Item newItem = ScriptableObjectUtility.Clone(item);
             newItem.Initialize(item);
+            Debug.Log("NewItem amount: " + newItem.amount);
             this.inventory.AddItem(newItem);
-            Debug.Log("Adicionando item!");
         }
         else
         {
-            //colocar msg popup aq
             FeedbackManager.Instance.FeedbackText("Inventario cheio!");
-            Debug.Log("Inventario cheio");
         }
-
     }
 
     public void RemoveItemByAmount(Item item, int amount)

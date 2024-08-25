@@ -10,6 +10,13 @@ public class ItemWorld : NetworkBehaviour, Interactable
     // Método para definir o item
     public void SetItem(Item item)
     {
+        if (item == null)
+        {
+            Debug.LogError("Item is null in SetItem!");
+            return;
+        }
+
+        Debug.Log("Setting item with amount: " + item.amount);
         this.item = item;
     }
 
@@ -73,6 +80,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
     {
         if (NetworkManager.Singleton.IsServer)
         {
+            Debug.Log(item.amount);
             SpawnItemWorld(dropPosition, item);
             Debug.Log("sou o servidor to chamando o Spawn!");
         }
@@ -90,11 +98,10 @@ public class ItemWorld : NetworkBehaviour, Interactable
     [ServerRpc(RequireOwnership = false)]
     private void DropItemServerRpc(Vector3 position, Item item)
     {
+        Debug.Log(item.amount);
         Vector3 finalDropPosition = VariablePosition(position);
         var itemWorldInstance = Instantiate(ItemAssets.Instance.pfItemWorld, finalDropPosition, Quaternion.identity);
         var itemWorld = itemWorldInstance.GetComponent<ItemWorld>();
-
-        // Cria uma nova instância do item no servidor para evitar compartilhamento de referência
         itemWorld.SetItem(item);
 
         NetworkObject networkObject = itemWorldInstance.GetComponent<NetworkObject>();
