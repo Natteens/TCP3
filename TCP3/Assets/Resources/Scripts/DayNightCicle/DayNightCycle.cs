@@ -7,11 +7,11 @@ public class DayNightCycle : NetworkBehaviour
     public Light directionalLight;
     public Gradient lightColorGradient;
     public AnimationCurve lightIntensityCurve;
-    public float dayDuration = 120f;
+    public short dayDuration = 120; // Ajustado para byte
     public float transitionDuration = 5f; // Tempo de transição suave entre dia e noite
 
-    [SerializeField] private float timeOfDay;
-    private float transitionProgress = 0f;
+    private short timeOfDay;
+    private float transitionProgress = 1f; // Inicia com 1 para aplicar transição imediatamente
     private Color targetColor;
     private float targetIntensity;
     private Color startColor;
@@ -21,35 +21,23 @@ public class DayNightCycle : NetworkBehaviour
     {
         if (IsServer)
         {
-            timeOfDay = 0f;
+            timeOfDay = 0;
             InvokeRepeating(nameof(UpdateDayNightCycle), 0f, 1f);
         }
     }
 
     private void UpdateDayNightCycle()
     {
-        if (dayDuration <= 0f)
+        if (dayDuration <= 0)
         {
             Debug.LogError("dayDuration deve ser maior que zero.");
             return;
         }
 
-        if (timeOfDay >= dayDuration * 0.7) GameManager.Instance.isNight = true;
+        // Atualiza o tempo do dia
+        timeOfDay = (short)((timeOfDay + 1) % (dayDuration + 1));
 
-        timeOfDay += Time.deltaTime;
-        if (timeOfDay > dayDuration)
-        {
-            timeOfDay = 0f; // Reinicia o ciclo
-            if (timeOfDay >= dayDuration * 0.7) GameManager.Instance.isNight = false;
-        }
-
-        float normalizedTimeOfDay = timeOfDay / dayDuration;
-
-        if (normalizedTimeOfDay < 0f || normalizedTimeOfDay > 1f)
-        {
-            Debug.LogError("normalizedTimeOfDay está fora do intervalo esperado [0, 1].");
-            return;
-        }
+        float normalizedTimeOfDay = timeOfDay / (float)dayDuration;
 
         // Calcula as cores e intensidades alvo com base no tempo do dia
         Color newColor = lightColorGradient.Evaluate(normalizedTimeOfDay);
@@ -58,38 +46,28 @@ public class DayNightCycle : NetworkBehaviour
         // Atualiza a luz com a nova cor e intensidade
         if (directionalLight != null)
         {
+            // Se a transição estiver em andamento, apenas atualiza os valores alvo
             if (transitionProgress >= 1f)
             {
-                // Se já terminou a transição, só atualiza as variáveis alvo
                 targetColor = newColor;
                 targetIntensity = newIntensity;
+                StartCoroutine(TransitionLighting(newColor, newIntensity));
             }
             else
             {
-                // Inicia a transição
-                StartCoroutine(TransitionLighting(newColor, newIntensity));
+                // Atualiza as variáveis alvo para a próxima transição
+                targetColor = newColor;
+                targetIntensity = newIntensity;
             }
-        }
-    }
-
-    [ClientRpc]
-    private void UpdateLightingClientRpc(Color newColor, float newIntensity)
-    {
-        if (directionalLight != null)
-        {
-            // Atualiza as variáveis alvo e inicia a transição
-            targetColor = newColor;
-            targetIntensity = newIntensity;
-            StartCoroutine(TransitionLighting(newColor, newIntensity));
         }
     }
 
     private IEnumerator TransitionLighting(Color newColor, float newIntensity)
     {
-        // Se a transição já estiver em andamento, interrompe
+        // Se a transição já estiver em andamento, não inicia uma nova
         if (transitionProgress < 1f)
         {
-            yield return null;
+            yield break;
         }
 
         // Configura os valores iniciais para a transição
@@ -110,5 +88,8 @@ public class DayNightCycle : NetworkBehaviour
         // Garante que o valor final seja exatamente o alvo
         directionalLight.color = targetColor;
         directionalLight.intensity = targetIntensity;
+
+        // Finaliza a transição
+        transitionProgress = 1f;
     }
 }
