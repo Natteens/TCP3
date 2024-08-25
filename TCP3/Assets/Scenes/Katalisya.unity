@@ -2033,62 +2033,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c9d96ec5ba713489534df3c0743a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionalLight: {fileID: 142925535}
-  lightColorGradient:
-    serializedVersion: 2
-    key0: {r: 0.9339623, g: 0.608689, b: 0.47138664, a: 1}
-    key1: {r: 0.99417317, g: 0.822906, b: 0.61359626, a: 1}
-    key2: {r: 1, g: 0.8436367, b: 0.6273585, a: 0}
-    key3: {r: 0.5113965, g: 0.44713423, b: 0.6037736, a: 0}
-    key4: {r: 0.19958171, g: 0.22734185, b: 0.6132076, a: 0}
-    key5: {r: 0.2048023, g: 0.23565564, b: 0.6175625, a: 0}
-    key6: {r: 0.2787469, g: 0.35341257, b: 0.6792453, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 2506
-    ctime1: 8674
-    ctime2: 21395
-    ctime3: 30647
-    ctime4: 39899
-    ctime5: 53970
-    ctime6: 62258
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 7
-    m_NumAlphaKeys: 2
-  lightIntensityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.39859858
-      outSlope: 0.39859858
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.087346524
-    - serializedVersion: 3
-      time: 1.008667
-      value: 0.2928505
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  dayDuration: 10
-  transitionDuration: 5
 --- !u!1 &168078387
 GameObject:
   m_ObjectHideFlags: 0
@@ -3711,6 +3655,79 @@ MonoBehaviour:
   stamina: {fileID: 1595055276}
   hunger: {fileID: 1826704389}
   thirsty: {fileID: 213452448}
+  dayDuration: 100
+  directionalLight: {fileID: 142925535}
+  lightColorGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.84431523, b: 0.7216981, a: 1}
+    key1: {r: 0.29178533, g: 0.32475403, b: 0.7830189, a: 1}
+    key2: {r: 0.2901961, g: 0.3254902, b: 0.78431374, a: 0}
+    key3: {r: 1, g: 0.84705883, b: 0.7254902, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 20817
+    ctime2: 43176
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  lightIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.49780458
+      value: 0.50434405
+      inSlope: 0.04204428
+      outSlope: 0.04204428
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0247207
+      value: 0.007513255
+      inSlope: 0.5854625
+      outSlope: 0.5854625
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.1791687
+      value: 0.53302
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   isNight: 0
 --- !u!114 &330108346
 MonoBehaviour:
@@ -15318,7 +15335,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1151295985}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -16063,7 +16080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00002220692}
+  m_AnchoredPosition: {x: 0, y: -0.000019206278}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783
@@ -17316,8 +17333,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1787074373}
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.9998175
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
