@@ -23,26 +23,30 @@ public class Inventory
 
         FeedbackManager.Instance.FeedbackItem(item);
 
-        if (item.IsStackable())
+        // Cria uma nova instância do item para garantir que estamos manipulando uma cópia
+        Item newItem = ScriptableObject.CreateInstance<Item>();
+        newItem.Initialize(item);
+
+        if (newItem.IsStackable())
         {
             // Tenta encontrar um item igual para acumular
             for (int i = 0; i < itemList.Count; i++)
             {
-                if (itemList[i] != null && itemList[i].uniqueID == item.uniqueID)
+                if (itemList[i] != null && itemList[i].uniqueID == newItem.uniqueID)
                 {
-                    itemList[i].amount += 1;
+                    itemList[i].amount += newItem.amount;
                     OnItemListChanged?.Invoke(this, EventArgs.Empty);
                     return;
                 }
             }
         }
 
-        // Encontra o primeiro slot vazio e coloca o item lá
+        // Encontra o primeiro slot vazio e coloca o novo item lá
         for (int i = 0; i < itemList.Count; i++)
         {
             if (itemList[i] == null)
             {
-                itemList[i] = item;
+                itemList[i] = newItem;
                 slotsWithItem++;
                 OnItemListChanged?.Invoke(this, EventArgs.Empty);
                 return;

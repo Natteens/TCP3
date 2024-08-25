@@ -5,6 +5,7 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 
 public class SlotExpandController : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class SlotExpandController : MonoBehaviour
     [SerializeField] private GameObject infoContainer;
     [FoldoutGroup("UI Containers")]
     [SerializeField] private GameObject selectAmountContainer;
+    [FoldoutGroup("UI Containers")]
+    [SerializeField] private GameObject selectSlot;
+    [SerializeField] private Color saveColorSlot;
 
     [FoldoutGroup("Buttons")]
     [SerializeField] private GameObject dropButton;
@@ -45,17 +49,37 @@ public class SlotExpandController : MonoBehaviour
         Squeeze();
         slider.onValueChanged.AddListener(UpdateSliderAmount);
         sliderAmount.text = "0";
+        selectSlot = null;
+    }
+
+
+    public void SetSlot(GameObject obj)
+    {
+        selectSlot = obj;
     }
 
     public void Setup(Item item)
-    { 
-        selectedItem = item;
-        itemName.text = item.itemName;
-        itemDesc.text = item.itemDescription;
-        itemImage.sprite = item.itemSprite;
-        sliderMaxAmount = item.amount;
+    {
+        if (item == null)
+        {
+            Debug.LogError("Item passado para Setup é nulo!");
+            return;
+        }
+
+        Item newItem = ScriptableObject.CreateInstance<Item>();
+        newItem.Initialize(item);
+        selectedItem = newItem;
+        
+        itemName.text = selectedItem.itemName;
+        itemDesc.text = selectedItem.itemDescription;
+        itemImage.sprite = selectedItem.itemSprite;
+
+        sliderMaxAmount = selectedItem.amount;
         slider.maxValue = sliderMaxAmount;
         sliderAmount.text = "0";
+
+        if (selectSlot != null) saveColorSlot = selectSlot.GetComponentInChildren<Image>().color;
+        if (selectSlot != null) selectSlot.GetComponentInChildren<Image>().color = Color.red;
     }
 
     public void Clean()
@@ -63,6 +87,8 @@ public class SlotExpandController : MonoBehaviour
         selectedItem = null;
         slider.value = 0;
         sliderAmount.text = "0";
+        if(selectSlot != null) selectSlot.GetComponentInChildren<Image>().color = saveColorSlot;
+        selectSlot = null;
     }
 
     public void ActiveItemButton()
@@ -93,14 +119,18 @@ public class SlotExpandController : MonoBehaviour
     {
         if (selectedItem.amount > 1)
         {
+            Debug.Log("Expandindo:" + selectedItem.itemName);
+            Debug.Log("Expandindo:" + selectedItem);
             ActiveSelectAmount();
             return;
         }
 
         if (selectedItem != null)
         {
-            GameManager.Instance.uiInventory.GetInventory().RemoveItem(selectedItem);
-            ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), selectedItem);
+            Item newInstance = ScriptableObject.CreateInstance<Item>();
+            newInstance.Initialize(selectedItem);
+            GameManager.Instance.uiInventory.GetInventory().RemoveItem(newInstance);
+            ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), newInstance);
             Clean();
             Squeeze();
         }
@@ -121,7 +151,9 @@ public class SlotExpandController : MonoBehaviour
             {
                 SurvivalManager manager = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<SurvivalManager>();
                 manager.IncreaseStats(consumable);
-                GameManager.Instance.uiInventory.GetInventory().RemoveItem(selectedItem);
+                Item newInstance = ScriptableObject.CreateInstance<Item>();
+                newInstance.Initialize(selectedItem);
+                GameManager.Instance.uiInventory.GetInventory().RemoveItem(newInstance);
                 Clean();
                 Squeeze();
             }
@@ -141,6 +173,15 @@ public class SlotExpandController : MonoBehaviour
     public void SelectAmountConfirm()
     {
         bool isConsumable = selectedItem.itemType == Item.Itemtype.Consumivel;
+        Debug.Log("SelecAmount:" + selectedItem.itemName);
+        Debug.Log("SelecAmount:" + selectedItem);
+
+        if (selectedItem == null)
+        {
+            Debug.LogError("SELECTED ITEM NULO no início de SelectAmountConfirm!");
+            ActiveInfo();
+            return;
+        }
 
         if (isConsumable)
         {
@@ -152,21 +193,32 @@ public class SlotExpandController : MonoBehaviour
                     SurvivalManager manager = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<SurvivalManager>();
                     manager.IncreaseStats(consumable);
                     int amount = int.Parse(sliderAmount.text);
-                    GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amount);
+
+                    Item newInstance = ScriptableObject.CreateInstance<Item>();
+                    newInstance.Initialize(selectedItem);
+                    Debug.Log("Debug em SelectAmount:" + newInstance.itemName);
+                    GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(newInstance, amount);
                     Clean();
+                    return;
                 }   
             }
+            Debug.Log("SELECTED ITEM NULO CONSUMIVEL");
         }
         else //Se nao e consumivel entao é pra dropar
         {
             if (selectedItem != null)
             {
                 int amount = int.Parse(sliderAmount.text);
+                Item newInstance = ScriptableObject.CreateInstance<Item>();
+                newInstance.Initialize(selectedItem);
 
-                GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem,amount);
-                ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), selectedItem);
+                GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(newInstance,amount);
+                ItemWorld.DropItem(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), newInstance);
                 Clean();
+                return;
             }
+
+            Debug.Log("SELECTED ITEM NULO DROPAVEL");
         }
         ActiveInfo();
     }

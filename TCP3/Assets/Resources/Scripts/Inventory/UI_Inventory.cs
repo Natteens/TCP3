@@ -102,6 +102,8 @@ public class UI_Inventory : MonoBehaviour
 
         instance.GetComponent<Button_UI>().ClickFunc = () =>
         {
+            Debug.Log("Meu item é:" + item.itemName);
+            expandController.SetSlot(instance);
             expandController.Setup(item);
 
             if (item != null && item.itemType == Item.Itemtype.Consumivel)

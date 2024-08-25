@@ -6,18 +6,15 @@ using EasyBuildSystem.Packages.Addons.AdvancedBuilding;
 public class ItemWorld : NetworkBehaviour, Interactable
 {
     private Item item;
-    private int amount;
+
     // Método para definir o item
     public void SetItem(Item item)
     {
-        if (item.amount <= 0) item.amount = 1;
-        this.item = item;
-        SetAmount(item.amount);
-    }
+        // Cria uma nova instância do item para evitar problemas de referência compartilhada
+        Item newItem = ScriptableObject.CreateInstance<Item>();
+        newItem.Initialize(item);
+        this.item = newItem;
 
-    public void SetAmount(int i)
-    {
-        amount = i;
     }
 
     // Método para obter o item
@@ -47,10 +44,10 @@ public class ItemWorld : NetworkBehaviour, Interactable
         InteractController interact = interactor.GetComponent<InteractController>();
         if (inventory != null)
         {
-            Item giveItem = item;
-            giveItem.amount = amount;
+            // Cria uma nova instância do item para garantir que estamos manipulando uma cópia
+            Item giveItem = ScriptableObject.CreateInstance<Item>();
+            giveItem.Initialize(item);
             inventory.SetItem(giveItem);
-            amount = 0;
             interact.RemoveThisInteractable(this);
             DestroySelf();
 
@@ -105,7 +102,10 @@ public class ItemWorld : NetworkBehaviour, Interactable
         var itemWorldInstance = Instantiate(ItemAssets.Instance.pfItemWorld, finalDropPosition, Quaternion.identity);
         var itemWorld = itemWorldInstance.GetComponent<ItemWorld>();
 
-        itemWorld.SetItem(item);
+        // Cria uma nova instância do item no servidor para evitar compartilhamento de referência
+        Item newItem = ScriptableObject.CreateInstance<Item>();
+        newItem.Initialize(item);
+        itemWorld.SetItem(newItem);
 
         NetworkObject networkObject = itemWorldInstance.GetComponent<NetworkObject>();
         if (networkObject != null)
@@ -127,12 +127,10 @@ public class ItemWorld : NetworkBehaviour, Interactable
     {
         if (IsServer)
         {
-
             if (TryGetComponent<NetworkObject>(out var networkObject))
             {
                 networkObject.Despawn();
             }
-            
         }
 
         Destroy(gameObject);

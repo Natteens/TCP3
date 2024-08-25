@@ -28,18 +28,33 @@ public class Item : ScriptableObject, INetworkSerializable
 
     private void OnEnable()
     {
-        // Gera um ID único baseado em um GUID
-        uniqueID = GenerateUniqueID();
+        if (string.IsNullOrEmpty(itemName))
+        {
+            itemName = "Default Item Name"; // ou algum valor padrão
+        }
+
+        if (string.IsNullOrEmpty(uniqueID))
+            uniqueID = GenerateUniqueID();  
     }
 
-    private void OnValidate()
-    {
-        amount = 1;
+    public void Initialize(Item item)
+    { 
+        this.itemName = item.itemName;
+        this.itemDescription = item.itemDescription;
+        this.itemType = item.itemType;
+        this.itemSprite = item.itemSprite;
+        this.amount = item.amount;
+        this.uniqueID = item.uniqueID;
     }
 
     private string GenerateUniqueID()
     {
-        // Combina um GUID com um hash das propriedades principais do item
+        if (string.IsNullOrEmpty(itemName))
+        {
+            Debug.LogError("Item name is not set before generating unique ID!");
+            return null;
+        }
+
         return Guid.NewGuid().ToString("N") + "_" + itemName.GetHashCode() + "_" + itemType.GetHashCode();
     }
 
