@@ -45,7 +45,7 @@ public class GameManager : Singleton<GameManager>
     public void UpdateDayTime()
     {
         timeOfDay.Value++;
-        bool CheckIfisNight = timeOfDay.Value >= dayDuration * .7f;
+        bool CheckIfisNight = timeOfDay.Value >= dayDuration * .3f && timeOfDay.Value <= dayDuration * .65f;
         isNight = CheckIfisNight;
 
         if (timeOfDay.Value >= dayDuration) timeOfDay.Value = 0;
