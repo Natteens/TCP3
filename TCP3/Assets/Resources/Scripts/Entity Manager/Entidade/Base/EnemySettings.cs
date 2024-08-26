@@ -31,6 +31,8 @@ public class EnemySettings : MonoBehaviour
     [SerializeField] private Vector3 uiOffset; // Deslocamento da UI em relação ao inimigo
 
     [SerializeField] private StatusComponent statusComponent;
+    [SerializeField] private HealthComponent healthComponent;
+    [SerializeField] private HealthBar healthBar;
     private Camera mainCamera;
 
     private void Start()
@@ -70,6 +72,9 @@ public class EnemySettings : MonoBehaviour
         }
 
         statusComponent.UpdateStatus(currentStats);
+        healthComponent.InitializeHealth();
+        healthBar.UpdateHealthBar(0);
+        UpdateNameAndLevelUI();
     }
 
     private void UpdateNameAndLevelUI()

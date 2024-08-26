@@ -66,14 +66,24 @@ public abstract class BaseEntity : MonoBehaviour
 
     public void MoveAndRotate(Vector3 dir, float speed)
     {
-        Vector3 normalizedDirection = dir.normalized;
+        // Normalize a direção do movimento apenas no plano XZ
+        Vector3 normalizedDirection = new Vector3(dir.x, 0, dir.z).normalized;
         Vector3 movement = normalizedDirection * speed;
+
+        // Ajusta a velocidade no rigidbody mantendo a componente Y inalterada
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+
+        // Rotaciona apenas se houver movimento (direção não nula)
         if (normalizedDirection != Vector3.zero)
         {
+            // Calcula a rotação alvo no plano XZ
             Quaternion targetRotation = Quaternion.LookRotation(normalizedDirection);
-            rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * speed));
+
+            // Interpola suavemente a rotação atual para a rotação alvo no eixo Y
+            Quaternion newRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * speed));
         }
-        Debug.Log("moveAndRotate");
     }
+
+
 }

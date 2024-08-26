@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27fe91d978dece0478c196c53960c5d4, type: 3}
   m_Name: Zarnok Idle Patrol
   m_EditorClassIdentifier: Assembly-CSharp::IdlePatrolState
-  patrolRadius: 5
-  patrolPointReachThreshold: 0.5
-  maxPatrolTime: 3
+  patrolRadius: 30
+  patrolPointReachThreshold: 3
+  maxPatrolTime: 10

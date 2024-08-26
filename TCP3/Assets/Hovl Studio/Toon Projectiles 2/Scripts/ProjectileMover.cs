@@ -68,7 +68,9 @@ public class ProjectileMover : MonoBehaviour
             if ((Layer & (1 << collision.gameObject.layer)) != 0)
             {
                 Debug.Log("Colidiu com: " + collision.gameObject.name);
-                collision.gameObject.GetComponent<HealthComponent>().TakeDamage(Damage);
+                float targetDefense = collision.gameObject.GetComponent<StatusComponent>().GetStatus(StatusType.Defense);
+                int finalDamage = DamageCalculator.CalculateWithDefense(targetDefense, Damage);
+                collision.gameObject.GetComponent<HealthComponent>().TakeDamage(finalDamage);
             }
 
             var hitPs = hitInstance.GetComponent<ParticleSystem>();

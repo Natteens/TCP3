@@ -30,7 +30,7 @@ public class HealthComponent : NetworkBehaviour, IHealth
         InitializeHealth();
     }
 
-    private void InitializeHealth()
+    public void InitializeHealth()
     {
         StatusComponent statusComponent = GetComponent<StatusComponent>();
         statusComponent.OnStatusChanged += HandleStatusChanged;

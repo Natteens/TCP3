@@ -31,10 +31,13 @@ public class HealthBar : MonoBehaviour
         transform.position = healthComponent.transform.position + offset;
     }
 
-    private void UpdateHealthBar(float amount)
+    public void UpdateHealthBar(float amount)
     {
-        // Atualiza a barra de vida com base na vida atual do HealthComponent
-        healthBarImage.fillAmount = healthComponent.CurrentHealth / healthComponent.MaxHealth;
+        // Calcula o valor normalizado da vida atual entre 0 e 1
+        float normalizedHealth = Mathf.Clamp01(healthComponent.CurrentHealth / healthComponent.MaxHealth);
+
+        // Atualiza a barra de vida usando o valor normalizado
+        healthBarImage.fillAmount = normalizedHealth;
     }
 
     private void OnDestroy()
