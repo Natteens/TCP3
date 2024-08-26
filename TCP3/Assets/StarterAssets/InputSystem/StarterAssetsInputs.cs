@@ -17,13 +17,8 @@ public class StarterAssetsInputs : MonoBehaviour
 	public bool interact;
 	public bool reload;
 
-	#region excluir isso dps pfv (SELECAO DE SLOTS HOTBAR)
-	public bool slot_1;
-	public bool slot_2;
-	public bool slot_3;
-	public bool slot_4;
-	public bool slot_5;
-	#endregion
+	public int activeIndexSlot = 0;
+	public Action<int> slot;
 
 	#region olds
 
@@ -81,50 +76,17 @@ public class StarterAssetsInputs : MonoBehaviour
 		ShootInput(value.isPressed);
 	}
 
-    #region  (SELECAO DE SLOTS HOTBAR)
-    public void Slot1(InputValue value)
+    public void OnHotbar(InputValue value)
     {
-        Slot1Input(value.isPressed);
-    }
-    public void Slot2(InputValue value)
-    {
-        Slot1Input(value.isPressed);
-    }
-    public void Slot3(InputValue value)
-    {
-        Slot1Input(value.isPressed);
-    }
-    public void Slot4(InputValue value)
-    {
-        Slot1Input(value.isPressed);
-    }
-    public void Slot5(InputValue value)
-    {
-        Slot1Input(value.isPressed);
+        HotbarInput(value.Get<float>());
     }
 
-    public void Slot1Input(bool slotValue)
+    public void HotbarInput(float newSlotIndex)
     {
-        slot_1 = slotValue;
+		int value = Mathf.FloorToInt(newSlotIndex);
+		activeIndexSlot = value;
+		slot.Invoke(activeIndexSlot);
     }
-    public void Slot2Input(bool slotValue)
-    {
-        slot_2 = slotValue;
-    }
-    public void Slot3Input(bool slotValue)
-    {
-        slot_3 = slotValue;
-    }
-    public void Slot4Input(bool slotValue)
-    {
-        slot_4 = slotValue;
-    }
-    public void Slot5Input(bool slotValue)
-    {
-        slot_5 = slotValue;
-    }
-
-    #endregion
 
     public void MoveInput(Vector2 newMoveDirection)
 	{

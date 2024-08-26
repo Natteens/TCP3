@@ -58,7 +58,7 @@ public class GameManager : Singleton<GameManager>
 
         Vector3 newRotation = new(Mathf.Lerp(newXvalue, newXvalue + 1f, .3f), directionalLight.gameObject.transform.rotation.y, directionalLight.gameObject.transform.rotation.z);
         directionalLight.gameObject.transform.rotation = Quaternion.Euler(newRotation);
-        Debug.Log(newRotation);
+        //Debug.Log(newRotation);
         
     }
 }

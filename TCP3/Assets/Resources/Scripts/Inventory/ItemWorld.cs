@@ -16,7 +16,7 @@ public class ItemWorld : NetworkBehaviour, Interactable
             return;
         }
 
-        Debug.Log("Setting item with amount: " + item.amount);
+        //Debug.Log("Setting item with amount: " + item.amount);
         this.item = item;
     }
 

@@ -24,6 +24,7 @@ public class UI_Inventory : MonoBehaviour
     {
         inventoryHolder.gameObject.SetActive(false);
         RefreshInventoryItems();
+        CleanHotbarSlots();
     }
 
     public void SetInventory(Inventory inventory)
@@ -76,16 +77,16 @@ public class UI_Inventory : MonoBehaviour
     {
         List<Item> itemList = inventory.GetItemList();
 
+        // Limpar todos os slots da hotbar antes de configurá-los novamente
+        CleanHotbarSlots();
+
+        int hotbarStartIndex = Math.Max(0, itemList.Count - 5);
+
         for (int i = 0; i < Slots.Length; i++)
         {
             if (i < itemList.Count && itemList[i] != null)
             {
                 ConfigureItemSlot(itemList[i], Slots[i]);
-
-                if(i > 24)
-                {
-                    ConfigureHotbarSlot(itemList[i], SlotsHotbar[i - 24]);
-                }
             }
             else
             {
@@ -94,8 +95,17 @@ public class UI_Inventory : MonoBehaviour
                     ClearSlot(Slots[i].GetChild(Slots[i].childCount - 1).GetComponent<RectTransform>());
                 }
             }
+
+            // Atualizar hotbar para os últimos 5 itens do inventário
+            if (i >= hotbarStartIndex && i < itemList.Count)
+            {
+                int hotbarIndex = i - hotbarStartIndex;
+                ConfigureHotbarSlot(itemList[i], SlotsHotbar[hotbarIndex]);
+            }
         }
     }
+
+
 
     private void ConfigureItemSlot(Item item, RectTransform rect)
     {
@@ -120,32 +130,6 @@ public class UI_Inventory : MonoBehaviour
 
             expandController.ActiveItemButton();
             expandController.Expand();
-            // Use Item
-            //if (item != null)
-            //{
-            //    switch (item.itemType)
-            //    {
-            //        case Item.Itemtype.Consumivel:
-            //            Consumable consumable = item as Consumable;
-            //            if (consumable != null)
-            //            {
-            //                SurvivalManager manager = player.gameObject.GetComponent<SurvivalManager>();
-            //                manager.IncreaseStats(consumable);
-            //                inventory.RemoveItem(item);
-            //            }
-            //            break;
-            //    }
-            //}
-        };
-
-        instance.GetComponent<Button_UI>().MouseRightClickFunc = () =>
-        {
-            // Drop item
-            //if (item != null)
-            //{
-            //    inventory.RemoveItem(item);
-            //    ItemWorld.DropItem(player.GetPosition(), item);
-            //}
         };
 
         // Configurar o item arrastável
@@ -176,15 +160,6 @@ public class UI_Inventory : MonoBehaviour
     private void ClearSlot(RectTransform obj)
     {
         Destroy(obj.gameObject);
-    }
-
-    private void ConfigureHotbarSlot(Item item, RectTransform rect)
-    {
-        Image image = rect.gameObject.transform.Find("image").GetComponent<Image>();
-        TextMeshProUGUI amount = rect.gameObject.transform.Find("txt").GetComponent<TextMeshProUGUI>();
-
-        image.sprite = item.itemSprite;
-        amount.text = "x"+item.amount.ToString();
     }
 
     public LocatePlayer GetPlayer()
@@ -228,34 +203,63 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    public void SelectHotbarSlot(int id)
+    private void ConfigureHotbarSlot(Item item, RectTransform rect)
     {
-        ChangeHotbarColor(id);
-        //colocar logica individual 
+        if (item && rect != null)
+        {
+            Image image = rect.gameObject.transform.Find("image").GetComponent<Image>();
+            image.enabled = true;
+            TextMeshProUGUI amount = rect.gameObject.transform.Find("txt").GetComponent<TextMeshProUGUI>();
+            amount.enabled = true;
 
+            image.sprite = item.itemSprite;
+            amount.text = "x" + item.amount.ToString();
+        }
     }
 
-    private void ChangeHotbarColor(int id)
+    public void SelectHotbarSlot(int id)
     {
-        Image currentSlotBg = SlotsHotbar[id - 1].Find("bg").GetComponent<Image>();
+        if (id <= 0) return;
+
+        ChangeHotbarBgColor(id-1);
+    }
+
+    private void ChangeHotbarBgColor(int id)
+    {
+        ClearHotbarBg(id);
+        Image currentSlotBg = SlotsHotbar[id].Find("bg").GetComponent<Image>();
 
         if (currentSlotBg.color == Color.red)
         {
             currentSlotBg.color = Color.white;
+            return;
         }
-        else
-        {
-            currentSlotBg.color = Color.red;
-        }
-    }
 
-    public void ClearHotbar(int idForExclude)
+        currentSlotBg.color = Color.red;
+        
+    }
+    
+    public void ClearHotbarBg(int idForExclude)
     {
         for (int i = 0; i < SlotsHotbar.Length; i++)
         {
-            if (i == idForExclude) return;
-
-            SlotsHotbar[i].Find("bg").GetComponent<Image>().color = Color.white;
+            if (i != idForExclude) 
+            SlotsHotbar[i].Find("bg").GetComponent<Image>().color = Color.white; 
         }
     }
+
+    private void CleanHotbarSlots()
+    {
+        foreach (RectTransform hotbarSlot in SlotsHotbar)
+        {
+            Image hotbarImage = hotbarSlot.Find("image").GetComponent<Image>();
+            hotbarImage.sprite = null; // Adicionado para remover qualquer referência à imagem anterior
+            hotbarImage.enabled = false;
+
+            TextMeshProUGUI hotbarText = hotbarSlot.Find("txt").GetComponent<TextMeshProUGUI>();
+            hotbarText.text = ""; // Adicionado para limpar o texto
+            hotbarText.enabled = false;
+        }
+    }
+
 }

@@ -54,6 +54,8 @@ public class Inventory
     {
         TooltipScreenSpaceUI.HideTooltip_Static();
 
+        int hotbarStartIndex = Math.Max(0, itemList.Count - 5);
+
         for (int i = 0; i < itemList.Count; i++)
         {
             if (itemList[i] != null && itemList[i].uniqueID == item.uniqueID)
@@ -65,15 +67,40 @@ public class Inventory
                     {
                         itemList[i] = null;
                         slotsWithItem--;
+
+                        // Não reorganizar se o item estiver na hotbar
+                        if (i < hotbarStartIndex)
+                        {
+                            ReorganizeInventory(i);
+                        }
                     }
                 }
                 else
                 {
                     itemList[i] = null;
                     slotsWithItem--;
+
+                    // Não reorganizar se o item estiver na hotbar
+                    if (i < hotbarStartIndex)
+                    {
+                        ReorganizeInventory(i);
+                    }
                 }
                 OnItemListChanged?.Invoke(this, EventArgs.Empty);
                 return;
+            }
+        }
+    }
+
+    private void ReorganizeInventory(int emptyIndex)
+    {
+        for (int i = emptyIndex; i < itemList.Count - 1; i++)
+        {
+            // Não mover itens que estão na hotbar
+            if (i < itemList.Count - 5)
+            {
+                itemList[i] = itemList[i + 1];
+                itemList[i + 1] = null;
             }
         }
     }
