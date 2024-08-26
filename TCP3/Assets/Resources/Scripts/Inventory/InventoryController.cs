@@ -77,4 +77,13 @@ public class InventoryController : NetworkBehaviour
         }
     }
 
+    public void SelectSlot()
+    {
+       if (starterAssetsInputs.slot_1) { uiInventory.SelectHotbarSlot(1); starterAssetsInputs.slot_1 = false; }
+       if (starterAssetsInputs.slot_2) { uiInventory.SelectHotbarSlot(2); starterAssetsInputs.slot_2 = false; }
+       if (starterAssetsInputs.slot_3) { uiInventory.SelectHotbarSlot(3); starterAssetsInputs.slot_3 = false; }
+       if (starterAssetsInputs.slot_4) { uiInventory.SelectHotbarSlot(4); starterAssetsInputs.slot_4 = false; }
+       if (starterAssetsInputs.slot_5) { uiInventory.SelectHotbarSlot(5); starterAssetsInputs.slot_5 = false; }
+
+    }
 }

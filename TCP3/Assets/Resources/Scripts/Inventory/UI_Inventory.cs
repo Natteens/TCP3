@@ -14,6 +14,7 @@ public class UI_Inventory : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform inventoryHolder;
     [SerializeField] private RectTransform[] Slots;
+    [SerializeField] private RectTransform[] SlotsHotbar;
     [SerializeField] private GameObject itemSlotPrefab;
     [SerializeField] private SlotExpandController expandController;
     private LocatePlayer player;
@@ -80,6 +81,11 @@ public class UI_Inventory : MonoBehaviour
             if (i < itemList.Count && itemList[i] != null)
             {
                 ConfigureItemSlot(itemList[i], Slots[i]);
+
+                if(i > 24)
+                {
+                    ConfigureHotbarSlot(itemList[i], SlotsHotbar[i - 24]);
+                }
             }
             else
             {
@@ -93,6 +99,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void ConfigureItemSlot(Item item, RectTransform rect)
     {
+        
         if (rect.childCount > 0)
         {
             ClearSlot(rect.GetChild(rect.childCount - 1).GetComponent<RectTransform>());
@@ -171,6 +178,15 @@ public class UI_Inventory : MonoBehaviour
         Destroy(obj.gameObject);
     }
 
+    private void ConfigureHotbarSlot(Item item, RectTransform rect)
+    {
+        Image image = rect.gameObject.transform.Find("image").GetComponent<Image>();
+        TextMeshProUGUI amount = rect.gameObject.transform.Find("txt").GetComponent<TextMeshProUGUI>();
+
+        image.sprite = item.itemSprite;
+        amount.text = "x"+item.amount.ToString();
+    }
+
     public LocatePlayer GetPlayer()
     {
         return player;
@@ -209,6 +225,37 @@ public class UI_Inventory : MonoBehaviour
             T temp = list[indexA];
             list[indexA] = list[indexB];
             list[indexB] = temp;
+        }
+    }
+
+    public void SelectHotbarSlot(int id)
+    {
+        ChangeHotbarColor(id);
+        //colocar logica individual 
+
+    }
+
+    private void ChangeHotbarColor(int id)
+    {
+        Image currentSlotBg = SlotsHotbar[id - 1].Find("bg").GetComponent<Image>();
+
+        if (currentSlotBg.color == Color.red)
+        {
+            currentSlotBg.color = Color.white;
+        }
+        else
+        {
+            currentSlotBg.color = Color.red;
+        }
+    }
+
+    public void ClearHotbar(int idForExclude)
+    {
+        for (int i = 0; i < SlotsHotbar.Length; i++)
+        {
+            if (i == idForExclude) return;
+
+            SlotsHotbar[i].Find("bg").GetComponent<Image>().color = Color.white;
         }
     }
 }
