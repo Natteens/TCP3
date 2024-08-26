@@ -22,6 +22,11 @@ public class InventoryController : NetworkBehaviour
         MouseController.CursorVisibility(false);
     }
 
+    private void Update()
+    {
+        VisibilityControl();
+    }
+
     public void SetItem(Item item)
     {
         if (inventory.CanPickup())
@@ -61,12 +66,6 @@ public class InventoryController : NetworkBehaviour
 
         // Se passar por todas as verificações, significa que pode craftar
         return true;
-    }
-
-
-    private void Update()
-    {
-        VisibilityControl();
     }
 
     private void VisibilityControl()
