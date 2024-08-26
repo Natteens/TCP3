@@ -39,15 +39,26 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        InvokeRepeating(nameof(UpdateDayTime), 0f, .5f);
+        InvokeRepeating(nameof(UpdateDayTime), 0f, .15f);
     }
 
     public void UpdateDayTime()
     {
+
+        if (timeOfDay.Value >= dayDuration)
+        {
+            timeOfDay.Value = 0;
+            return;
+        }
+
         timeOfDay.Value++;
         bool CheckIfisNight = timeOfDay.Value >= dayDuration * .3f && timeOfDay.Value <= dayDuration * .65f;
         isNight = CheckIfisNight;
+        float newXvalue = ((timeOfDay.Value / (float)dayDuration) * 100f) + 40f;
 
-        if (timeOfDay.Value >= dayDuration) timeOfDay.Value = 0;
+        Vector3 newRotation = new(Mathf.Lerp(newXvalue, newXvalue + 1f, .3f), directionalLight.gameObject.transform.rotation.y, directionalLight.gameObject.transform.rotation.z);
+        directionalLight.gameObject.transform.rotation = Quaternion.Euler(newRotation);
+        Debug.Log(newRotation);
+        
     }
 }
