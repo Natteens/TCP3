@@ -28,9 +28,7 @@ public class DayNightCycle : NetworkBehaviour
         float normalizedTimeOfDay = newTime / (float)GameManager.Instance.dayDuration;
 
         Color newColor = GameManager.Instance.lightColorGradient.Evaluate(normalizedTimeOfDay);
-        float newIntensity = GameManager.Instance.lightIntensityCurve.Evaluate(normalizedTimeOfDay);
         GameManager.Instance.directionalLight.color = newColor;
-        GameManager.Instance.directionalLight.intensity = newIntensity;
     }
 
     [ClientRpc]
