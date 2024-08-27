@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EventComponent : MonoBehaviour
 {
+    public Transform feet;
     public Action OnShootingWithWeapon;
     public AudioClip LandingAudioClip;
     public AudioClip[] FootstepAudioClips;
@@ -34,5 +35,10 @@ public class EventComponent : MonoBehaviour
     public void OnShooting()
     {
         OnShootingWithWeapon.Invoke();
+    }
+
+    public void OnLandVFX()
+    {
+        Spawner.Instance.SpawnInWorldServerRpc(feet.position, "landVFX");
     }
 }
