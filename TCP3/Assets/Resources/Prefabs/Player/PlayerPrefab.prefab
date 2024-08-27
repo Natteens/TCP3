@@ -12518,6 +12518,7 @@ GameObject:
   - component: {fileID: 8664087164105426229}
   - component: {fileID: 8664087164105426230}
   - component: {fileID: 8664087164105426225}
+  - component: {fileID: 248576004735838127}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -12795,6 +12796,7 @@ MonoBehaviour:
   inventory: 0
   interact: 0
   reload: 0
+  chat: 0
   activeIndexSlot: 0
   analogMovement: 0
 --- !u!114 &8664087164105426179
@@ -13018,6 +13020,24 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 116
   m_CollisionDetection: 1
+--- !u!114 &248576004735838127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664087164105426190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d258f7f547a27649afc121b71f34a79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatMessagePrefab: {fileID: 3105236472809020981, guid: 93ae903013dcc1b4a9c00886df922b73, type: 3}
+  chatContent: {fileID: 0}
+  chatInput: {fileID: 0}
+  chat: {fileID: 0}
+  input: {fileID: 8664087164105426176}
+  playerName: 
 --- !u!1 &8664087165299966984
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,8 +16,10 @@ public class StarterAssetsInputs : MonoBehaviour
 	public bool inventory;
 	public bool interact;
 	public bool reload;
+	public bool chat;
 
-	public int activeIndexSlot = 0;
+
+    public int activeIndexSlot = 0;
 	public Action<int> slot;
 
 	#region olds
@@ -79,6 +81,16 @@ public class StarterAssetsInputs : MonoBehaviour
     public void OnHotbar(InputValue value)
     {
         HotbarInput(value.Get<float>());
+    }
+
+	public void OnChat(InputValue value)
+	{
+		ChatInput(value.isPressed);
+    }
+
+    public void ChatInput(bool newChatState)
+    {
+        chat = newChatState;
     }
 
     public void HotbarInput(float newSlotIndex)
