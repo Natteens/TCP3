@@ -88,6 +88,10 @@ public class EnemySettings : MonoBehaviour
             nameAndLevelText.text = $"{enemyName} - Nv. {level}";
         }
     }
+    public void Setup(byte minLevel, byte maxLevel)
+    {
+        SetLevel(Random.Range(minLevel, maxLevel + 1));
+    }
 
     [Button("Definir Nível")]
     public void SetLevel(int newLevel)
