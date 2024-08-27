@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9d3cd2188aff049a758c0f86bae895, type: 3}
+  m_Name: wTempestadeDeAreia
+  m_EditorClassIdentifier: 
+  itemName: Default Item Name
+  itemDescription: "<color=red>Dano: 6\nPenetra\xE7\xE3o de Armadura: 45\nMuni\xE7\xE3o
+    m\xE1xima: 30\nVelocidade de Recarga: 1,25\nCad\xEAncia: 0,1</color>"
+  itemType: 1
+  itemSprite: {fileID: 0}
+  amount: 1
+  uniqueID: 1bfad999c10a400f9c413e6fb41a3e07_194234209_0
+  weaponType: 3
+  maxMunition: 30
+  cadence: 0.1
+  reloadSpeed: 1.25
+  spread: 0.01
+  bulletPerShoot: 10
+  damage: 6
+  defensePenetration: 45
+  isAutomatic: 0
+  spawnPosition: {x: 0, y: 0, z: 0}
+  bulletPrefab: {fileID: 0}
+  effects: []
+  animatorParameter: 
+  weaponState: 0

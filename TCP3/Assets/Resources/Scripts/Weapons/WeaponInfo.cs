@@ -5,7 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon", menuName = "Item/Create Weapon")]
 public class WeaponInfo : Item
 {
+    public enum WeaponType
+    {
+        Fuzil,
+        FuzilRajada,
+        Revolver,
+        SubMetralhadora,
+        Rifle,
+        Escopeta
+    }
     [Header("Weapon Configs")]
+    public WeaponType weaponType;
     public int maxMunition;
     public float cadence;
     public float reloadSpeed;
