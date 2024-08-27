@@ -21,6 +21,7 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public int activeIndexSlot = 0;
 	public Action<int> slot;
+	public Action<bool> interacting;
 
 	#region olds
 
@@ -68,12 +69,12 @@ public class StarterAssetsInputs : MonoBehaviour
 		InventoryInput(value.isPressed);
 	}
 
-	public void OnInteract(InputValue value)
-	{
-		InteractInput(value.isPressed);
-	}
+    public void OnInteract(InputValue value)
+    {
+        InteractInput(value.isPressed);
+    }
 
-	public void OnShoot(InputValue value)
+    public void OnShoot(InputValue value)
 	{
 		ShootInput(value.isPressed);
 	}
@@ -121,12 +122,13 @@ public class StarterAssetsInputs : MonoBehaviour
 		jump = newJumpState;
 	}
 
-	public void InteractInput(bool newInteractState)
-	{
-		interact = newInteractState;
-	}
+    public void InteractInput(bool newInteractState)
+    {
+        interact = newInteractState;
+        interacting?.Invoke(interact);
+    }
 
-	public void InventoryInput(bool newInventoryState)
+    public void InventoryInput(bool newInventoryState)
 	{
 		inventory = newInventoryState;
 	}

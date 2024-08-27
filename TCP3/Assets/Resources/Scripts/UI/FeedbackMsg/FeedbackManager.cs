@@ -43,6 +43,36 @@ public class FeedbackManager : MonoBehaviour
         logic.SetText(txt);
     }
 
+    public IEnumerator FeedbackTextForRenewingResource()
+    {
+        yield return new WaitForSeconds(.5f);
+        Transform instance = Instantiate(pfFeedbackMsg, transform);
+        FeedbackLogic logic = Configure(instance);
+
+        logic.RemoveMyImage();
+        logic.SetText("O recurso está sendo renovado!");
+    }
+
+    public IEnumerator FeedbackTextForNoResource()
+    {
+        yield return new WaitForSeconds(1f);
+        Transform instance = Instantiate(pfFeedbackMsg, transform);
+        FeedbackLogic logic = Configure(instance);
+
+        logic.RemoveMyImage();
+        logic.SetText("Recursos esgotados!");
+    }
+
+    public IEnumerator FeedbackTextForCancelColect()
+    {
+        yield return new WaitForSeconds(.3f);
+        Transform instance = Instantiate(pfFeedbackMsg, transform);
+        FeedbackLogic logic = Configure(instance);
+
+        logic.RemoveMyImage();
+        logic.SetText("Coleta Cancelada!");
+    }
+
     private FeedbackLogic Configure(Transform instance)
     {
         FeedbackLogic logic = instance.AddComponent<FeedbackLogic>();
