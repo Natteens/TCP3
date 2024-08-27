@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+using Sirenix.OdinInspector;
+using static Enemy;
 
 public abstract class Enemy : BaseEntity
 {
@@ -40,11 +43,21 @@ public abstract class Enemy : BaseEntity
 
     [Space(10f)]
     [Header("States")]
-    [SerializeField] public List<Item> dropItemList = new List<Item>();
 
     //  private Movement move;
     private EnemyStateMachine stateMachine;
     private bool IncreaseDetectionHasBuffed = false;
+    [Header("Drop")]
+    public List<DropItem> dropItemList = new List<DropItem>();
+    [Sirenix.OdinInspector.ReadOnly, SerializeField] private float dropTotalChance;
+
+    [System.Serializable]
+    public class DropItem
+    {
+        public Item item;
+
+        public float dropChance;
+    }
 
     public virtual void Start()
     {
@@ -64,6 +77,8 @@ public abstract class Enemy : BaseEntity
         InitializeScriptables();
        
         InvokeRepeating("PerformDetection", 0, detectionDelay);
+
+        dropTotalChance = GetTotalChance();
     }
 
     protected virtual void Update()
@@ -141,9 +156,41 @@ public abstract class Enemy : BaseEntity
 
     public virtual void EventActionOnDeath() { }
 
-    public void DropEnemyItem(List<Item> itemDropList, int myLevel)
+    public Item GetRandomItem()
     {
-        Item dropItem = itemDropList[Random.Range(0, itemDropList.Count)];
+        float total = 0f;
+        foreach (DropItem dropItem in dropItemList)
+        {
+            total += dropItem.dropChance;
+        }
+
+        float randomValue = Random.Range(0, total);
+        float cumulative = 0f;
+
+        foreach (DropItem dropItem in dropItemList)
+        {
+            cumulative += dropItem.dropChance;
+            if (randomValue < cumulative)
+            {
+                return dropItem.item;
+            }
+        }
+
+        return null; // Nenhum item foi dropado
+    }
+
+    private float GetTotalChance()
+    {
+        float total = 0f;
+        foreach (DropItem dropItem in dropItemList)
+        {
+            total += dropItem.dropChance;
+        }
+        return total;
+    }
+    public void DropEnemyItem(int myLevel)
+    {
+        Item dropItem = GetRandomItem();
         int dropAmount = Random.Range(1, 3); //botar conta com base no nivel ou outra coisa sla
 
         for (int i = 0; i < dropAmount; i++)
