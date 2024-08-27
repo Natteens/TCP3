@@ -39,6 +39,10 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
     [ShowInInspector, ReadOnly]
     private InteractController controller;
+    
+    [ShowInInspector, ReadOnly]
+    private Animator anim;
+
 
     [SerializeField]
     private BoxCollider myCollider;
@@ -60,7 +64,10 @@ public class ResourceSpot : MonoBehaviour, Interactable
             if (inputs != null)
             {
                 if (inputs.move != Vector2.zero)
-                { CancelHarvesting(); StartCoroutine(FeedbackManager.Instance.FeedbackTextForCancelColect()); }
+                {
+                    CancelHarvesting(); 
+                    StartCoroutine(FeedbackManager.Instance.FeedbackTextForCancelColect()); 
+                }
             }
 
             Countdown();
@@ -134,14 +141,39 @@ public class ResourceSpot : MonoBehaviour, Interactable
         {
             inputs = interactor.GetComponent<StarterAssetsInputs>();
             controller = interactor.GetComponent<InteractController>();
+            anim = interactor.GetComponentInChildren<Animator>();
+            #region animation
+            StartCoroutine(SetLayerWeight(anim, 2, 1f, 10f));
+            anim.SetBool("Collection", true); 
+            #endregion
             StartHarvesting();
             maxTime = baseTimeToHarvest - (interactor.GetComponent<StatusComponent>().GetStatus(StatusType.GatheringSpeed) / 10f);
         }
         else
         {
             StartCoroutine(FeedbackManager.Instance.FeedbackTextForRenewingResource());
+            #region animator
+            StartCoroutine(SetLayerWeight(anim, 2, 0f, 10f));
+            anim.SetBool("Collection", false); 
+            #endregion
         }
         
+    }
+
+    private IEnumerator SetLayerWeight(Animator animator, int layerIndex, float targetWeight, float duration)
+    {
+        float startWeight = animator.GetLayerWeight(layerIndex);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float weight = Mathf.Lerp(startWeight, targetWeight, elapsed / duration);
+            animator.SetLayerWeight(layerIndex, weight);
+            yield return null;
+        }
+
+        animator.SetLayerWeight(layerIndex, targetWeight);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -155,6 +187,18 @@ public class ResourceSpot : MonoBehaviour, Interactable
         if (other.CompareTag("Player"))
         {
             ControlUI();
+
+            if (inputs != null && inputs.interact)
+            {
+                if (!isHarvesting && canHarvest)
+                {
+                    OnInteract(other.transform); 
+                }
+                else if (isHarvesting)
+                {
+                    Countdown(); 
+                }
+            }
         }
     }
 

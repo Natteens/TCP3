@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18222857, g: 0.22793214, b: 0.307356, a: 1}
+  m_IndirectSpecularColor: {r: 0.18222857, g: 0.22793216, b: 0.30735606, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -37645,7 +37645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1225744741
 Transform:
   m_ObjectHideFlags: 0
@@ -37661,7 +37661,7 @@ Transform:
   - {fileID: 1462578412}
   - {fileID: 119226845}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1225744742
 MonoBehaviour:
@@ -39134,7 +39134,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1151295986}
   m_HandleRect: {fileID: 1151295985}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -42157,7 +42157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00085301214}
+  m_AnchoredPosition: {x: 0, y: 0.0000065271693}
   m_SizeDelta: {x: 0, y: 452.27}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1346623783
@@ -47874,7 +47874,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1787074373}
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -67443,7 +67443,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3625334304423562309, guid: 319d6c1923d6c634fbebf24deb7d8ddd, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3625334304423562309, guid: 319d6c1923d6c634fbebf24deb7d8ddd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -67451,7 +67451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3625334304423562309, guid: 319d6c1923d6c634fbebf24deb7d8ddd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 453.9
+      value: 449.94
       objectReference: {fileID: 0}
     - target: {fileID: 3625334304423562309, guid: 319d6c1923d6c634fbebf24deb7d8ddd, type: 3}
       propertyPath: m_LocalPosition.z

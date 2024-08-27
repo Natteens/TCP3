@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WallBoxingMat
+  m_Name: Dissolve
   m_Shader: {fileID: 4800000, guid: 4c57345b1627cc94cb0fd5ec7c3df408, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -32,12 +32,22 @@ Material:
     m_Floats:
     - _DissolveAmount: 0
     - _DissolveEdgeWidth: 0.01
+    - _DissolveHeight: 449.25458
+    - _DissolveIntensity: 2
+    - _DissolveLimit: 1
     - _DissolveNoiseScale: 30
-    - _EdgeWidth: 0.01
+    - _EdgeColorWidth: 0.02
+    - _EdgeIntensity: 5
+    - _EdgeSharpness: 10
+    - _EdgeWidth: 0.1
+    - _FresnelStrength: 1
     - _Metallic: 0
+    - _NoiseScale: 10
+    - _NoiseStrength: 0.5
     - _Smoothness: 0.5
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
     - _DissolveColor: {r: 1, g: 0, b: 0, a: 1}
+    - _DissolveDirection: {r: 0, g: -1, b: 0, a: 0}
     - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
