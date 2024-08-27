@@ -49,7 +49,7 @@ public class LobbyListUI : MonoBehaviour {
     }
 
     private void UpdateLobbyList(List<Lobby> lobbyList) {
-        if (LobbyManager.Instance.joinedLobby.Data[LobbyManager.Instance.GetKeyGame()].Value != "0")
+        if (LobbyManager.Instance.joinedLobby == null)
         { 
             foreach (Transform child in container) {
                 if (child == lobbySingleTemplate) continue;
