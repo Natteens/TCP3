@@ -84,7 +84,30 @@ public class Spawner : Singleton<Spawner>
 
     #endregion
 
+    #region Projectiles
 
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnProjectilesServerRpc(Vector3 position, Vector3 shootDirection, string prefabId, int damage)
+    {
+        SpawnProjectiles(position, shootDirection,prefabId, damage);
+    }
 
+    private void SpawnProjectiles(Vector3 position, Vector3 shootDirection, string prefabId,int damage)
+    {
+        var prefab = ItemAssets.Instance.GetPrefabById(prefabId);
+        if (prefab == null)
+        {
+            return;
+        }
 
+        var projectile = Instantiate(prefab, position, Quaternion.LookRotation(shootDirection, Vector3.up));
+        projectile.GetComponent<ProjectileMover>().InitializeProjectile(damage);
+
+        if (projectile.TryGetComponent<NetworkObject>(out var networkObject))
+        {
+            networkObject.Spawn();
+        }
+    }
+
+    #endregion
 }

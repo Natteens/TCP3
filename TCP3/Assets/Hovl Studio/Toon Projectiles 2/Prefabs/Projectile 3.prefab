@@ -9698,6 +9698,8 @@ GameObject:
   - component: {fileID: 54351105455091520}
   - component: {fileID: 135893854351048510}
   - component: {fileID: 4644791738190737273}
+  - component: {fileID: -5026670218509529588}
+  - component: {fileID: 6348130459196650404}
   m_Layer: 0
   m_Name: Projectile 3
   m_TagString: Untagged
@@ -14510,6 +14512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 0
   speed: 25
   hitOffset: 0.05
   UseFirePointRotation: 0
@@ -14518,6 +14521,9 @@ MonoBehaviour:
   flash: {fileID: 1416074664878166, guid: 617f36d624d400a4b835a1309da53fb3, type: 3}
   Detached:
   - {fileID: 1527140251071848}
+  Layer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!199 &199429552616622666
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -14702,3 +14708,55 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!114 &-5026670218509529588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841414879310842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1037567662
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &6348130459196650404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841414879310842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  Interpolate: 1
+  SlerpPosition: 0

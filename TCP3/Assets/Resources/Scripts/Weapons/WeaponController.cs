@@ -57,8 +57,6 @@ public class WeaponController : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void WeaponUpdateServerRpc()
     {
-        if (!IsOwner) return;
-
         HandleInput();
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)
@@ -98,8 +96,7 @@ public class WeaponController : NetworkBehaviour
             {
                 if (!isShooting) isShooting = true;
                 Vector3 shootDirection = GetShootDirection(aimPoint);
-                var projectile = Instantiate(currentWeapon.bulletPrefab, bulletSpawner.position, Quaternion.LookRotation(shootDirection, Vector3.up));
-                projectile.GetComponent<ProjectileMover>().InitializeProjectile((int)currentWeapon.damage);
+                Spawner.Instance.SpawnProjectilesServerRpc(bulletSpawner.position, shootDirection, "projectileBasic", currentWeapon.damage);
                 currentAmmo -= currentWeapon.bulletPerShoot;
                 fireRateCounter = 0f;
                 OnShoot?.Invoke();
@@ -127,34 +124,39 @@ public class WeaponController : NetworkBehaviour
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
             anim.SetInteger("WeaponState", 3);
 
+            // Ajustar a rotação apenas quando mirando
             AdjustCharacterRotation(aimPoint);
-            AdjustAimOffset();
         }
         else
         {
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
             anim.SetInteger("WeaponState", 2);
             DisableShooting();
-            ResetAimOffset();
         }
+
+        AdjustAimOffset();
     }
 
     private void AdjustCharacterRotation(Vector3 aimPoint)
     {
-        Vector3 directionToAim = (aimPoint - transform.position).normalized;
-        directionToAim.y = 0;
+        if (input.move == Vector2.zero) // Somente rota quando parado e mirando
+        {
+            Vector3 directionToAim = (aimPoint - transform.position).normalized;
+            directionToAim.y = 0;
 
-        float angle = Vector3.SignedAngle(transform.forward, directionToAim, Vector3.up);
-        angle = Mathf.Clamp(angle, -maxAimAngle, maxAimAngle);
+            float angle = Vector3.SignedAngle(transform.forward, directionToAim, Vector3.up);
+            angle = Mathf.Clamp(angle, -maxAimAngle, maxAimAngle);
 
-        Vector3 targetDirection = Quaternion.Euler(0, angle, 0) * transform.forward;
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+            Vector3 targetDirection = Quaternion.Euler(0, angle, 0) * transform.forward;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
     }
 
     private void AdjustAimOffset()
     {
+        // Ajustar o offset da mira (Y) com base no movimento
         if (input.move != Vector2.zero)
         {
             if (input.move.x < 0)
@@ -176,12 +178,6 @@ public class WeaponController : NetworkBehaviour
         }
 
         currentAimOffsetY = Mathf.Lerp(currentAimOffsetY, targetAimOffsetY, Time.deltaTime * aimOffsetTransitionSpeed);
-        torsoAimConstraint.data.offset = new Vector3(0f, currentAimOffsetY, 0f);
-    }
-
-    private void ResetAimOffset()
-    {
-        currentAimOffsetY = Mathf.Lerp(currentAimOffsetY, 0f, Time.deltaTime * aimOffsetTransitionSpeed);
         torsoAimConstraint.data.offset = new Vector3(0f, currentAimOffsetY, 0f);
     }
 
