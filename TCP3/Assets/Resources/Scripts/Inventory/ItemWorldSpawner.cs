@@ -19,8 +19,7 @@ public class ItemWorldSpawner : NetworkBehaviour
     {
         if (currentTime > timeToSpawn)
         {
-            Debug.Log(item);
-            Spawner.Instance.SpawnItemServerRpc(transform.position, item);
+            Spawner.Instance.SpawnItemServerRpc(transform.position, item.uniqueID);
             currentTime = 0f;
         }
         else
