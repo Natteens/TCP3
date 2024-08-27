@@ -129,7 +129,7 @@ public class SlotExpandController : MonoBehaviour
             Item itemToDrop = ScriptableObjectUtility.Clone(selectedItem);
             itemToDrop.amount = amountToDrop;
 
-            Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop);
+            Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop.uniqueID);
             GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amountToDrop);
 
             Clean();
@@ -214,7 +214,7 @@ public class SlotExpandController : MonoBehaviour
                 itemToDrop.amount = amount;
 
                 // Dropa a cópia do item com o valor atualizado
-                Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop);
+                Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop.uniqueID);
 
                 // Remove a quantidade correta do inventário
                 GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amount);

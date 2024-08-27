@@ -1,7 +1,8 @@
 using UnityEngine;
 using Unity.Netcode;
+using Sirenix.OdinInspector;
 
-public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
+public class Singleton<T> : SerializedMonoBehaviour where T : SerializedMonoBehaviour
 {
     private static T _instance;
 

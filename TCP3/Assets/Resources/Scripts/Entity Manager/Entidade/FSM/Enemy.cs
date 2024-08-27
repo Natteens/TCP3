@@ -144,10 +144,12 @@ public abstract class Enemy : BaseEntity
     public void DropEnemyItem(List<Item> itemDropList, int myLevel)
     {
         Item dropItem = itemDropList[Random.Range(0, itemDropList.Count)];
-        int dropAmount = Random.Range(1, Mathf.CeilToInt(1 + myLevel * .3f));
-        dropItem.amount = dropAmount;
+        int dropAmount = Random.Range(1, 3); //botar conta com base no nivel ou outra coisa sla
 
-        Spawner.Instance.SpawnItemServerRpc(transform.position, dropItem);
+        for (int i = 0; i < dropAmount; i++)
+        {
+            Spawner.Instance.SpawnItemServerRpc(transform.position, dropItem.uniqueID);
+        }
     }
 
     private void OnDrawGizmos()
