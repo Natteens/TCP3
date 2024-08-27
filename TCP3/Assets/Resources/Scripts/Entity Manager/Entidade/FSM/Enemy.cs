@@ -38,7 +38,11 @@ public abstract class Enemy : BaseEntity
     [HideInInspector] public AIData aiData { get { return _aiData;} set { _aiData = value; } }
     [HideInInspector]  public bool attackRangeInUse => hasIncreasedDetectionRange;
 
-  //  private Movement move;
+    [Space(10f)]
+    [Header("States")]
+    [SerializeField] public List<Item> dropItemList = new List<Item>();
+
+    //  private Movement move;
     private EnemyStateMachine stateMachine;
     private bool IncreaseDetectionHasBuffed = false;
 
@@ -136,6 +140,15 @@ public abstract class Enemy : BaseEntity
     public virtual void EventActionOnAttack() { }
 
     public virtual void EventActionOnDeath() { }
+
+    public void DropEnemyItem(List<Item> itemDropList, int myLevel)
+    {
+        Item dropItem = itemDropList[Random.Range(0, itemDropList.Count)];
+        int dropAmount = Random.Range(1, Mathf.CeilToInt(1 + myLevel * .3f));
+        dropItem.amount = dropAmount;
+
+        Spawner.Instance.SpawnItemServerRpc(transform.position, dropItem);
+    }
 
     private void OnDrawGizmos()
     {

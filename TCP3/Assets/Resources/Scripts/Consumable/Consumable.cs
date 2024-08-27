@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Consumable", menuName = "Item/Create Consumable")]
-public class Consumable : Item
+public class Consumable : Item, INetworkSerializable
 {
     [Header("Consumable Configs")]
     public ConsumableType type;

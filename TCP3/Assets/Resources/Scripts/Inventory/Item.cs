@@ -34,7 +34,7 @@ public class Item : ScriptableObject, INetworkSerializable
         }
 
         if (string.IsNullOrEmpty(uniqueID))
-            uniqueID = GenerateUniqueID();  
+            uniqueID = GenerateUniqueID();
         if (amount > 1 || amount <= 0)
         {
             amount = 1;
@@ -42,7 +42,7 @@ public class Item : ScriptableObject, INetworkSerializable
     }
 
     public void Initialize(Item item)
-    { 
+    {
         this.itemName = item.itemName;
         this.itemDescription = item.itemDescription;
         this.itemType = item.itemType;
@@ -86,9 +86,39 @@ public class Item : ScriptableObject, INetworkSerializable
     {
         serializer.SerializeValue(ref itemType);
         serializer.SerializeValue(ref itemName);
+
+        if (serializer.IsWriter)
+        {
+            byte[] textureBytes = SpriteToBytes(itemSprite);
+            serializer.SerializeValue(ref textureBytes);
+        }
+        else
+        {
+            byte[] textureBytes = null;
+            serializer.SerializeValue(ref textureBytes);
+            itemSprite = BytesToSprite(textureBytes);
+        }
+
         serializer.SerializeValue(ref itemDescription);
         serializer.SerializeValue(ref amount);
         Debug.Log("Serialized amount: " + amount);
         serializer.SerializeValue(ref uniqueID);
+    }
+
+    private byte[] SpriteToBytes(Sprite sprite)
+    {
+        if (sprite == null) return null;
+
+        Texture2D texture = sprite.texture;
+        return texture.EncodeToPNG(); // Ou EncodeToJPG se preferir
+    }
+
+    private Sprite BytesToSprite(byte[] bytes)
+    {
+        if (bytes == null || bytes.Length == 0) return null;
+
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(bytes);
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 }

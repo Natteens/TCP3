@@ -36,8 +36,10 @@ public class InventoryController : NetworkBehaviour
     {
         if (inventory.CanPickup())
         {
+            Debug.Log(item.itemSprite != null);
             Item newItem = ScriptableObjectUtility.Clone(item);
             newItem.Initialize(item);
+            Debug.Log(newItem.itemSprite != null);
             Debug.Log("NewItem amount: " + newItem.amount);
             this.inventory.AddItem(newItem);
         }

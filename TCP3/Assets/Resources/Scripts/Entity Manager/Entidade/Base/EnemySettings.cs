@@ -15,6 +15,10 @@ public class EnemySettings : MonoBehaviour
     [SerializeField, Range(1, 100)] private int level = 1; // Nível do inimigo
 
     [BoxGroup("Configurações do Inimigo")]
+    [LabelText("Xp drop Inimigo")]
+    [SerializeField, Range(1, 10000)] private int giveXp; 
+
+    [BoxGroup("Configurações do Inimigo")]
     [LabelText("UI de Nome e Nível")]
     [SerializeField, Required] private TextMeshProUGUI nameAndLevelText; // Referência ao texto da UI
 
@@ -98,6 +102,11 @@ public class EnemySettings : MonoBehaviour
     {
         enemyName = newName;
         UpdateNameAndLevelUI();
+    }
+
+    public int GetLevel()
+    { 
+        return level;
     }
 
     private void OnValidate()

@@ -19,7 +19,8 @@ public class ItemWorldSpawner : NetworkBehaviour
     {
         if (currentTime > timeToSpawn)
         {
-            SpawnItemServerRpc(transform.position, item.name);
+            Debug.Log(item);
+            Spawner.Instance.SpawnItemServerRpc(transform.position, item);
             currentTime = 0f;
         }
         else
@@ -28,9 +29,4 @@ public class ItemWorldSpawner : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void SpawnItemServerRpc(Vector3 position, string itemName)
-    {
-        ItemWorld.SpawnItemWorld(position, item);
-    }
 }
