@@ -578,6 +578,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Lagarix
   level: 30
+  giveXp: 10
   nameAndLevelText: {fileID: 3849179495277918829}
   healthMultiplier: 30
   defenseMultiplier: 1.5
@@ -713,6 +714,14 @@ MonoBehaviour:
   idle: {fileID: 11400000, guid: 4184bd3688ce5724dbcdc21a65ba55a7, type: 2}
   chase: {fileID: 11400000, guid: 076ca20f56237e542bea7cfe89fdcf5d, type: 2}
   attack: {fileID: 11400000, guid: cd0c6edd4ea449f43b8a192c70bf352c, type: 2}
+  dropItemList:
+  - item: {fileID: 11400000, guid: ff0853f01d2f6f74b9ebf72c50796028, type: 2}
+    dropChance: 90
+  - item: {fileID: 11400000, guid: 340c3e52824d205498cf44c0deab8a6c, type: 2}
+    dropChance: 20
+  - item: {fileID: 11400000, guid: 995c13c71540323448a847b63dd862c8, type: 2}
+    dropChance: 5
+  dropTotalChance: 0
 --- !u!1001 &3339344234282971141
 PrefabInstance:
   m_ObjectHideFlags: 0

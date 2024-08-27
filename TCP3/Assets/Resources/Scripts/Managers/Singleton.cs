@@ -2,7 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Sirenix.OdinInspector;
 
-public class Singleton<T> : SerializedMonoBehaviour where T : SerializedMonoBehaviour
+public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
 {
     private static T _instance;
 

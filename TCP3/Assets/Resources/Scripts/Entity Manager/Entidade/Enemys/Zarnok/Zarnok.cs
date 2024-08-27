@@ -8,7 +8,7 @@ public class Zarnok : Enemy
     {
         base.OnDeath();
         Debug.Log("Morri");
-        DropEnemyItem(dropItemList, GetComponent<EnemySettings>().GetLevel());
+        DropEnemyItem(GetComponent<EnemySettings>().GetLevel());
         Destroy(gameObject);
     }
 
@@ -21,7 +21,7 @@ public class Zarnok : Enemy
     public override void EventActionOnDeath()
     {
         base.EventActionOnDeath();
-        DropEnemyItem(dropItemList, GetComponent<EnemySettings>().GetLevel());
+        DropEnemyItem(GetComponent<EnemySettings>().GetLevel());
     }
 
 
