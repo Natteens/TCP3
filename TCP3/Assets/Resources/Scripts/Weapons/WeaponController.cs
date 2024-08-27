@@ -13,11 +13,12 @@ public class WeaponController : NetworkBehaviour
     [SerializeField] private TPSController tpsController;
     [SerializeField] private Animator anim;
     [SerializeField] private LayerMask layer;
+    [SerializeField] private EventComponent events;
     private StarterAssetsInputs input;
-    private float aimWeightChangeSpeed = 5f;
     private int currentAmmo;
     private bool isShooting;
     private float fireRateCounter;
+    private bool canShoot; // Variável para controle do disparo baseado em animação
 
     public event Action OnWeaponChanged;
     public event Action OnShoot;
@@ -25,26 +26,28 @@ public class WeaponController : NetworkBehaviour
     private void Awake()
     {
         input = GetComponent<StarterAssetsInputs>();
+        events.OnShootingWithWeapon += EnableShooting;
     }
 
     private void Start()
     {
-        StartingWeaponRpc();
+        StartingWeaponServerRpc();
     }
 
-    [Rpc(SendTo.Everyone)]
-    private void StartingWeaponRpc()
+    [ServerRpc(RequireOwnership = false)]
+    private void StartingWeaponServerRpc()
     {
         EquipWeapon(currentWeapon);
     }
 
     private void Update()
     {
-        WeaponUpdateRpc();
+        WeaponUpdateServerRpc();
     }
 
-    [Rpc(SendTo.Everyone)]
-    private void WeaponUpdateRpc()
+
+    [ServerRpc(RequireOwnership = false)]
+    private void WeaponUpdateServerRpc()
     {
         if (!IsOwner) return;
 
@@ -79,9 +82,12 @@ public class WeaponController : NetworkBehaviour
 
     private void HandleShooting(Vector3 aimPoint)
     {
-        tpsController.RotateTowardsMouseSmooth(aimPoint);
+        if (IsAimBeyondThreshold(aimPoint))
+        {
+            tpsController.RotateTowardsMouseSmooth(aimPoint);
+        }
 
-        if (fireRateCounter >= currentWeapon.cadence)
+        if (fireRateCounter >= currentWeapon.cadence && canShoot)
         {
             if (currentAmmo > 0)
             {
@@ -96,7 +102,7 @@ public class WeaponController : NetworkBehaviour
             }
             else
             {
-                StartCoroutine(Reload()); 
+                StartCoroutine(Reload());
             }
         }
     }
@@ -105,7 +111,7 @@ public class WeaponController : NetworkBehaviour
     {
         if (isShooting)
         {
-            anim.SetInteger("WeaponState", input.aim ? 3 : 2); 
+            anim.SetInteger("WeaponState", input.aim ? 3 : 2);
             isShooting = false;
         }
     }
@@ -116,13 +122,36 @@ public class WeaponController : NetworkBehaviour
         {
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
             anim.SetInteger("WeaponState", 3);
-            tpsController.RotateTowardsMouseSmooth(aimPoint);
+
+            if (!IsAimBeyondThreshold(aimPoint))
+            {
+                AdjustTorsoOnlyAim(aimPoint);
+            }
+            else
+            {
+                tpsController.RotateTowardsMouseSmooth(aimPoint);
+            }
         }
         else
         {
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
             anim.SetInteger("WeaponState", 2);
+            DisableShooting();
         }
+    }
+
+    private void AdjustTorsoOnlyAim(Vector3 aimPoint)
+    {
+        Vector3 aimDirection = (aimPoint - transform.position).normalized;
+        aimDirection.y = 0; // Ignora a rotação no eixo Y
+        transform.rotation = Quaternion.LookRotation(aimDirection);
+    }
+
+    private bool IsAimBeyondThreshold(Vector3 aimPoint)
+    {
+        Vector3 aimDirection = (aimPoint - transform.position).normalized;
+        float angle = Vector3.Angle(transform.forward, aimDirection);
+        return angle > 90f; // Checa se o ângulo de rotação é maior que 90 graus
     }
 
     public void EquipWeapon(WeaponInfo newWeapon)
@@ -133,6 +162,7 @@ public class WeaponController : NetworkBehaviour
         currentAmmo = newWeapon != null ? newWeapon.maxMunition : 0;
         fireRateCounter = 0f;
         isShooting = false;
+        canShoot = false; // Define que o jogador não pode atirar inicialmente
 
         if (currentWeapon != null)
         {
@@ -180,9 +210,6 @@ public class WeaponController : NetworkBehaviour
     {
         Transform weaponTransform = weaponsContainer.Find(weaponModelName);
         return weaponTransform;
-        // espero q não de bug na hora de fazer o network disso
-        // mas se a arma de um jogador estiver sendo afetada 
-        // por outro jogador pode ser isso aq por causa do Find 
     }
 
     private void HandleInput()
@@ -197,20 +224,24 @@ public class WeaponController : NetworkBehaviour
 
     private bool CanShoot()
     {
-        return input.shoot && fireRateCounter >= currentWeapon.cadence && currentWeapon != null;
+        return input.shoot && fireRateCounter >= currentWeapon.cadence && currentWeapon != null && canShoot;
     }
 
     private Vector3 GetShootDirection(Vector3 aimPoint)
     {
         Vector3 shootDirection = (aimPoint - bulletSpawner.position).normalized;
         shootDirection.y = 0;
-        shootDirection += new Vector3(UnityEngine.Random.Range(-currentWeapon.spread, currentWeapon.spread),0,0);
+
+        float spreadFactor = UnityEngine.Random.Range(-currentWeapon.spread, currentWeapon.spread);
+        Vector3 spreadOffset = new Vector3(spreadFactor, 0, spreadFactor);
+        shootDirection += spreadOffset;
+
         return shootDirection.normalized;
     }
 
     private IEnumerator Reload()
     {
-       // anim.SetInteger("WeaponState", 5); // Atualizar animação para "recarregando"
+        // anim.SetInteger("WeaponState", 5); // Atualizar animação para "recarregando"
         yield return new WaitForSeconds(currentWeapon.reloadSpeed);
         currentAmmo = currentWeapon.maxMunition;
         anim.SetInteger("WeaponState", input.aim ? 3 : 2); // Voltar ao estado de segurar a arma após recarregar
@@ -218,8 +249,32 @@ public class WeaponController : NetworkBehaviour
 
     private void AdjustTorsoAimWeight()
     {
-        float targetWeight = input.aim ? 1f : 0f; 
-        float currentWeight = torsoAimConstraint.weight;
-        torsoAimConstraint.weight = Mathf.Lerp(currentWeight, targetWeight, Time.deltaTime * aimWeightChangeSpeed);
+        torsoAimConstraint.weight = input.aim ? 1f : 0f;
+    }
+
+    // Método para ser chamado pelo evento de animação
+    public void EnableShooting()
+    {
+        canShoot = true;
+    }
+
+    public void DisableShooting()
+    {
+        canShoot = false;
+    }
+
+    // Novo método para ajustar a rotação do personagem com base na posição do mouse
+    private void AdjustCharacterRotation(Vector3 targetPosition)
+    {
+        Vector3 directionToTarget = (targetPosition - transform.position).normalized;
+        directionToTarget.y = 0; // Ignora a rotação no eixo Y para manter a rotação plana
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(directionToTarget), Time.deltaTime * 10f);
+    }
+
+    // Exibição do Raycast da linha de mira
+    private void DisplayAimingRay(Vector3 aimPoint)
+    {
+        Vector3 directionToAim = (aimPoint - bulletSpawner.position).normalized;
+        Debug.DrawRay(bulletSpawner.position, directionToAim * 10f, Color.red);
     }
 }
