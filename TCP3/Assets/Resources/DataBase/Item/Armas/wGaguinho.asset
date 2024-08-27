@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d9d3cd2188aff049a758c0f86bae895, type: 3}
-  m_Name: wFuzil
+  m_Name: wGaguinho
   m_EditorClassIdentifier: 
-  itemName: Fuzil
+  itemName: Gaguinho
   itemDescription: "<color=red>Dano: 10\nPenetra\xE7\xE3o de Armadura: 2\nMuni\xE7\xE3o
     m\xE1xima: 40\nVelocidade de Recarga: 1,25\nCad\xEAncia: 0,1</color>"
   itemType: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
   bulletPerShoot: 1
   damage: 10
   defensePenetration: 2
-  isAutomatic: 1
+  isAutomatic: 0
   spawnPosition: {x: 0, y: 2, z: 1.5}
   bulletPrefab: {fileID: 4516715164336042, guid: f1dc4df701f37324c98ea16f41770afc, type: 3}
   effects:
