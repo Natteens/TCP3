@@ -5,6 +5,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using UnityEngine.InputSystem; // Importa a biblioteca Odin
+using UnityEngine.Animations.Rigging;
 
 public class ResourceSpot : MonoBehaviour, Interactable
 {
@@ -43,6 +44,9 @@ public class ResourceSpot : MonoBehaviour, Interactable
     [ShowInInspector, ReadOnly]
     private Animator anim;
 
+    [ShowInInspector, ReadOnly]
+    private MultiAimConstraint torsoAimConstraint;
+    private WeightedTransformArray originalSourceObjects;
 
     [SerializeField]
     private BoxCollider myCollider;
@@ -102,9 +106,12 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
     public void CancelHarvesting()
     {
+        StartCoroutine(SetLayerWeight(anim, 2, 0f, .5f));
+        anim.SetBool("Collection", false);
         isHarvesting = false;
         currentTime = 0f;
         inputs = null;
+        RestoreOriginalAimSource();
         GameManager.Instance.HarvestHolder.SetActive(false);
     }
 
@@ -142,10 +149,13 @@ public class ResourceSpot : MonoBehaviour, Interactable
             inputs = interactor.GetComponent<StarterAssetsInputs>();
             controller = interactor.GetComponent<InteractController>();
             anim = interactor.GetComponentInChildren<Animator>();
-            #region animation
-            StartCoroutine(SetLayerWeight(anim, 2, 1f, 10f));
-            anim.SetBool("Collection", true); 
-            #endregion
+            torsoAimConstraint = interactor.GetComponentInChildren<MultiAimConstraint>();
+            originalSourceObjects = torsoAimConstraint.data.sourceObjects;
+
+            StartCoroutine(SetLayerWeight(anim, 2, 1f, 1f));
+            anim.SetBool("Collection", true);
+            UpdateAimSource();
+
             StartHarvesting();
             maxTime = baseTimeToHarvest - (interactor.GetComponent<StatusComponent>().GetStatus(StatusType.GatheringSpeed) / 10f);
         }
@@ -153,11 +163,30 @@ public class ResourceSpot : MonoBehaviour, Interactable
         {
             StartCoroutine(FeedbackManager.Instance.FeedbackTextForRenewingResource());
             #region animator
-            StartCoroutine(SetLayerWeight(anim, 2, 0f, 10f));
+            StartCoroutine(SetLayerWeight(anim, 2, 0f, .5f));
             anim.SetBool("Collection", false); 
             #endregion
         }
         
+    }
+
+    private void UpdateAimSource()
+    {
+        if (torsoAimConstraint != null)
+        {
+            var newSourceObjects = torsoAimConstraint.data.sourceObjects;
+            newSourceObjects.Clear();
+            newSourceObjects.Add(new WeightedTransform(transform, 1f));
+            torsoAimConstraint.data.sourceObjects = newSourceObjects;
+        }
+    }
+
+    private void RestoreOriginalAimSource()
+    {
+        if (torsoAimConstraint != null && originalSourceObjects.Count > 0)
+        {
+            torsoAimConstraint.data.sourceObjects = originalSourceObjects;
+        }
     }
 
     private IEnumerator SetLayerWeight(Animator animator, int layerIndex, float targetWeight, float duration)
