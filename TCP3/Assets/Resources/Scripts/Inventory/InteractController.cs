@@ -20,6 +20,8 @@ public class InteractController : NetworkBehaviour
 
     public void ControlInteractMessage(bool request)
     {
+        if (!IsOwner) return;
+
         interactMessage.SetActive(request);
     }
 
