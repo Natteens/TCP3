@@ -31,7 +31,7 @@ public class LobbyManager : MonoBehaviour
     public event EventHandler<LobbyEventArgs> OnJoinedLobby;
     public event EventHandler<LobbyEventArgs> OnJoinedLobbyUpdate;
     public event EventHandler<LobbyEventArgs> OnKickedFromLobby;
-   // public event EventHandler OnGameStarted;
+    // public event EventHandler OnGameStarted;
 
     private Lobby hostLobby;
     public Lobby joinedLobby;
@@ -76,9 +76,14 @@ public class LobbyManager : MonoBehaviour
 
     private void Update()
     {
-      HandleRefreshLobbyList();
-      HandleLobbyHeartbeat();
-      HandleLobbyPollForUpdates();
+        HandleRefreshLobbyList();
+        HandleLobbyHeartbeat();
+        HandleLobbyPollForUpdates();
+    }
+
+    public string GetKeyGame()
+    {
+        return KEY_START_GAME;
     }
 
     private async void HandleLobbyPollForUpdates()
