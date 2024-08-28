@@ -463,6 +463,7 @@ public class LobbyManager : MonoBehaviour
                 }
                 else
                 {
+                    await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
                     DeleteLobby();
                     return;
                 } 
@@ -493,24 +494,18 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            if (joinedLobby.Players.Count > 1)
-            {
-                Player nextHost = joinedLobby.Players.FirstOrDefault(player => player.Id != joinedLobby.HostId);
+            Player nextHost = joinedLobby.Players.FirstOrDefault(player => player.Id != joinedLobby.HostId);
 
-                if (nextHost != null)
+            if (nextHost != null)
+            {
+                hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
                 {
-                    hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
-                    {
-                        HostId = nextHost.Id
-                    });
-
-                    joinedLobby = hostLobby;
-                }
-            }
-            else
-            {
-                DeleteLobby();
-            }
+                    HostId = nextHost.Id
+                    
+                });
+                Debug.Log("um novo host foi setado!");
+                joinedLobby = hostLobby;
+            }   
         }
         catch (LobbyServiceException e)
         {
