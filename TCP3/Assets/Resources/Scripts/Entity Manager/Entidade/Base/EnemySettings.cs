@@ -62,8 +62,9 @@ public class EnemySettings : MonoBehaviour
     {
         Dictionary<StatusType, float> currentStats = statusComponent.currentStatus;
 
-        float healthModifier = level * healthMultiplier;
-        float defenseModifier = level * defenseMultiplier;
+        bool condition = GameManager.Instance.isNight;
+        float healthModifier = condition ? level * (healthMultiplier * 1.5f) : level * healthMultiplier;
+        float defenseModifier = condition ? level * (defenseMultiplier * 1.5f) : level * defenseMultiplier;
 
         if (currentStats.ContainsKey(StatusType.Health))
         {
