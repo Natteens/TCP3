@@ -53,7 +53,7 @@ public class LobbyListUI : MonoBehaviour {
         { 
             foreach (Transform child in container) {
                 if (child == lobbySingleTemplate) continue;
-
+                else if(child == null) break;
                 Destroy(child.gameObject);
             }
 
