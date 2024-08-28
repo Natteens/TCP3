@@ -459,6 +459,7 @@ public class LobbyManager : MonoBehaviour
                     Debug.Log("sai do lobby");
                     await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
                     joinedLobby = null;
+                    OnLeftLobby?.Invoke(this, EventArgs.Empty);
                     return;
                 }
                 else
@@ -505,6 +506,11 @@ public class LobbyManager : MonoBehaviour
                 });
                 Debug.Log("um novo host foi setado!");
                 joinedLobby = hostLobby;
+
+                if (IsLobbyHost())
+                {
+                    LobbyUI.Instance.ControlStartButton(true);
+                }
             }   
         }
         catch (LobbyServiceException e)
