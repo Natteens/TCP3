@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class Spawner : Singleton<Spawner>
 {
+    private HashSet<NetworkObject> spawnedObjects = new HashSet<NetworkObject>();
+
     #region Item
 
     [ServerRpc(RequireOwnership = false)]
     public void SpawnItemServerRpc(Vector3 position, string itemId)
     {
-        SpawnItemWorld(position, itemId); 
+        SpawnItemWorld(position, itemId);
     }
 
     private void SpawnItemWorld(Vector3 position, string itemId)
@@ -26,6 +28,8 @@ public class Spawner : Singleton<Spawner>
         if (itemWorldInstance.TryGetComponent<NetworkObject>(out var networkObject))
         {
             networkObject.Spawn();
+            // Adiciona o objeto ao HashSet
+            spawnedObjects.Add(networkObject);
         }
     }
 
@@ -52,6 +56,8 @@ public class Spawner : Singleton<Spawner>
         if (worldInstance.TryGetComponent<NetworkObject>(out var networkObject))
         {
             networkObject.Spawn();
+            // Adiciona o objeto ao HashSet
+            spawnedObjects.Add(networkObject);
         }
     }
 
@@ -79,6 +85,8 @@ public class Spawner : Singleton<Spawner>
         if (worldInstance.TryGetComponent<NetworkObject>(out var networkObject))
         {
             networkObject.Spawn();
+            // Adiciona o objeto ao HashSet
+            spawnedObjects.Add(networkObject);
         }
     }
 
@@ -89,10 +97,10 @@ public class Spawner : Singleton<Spawner>
     [ServerRpc(RequireOwnership = false)]
     public void SpawnProjectilesServerRpc(Vector3 position, Vector3 shootDirection, string prefabId, int damage)
     {
-        SpawnProjectiles(position, shootDirection,prefabId, damage);
+        SpawnProjectiles(position, shootDirection, prefabId, damage);
     }
 
-    private void SpawnProjectiles(Vector3 position, Vector3 shootDirection, string prefabId,int damage)
+    private void SpawnProjectiles(Vector3 position, Vector3 shootDirection, string prefabId, int damage)
     {
         var prefab = ItemAssets.Instance.GetPrefabById(prefabId);
         if (prefab == null)
@@ -106,7 +114,47 @@ public class Spawner : Singleton<Spawner>
         if (projectile.TryGetComponent<NetworkObject>(out var networkObject))
         {
             networkObject.Spawn();
+            // Adiciona o objeto ao HashSet
+            spawnedObjects.Add(networkObject);
         }
+    }
+
+    #endregion
+
+    #region Despawn
+
+    public void DespawnInWorld(NetworkObject obj)
+    {
+        if (spawnedObjects.Contains(obj))
+        {
+            obj.Despawn();
+            spawnedObjects.Remove(obj); // Remove o objeto do HashSet
+        }
+    }
+
+    public void DespawnByTimeInWorld(NetworkObject obj, float time)
+    {
+        StartCoroutine(DespawnByTime(obj, time));
+    }
+
+    private IEnumerator DespawnByTime(NetworkObject obj, float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (spawnedObjects.Contains(obj))
+        {
+            obj.Despawn();
+            spawnedObjects.Remove(obj); // Remove o objeto do HashSet
+        }
+    }
+
+    // Método para despawnar todos os objetos
+    public void DespawnAll()
+    {
+        foreach (var networkObject in spawnedObjects)
+        {
+            networkObject.Despawn();
+        }
+        spawnedObjects.Clear(); // Limpa o HashSet após despawnar todos os objetos
     }
 
     #endregion

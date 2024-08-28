@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using static Enemy;
 
 public abstract class Enemy : BaseEntity
 {

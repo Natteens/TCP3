@@ -17,7 +17,7 @@ public abstract class BaseEntity : MonoBehaviour
         statusComponent = GetComponent<StatusComponent>();
         healthComponent = GetComponent<HealthComponent>();
         knockback = GetComponent<Knockback>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collider>();
 
