@@ -456,7 +456,7 @@ public class LobbyManager : MonoBehaviour
             {
                 if (joinedLobby.Players.Count > 1)
                 {
-                    if (IsLobbyHost()) { MigrateLobbyHost(); }
+                    if (IsLobbyHost()) { hostLobby = null; MigrateLobbyHost(); }
                     Debug.Log("sai do lobby");
                     await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
                     joinedLobby = null;
@@ -465,7 +465,6 @@ public class LobbyManager : MonoBehaviour
                 }
                 else
                 {
-                    //await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
                     DeleteLobby();
                     return;
                 } 
@@ -496,14 +495,13 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            Player nextHost = joinedLobby.Players.FirstOrDefault(player => player.Id != joinedLobby.HostId);
+            //Player nextHost = joinedLobby.Players.FirstOrDefault(player => player.Id != joinedLobby.HostId);
 
-            if (nextHost != null)
+            if (joinedLobby.Players[1].Id != null)
             {
                 hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
                 {
-                    HostId = nextHost.Id
-
+                    HostId = joinedLobby.Players[1].Id
                 });
 
                 Debug.Log("um novo host foi setado!");
