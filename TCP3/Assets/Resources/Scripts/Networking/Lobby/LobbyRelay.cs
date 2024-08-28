@@ -54,8 +54,6 @@ public class LobbyRelay : MonoBehaviour
         }
     }
 
-
-
     public async void JoinRelay(string joinCode)
     {
         try
@@ -90,7 +88,5 @@ public class LobbyRelay : MonoBehaviour
             Debug.LogError("Failed to join relay: " + e.Message);
         }
     }
-
-
 
 }

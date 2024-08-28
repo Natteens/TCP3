@@ -164,6 +164,7 @@ public class LobbyManager : MonoBehaviour
 
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
 
+            hostLobby = lobby;
             joinedLobby = lobby;
 
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
@@ -454,15 +455,20 @@ public class LobbyManager : MonoBehaviour
             {
                 if (joinedLobby.Players.Count > 1)
                 {
+                    if (IsLobbyHost()) { MigrateLobbyHost(); }
                     Debug.Log("sai do lobby");
                     await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
                     joinedLobby = null;
+                    return;
                 }
                 else
                 {
                     DeleteLobby();
+                    return;
                 } 
             }
+
+            Debug.LogWarning("JOINED LOBBY NULO");
             
         }
         catch (LobbyServiceException e)
@@ -514,6 +520,7 @@ public class LobbyManager : MonoBehaviour
 
     public async void DeleteLobby()
     {
+        
         if (hostLobby != null)
         {
             try
@@ -522,12 +529,17 @@ public class LobbyManager : MonoBehaviour
                 hostLobby = null;
                 joinedLobby = null;
                 OnLeftLobby?.Invoke(this, EventArgs.Empty);
+                Debug.Log("Deletei o Lobby!");
+                return;
             }
             catch (LobbyServiceException e)
             {
                 Debug.Log(e);
+                return;
             }
         }
+
+        Debug.LogWarning("HOST LOBBY NULO");
     }
 
     private void OnApplicationQuit()
