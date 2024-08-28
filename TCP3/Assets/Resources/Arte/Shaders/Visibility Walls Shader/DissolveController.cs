@@ -34,7 +34,8 @@ public class DissolveController : MonoBehaviour
     private void UpdateAffectedRenderers()
     {
         affectedRenderers.Clear();
-        Collider[] colliders = Physics.OverlapBox(player.position + dissolveBoxOffset, dissolveBoxSize / 2, player.rotation, constructionLayer);
+        Vector3 boxCenter = player.position + dissolveBoxOffset;
+        Collider[] colliders = Physics.OverlapBox(boxCenter, dissolveBoxSize / 2, player.rotation, constructionLayer);
 
         foreach (Collider collider in colliders)
         {
@@ -107,7 +108,12 @@ public class DissolveController : MonoBehaviour
         if (showDissolveBox && player != null)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.matrix = Matrix4x4.TRS(player.position + dissolveBoxOffset, player.rotation, Vector3.one);
+
+            // Criar uma matriz de transformação para o cubo de dissolução
+            Matrix4x4 dissolveMatrix = Matrix4x4.TRS(player.position + dissolveBoxOffset, player.rotation, Vector3.one);
+            Gizmos.matrix = dissolveMatrix;
+
+            // Desenhar o cubo de dissolução
             Gizmos.DrawWireCube(Vector3.zero, dissolveBoxSize);
         }
     }
