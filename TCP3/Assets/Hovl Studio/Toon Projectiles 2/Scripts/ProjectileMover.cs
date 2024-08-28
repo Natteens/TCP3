@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class ProjectileMover : MonoBehaviour
@@ -14,7 +15,6 @@ public class ProjectileMover : MonoBehaviour
     private Rigidbody rb;
     public GameObject[] Detached;
     public LayerMask Layer;
-
     public void InitializeProjectile(int amount) { Damage = amount; }
 
     void Start()
@@ -93,6 +93,7 @@ public class ProjectileMover : MonoBehaviour
                 detachedPrefab.transform.parent = null;
             }
         }
+        Spawner.Instance.DespawnInWorld(this.GetComponent<NetworkObject>());
         Destroy(gameObject);
     }
 }

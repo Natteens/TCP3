@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Zarnok : Enemy
+public class Lagarix : Enemy
 {
     protected override void OnDeath()
     {

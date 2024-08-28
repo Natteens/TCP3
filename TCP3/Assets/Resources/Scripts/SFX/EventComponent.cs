@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class EventComponent : MonoBehaviour
@@ -40,5 +41,6 @@ public class EventComponent : MonoBehaviour
     public void OnLandVFX()
     {
         Spawner.Instance.SpawnInWorldServerRpc(feet.position, "landVFX");
+        Spawner.Instance.DespawnByTimeInWorld(this.GetComponent<NetworkObject>(), 1f);
     }
 }
