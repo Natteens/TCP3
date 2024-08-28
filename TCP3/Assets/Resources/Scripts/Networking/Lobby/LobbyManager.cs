@@ -135,6 +135,12 @@ public class LobbyManager : MonoBehaviour
                 float heartbeatTimerMax = 15;
                 heartbeatTimer = heartbeatTimerMax;
 
+                if (IsLobbyHost())
+                {
+                    Debug.Log("ativei o botao para o host");
+                    LobbyUI.Instance.ControlStartButton(true);
+                }
+
                 try
                 {
                     await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
@@ -507,11 +513,6 @@ public class LobbyManager : MonoBehaviour
                 Debug.Log("um novo host foi setado!");
                 joinedLobby = hostLobby;
 
-                if (IsLobbyHost())
-                {
-                    Debug.Log("ativei o botao para o host");
-                    LobbyUI.Instance.ControlStartButton(true);
-                }
             }
             else
             {
