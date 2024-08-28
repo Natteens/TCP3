@@ -410,7 +410,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210240011}
   m_LocalRotation: {x: -0.00466365, y: 0.9171342, z: -0.39840677, w: -0.010729233}
-  m_LocalPosition: {x: 4.7047634, y: 13.6616535, z: 28.57417}
+  m_LocalPosition: {x: -1.12, y: 18.41, z: 23.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -469,7 +469,7 @@ MonoBehaviour:
   dissolveSpeed: 2
   dissolveBoxSize: {x: 2, y: 2, z: 2}
   dissolveBoxOffset: {x: 0, y: 0, z: 0}
-  dissolveMaterial: {fileID: 0}
+  dissolveMaterial: {fileID: 2100000, guid: a1917c8043b13a84fbf5842d661ff803, type: 2}
   showDissolveBox: 1
 --- !u!1 &233800338
 GameObject:
@@ -658,7 +658,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3e627a90c7f603442a45a1a26c364627, type: 2}
+  - {fileID: 2100000, guid: a1917c8043b13a84fbf5842d661ff803, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

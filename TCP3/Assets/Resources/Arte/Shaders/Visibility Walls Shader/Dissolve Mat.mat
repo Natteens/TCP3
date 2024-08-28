@@ -34,15 +34,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CutoffHeight: 0
-    - _EdgeWidth: 0.05
-    - _NoiseScale: 50
-    - _NoiseStrength: 1
+    - _CutoffHeight: 0.8
+    - _EdgeWidth: 0.25
+    - _NoiseScale: 47
+    - _NoiseStrength: 0.2
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Albedo: {r: 0, g: 0, b: 0, a: 1}
-    - _EdgeColor: {r: 0, g: 3.262745, b: 23.96863, a: 1}
+    - _Albedo: {r: 1, g: 1, b: 1, a: 1}
+    - _EdgeColor: {r: 0, g: 1.6714716, b: 6.2490563, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8235279805497464121
 MonoBehaviour:
