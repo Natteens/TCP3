@@ -19,7 +19,6 @@ public class LobbyUI : MonoBehaviour {
     [SerializeField] private Button leaveLobbyButton;
     [SerializeField] private Button startGameLobbyButton;
 
-
     private void Awake() {
         Instance = this;
 

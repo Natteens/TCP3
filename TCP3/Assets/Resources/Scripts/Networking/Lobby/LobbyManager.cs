@@ -503,8 +503,9 @@ public class LobbyManager : MonoBehaviour
                 hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
                 {
                     HostId = nextHost.Id
-                    
+
                 });
+
                 Debug.Log("um novo host foi setado!");
                 joinedLobby = hostLobby;
 
@@ -513,7 +514,12 @@ public class LobbyManager : MonoBehaviour
                     Debug.Log("ativei o botao para o host");
                     LobbyUI.Instance.ControlStartButton(true);
                 }
-            }   
+            }
+            else
+            {
+                Debug.LogWarning("NEXT HOST ESTA NULO!");
+
+            }
         }
         catch (LobbyServiceException e)
         {
