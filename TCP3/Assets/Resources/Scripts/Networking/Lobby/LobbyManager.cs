@@ -171,6 +171,7 @@ public class LobbyManager : MonoBehaviour
 
             if (IsLobbyHost())
             {
+                Debug.Log("Ativei o botao para o host!");
                 LobbyUI.Instance.ControlStartButton(true);
             }
 
@@ -464,7 +465,7 @@ public class LobbyManager : MonoBehaviour
                 }
                 else
                 {
-                    await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
+                    //await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
                     DeleteLobby();
                     return;
                 } 
@@ -509,6 +510,7 @@ public class LobbyManager : MonoBehaviour
 
                 if (IsLobbyHost())
                 {
+                    Debug.Log("ativei o botao para o host");
                     LobbyUI.Instance.ControlStartButton(true);
                 }
             }   
@@ -521,27 +523,52 @@ public class LobbyManager : MonoBehaviour
 
     public async void DeleteLobby()
     {
-        
         if (hostLobby != null)
         {
+            Debug.Log($"Tentando deletar o lobby com ID: {hostLobby.Id}");
+
+            // Verifique se o ID do lobby não é nulo ou vazio
+            if (string.IsNullOrEmpty(hostLobby.Id))
+            {
+                Debug.LogWarning("ID do lobby é nulo ou vazio.");
+                return;
+            }
+
             try
             {
+                // Verifique se o lobby realmente existe no servidor
+                var existingLobby = await LobbyService.Instance.GetLobbyAsync(hostLobby.Id);
+                if (existingLobby == null)
+                {
+                    Debug.LogWarning("Lobby não encontrado, pode já ter sido excluído.");
+                    return;
+                }
+
                 await LobbyService.Instance.DeleteLobbyAsync(hostLobby.Id);
                 hostLobby = null;
                 joinedLobby = null;
                 OnLeftLobby?.Invoke(this, EventArgs.Empty);
-                Debug.Log("Deletei o Lobby!");
-                return;
+                Debug.Log("Lobby deletado com sucesso!");
             }
             catch (LobbyServiceException e)
             {
-                Debug.Log(e);
-                return;
+                Debug.LogError($"Erro ao tentar deletar o lobby: {e.Message}");
+                if (e.InnerException != null)
+                {
+                    Debug.LogError($"Detalhes da InnerException: {e.InnerException.Message}");
+                }
+                Debug.LogError($"Status Code: {e.ErrorCode}");
+                Debug.LogError($"Stack Trace: {e.StackTrace}");
             }
-        }
 
-        Debug.LogWarning("HOST LOBBY NULO");
+        }
+        else
+        {
+            Debug.LogWarning("HOST LOBBY NULO");
+        }
     }
+
+
 
     private void OnApplicationQuit()
     {
