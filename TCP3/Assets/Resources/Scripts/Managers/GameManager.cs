@@ -39,7 +39,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        InvokeRepeating(nameof(UpdateDayTime), 0f, .15f);
+        InvokeRepeating(nameof(UpdateDayTime), 0f, .05f);
     }
 
     public void UpdateDayTime()
