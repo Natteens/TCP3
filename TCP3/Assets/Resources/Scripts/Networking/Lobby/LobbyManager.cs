@@ -186,30 +186,30 @@ public class LobbyManager : MonoBehaviour
 
     public async void StartGame()
     {
-        if (IsLobbyHost())
-        {
-            try
-            {
+       try
+       {
+           if (IsLobbyHost())
+           {
                await LoadingGameScreen();
-
-                string relayCode = await LobbyRelay.Instance.CreateRelay();
-
-                Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
-                {
-                    Data = new Dictionary<string, DataObject> {
-                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)} //muda a visibilidade aq
-                    }
-
-                });
-
-                joinedLobby = lobby;
-
-            }
-            catch (LobbyServiceException e)
-            {
-                Debug.Log(e);
-            }
-        }
+           
+               string relayCode = await LobbyRelay.Instance.CreateRelay();
+           
+               Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+               {
+                   Data = new Dictionary<string, DataObject> {
+                       { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)} //muda a visibilidade aq
+                   }
+           
+               });
+           
+               joinedLobby = lobby;
+           }
+       }
+       catch (LobbyServiceException e)
+       {
+           Debug.Log(e);
+       }
+   
     }
 
     private async Task LoadingGameScreen()
@@ -229,16 +229,24 @@ public class LobbyManager : MonoBehaviour
 
     private void HandleRefreshLobbyList()
     {
-        if (UnityServices.State == ServicesInitializationState.Initialized && AuthenticationService.Instance.IsSignedIn)
-        {
-            refreshLobbyListTimer -= Time.deltaTime;
-            if (refreshLobbyListTimer < 0f)
-            {
-                float refreshLobbyListTimerMax = 5f;
-                refreshLobbyListTimer = refreshLobbyListTimerMax;
 
-                RefreshLobbyList();
+        try
+        {
+            if (UnityServices.State == ServicesInitializationState.Initialized && AuthenticationService.Instance.IsSignedIn)
+            {
+                refreshLobbyListTimer -= Time.deltaTime;
+                if (refreshLobbyListTimer < 0f)
+                {
+                    float refreshLobbyListTimerMax = 5f;
+                    refreshLobbyListTimer = refreshLobbyListTimerMax;
+
+                    RefreshLobbyList();
+                }
             }
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
         }
     }
 
@@ -392,7 +400,7 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-             hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
+            hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
             {
                 MaxPlayers = _maxPlayers
             });
@@ -422,12 +430,12 @@ public class LobbyManager : MonoBehaviour
 
     public async void UpdatePlayerName(string playerName)
     {
-        this.playerName = playerName;
-
-
-        if (joinedLobby != null)
+        try
         {
-            try
+            this.playerName = playerName;
+
+
+            if (joinedLobby != null)
             {
                 UpdatePlayerOptions options = new UpdatePlayerOptions();
 
@@ -445,13 +453,12 @@ public class LobbyManager : MonoBehaviour
                 joinedLobby = lobby;
 
                 OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-
             }
-            catch (LobbyServiceException e)
-            {
-                Debug.Log(e);
-            }
-        }
+         }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }  
     }
 
     public async void LeaveLobby()
@@ -500,8 +507,6 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            //Player nextHost = joinedLobby.Players.FirstOrDefault(player => player.Id != joinedLobby.HostId);
-
             if (joinedLobby.Players[1].Id != null)
             {
                 hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
@@ -527,42 +532,41 @@ public class LobbyManager : MonoBehaviour
 
     public async void DeleteLobby()
     {
-        if (hostLobby != null)
+        try
         {
-            Debug.Log($"Tentando deletar o lobby com ID: {hostLobby.Id}");
+           if (hostLobby != null)
+           {
+               Debug.Log($"Tentando deletar o lobby com ID: {hostLobby.Id}");
+               if (string.IsNullOrEmpty(hostLobby.Id))
+               {
+                   Debug.LogWarning("ID do lobby é nulo ou vazio.");
+                   return;
+               }
 
-            // Verifique se o ID do lobby não é nulo ou vazio
-            if (string.IsNullOrEmpty(hostLobby.Id))
-            {
-                Debug.LogWarning("ID do lobby é nulo ou vazio.");
-                return;
-            }
+               var existingLobby = await LobbyService.Instance.GetLobbyAsync(hostLobby.Id);
+               if (existingLobby == null)
+               {
+                   Debug.LogWarning("Lobby não encontrado, pode já ter sido excluído.");
+                   return;
+               }
 
-            try
-            {
-                var existingLobby = await LobbyService.Instance.GetLobbyAsync(hostLobby.Id);
-                if (existingLobby == null)
-                {
-                    Debug.LogWarning("Lobby não encontrado, pode já ter sido excluído.");
-                    return;
-                }
-
-                await LobbyService.Instance.DeleteLobbyAsync(hostLobby.Id);
-                hostLobby = null;
-                joinedLobby = null;
-                OnLeftLobby?.Invoke(this, EventArgs.Empty);
-                Debug.Log("Lobby deletado com sucesso!");
-            }
-            catch (LobbyServiceException e)
-            {
-                Debug.LogError(e);
-            }
-
-        }
-        else
+               await LobbyService.Instance.DeleteLobbyAsync(hostLobby.Id);
+               hostLobby = null;
+               joinedLobby = null;
+               OnLeftLobby?.Invoke(this, EventArgs.Empty);
+               Debug.Log("Lobby deletado com sucesso!");
+           }
+           else
+           {
+               Debug.LogWarning("HOST LOBBY NULO");
+           }
+         }
+        catch (LobbyServiceException e)
         {
-            Debug.LogWarning("HOST LOBBY NULO");
+            Debug.LogError(e);
         }
+
+    
     }
 
     private void OnApplicationQuit()
