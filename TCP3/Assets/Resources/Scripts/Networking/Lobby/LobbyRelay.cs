@@ -31,6 +31,12 @@ public class LobbyRelay : MonoBehaviour
     {
         try
         {
+            if (NetworkManager.Singleton.IsClient || NetworkManager.Singleton.IsServer)
+            {
+                Debug.LogWarning("Client or Server is already running.");
+                return null;
+            }
+
             var joinedLobby = LobbyManager.Instance.GetJoinedLobby();
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(joinedLobby.MaxPlayers);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
@@ -45,6 +51,7 @@ public class LobbyRelay : MonoBehaviour
             return null;
         }
     }
+
 
     public async void JoinRelay(string joinCode)
     {
