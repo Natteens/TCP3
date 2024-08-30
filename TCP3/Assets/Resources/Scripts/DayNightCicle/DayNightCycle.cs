@@ -5,7 +5,10 @@ public class DayNightCycle : NetworkBehaviour
 {
     private void Start()
     {
-       GameManager.Instance.timeOfDay.OnValueChanged += UpdateDayNightCycleServerRpc;
+        if (IsServer)
+        {
+            GameManager.Instance.timeOfDay.OnValueChanged += UpdateDayNightCycleServerRpc;
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]

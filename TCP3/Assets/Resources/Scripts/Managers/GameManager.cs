@@ -39,11 +39,15 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        InvokeRepeating(nameof(UpdateDayTime), 0f, .05f);
+        if (IsServer)
+        {
+            InvokeRepeating(nameof(UpdateDayTime), 0f, .05f);
+        }
     }
 
     public void UpdateDayTime()
     {
+        if (!IsServer) return; // Apenas o servidor deve atualizar o tempo
 
         if (timeOfDay.Value >= dayDuration)
         {
@@ -59,6 +63,5 @@ public class GameManager : Singleton<GameManager>
         Vector3 newRotation = new(Mathf.Lerp(newXvalue, newXvalue + 1f, .3f), directionalLight.gameObject.transform.rotation.y, directionalLight.gameObject.transform.rotation.z);
         directionalLight.gameObject.transform.rotation = Quaternion.Euler(newRotation);
         //Debug.Log(newRotation);
-        
     }
 }
