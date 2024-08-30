@@ -139,19 +139,16 @@ public class WeaponController : NetworkBehaviour
 
     private void AdjustCharacterRotation(Vector3 aimPoint)
     {
-        if (input.move == Vector2.zero) // Somente rota quando parado e mirando
-        {
-            Vector3 directionToAim = (aimPoint - transform.position).normalized;
-            directionToAim.y = 0;
+        Vector3 directionToAim = (aimPoint - transform.position).normalized;
+        directionToAim.y = 0;
 
-            float angle = Vector3.SignedAngle(transform.forward, directionToAim, Vector3.up);
-            angle = Mathf.Clamp(angle, -maxAimAngle, maxAimAngle);
+        float angle = Vector3.SignedAngle(transform.forward, directionToAim, Vector3.up);
+        angle = Mathf.Clamp(angle, -maxAimAngle, maxAimAngle);
 
-            Vector3 targetDirection = Quaternion.Euler(0, angle, 0) * transform.forward;
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+        Vector3 targetDirection = Quaternion.Euler(0, angle, 0) * transform.forward;
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-        }
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 
     private void AdjustAimOffset()
