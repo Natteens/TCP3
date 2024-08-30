@@ -28,21 +28,28 @@ public static class Loader
 
     public static async Task LoadSceneAsync(gameScenes scene)
     {
-        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(scene.ToString());
-        loadingOperation.allowSceneActivation = false;
-
-        while (!loadingOperation.isDone)
+        try
         {
-            if (loadingOperation.progress >= 0.9f)
-            {
-                onLoaderCallback?.Invoke();
-                break;
-            }
-            await Task.Yield();
-        }
+            AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(scene.ToString());
+            loadingOperation.allowSceneActivation = false;
 
-        await Task.Delay(1000); 
-        loadingOperation.allowSceneActivation = true;
+            while (!loadingOperation.isDone)
+            {
+                if (loadingOperation.progress >= 0.9f)
+                {
+                    onLoaderCallback?.Invoke();
+                    break;
+                }
+                await Task.Yield();
+            }
+
+            await Task.Delay(1000);
+            loadingOperation.allowSceneActivation = true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Erro ao carregar cena: {e.Message}");
+        }
     }
 
     public static float GetLoadingProgress()

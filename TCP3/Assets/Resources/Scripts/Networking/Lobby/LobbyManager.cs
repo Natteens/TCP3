@@ -540,7 +540,6 @@ public class LobbyManager : MonoBehaviour
 
             try
             {
-                // Verifique se o lobby realmente existe no servidor
                 var existingLobby = await LobbyService.Instance.GetLobbyAsync(hostLobby.Id);
                 if (existingLobby == null)
                 {
