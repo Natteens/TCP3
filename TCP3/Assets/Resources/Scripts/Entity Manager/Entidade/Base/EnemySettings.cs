@@ -3,21 +3,29 @@ using Sirenix.OdinInspector;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class EnemySettings : NetworkBehaviour, INetworkSerializable
+[GenerateSerializationForType(typeof(string))]
+public class EnemySettings : NetworkBehaviour
 {
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nome do Inimigo")]
-    [SerializeField, Required] private NetworkVariable<string> enemyName = new NetworkVariable<string>("Inimigo", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<string> networkEnemyName = new NetworkVariable<string>("Inimigo", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    [BoxGroup("Configurações do Inimigo")]
+    [LabelText("Nome do Inimigo")]
+    [SerializeField] private string enemyName;
 
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nível do Inimigo")]
-    [SerializeField, Required] private NetworkVariable<int> level = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<int> networkLevel = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    [BoxGroup("Configurações do Inimigo")]
+    [LabelText("Nível do Inimigo")]
+    [SerializeField] private int level;
 
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Xp drop Inimigo")]
-    [SerializeField, Range(1, 10000)] private int giveXp; 
+    [SerializeField, Range(1, 10000)] private int giveXp;
 
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("UI de Nome e Nível")]
@@ -40,11 +48,35 @@ public class EnemySettings : NetworkBehaviour, INetworkSerializable
     [SerializeField] private HealthBar healthBar;
     private Camera mainCamera;
 
+    [BoxGroup("Configurações do Inimigo")]
+    [LabelText("Nome do Inimigo")]
+    public string EnemyName
+    {
+        get => networkEnemyName.Value;
+        set
+        {
+            enemyName = value;
+            networkEnemyName.Value = value;
+            
+        }
+    }
+
+    [BoxGroup("Configurações do Inimigo")]
+    [LabelText("Nível do Inimigo")]
+    public int Level
+    {
+        get => networkLevel.Value;
+        set
+        {
+            level = value;
+            networkLevel.Value = value; 
+        }
+    }
+
     private void Start()
     {
-        //statusComponent = GetComponent<StatusComponent>();
         mainCamera = Camera.main;
-
+        EnemyName = enemyName;
         ApplyLevelScaling();
         UpdateNameAndLevelUI();
     }
@@ -64,12 +96,12 @@ public class EnemySettings : NetworkBehaviour, INetworkSerializable
         Dictionary<StatusType, float> currentStats = statusComponent.currentStatus;
 
         bool condition = GameManager.Instance.isNight.Value;
-        float healthModifier = condition ? level.Value * (healthMultiplier * 1.5f) : level.Value * healthMultiplier;
-        float defenseModifier = condition ? level.Value * (defenseMultiplier * 1.5f) : level.Value * defenseMultiplier;
+        float healthModifier = condition ? level * (healthMultiplier * 1.5f) : level * healthMultiplier;
+        float defenseModifier = condition ? level * (defenseMultiplier * 1.5f) : level * defenseMultiplier;
 
         if (currentStats.ContainsKey(StatusType.Health))
         {
-            currentStats[StatusType.Health] = currentStats[StatusType.Health] + healthModifier; 
+            currentStats[StatusType.Health] = currentStats[StatusType.Health] + healthModifier;
         }
 
         if (currentStats.ContainsKey(StatusType.Defense))
@@ -87,32 +119,30 @@ public class EnemySettings : NetworkBehaviour, INetworkSerializable
     {
         if (nameAndLevelText != null)
         {
-            nameAndLevelText.text = $"{enemyName} - Nv. {level}";
+            nameAndLevelText.text = $"{EnemyName} - Nv. {Level}";
         }
     }
+
     public void Setup(byte minLevel, byte maxLevel)
     {
-        SetLevel(Random.Range(minLevel, maxLevel + 1));
+        Level = Random.Range(minLevel, maxLevel + 1);
     }
 
     [Button("Definir Nível")]
     public void SetLevel(int newLevel)
     {
-        level.Value = newLevel;
-        ApplyLevelScaling();
-        UpdateNameAndLevelUI();
+        Level = newLevel;
     }
 
     [Button("Definir Nome")]
     public void SetName(string newName)
     {
-        enemyName.Value = newName;
-        UpdateNameAndLevelUI();
+        EnemyName = newName;
     }
 
     public int GetLevel()
-    { 
-        return level.Value;
+    {
+        return level;
     }
 
     private void OnValidate()
@@ -124,10 +154,11 @@ public class EnemySettings : NetworkBehaviour, INetworkSerializable
         }
     }
 
+    /*
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
-        var name = enemyName.Value;
-        var lvl = level.Value;
+        var name = networkEnemyName.Value;
+        var lvl = networkLevel.Value;
 
         // Serializa o valor do nome do inimigo
         serializer.SerializeValue(ref name);
@@ -135,7 +166,8 @@ public class EnemySettings : NetworkBehaviour, INetworkSerializable
         serializer.SerializeValue(ref lvl);
 
         // Atualiza os NetworkVariables com os valores serializados/deserializados
-        enemyName.Value = name;
-        level.Value = lvl;
+        networkEnemyName.Value = name;
+        networkLevel.Value = lvl;
     }
+    */
 }

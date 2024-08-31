@@ -61,17 +61,23 @@ public class ResourceSpot : NetworkBehaviour, Interactable
 
     void Update()
     {
+        if (!IsSpawned) return;
+
         myCollider.enabled = canHarvest.Value;
         //botar aqui o shader ou a cor que vai aplicar quando o recurso nao for possivel de pegar usando o canharvest de parametro
+        ResourceSpotLogic();
+    }
 
+    private void ResourceSpotLogic()
+    {
         if (isHarvesting)
         {
             if (inputs != null)
             {
                 if (inputs.move != Vector2.zero)
                 {
-                    CancelHarvesting(); 
-                    StartCoroutine(FeedbackManager.Instance.FeedbackTextForCancelColect()); 
+                    CancelHarvesting();
+                    StartCoroutine(FeedbackManager.Instance.FeedbackTextForCancelColect());
                 }
             }
 

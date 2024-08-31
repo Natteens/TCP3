@@ -6,15 +6,22 @@ using Unity.Netcode;
 
 public class HealthComponent : NetworkBehaviour, IHealth
 {
-    [SerializeField] public float MaxHealth { get; private set; }
-
+    
     private NetworkVariable<float> currentHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> maxHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
      [SerializeField]
     public float CurrentHealth
     {
         get => currentHealth.Value;
         private set => currentHealth.Value = value;
+    }
+
+    [SerializeField]
+    public float MaxHealth
+    {
+        get => maxHealth.Value;
+        private set => maxHealth.Value = value;
     }
 
     [SerializeField] public bool IsAlive => CurrentHealth > 0;

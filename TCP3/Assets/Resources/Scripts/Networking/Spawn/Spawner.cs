@@ -80,14 +80,13 @@ public class Spawner : Singleton<Spawner>
         }
 
         var worldInstance = Instantiate(prefab, position, Quaternion.identity);
-        worldInstance.GetComponent<EnemySettings>().Setup(minLevel, maxLevel);
+        worldInstance?.GetComponent<EnemySettings>().Setup(minLevel, maxLevel);
+        
+        NetworkObject networkObject = worldInstance?.GetComponent<NetworkObject>();
 
-        if (worldInstance.TryGetComponent<NetworkObject>(out var networkObject))
-        {
-            networkObject.Spawn();
-            // Adiciona o objeto ao HashSet
-            spawnedObjects.Add(networkObject);
-        }
+        networkObject?.Spawn();
+        // Adiciona o objeto ao HashSet
+        spawnedObjects?.Add(networkObject);
     }
 
     #endregion
