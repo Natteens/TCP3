@@ -34,7 +34,7 @@ public class ResourceSpot : NetworkBehaviour, Interactable
     private bool isHarvesting = false;
 
     [ShowInInspector, ReadOnly]
-    public NetworkVariable<bool> canHarvest = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<bool> canHarvest = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [ShowInInspector, ReadOnly]
     private StarterAssetsInputs inputs;

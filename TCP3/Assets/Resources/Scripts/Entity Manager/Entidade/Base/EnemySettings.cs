@@ -5,11 +5,11 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemySettings : NetworkBehaviour
+public class EnemySettings : NetworkBehaviour, INetworkSerializable
 {
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nome do Inimigo")]
-    [SerializeField, Required] private NetworkVariable<string> enemyName = new NetworkVariable<string>("Inimigo", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); 
+    [SerializeField, Required] private NetworkVariable<string> enemyName = new NetworkVariable<string>("Inimigo", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nível do Inimigo")]
@@ -122,5 +122,20 @@ public class EnemySettings : NetworkBehaviour
             ApplyLevelScaling();
             UpdateNameAndLevelUI();
         }
+    }
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        var name = enemyName.Value;
+        var lvl = level.Value;
+
+        // Serializa o valor do nome do inimigo
+        serializer.SerializeValue(ref name);
+        // Serializa o valor do nível do inimigo
+        serializer.SerializeValue(ref lvl);
+
+        // Atualiza os NetworkVariables com os valores serializados/deserializados
+        enemyName.Value = name;
+        level.Value = lvl;
     }
 }
