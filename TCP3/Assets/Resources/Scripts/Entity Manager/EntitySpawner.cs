@@ -27,7 +27,7 @@ public class EntitySpawner : NetworkBehaviour
 
     private void CountToSpawn()
     {
-        if (GameManager.Instance.isNight)
+        if (GameManager.Instance.isNight.Value)
         {
             CountLogic(timeToSpawn / 2);
         }

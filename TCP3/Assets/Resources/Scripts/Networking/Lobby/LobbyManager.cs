@@ -39,8 +39,6 @@ public class LobbyManager : MonoBehaviour
     private float lobbyUpdateTimer;
     private float refreshLobbyListTimer = 5f;
 
-    private string relayCode; // Armazena o código do relay criado
-
     private string playerName;
     public class LobbyEventArgs : EventArgs
     {
@@ -188,35 +186,30 @@ public class LobbyManager : MonoBehaviour
 
     public async void StartGame()
     {
-        try
-        {
-            if (IsLobbyHost())
-            {
-                await LoadingGameScreen();
-
-                if (string.IsNullOrEmpty(relayCode))
-                {
-                    relayCode = await LobbyRelay.Instance.CreateRelay(); // Cria o relay somente se o código for nulo ou vazio
-                }
-                else
-                {
-                    Debug.Log("Relay já foi criado anteriormente.");
-                }
-
-                Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
-                {
-                    Data = new Dictionary<string, DataObject> {
-                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)} //muda a visibilidade aq
-                    }
-                });
-
-                joinedLobby = lobby;
-            }
-        }
-        catch (LobbyServiceException e)
-        {
-            Debug.Log(e);
-        }
+       try
+       {
+           if (IsLobbyHost())
+           {
+               await LoadingGameScreen();
+           
+               string relayCode = await LobbyRelay.Instance.CreateRelay();
+           
+               Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+               {
+                   Data = new Dictionary<string, DataObject> {
+                       { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)} //muda a visibilidade aq
+                   }
+           
+               });
+           
+               joinedLobby = lobby;
+           }
+       }
+       catch (LobbyServiceException e)
+       {
+           Debug.Log(e);
+       }
+   
     }
 
     private async Task LoadingGameScreen()

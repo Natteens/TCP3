@@ -4,11 +4,21 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Unity.Netcode;
 
-
 public class HealthComponent : NetworkBehaviour, IHealth
 {
     [SerializeField] public float MaxHealth { get; private set; }
-    [field: SerializeField] public float CurrentHealth { get; private set; }
+
+    // NetworkVariable para sincronizar o valor
+    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(0f);
+
+    // Propriedade que expõe o valor de CurrentHealth como float para a interface
+     [SerializeField]
+    public float CurrentHealth
+    {
+        get => currentHealth.Value;
+        private set => currentHealth.Value = value;
+    }
+
     [SerializeField] public bool IsAlive => CurrentHealth > 0;
 
     public event Action OnDeath;
@@ -28,6 +38,15 @@ public class HealthComponent : NetworkBehaviour, IHealth
     private void Start()
     {
         InitializeHealth();
+
+        // Monitorando mudanças na CurrentHealth
+        currentHealth.OnValueChanged += (previousValue, newValue) =>
+        {
+            if (newValue <= 0 && previousValue > 0)
+            {
+                Die();
+            }
+        };
     }
 
     public void InitializeHealth()
@@ -36,7 +55,7 @@ public class HealthComponent : NetworkBehaviour, IHealth
         statusComponent.OnStatusChanged += HandleStatusChanged;
         statusComponent.OnEffectApplied += HandleEffectApplied;
         MaxHealth = statusComponent.GetStatus(StatusType.Health);
-        CurrentHealth = MaxHealth;
+        CurrentHealth = MaxHealth; // Atribui o valor inicial usando a propriedade
     }
 
     private void HandleStatusChanged(Dictionary<StatusType, float> currentStatus)
@@ -46,7 +65,6 @@ public class HealthComponent : NetworkBehaviour, IHealth
             MaxHealth = health;
             CurrentHealth = (CurrentHealth >= MaxHealth) ? MaxHealth : CurrentHealth;
         }
-
     }
 
     private void HandleEffectApplied(StatusEffectData effect)
@@ -61,16 +79,18 @@ public class HealthComponent : NetworkBehaviour, IHealth
     public void TakeDamage(float amount)
     {
         if (!IsAlive) return;
-        CurrentHealth -= amount;
+        CurrentHealth -= amount; // Modifica usando a propriedade
         OnTakeDamage?.Invoke(amount);
-        CurrentHealth = (CurrentHealth <= 0) ? 0 : CurrentHealth;
-        if ((CurrentHealth = (CurrentHealth <= 0) ? 0 : CurrentHealth) <= 0) Die();
+        if (CurrentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     public void Heal(float amount)
     {
         if (!IsAlive) return;
-        CurrentHealth += amount;
+        CurrentHealth += amount; // Modifica usando a propriedade
         CurrentHealth = (CurrentHealth >= MaxHealth) ? MaxHealth : CurrentHealth;
         OnHeal?.Invoke(amount);
         Debug.Log("Recebendo cura " + amount);
@@ -78,13 +98,13 @@ public class HealthComponent : NetworkBehaviour, IHealth
 
     public void Die()
     {
-        CurrentHealth = (CurrentHealth <= 0) ? 0 : CurrentHealth;
+        CurrentHealth = 0;
         OnDeath?.Invoke();
     }
 
     public void Revive()
     {
-        if (!IsAlive) return;
+        if (IsAlive) return;
         CurrentHealth = MaxHealth;
         OnRevive?.Invoke();
     }
