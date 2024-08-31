@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.Animations;
 
 public class WeaponController : NetworkBehaviour
 {
@@ -20,6 +21,10 @@ public class WeaponController : NetworkBehaviour
     //[SerializeField] private float movingAimOffsetYLeft = -55f;
     //[SerializeField] private float movingAimOffsetYRight = -45f;
     //[SerializeField] private float aimOffsetTransitionSpeed = 5f;
+
+    [SerializeField]
+    private float rotationOffset = 0f; // Adicione um offset para ajuste fino da rotação
+
 
     private StarterAssetsInputs input;
     private int currentAmmo;
@@ -138,32 +143,20 @@ public class WeaponController : NetworkBehaviour
             DisableShooting();
         }
 
-        AdjustAimOffset();
     }
 
     private void AdjustCharacterRotation(Vector3 aimPoint)
     {
-        // Ajusta a rotação do personagem com base no ponto de mira
-        Vector3 directionToAim = (aimPoint - transform.position).normalized;
-        directionToAim.y = 0; // Ignora a diferença de altura para a rotação no plano
-
-        // Calcula a rotação alvo para o personagem
-        float angle = Vector3.SignedAngle(transform.forward, directionToAim, Vector3.up);
-     //   angle = Mathf.Clamp(angle, -maxAimAngle, maxAimAngle);
-
-        Quaternion targetRotation = Quaternion.LookRotation(directionToAim, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        // Calcula a direção do ponto de mira em relação à posição atual do personagem
+        Vector3 dir = (aimPoint - transform.position).normalized;
+        dir.y = 0; // Ignora a diferença de altura para manter a rotação no plano horizontal
+        // Calcula a rotação alvo com base na direção corrigida
+        Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up);
+        
+        // Aplica a rotação diretamente ao personagem
+        transform.rotation = targetRotation;
     }
 
-    private void AdjustAimOffset()
-    {
-        // Ajusta o offset de mira para a animação com base na direção de movimento
-        //currentAimOffsetY = input.move != Vector2.zero
-        //    ? (input.move.x < 0 ? movingAimOffsetYLeft : (input.move.x > 0 ? movingAimOffsetYRight : (movingAimOffsetYLeft + movingAimOffsetYRight) / 2f))
-        //    : defaultAimOffsetY;
-
-        torsoAimConstraint.data.offset = new Vector3(0f, currentAimOffsetY, 0f);
-    }
 
     public void EquipWeapon(WeaponInfo newWeapon)
     {

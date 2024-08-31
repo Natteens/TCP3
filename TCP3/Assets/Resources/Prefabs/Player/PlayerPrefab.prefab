@@ -723,7 +723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 1
   m_Data:
-    m_ConstrainedObject: {fileID: 566634240758888568}
+    m_ConstrainedObject: {fileID: 6837787163822979813}
     m_SourceObjects:
       m_Length: 1
       m_Item0:
@@ -1967,7 +1967,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600444276152186537}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
   m_Name: 
@@ -12826,41 +12826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de06847979b29484ea77e32d7b783819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentStatus
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[StatusType, Assembly-CSharp],[System.Single,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[StatusType, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
   baseStatus: {fileID: 11400000, guid: fd32e62d7f66e0944af29d3c261fc04a, type: 2}
   activeEffects: []
 --- !u!114 &8664087164105426188
@@ -12875,7 +12840,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466943f569509f641bf5ed646bd0e0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentHealth>k__BackingField: 0
 --- !u!114 &8664087164105426224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12964,6 +12928,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   events: {fileID: 4804455592028902273}
+  rotationSpeed: 10
+  rotationOffset: 0
 --- !u!114 &8664087164105426229
 MonoBehaviour:
   m_ObjectHideFlags: 0
