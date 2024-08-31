@@ -15,11 +15,11 @@ public class WeaponController : NetworkBehaviour
     [SerializeField] private LayerMask layer;
     [SerializeField] private EventComponent events;
     [SerializeField] private float rotationSpeed = 10f;
-    [SerializeField] private float maxAimAngle = 180f;
-    [SerializeField] private float defaultAimOffsetY = -30f;
-    [SerializeField] private float movingAimOffsetYLeft = -55f;
-    [SerializeField] private float movingAimOffsetYRight = -45f;
-    [SerializeField] private float aimOffsetTransitionSpeed = 5f;
+    //[SerializeField] private float maxAimAngle = 180f;
+    //[SerializeField] private float defaultAimOffsetY = -30f;
+    //[SerializeField] private float movingAimOffsetYLeft = -55f;
+    //[SerializeField] private float movingAimOffsetYRight = -45f;
+    //[SerializeField] private float aimOffsetTransitionSpeed = 5f;
 
     private StarterAssetsInputs input;
     private int currentAmmo;
@@ -28,6 +28,10 @@ public class WeaponController : NetworkBehaviour
     private bool canShoot;
     private float targetAimOffsetY;
     private float currentAimOffsetY;
+
+    private const float ANIM_STATE_EQUIP = 0f;
+    private const float ANIM_STATE_HOLD = 1f;
+    private const float ANIM_STATE_AIM = 2f;
 
     public event Action OnWeaponChanged;
     public event Action OnShoot;
@@ -70,11 +74,12 @@ public class WeaponController : NetworkBehaviour
         }
 
         DisplayDebugRays(position);
+
     }
 
     private void FixedUpdate()
     {
-        FireCounterTimer();
+        FireCounterTimer();  
     }
 
     private void FireCounterTimer()
@@ -107,7 +112,8 @@ public class WeaponController : NetworkBehaviour
     {
         if (isShooting)
         {
-            anim.SetInteger("WeaponState", input.aim ? 3 : 2);
+            // Transição suave para o estado de "segurando a arma" ao parar de atirar
+            anim.SetFloat("WeaponState", input.aim ? ANIM_STATE_AIM : ANIM_STATE_HOLD);
             isShooting = false;
         }
     }
@@ -116,14 +122,19 @@ public class WeaponController : NetworkBehaviour
     {
         if (input.aim)
         {
-            anim.SetLayerWeight(1, 1f); // Define imediatamente para 1f quando estiver mirando
-            anim.SetInteger("WeaponState", input.move == Vector2.zero ? 3 : 4); // 4 para mover enquanto mira
+            // Sempre ativa a camada de arma durante a mira
+            anim.SetLayerWeight(1, 1f);
+            // Transição suave para o estado de "mirar com a arma"
+            anim.SetFloat("WeaponState", ANIM_STATE_AIM);
+
+            // Ajuste a rotação do personagem com base no ponto de mira
             AdjustCharacterRotation(aimPoint);
         }
         else
         {
-            anim.SetLayerWeight(1, 0f); // Define imediatamente para 0f quando não estiver mirando
-            anim.SetInteger("WeaponState", input.move == Vector2.zero ? 2 : 1); // 1 para mover sem mirar
+            // Reduz o peso da camada de arma ao não mirar
+            anim.SetLayerWeight(1, input.move != Vector2.zero ? 0f : 1f);
+            anim.SetFloat("WeaponState", input.move == Vector2.zero ? ANIM_STATE_HOLD : ANIM_STATE_EQUIP);
             DisableShooting();
         }
 
@@ -132,26 +143,25 @@ public class WeaponController : NetworkBehaviour
 
     private void AdjustCharacterRotation(Vector3 aimPoint)
     {
+        // Ajusta a rotação do personagem com base no ponto de mira
         Vector3 directionToAim = (aimPoint - transform.position).normalized;
-        directionToAim.y = 0;
+        directionToAim.y = 0; // Ignora a diferença de altura para a rotação no plano
 
+        // Calcula a rotação alvo para o personagem
         float angle = Vector3.SignedAngle(transform.forward, directionToAim, Vector3.up);
-        angle = Mathf.Clamp(angle, -maxAimAngle, maxAimAngle);
+     //   angle = Mathf.Clamp(angle, -maxAimAngle, maxAimAngle);
 
-        Vector3 targetDirection = Quaternion.Euler(0, angle, 0) * transform.forward;
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-
+        Quaternion targetRotation = Quaternion.LookRotation(directionToAim, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 
     private void AdjustAimOffset()
     {
-        // Definir o offset da mira (Y) diretamente com base no movimento
-        currentAimOffsetY = input.move != Vector2.zero
-            ? (input.move.x < 0 ? movingAimOffsetYLeft : (input.move.x > 0 ? movingAimOffsetYRight : (movingAimOffsetYLeft + movingAimOffsetYRight) / 2f))
-            : defaultAimOffsetY;
+        // Ajusta o offset de mira para a animação com base na direção de movimento
+        //currentAimOffsetY = input.move != Vector2.zero
+        //    ? (input.move.x < 0 ? movingAimOffsetYLeft : (input.move.x > 0 ? movingAimOffsetYRight : (movingAimOffsetYLeft + movingAimOffsetYRight) / 2f))
+        //    : defaultAimOffsetY;
 
-        // Atualizar o offset do MultiAimConstraint diretamente
         torsoAimConstraint.data.offset = new Vector3(0f, currentAimOffsetY, 0f);
     }
 
@@ -171,7 +181,7 @@ public class WeaponController : NetworkBehaviour
 
             anim.SetLayerWeight(1, 1f);
             anim.SetBool("withoutWeapon", false);
-            anim.SetInteger("WeaponState", 1);
+            anim.SetFloat("WeaponState", ANIM_STATE_EQUIP, 0.1f, Time.deltaTime);
             anim.SetBool(currentWeapon.animatorParameter, true);
         }
         else
@@ -244,7 +254,7 @@ public class WeaponController : NetworkBehaviour
     {
         yield return new WaitForSeconds(currentWeapon.reloadSpeed);
         currentAmmo = currentWeapon.maxMunition;
-        anim.SetInteger("WeaponState", input.aim ? 3 : 2);
+        anim.SetFloat("WeaponState", ANIM_STATE_HOLD, 0.1f, Time.deltaTime);
     }
 
     private void AdjustTorsoAimWeight()
