@@ -1,7 +1,8 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
-public abstract class BaseEntity : MonoBehaviour
+public abstract class BaseEntity : NetworkBehaviour
 {
     public  StatusComponent statusComponent { get; private set; }
     public  HealthComponent healthComponent { get; private set; }
