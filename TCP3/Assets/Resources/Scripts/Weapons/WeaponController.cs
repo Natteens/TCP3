@@ -116,13 +116,13 @@ public class WeaponController : NetworkBehaviour
     {
         if (input.aim)
         {
-            anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+            anim.SetLayerWeight(1, 1f); // Define imediatamente para 1f quando estiver mirando
             anim.SetInteger("WeaponState", input.move == Vector2.zero ? 3 : 4); // 4 para mover enquanto mira
             AdjustCharacterRotation(aimPoint);
         }
         else
         {
-            anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+            anim.SetLayerWeight(1, 0f); // Define imediatamente para 0f quando não estiver mirando
             anim.SetInteger("WeaponState", input.move == Vector2.zero ? 2 : 1); // 1 para mover sem mirar
             DisableShooting();
         }
@@ -147,32 +147,13 @@ public class WeaponController : NetworkBehaviour
     private void AdjustAimOffset()
     {
         // Definir o offset da mira (Y) diretamente com base no movimento
-        if (input.move != Vector2.zero)
-        {
-            // Se o jogador estiver se movendo, define o offset de acordo com a direção
-            if (input.move.x < 0)
-            {
-                currentAimOffsetY = movingAimOffsetYLeft;
-            }
-            else if (input.move.x > 0)
-            {
-                currentAimOffsetY = movingAimOffsetYRight;
-            }
-            else
-            {
-                currentAimOffsetY = (movingAimOffsetYLeft + movingAimOffsetYRight) / 2f;
-            }
-        }
-        else
-        {
-            // Se o jogador estiver parado, usa o offset padrão
-            currentAimOffsetY = defaultAimOffsetY;
-        }
+        currentAimOffsetY = input.move != Vector2.zero
+            ? (input.move.x < 0 ? movingAimOffsetYLeft : (input.move.x > 0 ? movingAimOffsetYRight : (movingAimOffsetYLeft + movingAimOffsetYRight) / 2f))
+            : defaultAimOffsetY;
 
         // Atualizar o offset do MultiAimConstraint diretamente
         torsoAimConstraint.data.offset = new Vector3(0f, currentAimOffsetY, 0f);
     }
-
 
     public void EquipWeapon(WeaponInfo newWeapon)
     {
