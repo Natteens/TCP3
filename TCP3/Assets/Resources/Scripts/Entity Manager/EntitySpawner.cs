@@ -9,8 +9,11 @@ public class EntitySpawner : NetworkBehaviour
     public string entityId;
     public float timeToSpawn = 50f;
     private float currentTime;
+    public LayerMask layerToCheck;
     [Range(1,250)]
-    public float dropRadius;
+    public float spawnRadius;
+    [Range(1, 250)]
+    public int checkRadius;
     [Range(1, 100)]
     public byte minLevel;
     [Range(1, 100)]
@@ -41,10 +44,14 @@ public class EntitySpawner : NetworkBehaviour
     {
         if (currentTime > _timeToSpawn)
         {
-            Vector3 randomOffset = new(Random.Range(-dropRadius, dropRadius), 0, Random.Range(-dropRadius, dropRadius));
+            Vector3 randomOffset = new(Random.Range(-spawnRadius, spawnRadius), 0, Random.Range(-spawnRadius, spawnRadius));
             Vector3 spawnPosition = transform.position + randomOffset;
 
-            Spawner.Instance.SpawnEntityInWorldServerRpc(spawnPosition, entityId, minLevel, maxLevel);
+            if (HasNearPlayers())
+            { 
+                Spawner.Instance.SpawnEntityInWorldServerRpc(spawnPosition, entityId, minLevel, maxLevel);
+            }
+
             currentTime = 0f;
 
         }
@@ -57,7 +64,23 @@ public class EntitySpawner : NetworkBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, dropRadius);
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, checkRadius);
+    }
+
+    private bool HasNearPlayers()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius, layerToCheck);
+
+        foreach (Collider hit in hits)
+        {
+            Debug.Log("Objeto detectado: " + hit.name);
+            Debug.DrawLine(transform.position, hit.transform.position, Color.red);
+            return true;
+        }
+
+        return false;
     }
 
 }
