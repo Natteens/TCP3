@@ -6,8 +6,9 @@ using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using UnityEngine.InputSystem; // Importa a biblioteca Odin
 using UnityEngine.Animations.Rigging;
+using Unity.Netcode;
 
-public class ResourceSpot : MonoBehaviour, Interactable
+public class ResourceSpot : NetworkBehaviour, Interactable
 {
     [Title("Item Settings")] 
     [SerializeField, Required] 
@@ -15,9 +16,9 @@ public class ResourceSpot : MonoBehaviour, Interactable
     public Item item;
 
     [Title("Harvest Settings")]
-    [Range(1f, 10f)] 
+    [Range(1f, 60f)] 
     public float baseTimeToHarvest;
-    
+    [Range(1f, 9999f)]
     public int maxResourceToHarvest;
 
     [ShowInInspector, ReadOnly]
@@ -33,8 +34,8 @@ public class ResourceSpot : MonoBehaviour, Interactable
     private bool isHarvesting = false;
 
     [ShowInInspector, ReadOnly]
-    private bool canHarvest = true;
-    
+    public NetworkVariable<bool> canHarvest = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
     [ShowInInspector, ReadOnly]
     private StarterAssetsInputs inputs;
 
@@ -60,7 +61,7 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
     void Update()
     {
-        myCollider.enabled = canHarvest;
+        myCollider.enabled = canHarvest.Value;
         //botar aqui o shader ou a cor que vai aplicar quando o recurso nao for possivel de pegar usando o canharvest de parametro
 
         if (isHarvesting)
@@ -76,7 +77,7 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
             Countdown();
         }
-        else if (!canHarvest)
+        else if (!canHarvest.Value)
         {
             RestaureResource();
         }
@@ -93,7 +94,7 @@ public class ResourceSpot : MonoBehaviour, Interactable
         else
         {
             currentResourceToHarvest = maxResourceToHarvest;
-            canHarvest = true;
+            canHarvest.Value = true;
         }
     }
 
@@ -106,8 +107,8 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
     public void CancelHarvesting()
     {
-        StartCoroutine(SetLayerWeight(anim, 2, 0f, .5f));
-        anim.SetBool("Collection", false);
+        //StartCoroutine(SetLayerWeight(anim, 2, 0f, .5f));
+        //anim.SetBool("Collection", false);
         isHarvesting = false;
         currentTime = 0f;
         inputs = null;
@@ -117,14 +118,14 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
     public void Countdown()
     {
-        if (canHarvest)
+        if (canHarvest.Value)
         {
             if (currentResourceToHarvest <= 0)
             {
                 StartCoroutine(FeedbackManager.Instance.FeedbackTextForNoResource());
                 GameManager.Instance.HarvestHolder.SetActive(false);
                 currentTime = 0f;
-                canHarvest = false;
+                canHarvest.Value = false;
                 return;
             }
 
@@ -144,7 +145,7 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
     public void OnInteract(Transform interactor)
     {
-        if (canHarvest)
+        if (canHarvest.Value)
         {
             inputs = interactor.GetComponent<StarterAssetsInputs>();
             controller = interactor.GetComponent<InteractController>();
@@ -219,7 +220,7 @@ public class ResourceSpot : MonoBehaviour, Interactable
 
             if (inputs != null && inputs.interact)
             {
-                if (!isHarvesting && canHarvest)
+                if (!isHarvesting && canHarvest.Value)
                 {
                     OnInteract(other.transform); 
                 }
@@ -234,11 +235,11 @@ public class ResourceSpot : MonoBehaviour, Interactable
     private void ControlUI()
     {
 
-        if (!isHarvesting && canHarvest)
+        if (!isHarvesting && canHarvest.Value)
         {
             GameManager.Instance.interactMSG.SetActive(true);
         }
-        else if (isHarvesting && canHarvest)
+        else if (isHarvesting && canHarvest.Value)
         {
             GameManager.Instance.interactMSG.SetActive(false);
             GameManager.Instance.HarvestHolder.SetActive(true);
