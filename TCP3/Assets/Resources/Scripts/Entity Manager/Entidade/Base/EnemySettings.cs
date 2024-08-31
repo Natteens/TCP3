@@ -5,7 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemySettings : MonoBehaviour
+public class EnemySettings : NetworkBehaviour
 {
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nome do Inimigo")]
