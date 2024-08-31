@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,11 @@ public class EnemySettings : MonoBehaviour
 {
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nome do Inimigo")]
-    [SerializeField, Required] private string enemyName = "Inimigo"; // Nome do inimigo
+    [SerializeField, Required] private NetworkVariable<string> enemyName = new NetworkVariable<string>("Inimigo", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); 
 
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nível do Inimigo")]
-    [SerializeField, Range(1, 100)] private int level = 1; // Nível do inimigo
+    [SerializeField, Required] private NetworkVariable<int> level = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Xp drop Inimigo")]
@@ -63,8 +64,8 @@ public class EnemySettings : MonoBehaviour
         Dictionary<StatusType, float> currentStats = statusComponent.currentStatus;
 
         bool condition = GameManager.Instance.isNight.Value;
-        float healthModifier = condition ? level * (healthMultiplier * 1.5f) : level * healthMultiplier;
-        float defenseModifier = condition ? level * (defenseMultiplier * 1.5f) : level * defenseMultiplier;
+        float healthModifier = condition ? level.Value * (healthMultiplier * 1.5f) : level.Value * healthMultiplier;
+        float defenseModifier = condition ? level.Value * (defenseMultiplier * 1.5f) : level.Value * defenseMultiplier;
 
         if (currentStats.ContainsKey(StatusType.Health))
         {
@@ -97,7 +98,7 @@ public class EnemySettings : MonoBehaviour
     [Button("Definir Nível")]
     public void SetLevel(int newLevel)
     {
-        level = newLevel;
+        level.Value = newLevel;
         ApplyLevelScaling();
         UpdateNameAndLevelUI();
     }
@@ -105,13 +106,13 @@ public class EnemySettings : MonoBehaviour
     [Button("Definir Nome")]
     public void SetName(string newName)
     {
-        enemyName = newName;
+        enemyName.Value = newName;
         UpdateNameAndLevelUI();
     }
 
     public int GetLevel()
     { 
-        return level;
+        return level.Value;
     }
 
     private void OnValidate()

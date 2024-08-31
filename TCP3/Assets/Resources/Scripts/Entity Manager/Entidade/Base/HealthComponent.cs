@@ -8,10 +8,8 @@ public class HealthComponent : NetworkBehaviour, IHealth
 {
     [SerializeField] public float MaxHealth { get; private set; }
 
-    // NetworkVariable para sincronizar o valor
-    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(0f);
+    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    // Propriedade que expõe o valor de CurrentHealth como float para a interface
      [SerializeField]
     public float CurrentHealth
     {
