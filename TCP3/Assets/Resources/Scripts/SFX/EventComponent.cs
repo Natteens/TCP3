@@ -41,6 +41,5 @@ public class EventComponent : MonoBehaviour
     public void OnLandVFX()
     {
         Spawner.Instance.SpawnInWorldServerRpc(feet.position, "landVFX");
-        Spawner.Instance.DespawnByTimeInWorld(this.GetComponent<NetworkObject>(), 1f);
     }
 }

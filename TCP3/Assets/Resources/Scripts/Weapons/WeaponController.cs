@@ -51,13 +51,8 @@ public class WeaponController : NetworkBehaviour
 
     private void Update()
     {
-        WeaponUpdateServerRpc();
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void WeaponUpdateServerRpc()
-    {
         HandleInput();
+
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)
         {
@@ -90,7 +85,7 @@ public class WeaponController : NetworkBehaviour
 
     private void HandleShooting(Vector3 aimPoint)
     {
-        if (fireRateCounter >= currentWeapon.cadence && canShoot)
+        if (input.shoot && input.aim && fireRateCounter >= currentWeapon.cadence && canShoot)
         {
             if (currentAmmo > 0)
             {
@@ -122,15 +117,13 @@ public class WeaponController : NetworkBehaviour
         if (input.aim)
         {
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
-            anim.SetInteger("WeaponState", 3);
-
-            // Ajustar a rotação apenas quando mirando
+            anim.SetInteger("WeaponState", input.move == Vector2.zero ? 3 : 4); // 4 para mover enquanto mira
             AdjustCharacterRotation(aimPoint);
         }
         else
         {
             anim.SetLayerWeight(1, Mathf.Lerp(anim.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
-            anim.SetInteger("WeaponState", 2);
+            anim.SetInteger("WeaponState", input.move == Vector2.zero ? 2 : 1); // 1 para mover sem mirar
             DisableShooting();
         }
 
@@ -153,30 +146,33 @@ public class WeaponController : NetworkBehaviour
 
     private void AdjustAimOffset()
     {
-        // Ajustar o offset da mira (Y) com base no movimento
+        // Definir o offset da mira (Y) diretamente com base no movimento
         if (input.move != Vector2.zero)
         {
+            // Se o jogador estiver se movendo, define o offset de acordo com a direção
             if (input.move.x < 0)
             {
-                targetAimOffsetY = movingAimOffsetYLeft;
+                currentAimOffsetY = movingAimOffsetYLeft;
             }
             else if (input.move.x > 0)
             {
-                targetAimOffsetY = movingAimOffsetYRight;
+                currentAimOffsetY = movingAimOffsetYRight;
             }
             else
             {
-                targetAimOffsetY = (movingAimOffsetYLeft + movingAimOffsetYRight) / 2f;
+                currentAimOffsetY = (movingAimOffsetYLeft + movingAimOffsetYRight) / 2f;
             }
         }
         else
         {
-            targetAimOffsetY = defaultAimOffsetY;
+            // Se o jogador estiver parado, usa o offset padrão
+            currentAimOffsetY = defaultAimOffsetY;
         }
 
-        currentAimOffsetY = Mathf.Lerp(currentAimOffsetY, targetAimOffsetY, Time.deltaTime * aimOffsetTransitionSpeed);
+        // Atualizar o offset do MultiAimConstraint diretamente
         torsoAimConstraint.data.offset = new Vector3(0f, currentAimOffsetY, 0f);
     }
+
 
     public void EquipWeapon(WeaponInfo newWeapon)
     {
@@ -248,7 +244,7 @@ public class WeaponController : NetworkBehaviour
 
     private bool CanShoot()
     {
-        return input.shoot && fireRateCounter >= currentWeapon.cadence && currentWeapon != null && canShoot;
+        return input.shoot && input.aim && fireRateCounter >= currentWeapon.cadence && currentWeapon != null && canShoot;
     }
 
     private Vector3 GetShootDirection(Vector3 aimPoint)
