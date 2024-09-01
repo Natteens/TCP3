@@ -1,3 +1,4 @@
+using EasyBuildSystem.Features.Runtime.Buildings.Part;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class Spawner : Singleton<Spawner>
 {
     private HashSet<NetworkObject> spawnedObjects = new HashSet<NetworkObject>();
+    private List<BuildingPart> spawnedConstructions = new List<BuildingPart>();
 
     #region Item
 
@@ -120,6 +122,39 @@ public class Spawner : Singleton<Spawner>
 
     #endregion
 
+    #region Constructions
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnConstructionInWorldServerRpc(Vector3 position, string prefabId)
+    {
+        SpawnConstructionInWorld(position, prefabId);
+    }
+
+    private void SpawnConstructionInWorld(Vector3 position, string prefabId)
+    {
+        var prefab = ItemAssets.Instance.GetPrefabById(prefabId);
+
+        if (prefab == null)
+        {
+            return;
+        }
+
+        var worldInstance = Instantiate(prefab, position, Quaternion.identity);
+
+        NetworkObject networkObject = worldInstance?.GetComponent<NetworkObject>();
+
+        networkObject?.Spawn();
+        // Adiciona o objeto ao HashSet
+        spawnedObjects?.Add(networkObject);
+        spawnedConstructions?.Add(worldInstance.GetComponent<BuildingPart>());
+    }
+
+    public BuildingPart GetLastConstruction()
+    {
+        return spawnedConstructions[spawnedConstructions.Count];
+    }
+    #endregion
+
     #region Despawn
 
     public void DespawnInWorld(NetworkObject obj)
@@ -157,4 +192,6 @@ public class Spawner : Singleton<Spawner>
     }
 
     #endregion
+
+    
 }

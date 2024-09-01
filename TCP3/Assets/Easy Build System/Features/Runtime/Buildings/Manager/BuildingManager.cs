@@ -345,9 +345,16 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Manager
                 return null;
             }
 
-            BuildingPart instancedBuildingPart = Instantiate(buildingPart.gameObject,
-                position, Quaternion.Euler(rotation)).GetComponent<BuildingPart>();
+            // BuildingPart instancedBuildingPart = Instantiate(buildingPart.gameObject,
+            //position, Quaternion.Euler(rotation)).GetComponent<BuildingPart>();
 
+            string buildName = buildingPart.GetComponent<BuildingPart>().GetBuildingName();
+
+            Spawner.Instance.SpawnConstructionInWorldServerRpc(position, buildName);
+
+            BuildingPart instancedBuildingPart = Spawner.Instance.GetLastConstruction();
+
+            instancedBuildingPart.transform.rotation = Quaternion.Euler(rotation);
             instancedBuildingPart.transform.localScale = scale;
 
             instancedBuildingPart.ChangeState(BuildingPart.StateType.PLACED);

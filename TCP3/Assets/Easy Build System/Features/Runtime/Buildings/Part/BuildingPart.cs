@@ -945,6 +945,11 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Part
             return true;
         }
 
+        public string GetBuildingName()
+        {
+            return m_GeneralSettings.Name;
+        }
+
         /// <summary>
         /// Check the conditions for editing the building part.
         /// </summary>
