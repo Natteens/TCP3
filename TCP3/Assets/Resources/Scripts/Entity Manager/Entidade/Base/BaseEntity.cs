@@ -33,11 +33,6 @@ public abstract class BaseEntity : NetworkBehaviour
         healthComponent.OnRevive += OnRevive;
     }
 
-    private void OnDestroy()
-    {
-        UnsubscribeFromHealthEvents();
-    }
-
     protected virtual void UnsubscribeFromHealthEvents()
     {
         healthComponent.OnDeath -= OnDeath;
@@ -50,6 +45,7 @@ public abstract class BaseEntity : NetworkBehaviour
     {
         anim.SetTrigger("Death");
         coll.enabled = false;
+        UnsubscribeFromHealthEvents();
     }
 
     protected virtual void OnTakeDamage(float amount)
@@ -63,6 +59,7 @@ public abstract class BaseEntity : NetworkBehaviour
     {
         coll.enabled = true;
         anim.SetTrigger("Revive");
+        SubscribeToHealthEvents();
     }
 
     public void MoveAndRotate(Vector3 dir, float speed)

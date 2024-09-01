@@ -144,30 +144,4 @@ public class EnemySettings : NetworkBehaviour
     {
         return level;
     }
-
-    private void OnValidate()
-    {
-        if (Application.isPlaying)
-        {
-            ApplyLevelScaling();
-            UpdateNameAndLevelUI();
-        }
-    }
-
-    /*
-    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-    {
-        var name = networkEnemyName.Value;
-        var lvl = networkLevel.Value;
-
-        // Serializa o valor do nome do inimigo
-        serializer.SerializeValue(ref name);
-        // Serializa o valor do nível do inimigo
-        serializer.SerializeValue(ref lvl);
-
-        // Atualiza os NetworkVariables com os valores serializados/deserializados
-        networkEnemyName.Value = name;
-        networkLevel.Value = lvl;
-    }
-    */
 }

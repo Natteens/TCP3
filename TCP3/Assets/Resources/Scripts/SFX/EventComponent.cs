@@ -35,7 +35,7 @@ public class EventComponent : MonoBehaviour
 
     public void OnShooting()
     {
-        OnShootingWithWeapon.Invoke();
+        OnShootingWithWeapon?.Invoke();
     }
 
     public void OnLandVFX()

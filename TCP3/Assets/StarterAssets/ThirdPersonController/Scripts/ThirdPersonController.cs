@@ -235,12 +235,9 @@ namespace StarterAssets
             float speedOffset = 0.1f;
             float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
-            if (currentHorizontalSpeed < targetSpeed - speedOffset ||
-                currentHorizontalSpeed > targetSpeed + speedOffset)
+            if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
             {
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
-                    Time.deltaTime * SpeedChangeRate);
-
+                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
                 _speed = Mathf.Round(_speed * 1000f) / 1000f;
             }
             else
@@ -251,31 +248,51 @@ namespace StarterAssets
             _animationBlend = (targetSpeed == 0f) ? 0f : (targetSpeed == MoveSpeed) ? 1f : 2f;
 
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            bool isAiming = _input.aim;
 
-            if (_input.move != Vector2.zero)
+            if (isAiming)
             {
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
+                // Rotaciona o personagem para a direção da mira
+                _targetRotation = _mainCamera.transform.eulerAngles.y;
+                Vector3 directionToAim = (_mainCamera.transform.forward * _input.move.y + _mainCamera.transform.right * _input.move.x).normalized;
+                directionToAim.y = 0;
+                Quaternion targetRotation = Quaternion.LookRotation(directionToAim, Vector3.up);
 
-                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
-                    RotationSmoothTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * RotationSmoothTime);
 
-                if (_rotateOnMove)
-                {
-                    transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-                }
+                // Movimenta o personagem na direção calculada
+                _controller.Move(directionToAim * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+                // Ajusta a animação de movimento baseado na direção relativa
+                Vector3 localMoveDirection = transform.InverseTransformDirection(directionToAim);
+                _animator.SetFloat(_animIDHorizontal, localMoveDirection.x);
+                _animator.SetFloat(_animIDVertical, localMoveDirection.z);
             }
+            else
+            {
+                if (_input.move != Vector2.zero)
+                {
+                    _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
+                    float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+                    if (_rotateOnMove)
+                    {
+                        transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+                    }
+                }
 
-            Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+                Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+                Vector3 localMoveDirection = transform.InverseTransformDirection(targetDirection);
+                _animator.SetFloat(_animIDHorizontal, localMoveDirection.x);
+                _animator.SetFloat(_animIDVertical, localMoveDirection.z);
 
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+                // Movimenta o personagem na direção calculada
+                _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            }
 
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-                Vector3 localMoveDirection = transform.InverseTransformDirection(targetDirection);
-                _animator.SetFloat(_animIDHorizontal, localMoveDirection.x);
-                _animator.SetFloat(_animIDVertical, localMoveDirection.z);
             }
         }
 

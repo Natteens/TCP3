@@ -723,7 +723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 1
   m_Data:
-    m_ConstrainedObject: {fileID: 6837787163822979813}
+    m_ConstrainedObject: {fileID: 8647042872118193869}
     m_SourceObjects:
       m_Length: 1
       m_Item0:
@@ -750,7 +750,7 @@ MonoBehaviour:
       m_Item7:
         transform: {fileID: 0}
         weight: 0
-    m_Offset: {x: 0, y: 15, z: 0}
+    m_Offset: {x: 0, y: 0, z: 0}
     m_MinLimit: -70
     m_MaxLimit: 70
     m_AimAxis: 4
@@ -6187,7 +6187,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4317941556503258823}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12929,7 +12929,6 @@ MonoBehaviour:
     m_Bits: 8
   events: {fileID: 4804455592028902273}
   rotationSpeed: 10
-  rotationOffset: 0
 --- !u!114 &8664087164105426229
 MonoBehaviour:
   m_ObjectHideFlags: 0
