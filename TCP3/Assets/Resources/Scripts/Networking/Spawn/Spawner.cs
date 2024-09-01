@@ -125,12 +125,12 @@ public class Spawner : Singleton<Spawner>
     #region Constructions
 
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnConstructionInWorldServerRpc(Vector3 position, string prefabId)
+    public void SpawnConstructionInWorldServerRpc(Vector3 position, Quaternion rotation,string prefabId)
     {
-        SpawnConstructionInWorld(position, prefabId);
+        SpawnConstructionInWorld(position, rotation, prefabId);
     }
 
-    private void SpawnConstructionInWorld(Vector3 position, string prefabId)
+    private void SpawnConstructionInWorld(Vector3 position, Quaternion rotation, string prefabId)
     {
         var prefab = ItemAssets.Instance.GetPrefabById(prefabId);
 
@@ -139,7 +139,7 @@ public class Spawner : Singleton<Spawner>
             return;
         }
 
-        var worldInstance = Instantiate(prefab, position, Quaternion.identity);
+        var worldInstance = Instantiate(prefab, position, rotation);
 
         NetworkObject networkObject = worldInstance?.GetComponent<NetworkObject>();
 

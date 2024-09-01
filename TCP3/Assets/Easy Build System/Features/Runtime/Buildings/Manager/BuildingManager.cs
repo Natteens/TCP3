@@ -350,7 +350,7 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Manager
 
             string buildName = buildingPart.GetComponent<BuildingPart>().GetBuildingName();
 
-            Spawner.Instance.SpawnConstructionInWorldServerRpc(position, buildName);
+            Spawner.Instance.SpawnConstructionInWorldServerRpc(position, Quaternion.Euler(rotation), buildName);
 
             BuildingPart instancedBuildingPart = Spawner.Instance.GetLastConstruction();
 
