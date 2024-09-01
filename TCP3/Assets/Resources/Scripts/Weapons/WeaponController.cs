@@ -15,6 +15,7 @@ public class WeaponController : NetworkBehaviour
     [SerializeField] private LayerMask layer;
     [SerializeField] private EventComponent events;
     [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float defaultAimOffsetY = -30f;
 
     private StarterAssetsInputs input;
     private int currentAmmo;
@@ -125,6 +126,7 @@ public class WeaponController : NetworkBehaviour
             anim.SetFloat("WeaponState", input.move == Vector2.zero ? ANIM_STATE_HOLD : ANIM_STATE_EQUIP);
             DisableShooting();
         }
+        AdjustAimOffset();
     }
 
     private void AdjustCharacterRotation(Vector3 aimPoint)
@@ -137,10 +139,9 @@ public class WeaponController : NetworkBehaviour
 
     private void AdjustBulletSpawnerRotation(Vector3 aimPoint)
     {
-        // Certificar que o bulletSpawner esteja sempre apontando para o ponto de mira
         Vector3 directionToAim = (aimPoint - bulletSpawner.position).normalized;
-        directionToAim.y = 0; // Garantir que o tiro esteja sempre na horizontal
-        bulletSpawner.forward = directionToAim; // Alinhar o bulletSpawner na direção de tiro
+        directionToAim.y = 0; 
+        bulletSpawner.forward = directionToAim; 
     }
 
     public void EquipWeapon(WeaponInfo newWeapon)
@@ -217,13 +218,10 @@ public class WeaponController : NetworkBehaviour
 
     private Vector3 GetShootDirection(Vector3 aimPoint)
     {
-        // Calcular a direção do tiro como uma linha reta entre o bulletSpawner e o ponto de mira
         Vector3 shootDirection = (aimPoint - bulletSpawner.position).normalized;
         shootDirection.y = 0;
-        // Aplicar o spread, se necessário
         float spreadFactor = UnityEngine.Random.Range(-currentWeapon.spread, currentWeapon.spread);
         shootDirection += new Vector3(spreadFactor, 0, spreadFactor);
-
         return shootDirection.normalized;
     }
 
@@ -239,6 +237,20 @@ public class WeaponController : NetworkBehaviour
         torsoAimConstraint.weight = input.aim ? 1f : 0f;
     }
 
+    private void AdjustAimOffset()
+    {
+        if (input.move != Vector2.zero)
+        {
+            currentAimOffsetY = 0;
+        }
+        else
+        {
+            currentAimOffsetY = defaultAimOffsetY;
+        }
+        torsoAimConstraint.data.offset = new Vector3(0f, currentAimOffsetY, 0f);
+    }
+
+
     public void EnableShooting()
     {
         canShoot = true;
@@ -251,22 +263,21 @@ public class WeaponController : NetworkBehaviour
 
     private void DisplayDebugRays(Vector3 aimPoint)
     {
-        Debug.DrawRay(transform.position, transform.forward * 10f, Color.magenta); // Linha rosa (direção do personagem)
+        Debug.DrawRay(transform.position, transform.forward * 10f, Color.magenta);
 
         Vector3 bulletSpawnerDirection = (aimPoint - bulletSpawner.position).normalized;
         bulletSpawnerDirection.y = 0;
-        Debug.DrawRay(bulletSpawner.position, bulletSpawnerDirection * 10f, Color.yellow); // Linha amarela (direção do tiro)
+        Debug.DrawRay(bulletSpawner.position, bulletSpawnerDirection * 10f, Color.yellow);
     }
 
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
 
-        // Desenhar a direção do tiro
         if (bulletSpawner != null)
         {
             Gizmos.color = Color.red;
-            Vector3 shootDirection = GetShootDirection(Vector3.zero); // Usar o ponto de mira real
+            Vector3 shootDirection = GetShootDirection(Vector3.zero); 
             Gizmos.DrawLine(bulletSpawner.position, bulletSpawner.position + shootDirection * 10f);
             Gizmos.DrawSphere(bulletSpawner.position + shootDirection * 10f, 0.1f);
         }
@@ -280,7 +291,6 @@ public class WeaponController : NetworkBehaviour
             Gizmos.DrawLine(transform.position, transform.position + aimPoint);
         }
 
-        // Desenhar o ponto de mira calculado pelo MouseController
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
         if (success)
         {
@@ -289,16 +299,13 @@ public class WeaponController : NetworkBehaviour
             Gizmos.DrawLine(transform.position, position);
         }
 
-        // Desenhar direção para o ponto de mira
         Gizmos.color = Color.cyan;
         Vector3 directionToAim = (position - transform.position).normalized;
         Gizmos.DrawLine(transform.position, transform.position + directionToAim * 10f);
 
-        // Desenhar o raio da posição de origem do personagem
         Gizmos.color = Color.magenta;
         Gizmos.DrawRay(transform.position, transform.forward * 10f);
 
-        // Desenhar direção de mira do bulletSpawner
         if (bulletSpawner != null)
         {
             Gizmos.color = Color.yellow;
@@ -307,7 +314,6 @@ public class WeaponController : NetworkBehaviour
             Debug.DrawRay(bulletSpawner.position, bulletSpawnerDirection * 10f);
         }
 
-        // Debug para o vetor de offset da mira
         Gizmos.color = Color.white;
         Gizmos.DrawRay(transform.position, Vector3.up * currentAimOffsetY);
     }
