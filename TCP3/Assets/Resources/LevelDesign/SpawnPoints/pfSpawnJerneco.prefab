@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 297418289
+  GlobalObjectIdHash: 3110440969
   InScenePlacedSourceGlobalObjectIdHash: 3407454839
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -120,6 +120,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityId: Jerneco
   timeToSpawn: 5
-  dropRadius: 25
+  maxSpawns: 10
+  currentSpawns: 0
+  layerPlayer:
+    serializedVersion: 2
+    m_Bits: 64
+  layerEnemy:
+    serializedVersion: 2
+    m_Bits: 1024
+  spawnRadius: 0
+  checkRadius: 0
   minLevel: 1
   maxLevel: 5

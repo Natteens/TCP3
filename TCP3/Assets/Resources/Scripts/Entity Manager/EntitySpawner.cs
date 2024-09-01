@@ -8,8 +8,11 @@ public class EntitySpawner : NetworkBehaviour
 {
     public string entityId;
     public float timeToSpawn = 50f;
+    public int maxSpawns = 25;
+    public int currentSpawns = 0;
     private float currentTime;
-    public LayerMask layerToCheck;
+    public LayerMask layerPlayer;
+    public LayerMask layerEnemy;
     [Range(1,250)]
     public float spawnRadius;
     [Range(1, 250)]
@@ -47,9 +50,17 @@ public class EntitySpawner : NetworkBehaviour
             Vector3 randomOffset = new(Random.Range(-spawnRadius, spawnRadius), 0, Random.Range(-spawnRadius, spawnRadius));
             Vector3 spawnPosition = transform.position + randomOffset;
 
+
+            if (currentSpawns >= maxSpawns)
+            {
+                if(!HasNearPlayers()) ClearAllEnemys();
+                return;
+            }
+
             if (HasNearPlayers())
-            { 
+            {
                 Spawner.Instance.SpawnEntityInWorldServerRpc(spawnPosition, entityId, minLevel, maxLevel);
+                currentSpawns++;
             }
 
             currentTime = 0f;
@@ -71,7 +82,7 @@ public class EntitySpawner : NetworkBehaviour
 
     private bool HasNearPlayers()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius, layerToCheck);
+        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius, layerPlayer);
 
         foreach (Collider hit in hits)
         {
@@ -81,6 +92,26 @@ public class EntitySpawner : NetworkBehaviour
         }
 
         return false;
+    }
+
+    private void ClearAllEnemys()
+    {
+        currentSpawns = 0;
+        currentTime = 0f;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius, layerEnemy);
+
+        foreach (Collider hit in hits)
+        {
+            NetworkObject networkObj = hit.gameObject.GetComponent<NetworkObject>();
+
+            if (networkObj != null) 
+            {
+                networkObj.Despawn();
+            }
+
+            Destroy(hit.gameObject);
+        }
     }
 
 }

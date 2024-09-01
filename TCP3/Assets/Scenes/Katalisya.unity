@@ -5023,6 +5023,14 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
+      propertyPath: layerEnemy.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
+      propertyPath: layerPlayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
       propertyPath: layerToCheck.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -16728,6 +16736,14 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
+      propertyPath: layerEnemy.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
+      propertyPath: layerPlayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
       propertyPath: layerToCheck.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -21198,6 +21214,14 @@ PrefabInstance:
     - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
       propertyPath: spawnRadius
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
+      propertyPath: layerEnemy.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
+      propertyPath: layerPlayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6826719744652752736, guid: 2c159ccdc66a8c04a9508e70bf163a95, type: 3}
       propertyPath: layerToCheck.m_Bits
@@ -39630,7 +39654,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1151295986}
   m_HandleRect: {fileID: 1151295985}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -69128,6 +69152,14 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7672122871045059659, guid: d4e552f5fcba001408d9b60ce9d03cdf, type: 3}
+      propertyPath: layerEnemy.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672122871045059659, guid: d4e552f5fcba001408d9b60ce9d03cdf, type: 3}
+      propertyPath: layerPlayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672122871045059659, guid: d4e552f5fcba001408d9b60ce9d03cdf, type: 3}
       propertyPath: layerToCheck.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -69203,6 +69235,14 @@ PrefabInstance:
     - target: {fileID: 7042569522867163480, guid: b216b032b703e6e47887e05c65edcedd, type: 3}
       propertyPath: spawnRadius
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042569522867163480, guid: b216b032b703e6e47887e05c65edcedd, type: 3}
+      propertyPath: layerEnemy.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042569522867163480, guid: b216b032b703e6e47887e05c65edcedd, type: 3}
+      propertyPath: layerPlayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 7042569522867163480, guid: b216b032b703e6e47887e05c65edcedd, type: 3}
       propertyPath: layerToCheck.m_Bits
@@ -69520,6 +69560,14 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1313123504853740573, guid: 9ef44b73feca29346ab6ecefdb5b3dfb, type: 3}
+      propertyPath: layerEnemy.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313123504853740573, guid: 9ef44b73feca29346ab6ecefdb5b3dfb, type: 3}
+      propertyPath: layerPlayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313123504853740573, guid: 9ef44b73feca29346ab6ecefdb5b3dfb, type: 3}
       propertyPath: layerToCheck.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -69835,6 +69883,14 @@ PrefabInstance:
     - target: {fileID: 3905751804230616329, guid: c033b76480672584bbb25c2de800c1d2, type: 3}
       propertyPath: spawnRadius
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3905751804230616329, guid: c033b76480672584bbb25c2de800c1d2, type: 3}
+      propertyPath: layerEnemy.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 3905751804230616329, guid: c033b76480672584bbb25c2de800c1d2, type: 3}
+      propertyPath: layerPlayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 3905751804230616329, guid: c033b76480672584bbb25c2de800c1d2, type: 3}
       propertyPath: layerToCheck.m_Bits
