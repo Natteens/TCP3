@@ -12544,7 +12544,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 1.56
   m_Radius: 0.15
-  m_SlopeLimit: 45
+  m_SlopeLimit: 60
   m_StepOffset: 0.25
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
@@ -12929,6 +12929,7 @@ MonoBehaviour:
     m_Bits: 8
   events: {fileID: 4804455592028902273}
   rotationSpeed: 10
+  defaultAimOffsetY: -30
 --- !u!114 &8664087164105426229
 MonoBehaviour:
   m_ObjectHideFlags: 0
