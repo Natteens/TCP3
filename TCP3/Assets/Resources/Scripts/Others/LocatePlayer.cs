@@ -8,4 +8,9 @@ public class LocatePlayer : NetworkBehaviour
     {
         return transform.position;
     }
+
+    private void Start()
+    {
+        if(IsOwner) GameManager.Instance.waitForInitialize.SetActive(false);
+    }
 }

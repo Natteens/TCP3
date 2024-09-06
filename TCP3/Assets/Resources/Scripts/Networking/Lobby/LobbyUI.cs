@@ -14,6 +14,7 @@ public class LobbyUI : MonoBehaviour {
 
     [SerializeField] private Transform playerSingleTemplate;
     [SerializeField] private Transform container;
+    [SerializeField] private Image waitForClients;
     [SerializeField] private TextMeshProUGUI lobbyNameText;
     [SerializeField] private TextMeshProUGUI playerCountText;
     [SerializeField] private Button leaveLobbyButton;
@@ -117,5 +118,11 @@ public class LobbyUI : MonoBehaviour {
     { 
         startGameLobbyButton.gameObject.SetActive(set);
     }
+
+    public void ControlLoadForClients(bool set)
+    {
+        waitForClients.gameObject.SetActive(set);
+    }
+
 
 }

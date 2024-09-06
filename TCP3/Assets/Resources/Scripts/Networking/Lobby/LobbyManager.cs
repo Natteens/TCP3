@@ -152,6 +152,7 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            LobbyUI.Instance.ControlLoadForClients(false);
             Player player = GetPlayer();
 
             CreateLobbyOptions options = new CreateLobbyOptions
@@ -188,22 +189,26 @@ public class LobbyManager : MonoBehaviour
     {
        try
        {
-           if (IsLobbyHost())
-           {
-               await LoadingGameScreen();
+            if (!IsLobbyHost())
+            {
+                LobbyUI.Instance.ControlLoadForClients(true);
+                return;
+            } 
+          
+            await LoadingGameScreen();
            
-               string relayCode = await LobbyRelay.Instance.CreateRelay();
+            string relayCode = await LobbyRelay.Instance.CreateRelay();
            
-               Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
-               {
-                   Data = new Dictionary<string, DataObject> {
-                       { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)} //muda a visibilidade aq
-                   }
+            Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+            {
+                Data = new Dictionary<string, DataObject> {
+                    { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)} //muda a visibilidade aq
+                }
            
-               });
+            });
            
-               joinedLobby = lobby;
-           }
+            joinedLobby = lobby;
+           
        }
        catch (LobbyServiceException e)
        {
@@ -307,6 +312,7 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            LobbyUI.Instance.ControlLoadForClients(false);
             JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
             {
                 Player = GetPlayer()
@@ -333,6 +339,7 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            LobbyUI.Instance.ControlLoadForClients(false);
             Player player = GetPlayer();
 
             joinedLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobby.Id, new JoinLobbyByIdOptions
@@ -516,6 +523,11 @@ public class LobbyManager : MonoBehaviour
 
                 Debug.Log("um novo host foi setado!");
                 joinedLobby = hostLobby;
+
+                if (IsLobbyHost())
+                {
+                    LobbyUI.Instance.ControlStartButton(true);
+                }
 
             }
             else

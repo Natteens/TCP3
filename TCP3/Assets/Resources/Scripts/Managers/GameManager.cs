@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
     [BoxGroup("UI References")] public Image health, stamina, hunger, thirsty;
     [BoxGroup("UI References")] public GameObject interactMSG;
     [BoxGroup("UI References")] public GameObject HarvestHolder;
+    [BoxGroup("UI References")] public GameObject waitForInitialize;
     [BoxGroup("RespawnPoint")] public Transform spawnPoint;
 
 
@@ -28,6 +29,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        waitForInitialize.SetActive(true);
+
         if (IsServer)
         {
             InvokeRepeating(nameof(UpdateDayTime), 0f, .05f);
