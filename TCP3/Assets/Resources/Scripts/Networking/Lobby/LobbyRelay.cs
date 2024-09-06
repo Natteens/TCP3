@@ -108,6 +108,8 @@ public class LobbyRelay : MonoBehaviour
             mono.enabled = false;
             Debug.Log("desativei");
         }
+
+        Debug.Log("Singleton_OnClientConnectedCallback");
     }
 
     private void Singleton_OnClientStarted()

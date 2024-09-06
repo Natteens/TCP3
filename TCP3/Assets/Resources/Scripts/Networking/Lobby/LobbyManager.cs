@@ -123,8 +123,10 @@ public class LobbyManager : MonoBehaviour
                         joinedLobby = null;
                     }
 
+                    Debug.Log("joinedlobby: "+joinedLobby.Data[KEY_START_GAME].Value);
                     if (joinedLobby.Data[KEY_START_GAME].Value != "0")
                     {
+                       
                         if (!IsLobbyHost())
                         {
                            
@@ -208,6 +210,7 @@ public class LobbyManager : MonoBehaviour
             await LoadingGameScreen();
            
             string relayCode = await LobbyRelay.Instance.CreateRelay();
+          
            
             Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
             {
