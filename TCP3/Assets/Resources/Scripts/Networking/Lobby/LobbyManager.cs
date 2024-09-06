@@ -129,7 +129,7 @@ public class LobbyManager : MonoBehaviour
                         {
                             enabled = false;
                             Debug.Log("lobbypoll");
-                            LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
+                            LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value, this);
                         }
                     }
                 }

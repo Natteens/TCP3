@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 public class LobbyRelay : MonoBehaviour
 {
     public static LobbyRelay Instance { get; private set; }
+    MonoBehaviour mono;
 
     private void Awake()
     {
@@ -53,18 +54,39 @@ public class LobbyRelay : MonoBehaviour
     }
 
 
-    public async void JoinRelay(string joinCode)
+    public async void JoinRelay(string joinCode, MonoBehaviour _mono)
     {
         try
         {
+            Debug.Log("joinrelay");
+            mono = _mono;
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
             RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             NetworkManager.Singleton.StartClient();
+            NetworkManager.Singleton.OnClientStarted -= Singleton_OnClientStarted;
+            NetworkManager.Singleton.OnClientStarted += Singleton_OnClientStarted;
+            NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
+            NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
+            
         }
         catch (RelayServiceException e)
         {
             Debug.LogError("Falha ao entrar no relay: " + e.Message);
         }
+    }
+
+    private void Singleton_OnClientConnectedCallback(ulong obj)
+    {
+        if (mono != null)
+        {
+            mono.enabled = false;
+            Debug.Log("desativei");
+        }
+    }
+
+    private void Singleton_OnClientStarted()
+    {
+        Debug.Log("Singleton_OnClientStarted");
     }
 }
