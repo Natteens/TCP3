@@ -68,12 +68,25 @@ public class LobbyRelay : MonoBehaviour
             NetworkManager.Singleton.OnClientStarted += Singleton_OnClientStarted;
             NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
             NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
-            
+            NetworkManager.Singleton.OnClientStopped += Singleton_OnClientStopped;
+            NetworkManager.Singleton.OnTransportFailure += Singleton_OnTransportFailure;
+
+
         }
         catch (RelayServiceException e)
         {
             Debug.LogError("Falha ao entrar no relay: " + e.Message);
         }
+    }
+
+    private void Singleton_OnTransportFailure()
+    {
+        Debug.Log("Singleton_OnTransportFailure");
+    }
+
+    private void Singleton_OnClientStopped(bool obj)
+    {
+        Debug.Log("clientstopped: "+obj);
     }
 
     private void Singleton_OnClientConnectedCallback(ulong obj)
