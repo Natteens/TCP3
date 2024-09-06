@@ -126,7 +126,8 @@ public class LobbyManager : MonoBehaviour
                     Debug.Log("joinedlobby: "+joinedLobby.Data[KEY_START_GAME].Value);
                     if (joinedLobby.Data[KEY_START_GAME].Value != "0")
                     {
-                       
+                        Debug.Log("lobbyhost: " + IsLobbyHost());
+
                         if (!IsLobbyHost())
                         {
                            
