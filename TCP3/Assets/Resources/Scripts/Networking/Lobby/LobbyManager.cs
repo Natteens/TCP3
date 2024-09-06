@@ -76,9 +76,15 @@ public class LobbyManager : MonoBehaviour
 
     private void Update()
     {
-        HandleRefreshLobbyList();
-        HandleLobbyHeartbeat();
-        HandleLobbyPollForUpdates();
+        if (joinedLobby == null)
+        {
+            HandleRefreshLobbyList();
+            HandleLobbyHeartbeat(); 
+        }
+        else
+        {
+            HandleLobbyPollForUpdates(); 
+        }
     }
 
     public string GetKeyGame()
@@ -95,6 +101,7 @@ public class LobbyManager : MonoBehaviour
                 lobbyUpdateTimer -= Time.deltaTime;
                 if (lobbyUpdateTimer < 0f)
                 {
+                    Debug.Log("agora vai!!");
                     float lobbyPollTimerMax = 1.2f;
                     lobbyUpdateTimer = lobbyPollTimerMax;
 
@@ -120,6 +127,8 @@ public class LobbyManager : MonoBehaviour
                     {
                         if (!IsLobbyHost())
                         {
+                            enabled = false;
+                            Debug.Log("lobbypoll");
                             LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                         }
                     }
@@ -170,6 +179,7 @@ public class LobbyManager : MonoBehaviour
             joinedLobby = lobby;
 
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+           
 
             if (IsLobbyHost())
             {
@@ -348,6 +358,8 @@ public class LobbyManager : MonoBehaviour
             });
 
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+       
+
 
             if (!IsLobbyHost())
             {
