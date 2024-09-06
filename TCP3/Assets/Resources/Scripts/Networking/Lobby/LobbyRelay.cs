@@ -15,6 +15,16 @@ public class LobbyRelay : MonoBehaviour
     public static LobbyRelay Instance { get; private set; }
     MonoBehaviour mono;
 
+    private void Start()
+    {
+        NetworkManager.Singleton.OnClientStarted -= Singleton_OnClientStarted;
+        NetworkManager.Singleton.OnClientStarted += Singleton_OnClientStarted;
+        NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
+        NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
+        NetworkManager.Singleton.OnClientStopped += Singleton_OnClientStopped;
+        NetworkManager.Singleton.OnTransportFailure += Singleton_OnTransportFailure;
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -60,22 +70,24 @@ public class LobbyRelay : MonoBehaviour
         {
             Debug.Log("joinrelay");
             mono = _mono;
+            mono.enabled = false;
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
             RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
             NetworkManager.Singleton.StartClient();
-            NetworkManager.Singleton.OnClientStarted -= Singleton_OnClientStarted;
-            NetworkManager.Singleton.OnClientStarted += Singleton_OnClientStarted;
-            NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
-            NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
-            NetworkManager.Singleton.OnClientStopped += Singleton_OnClientStopped;
-            NetworkManager.Singleton.OnTransportFailure += Singleton_OnTransportFailure;
+
 
 
         }
         catch (RelayServiceException e)
         {
+            mono.enabled = true;
             Debug.LogError("Falha ao entrar no relay: " + e.Message);
+        }
+        catch
+        {
+            Debug.Log("catch2");
+            mono.enabled = true;
         }
     }
 

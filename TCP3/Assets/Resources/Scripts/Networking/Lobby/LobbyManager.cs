@@ -127,7 +127,7 @@ public class LobbyManager : MonoBehaviour
                     {
                         if (!IsLobbyHost())
                         {
-                            enabled = false;
+                           
                             Debug.Log("lobbypoll");
                             LobbyRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value, this);
                         }
