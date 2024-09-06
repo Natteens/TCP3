@@ -256,7 +256,7 @@ public class ResourceSpot : NetworkBehaviour, Interactable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.CompareTag("Player") && IsOwner) 
         {
             controller.RemoveThisInteractable(this);
             controller = null;
