@@ -104,6 +104,14 @@ public class HealthComponent : NetworkBehaviour, IHealth
     public void Die()
     {
         CurrentHealth = 0;
+
+        //Vai ficar assim e fé!
+        if (gameObject.CompareTag("Player"))
+        {
+            Revive();
+            return;
+        }
+
         OnDeath?.Invoke();
     }
 
@@ -111,6 +119,9 @@ public class HealthComponent : NetworkBehaviour, IHealth
     {
         if (IsAlive) return;
         CurrentHealth = MaxHealth;
+
+        //Vai ficar assim e fé!
+        GameManager.Instance.GoToRespawnPoint(transform);
         OnRevive?.Invoke();
     }
 }

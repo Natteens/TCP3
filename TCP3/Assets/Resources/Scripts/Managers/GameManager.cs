@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
     [BoxGroup("UI References")] public Image health, stamina, hunger, thirsty;
     [BoxGroup("UI References")] public GameObject interactMSG;
     [BoxGroup("UI References")] public GameObject HarvestHolder;
+    [BoxGroup("RespawnPoint")] public Transform spawnPoint;
 
 
     [BoxGroup("Day/Night Cycle")]
@@ -55,4 +56,10 @@ public class GameManager : Singleton<GameManager>
     {
         return isNight.Value;
     }
+
+    public void GoToRespawnPoint(Transform transform)
+    {
+        transform.position = spawnPoint.position;
+    }
+
 }

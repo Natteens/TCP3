@@ -9694,6 +9694,7 @@ MonoBehaviour:
   thirsty: {fileID: 213452448}
   interactMSG: {fileID: 1001865221}
   HarvestHolder: {fileID: 1022006592}
+  spawnPoint: {fileID: 1897796951}
   dayDuration: 1000
   directionalLight: {fileID: 142925535}
   lightColorGradient:
@@ -41672,8 +41673,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1151295986}
   m_HandleRect: {fileID: 1151295985}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

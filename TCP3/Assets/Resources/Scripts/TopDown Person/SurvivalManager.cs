@@ -19,6 +19,12 @@ public class SurvivalManager : NetworkBehaviour
     
     void Start()
     {
+        RestaureFull();
+        healthComponent.OnRevive += RestaureFull;
+    }
+
+    public void RestaureFull()
+    {
         CurrentStamina = MaxStamina;
         CurrentHungry = MaxHunger;
         CurrentThirsty = MaxThirsty;
