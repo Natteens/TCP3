@@ -25,6 +25,13 @@ public class LevelManager : NetworkBehaviour
         myStatus = GetComponent<StatusComponent>();
     }
 
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.L)) { LevelUp();  }
+#endif
+    }
+
     public void IncreaseXp(int amount)
     {
         if (currentXp + amount > nextLevelXp) { LevelUp(); }
@@ -35,10 +42,12 @@ public class LevelManager : NetworkBehaviour
 
     private void LevelUp()
     {
+        FeedbackManager.Instance.FeedbackText("Novo nível alcançado!");
         currentXp = 0;
         level++;
         skillPoints++;
         nextLevelXp = 150 + (int)(Mathf.Pow(level, 2f) * 10);
+        OnXpChanged.Invoke(); //COXAS CODE MAS FÉ
     }
 
     public void ApplyStatusChanges(int consPoints, int destPoints, int sobrePoints, int sortePoints)

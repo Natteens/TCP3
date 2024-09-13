@@ -103,8 +103,14 @@ public class LevelUIController : NetworkBehaviour
 
     public void IncreaseStat(StatusCategory category)
     {
-        
-        if (manager.SkillPoints <= 0) return;
+        bool condition_1 = manager.SkillPoints <= 0;
+        bool condition_2 = consPoints >= manager.SkillPoints || sobrePoints >= manager.SkillPoints 
+                           || sortePoints >= manager.SkillPoints || destPoints >= manager.SkillPoints;
+
+        bool condition_3 = consPoints + destPoints + sobrePoints + sortePoints >= manager.SkillPoints;
+
+
+        if (condition_1 || condition_2 || condition_3) return;
 
         switch (category)
         {
@@ -122,14 +128,16 @@ public class LevelUIController : NetworkBehaviour
                 break;
         }
 
-        manager.SkillPoints--;
         UpdateUI();
         confirm.gameObject.SetActive(true);
     }
 
     public void DecreaseStat(StatusCategory category)
     {
-        if (manager.SkillPoints <= 0) return;
+        bool condition_1 = manager.SkillPoints <= 0;
+
+
+        if (condition_1) return;
 
         switch (category)
         {
@@ -147,15 +155,25 @@ public class LevelUIController : NetworkBehaviour
                 break;
         }
 
-        manager.SkillPoints++;
         UpdateUI();
         confirm.gameObject.SetActive(true);
     }
 
     public void ConfirmChanges()
     {
-        // Aplica as mudanças aos status reais
-        manager.ApplyStatusChanges(consPoints, destPoints, sobrePoints, sortePoints);
+        int finalValueToReduce = consPoints + destPoints + sobrePoints + sortePoints;
+
+        if (manager.SkillPoints - finalValueToReduce >= 0) 
+        {
+            manager.ApplyStatusChanges(consPoints, destPoints, sobrePoints, sortePoints);
+            manager.SkillPoints -= finalValueToReduce;
+        }
+
+        consPoints = 0;
+        sobrePoints = 0;
+        sortePoints = 0;
+        destPoints = 0;
+
 
         // Atualiza a UI para refletir as alterações
         UpdateUI();
