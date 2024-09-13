@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_SandTopDunes
+  m_Name: Mat_SandBellowWater
   m_Shader: {fileID: -6465566751694194690, guid: e8bf880b80039c5429572a01d42bfbac, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -100,7 +100,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DistortAmplitude: 3
+    - _DistortAmplitude: -0.52
     - _DistortNoisePeriod: 5
     - _DstBlend: 0
     - _EnvironmentReflections: 1
@@ -138,10 +138,10 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.45283014, g: 0.03203987, b: 0.03203987, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SandHighColor: {r: 0.5377358, g: 0.15415093, b: 0, a: 1}
-    - _SandLowColor: {r: 0.8018868, g: 0.50016475, b: 0.17777678, a: 1}
-    - _ShineColor: {r: 0, g: 0.8169012, b: 1, a: 1}
+    - _SandHighColor: {r: 0.8490566, g: 0.5766466, b: 0.46858314, a: 1}
+    - _SandLowColor: {r: 0.8018868, g: 0.60035604, b: 0.38203096, a: 1}
+    - _ShineColor: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SubstrateColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SubstrateColor: {r: 0.5188679, g: 0.4723656, b: 0.4723656, a: 1}
     - _UVTilling: {r: 0.5, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []

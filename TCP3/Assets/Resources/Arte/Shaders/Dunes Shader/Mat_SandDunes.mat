@@ -111,29 +111,29 @@ Material:
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 2
-    - _DistortAmplitude: 3
-    - _DistortNoisePeriod: 5
+    - _DistortAmplitude: 1.38
+    - _DistortNoisePeriod: 7.16
     - _DstBlend: 0
     - _EnableHeightBlend: 0
     - _EnableInstancedPerPixelNormal: 1
-    - _GrainColorBlend: 0.34
-    - _GrainPeriod: 74.99
-    - _GrainShineStrength: 25
+    - _GrainColorBlend: 0.9
+    - _GrainPeriod: 3200
+    - _GrainShineStrength: 32.1
     - _HeightTransition: 0
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0
     - _Metallic3: 0
-    - _NormalStrength: 50
+    - _NormalStrength: 18.87
     - _NumLayersCount: 1
-    - _PolygonSides: 8
+    - _PolygonSides: 12
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShineDuneHeightMin: 0.95
+    - _ShineDuneHeightMin: 0.4
     - _ShineThreshold: 2
-    - _SineAmplitude: 0.5
-    - _SineFrequency: 4.35
+    - _SineAmplitude: 1.44
+    - _SineFrequency: 0.1
     - _SineRotation: 7
     - _Smoothness: 0.022
     - _Smoothness0: 0.5
@@ -141,20 +141,20 @@ Material:
     - _Smoothness2: 0.5
     - _Smoothness3: 0.5
     - _SrcBlend: 1
-    - _SubstracteDuneHeightMax: 0.802
-    - _SubstracteGrainHeightMax: 0.45
-    - _SubstrateTightening: 9
+    - _SubstracteDuneHeightMax: 1
+    - _SubstracteGrainHeightMax: 2.69
+    - _SubstrateTightening: 7.7
     - _Surface: 0
-    - _UVScale: 6.87
+    - _UVScale: 60
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SandHighColor: {r: 0.8, g: 0.41333818, b: 0.25490195, a: 1}
-    - _SandLowColor: {r: 0.8509804, g: 0.56286144, b: 0.25882348, a: 1}
-    - _ShineColor: {r: 0.3037113, g: 0.7579503, b: 0.8584906, a: 1}
-    - _SubstrateColor: {r: 0.85882354, g: 0.6643744, b: 0.5058824, a: 1}
+    - _SandHighColor: {r: 1, g: 0.7950319, b: 0.28773582, a: 1}
+    - _SandLowColor: {r: 1, g: 0.5905169, b: 0.3066038, a: 1}
+    - _ShineColor: {r: 0.745283, g: 0, b: 0.026304416, a: 1}
+    - _SubstrateColor: {r: 0.9528302, g: 0.47596255, b: 0, a: 1}
     - _UVTilling: {r: 0.5, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
