@@ -12433,7 +12433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 958174083
+  GlobalObjectIdHash: 1170836689
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -12780,8 +12780,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallMask:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 8193
   mainCamera: {fileID: 0}
+  wallMaterial: {fileID: 2100000, guid: 251ea43fc0dd69445a8743f632a83f2b, type: 2}
+  raycastDistance: 40
+  raycastOffset: {x: 0, y: 2, z: 0}
 --- !u!1 &8664087165299966984
 GameObject:
   m_ObjectHideFlags: 0

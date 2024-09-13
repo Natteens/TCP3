@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_SandDunes
+  m_Name: Mat_Grass
   m_Shader: {fileID: -6465566751694194690, guid: e8bf880b80039c5429572a01d42bfbac, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -112,11 +112,11 @@ Material:
     - _CastShadows: 1
     - _Cull: 2
     - _DistortAmplitude: 1.38
-    - _DistortNoisePeriod: 7.16
+    - _DistortNoisePeriod: 6.76
     - _DstBlend: 0
     - _EnableHeightBlend: 0
     - _EnableInstancedPerPixelNormal: 1
-    - _GrainColorBlend: 0.9
+    - _GrainColorBlend: 0.04
     - _GrainPeriod: 3200
     - _GrainShineStrength: 32.1
     - _HeightTransition: 0
@@ -130,12 +130,12 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShineDuneHeightMin: 0.4
+    - _ShineDuneHeightMin: 0.91
     - _ShineThreshold: 2
     - _SineAmplitude: 1.44
-    - _SineFrequency: 0.1
+    - _SineFrequency: 3.3
     - _SineRotation: 7
-    - _Smoothness: 0.022
+    - _Smoothness: 0.005
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5
@@ -145,16 +145,16 @@ Material:
     - _SubstracteGrainHeightMax: 2.69
     - _SubstrateTightening: 7.7
     - _Surface: 0
-    - _UVScale: 20
+    - _UVScale: 2
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SandHighColor: {r: 1, g: 0.7950319, b: 0.28773582, a: 1}
-    - _SandLowColor: {r: 1, g: 0.5905169, b: 0.3066038, a: 1}
-    - _ShineColor: {r: 0.745283, g: 0, b: 0.026304416, a: 1}
-    - _SubstrateColor: {r: 0.9528302, g: 0.47596255, b: 0, a: 1}
-    - _UVTilling: {r: 0.5, g: 2, b: 0, a: 0}
+    - _SandHighColor: {r: 0.8018868, g: 0.6134653, b: 0, a: 1}
+    - _SandLowColor: {r: 0.094876625, g: 0.6415094, b: 0.08170167, a: 1}
+    - _ShineColor: {r: 0.754717, g: 0.25987896, b: 0.27810994, a: 1}
+    - _SubstrateColor: {r: 0.8490566, g: 0.6190084, b: 0.07609467, a: 1}
+    - _UVTilling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
