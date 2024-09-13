@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dissolve Mat
-  m_Shader: {fileID: -6465566751694194690, guid: b028b416ec86ffb4d948e891e58431f6, type: 3}
+  m_Name: Shader Graphs_WallCutout
+  m_Shader: {fileID: -6465566751694194690, guid: b6444e13dcffd604d969e3382f4a3d9e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
@@ -20,6 +20,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -34,17 +38,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CutoffHeight: 40
-    - _EdgeWidth: 0.25
-    - _NoiseScale: 47
-    - _NoiseStrength: 0.2
+    - _CutoutSize: 0.1
+    - _FalloffSize: 0.05
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Albedo: {r: 1, g: 1, b: 1, a: 1}
-    - _EdgeColor: {r: 0, g: 1.6714716, b: 6.2490563, a: 1}
+    - _CutoutPos: {r: 0.5, g: 0.25, b: 0, a: 0}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &8235279805497464121
+--- !u!114 &1185966071747748595
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
