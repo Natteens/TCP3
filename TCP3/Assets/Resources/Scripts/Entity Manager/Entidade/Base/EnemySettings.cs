@@ -25,7 +25,7 @@ public class EnemySettings : NetworkBehaviour
 
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Xp drop Inimigo")]
-    [SerializeField, Range(1, 10000)] private int giveXp;
+    [HideInInspector] public int giveXp;
 
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("UI de Nome e Nível")]
@@ -113,6 +113,8 @@ public class EnemySettings : NetworkBehaviour
         healthComponent.InitializeHealth();
         healthBar.UpdateHealthBar(0);
         UpdateNameAndLevelUI();
+
+        giveXp = (10 * level) + Random.Range(level, level * 3);
     }
 
     private void UpdateNameAndLevelUI()

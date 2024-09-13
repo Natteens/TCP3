@@ -15,6 +15,7 @@ public class SurvivorUIController : MonoBehaviour
         stamina = GameManager.Instance.stamina;
         hunger = GameManager.Instance.hunger;
         thirsty = GameManager.Instance.thirsty; 
+        
         survivalManager.OnStatusChanged += UpdateUI;
     }
 
@@ -32,5 +33,6 @@ public class SurvivorUIController : MonoBehaviour
         stamina.fillAmount = survivalManager.CurrentStamina / survivalManager.MaxStamina;
         hunger.fillAmount = survivalManager.CurrentHungry / survivalManager.MaxHunger;
         thirsty.fillAmount = survivalManager.CurrentThirsty / survivalManager.MaxThirsty;
+        
     }
 }

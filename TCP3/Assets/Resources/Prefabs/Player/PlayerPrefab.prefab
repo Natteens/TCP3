@@ -12505,6 +12505,8 @@ GameObject:
   - component: {fileID: 8664087164105426230}
   - component: {fileID: 8664087164105426225}
   - component: {fileID: 248576004735838127}
+  - component: {fileID: 7965529405784283307}
+  - component: {fileID: 9051199019407712578}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -12995,6 +12997,35 @@ MonoBehaviour:
   chatDeactivateTime: 5
   chatTimer: 0
   inputWasPressed: 0
+--- !u!114 &7965529405784283307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664087164105426190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57a965ae35bd81428df4bc099df2b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  nextLevelXp: 0
+  currentXp: 0
+  skillPoints: 0
+--- !u!114 &9051199019407712578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664087164105426190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2710f82abcf4bdf438be90f778da9952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 7965529405784283307}
 --- !u!1 &8664087165299966984
 GameObject:
   m_ObjectHideFlags: 0

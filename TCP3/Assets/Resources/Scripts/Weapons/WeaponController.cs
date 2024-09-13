@@ -89,7 +89,8 @@ public class WeaponController : NetworkBehaviour
             {
                 if (!isShooting) isShooting = true;
                 Vector3 shootDirection = GetShootDirection(aimPoint);
-                Spawner.Instance.SpawnProjectilesServerRpc(bulletSpawner.position, shootDirection, "projectileBasic", currentWeapon.damage);
+                ulong shooterId = GetComponent<NetworkObject>().NetworkObjectId;
+                Spawner.Instance.SpawnProjectilesServerRpc(bulletSpawner.position, shootDirection, "projectileBasic", currentWeapon.damage, shooterId);
                 currentAmmo -= currentWeapon.bulletPerShoot;
                 fireRateCounter = 0f;
                 OnShoot?.Invoke();

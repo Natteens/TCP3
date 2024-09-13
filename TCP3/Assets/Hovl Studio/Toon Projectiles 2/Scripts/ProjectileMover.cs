@@ -14,6 +14,7 @@ public class ProjectileMover : MonoBehaviour
     public GameObject flash;
     private Rigidbody rb;
     public GameObject[] Detached;
+    public Transform shooter;
     public LayerMask Layer;
     public void InitializeProjectile(int amount) { Damage = amount; }
 
@@ -68,9 +69,17 @@ public class ProjectileMover : MonoBehaviour
             if ((Layer & (1 << collision.gameObject.layer)) != 0)
             {
                 Debug.Log("Colidiu com: " + collision.gameObject.name);
+
+                //Caso a entidade morra, dar xp ao atirador do projetil. Vai permitir compartilhar xp mas paciencia :p
+                collision.gameObject.GetComponent<HealthComponent>().OnDeath += () =>
+                {
+                    shooter.GetComponent<LevelManager>().IncreaseXp(collision.gameObject.GetComponent<EnemySettings>().giveXp);
+                };
+
                 float targetDefense = collision.gameObject.GetComponent<StatusComponent>().GetStatus(StatusType.Defense);
                 int finalDamage = DamageCalculator.CalculateWithDefense(targetDefense, Damage);
                 collision.gameObject.GetComponent<HealthComponent>().TakeDamage(finalDamage);
+
             }
 
             var hitPs = hitInstance.GetComponent<ParticleSystem>();

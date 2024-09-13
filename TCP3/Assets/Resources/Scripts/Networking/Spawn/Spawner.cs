@@ -96,12 +96,12 @@ public class Spawner : Singleton<Spawner>
     #region Projectiles
 
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnProjectilesServerRpc(Vector3 position, Vector3 shootDirection, string prefabId, int damage)
+    public void SpawnProjectilesServerRpc(Vector3 position, Vector3 shootDirection, string prefabId, int damage, ulong shooterId)
     {
-        SpawnProjectiles(position, shootDirection, prefabId, damage);
+        SpawnProjectiles(position, shootDirection, prefabId, damage, shooterId);
     }
 
-    private void SpawnProjectiles(Vector3 position, Vector3 shootDirection, string prefabId, int damage)
+    private void SpawnProjectiles(Vector3 position, Vector3 shootDirection, string prefabId, int damage, ulong shooterId)
     {
         var prefab = ItemAssets.Instance.GetPrefabById(prefabId);
         if (prefab == null)
@@ -112,19 +112,20 @@ public class Spawner : Singleton<Spawner>
         var projectile = Instantiate(prefab, position, Quaternion.LookRotation(shootDirection, Vector3.up));
         projectile.GetComponent<ProjectileMover>().InitializeProjectile(damage);
 
-        if (projectile.TryGetComponent<NetworkObject>(out var networkObject))
-        {
-            networkObject.Spawn();
-            // Adiciona o objeto ao HashSet
-            spawnedObjects.Add(networkObject);
-        }
+        // Recupera o shooter usando o shooterId
+        NetworkObject shooterObject = NetworkManager.Singleton.SpawnManager.SpawnedObjects[shooterId];
+        Transform shooterTransform = shooterObject.transform;
+
+        // Associa o Transform do shooter ao projétil
+        projectile.GetComponent<ProjectileMover>().shooter = shooterTransform;
+
     }
 
     #endregion
 
     #region Constructions
 
-    [ServerRpc(RequireOwnership = false)]
+        [ServerRpc(RequireOwnership = false)]
     public void SpawnConstructionInWorldServerRpc(Vector3 position, Quaternion rotation,string prefabId)
     {
         SpawnConstructionInWorld(position, rotation, prefabId);

@@ -4,27 +4,41 @@ using Cinemachine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using System.Dynamic;
+using TMPro;
 
 public class GameManager : Singleton<GameManager>
 {
     [BoxGroup("Camera")] public Camera mainCamera;
     [BoxGroup("Camera")] public CinemachineVirtualCamera virtualCamera;
+    [Space(20)]
+
     [BoxGroup("Player References")] public UI_Inventory uiInventory;
     [BoxGroup("Player References")] public UI_Craft uiCraft;
+    [Space(20)]
+
     [BoxGroup("UI References")] public Image health, stamina, hunger, thirsty;
     [BoxGroup("UI References")] public GameObject interactMSG;
     [BoxGroup("UI References")] public GameObject HarvestHolder;
     [BoxGroup("UI References")] public GameObject waitForInitialize;
+    [Space(20)]
+
+    [BoxGroup("UI References [LEVEL]")] public Image xpBar;
+    [BoxGroup("UI References [LEVEL]")] public TextMeshProUGUI nextLevelText, level, pointsToUp, cons, dest, sobre, sorte, details;
+    [Space(20)]
+
+
     [BoxGroup("RespawnPoint")] public Transform spawnPoint;
 
 
     [BoxGroup("Day/Night Cycle")]
+    [ShowInInspector]
     [ReadOnly] public NetworkVariable<float> timeOfDay { get; set; } = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [BoxGroup("Day/Night Cycle")] public short dayDuration;
     [BoxGroup("Day/Night Cycle")] public Light directionalLight;
     [BoxGroup("Day/Night Cycle")] public Gradient lightColorGradient;
     [BoxGroup("Day/Night Cycle")] public AnimationCurve lightIntensityCurve;
     [BoxGroup("Day/Night Cycle")]
+    [ShowInInspector]
     public NetworkVariable<bool> isNight = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     private void Start()
@@ -37,6 +51,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    #region Weather
     private void UpdateDayTime()
     {
         if (timeOfDay.Value >= dayDuration)
@@ -59,6 +74,8 @@ public class GameManager : Singleton<GameManager>
     {
         return isNight.Value;
     }
+
+    #endregion
 
     public void GoToRespawnPoint(Transform transform)
     {

@@ -48,6 +48,8 @@ public abstract class BaseEntity : NetworkBehaviour
         UnsubscribeFromHealthEvents();
     }
 
+    protected virtual void GiveXp(int xpAmount, Transform killer) { }
+
     protected virtual void OnTakeDamage(float amount)
     {
         anim.SetTrigger("TakeDamage");
