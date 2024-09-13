@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18222857, g: 0.22793216, b: 0.30735606, a: 1}
+  m_IndirectSpecularColor: {r: 0.18222857, g: 0.22793214, b: 0.307356, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10430,6 +10430,15 @@ MonoBehaviour:
   sobre: {fileID: 474578689}
   sorte: {fileID: 533058984}
   details: {fileID: 136904573}
+  confirm: {fileID: 745034220}
+  increaseConsButton: {fileID: 1491548519}
+  decreaseConsButton: {fileID: 281952825}
+  increaseDestButton: {fileID: 1344889198}
+  decreaseDestButton: {fileID: 1427712477}
+  increaseSobreButton: {fileID: 146047498}
+  decreaseSobreButton: {fileID: 452624731}
+  increaseSorteButton: {fileID: 1352680014}
+  decreaseSorteButton: {fileID: 895314254}
   spawnPoint: {fileID: 1897796951}
   dayDuration: 1000
   directionalLight: {fileID: 142925535}
@@ -28962,11 +28971,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillMethod: 0
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -44723,8 +44732,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1151295986}
   m_HandleRect: {fileID: 1151295985}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -55411,7 +55420,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1787074372}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

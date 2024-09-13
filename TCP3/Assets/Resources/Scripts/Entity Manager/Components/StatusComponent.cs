@@ -145,4 +145,28 @@ public class StatusComponent : NetworkBehaviour
     {
         ApplyModifier(effect.statusType, effect.effectValue * (effect.isBuff ? -1 : 1));
     }
+
+    public void ApplyConstitution(int points)
+    {
+        ApplyModifier(StatusType.Health, points);
+        ApplyModifier(StatusType.Defense, points);
+    }
+
+    public void ApplySurvival(int points)
+    {
+        ApplyModifier(StatusType.GatheringSpeed, points);
+        ApplyModifier(StatusType.Satiaty, points);
+    }
+
+    public void ApplyDexterity(int points)
+    {
+        ApplyModifier(StatusType.CooldownAbility, points);
+        ApplyModifier(StatusType.CooldownReload, points);
+    }
+
+    public void ApplyLuck(int points)
+    {
+        ApplyModifier(StatusType.CritChance, points);
+        ApplyModifier(StatusType.LootChance, points);
+    }
 }

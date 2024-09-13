@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,20 +8,21 @@ public class LevelManager : NetworkBehaviour
     [SerializeField] private int nextLevelXp;
     [SerializeField] private int currentXp = 0;
     [SerializeField] private int skillPoints = 0;
+    [SerializeField] private StatusComponent myStatus;
 
     public int CurrentXp { get { return currentXp; } }
     public int Level { get { return level; } }
     public int NextLevelXp { get { return nextLevelXp; } }
-    public int SkillPoints { get { return skillPoints; } }
+    public int SkillPoints { get { return skillPoints; } set { skillPoints = value; } }
 
     public event Action OnXpChanged;
+
     private void Start()
     {
         if (!IsOwner) return;
 
         nextLevelXp = 150 + (int)(Mathf.Pow(level, 2f) * 10);
-       
-
+        myStatus = GetComponent<StatusComponent>();
     }
 
     public void IncreaseXp(int amount)
@@ -42,5 +41,12 @@ public class LevelManager : NetworkBehaviour
         nextLevelXp = 150 + (int)(Mathf.Pow(level, 2f) * 10);
     }
 
-    
+    public void ApplyStatusChanges(int consPoints, int destPoints, int sobrePoints, int sortePoints)
+    {
+        // Aplica os pontos aos status
+        myStatus.ApplyConstitution(consPoints);
+        myStatus.ApplySurvival(sobrePoints);
+        myStatus.ApplyDexterity(destPoints);
+        myStatus.ApplyLuck(sortePoints);
+    }
 }

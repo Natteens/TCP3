@@ -11,3 +11,11 @@
     LootChance, // Sorte
     MoveSpeed,  // None 
 }
+
+public enum StatusCategory
+{
+    Constitution, // Constituição
+    Survival,     // Sobrevivência
+    Dexterity,    // Destreza
+    Luck          // Sorte
+}

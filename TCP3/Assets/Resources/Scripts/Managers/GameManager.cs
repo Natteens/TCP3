@@ -24,6 +24,11 @@ public class GameManager : Singleton<GameManager>
 
     [BoxGroup("UI References [LEVEL]")] public Image xpBar;
     [BoxGroup("UI References [LEVEL]")] public TextMeshProUGUI nextLevelText, level, pointsToUp, cons, dest, sobre, sorte, details;
+    [BoxGroup("UI References [LEVEL]")] public Button confirm;
+    [BoxGroup("UI References [LEVEL]")] public Button increaseConsButton, decreaseConsButton;
+    [BoxGroup("UI References [LEVEL]")] public Button increaseDestButton, decreaseDestButton;
+    [BoxGroup("UI References [LEVEL]")] public Button increaseSobreButton, decreaseSobreButton;
+    [BoxGroup("UI References [LEVEL]")] public Button increaseSorteButton, decreaseSorteButton;
     [Space(20)]
 
 
