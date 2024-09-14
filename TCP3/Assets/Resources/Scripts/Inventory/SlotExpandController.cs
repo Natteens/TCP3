@@ -19,8 +19,8 @@ public class SlotExpandController : MonoBehaviour
     [FoldoutGroup("UI Containers")]
     [SerializeField] private GameObject selectAmountContainer;
     [FoldoutGroup("UI Containers")]
-    [SerializeField] private GameObject selectSlot;
-    [SerializeField] private Color saveColorSlot;
+    [SerializeField] private GameObject selectedSlot;
+    [SerializeField] private Color baseColor;
 
     [FoldoutGroup("Buttons")]
     [SerializeField] private GameObject dropButton;
@@ -42,20 +42,25 @@ public class SlotExpandController : MonoBehaviour
     [SerializeField] private Image itemImage;
 
     [FoldoutGroup("Miscellaneous")]
-    public bool hasUse;
+    public bool hasUse = false;
 
     public void Start()
     {
         Squeeze();
         slider.onValueChanged.AddListener(UpdateSliderAmount);
         sliderAmount.text = "1";
-        selectSlot = null;
+        selectedSlot = null;
     }
 
 
     public void SetSlot(GameObject obj)
     {
-        selectSlot = obj;
+        if (selectedSlot != null) Clean();
+
+        if (obj == null) { Debug.Log("SETEI O SLOT COMO NULO"); }
+        else { Debug.Log("SETEI O SLOT"); }
+
+        selectedSlot = obj;
     }
 
     public void Setup(Item item)
@@ -65,29 +70,88 @@ public class SlotExpandController : MonoBehaviour
             Debug.LogError("Item passado para Setup é nulo!");
             return;
         }
-        Debug.Log(item.amount);
-        selectedItem = item;
-        Debug.Log(selectedItem.amount);
 
+        selectedItem = item;
+
+        // Atualiza os detalhes do item na interface
         itemName.text = selectedItem.itemName;
         itemDesc.text = selectedItem.itemDescription;
         itemImage.sprite = selectedItem.itemSprite;
 
+        if (item.itemType != Item.Itemtype.Consumivel)
+        {
+            itemDesc.fontSize = 18;
+        }
+        else
+        {
+            itemDesc.fontSize = 15;
+        }
+
+        // Define o slider
         sliderMaxAmount = selectedItem.amount;
         slider.maxValue = sliderMaxAmount;
         sliderAmount.text = "1";
 
-        if (selectSlot != null) saveColorSlot = selectSlot.GetComponentInChildren<Image>().color;
-        if (selectSlot != null) selectSlot.GetComponentInChildren<Image>().color = Color.red;
+        // Verifique se o selectedSlot não é nulo e altere a cor dele
+        if (selectedSlot != null)
+        {
+            Image slotImage = selectedSlot.GetComponentInParent<Image>();  // Pegue a Image diretamente do slot
+
+            if (slotImage != null)
+            {
+                // Verifica a cor atual e alterna entre vermelho e branco
+                if (slotImage.color == Color.white)
+                {
+                    slotImage.color = new Color(253f / 255f, 109f / 255f, 109f / 255f); // Muda para vermelho claro
+                    Debug.Log("Cor do slot alterada para vermelho claro.");
+                }
+                else if (slotImage.color == new Color(253f / 255f, 109f / 255f, 109f / 255f))
+                {
+                    slotImage.color = Color.white; // Reseta para branco
+                    Debug.Log("Cor do slot resetada para branco.");
+                    Squeeze();
+                }
+            }
+            else
+            {
+                Debug.LogError("selectedSlot não contém um componente Image.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("selectedSlot é nulo no Setup.");
+        }
     }
 
     public void Clean()
     {
-        selectedItem = null;
+        // Reseta o slider
         slider.value = 1;
         sliderAmount.text = "1";
-        if(selectSlot != null) selectSlot.GetComponentInChildren<Image>().color = saveColorSlot;
-        selectSlot = null;
+
+        // Se existe um slot selecionado, resetar a cor
+        if (selectedSlot != null)
+        {
+            Image slotImage = selectedSlot.GetComponentInParent<Image>();  // Pegue a Image diretamente do slot
+            if (slotImage != null)
+            {
+                slotImage.color = Color.white; // Resetar para a cor base (branca)
+                Debug.Log("Cor do slot resetada para branco.");
+            }
+            else
+            {
+                Debug.LogError("selectedSlot não contém um componente Image no Clean.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("selectedSlot é nulo no Clean.");
+        }
+
+        // Limpar seleção
+        selectedSlot = null;
+        selectedItem = null;
+
         Squeeze();
     }
 

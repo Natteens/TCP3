@@ -130,6 +130,7 @@ public class UI_Inventory : MonoBehaviour
             Debug.Log("Meu item é:" + item.itemName);
             expandController.SetSlot(instance);
             expandController.Setup(item);
+            expandController.hasUse = false;
 
             if (item != null && item.itemType == Item.Itemtype.Consumivel)
             {
@@ -163,7 +164,7 @@ public class UI_Inventory : MonoBehaviour
                 txt.text = "";
             }
         }
-    }
+    } 
 
     private void ClearSlot(RectTransform obj)
     {
@@ -187,7 +188,7 @@ public class UI_Inventory : MonoBehaviour
         {
             //Debug.Log("#Ativei o inventario#");
             GameManager.Instance.uiCraft.ControlExpandedCraft(false);
-            expandController.Squeeze();
+            //expandController.Squeeze();
             expandController.Clean();
             MouseController.CursorVisibility(true);
         }
@@ -271,14 +272,15 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    // Função para utilizar o item
+    // Função para utilizar o item da hotbar
     private void UseItem(Item item)
     {
         if (item == null) return;
 
+        DeactiveWeapon();
+
         if (item.itemType == Item.Itemtype.Consumivel)
         {
-            DeactiveWeapon();
             Consume(item);
         }
         else if (item.itemType == Item.Itemtype.Arma)
@@ -289,7 +291,6 @@ public class UI_Inventory : MonoBehaviour
         else
         {
             Debug.Log($"Item {item.itemName} não é utilizável.");
-            DeactiveWeapon();
         }
     }
 
