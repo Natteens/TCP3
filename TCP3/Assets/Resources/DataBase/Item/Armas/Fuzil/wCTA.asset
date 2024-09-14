@@ -12,23 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9d3cd2188aff049a758c0f86bae895, type: 3}
   m_Name: wCTA
   m_EditorClassIdentifier: 
-  itemName: "Ca\xE7a Corninha"
-  itemDescription: "<color=red>Dano: 10\nPenetra\xE7\xE3o de Armadura: 2\nMuni\xE7\xE3o
-    m\xE1xima: 40\nVelocidade de Recarga: 1,25\nCad\xEAncia: 0,1</color>"
+  itemName: C.T.A
+  itemDescription: "<color=red>Modelo:Fuzil\nDano: 20\nPenetra\xE7\xE3o de Armadura:
+    2\nMuni\xE7\xE3o m\xE1xima: 45\nVelocidade de Recarga: 1\nCad\xEAncia: 0,1</color>"
   itemType: 1
-  itemSprite: {fileID: 21300000, guid: bd4f02aeb88860a40a0c6f9d263ec3e4, type: 3}
+  itemSprite: {fileID: 21300000, guid: 9d4aaed35e3a5ed43a97abbe9b3ea540, type: 3}
   amount: 1
   uniqueID: 25416b2f2e19466d8cd33e2660041214_1527922738_1
-  maxMunition: 40
+  weaponType: 0
+  maxMunition: 45
   cadence: 0.1
-  reloadSpeed: 1.25
-  spread: 0.01
+  reloadSpeed: 1
+  spread: 0.013
   bulletPerShoot: 1
-  damage: 10
+  damage: 20
   defensePenetration: 2
   isAutomatic: 1
   spawnPosition: {x: 0, y: 2, z: 1.5}
-  bulletPrefab: {fileID: 4516715164336042, guid: f1dc4df701f37324c98ea16f41770afc, type: 3}
+  bulletPrefab: {fileID: 930696269855422731, guid: 9fc5bf94c37f1d84899f0af0cba92490, type: 3}
   effects:
   - {fileID: 11400000, guid: 8db6d3fb1b5451946a23b0c89facd2d9, type: 2}
   animatorParameter: Fuzil

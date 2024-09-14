@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9d3cd2188aff049a758c0f86bae895, type: 3}
   m_Name: wImpaciente
   m_EditorClassIdentifier: 
-  itemName: Default Item Name
-  itemDescription: "<color=red>Dano: 25\nPenetra\xE7\xE3o de Armadura: 0\nMuni\xE7\xE3o
-    m\xE1xima: 8\nVelocidade de Recarga: 1,25\nCad\xEAncia: 0,1</color>"
+  itemName: Impaciente
+  itemDescription: "<color=red>Modelo:Escopeta\nDano: 30\nPenetra\xE7\xE3o de Armadura:
+    10\nMuni\xE7\xE3o m\xE1xima: 8\nVelocidade de Recarga: 2\nCad\xEAncia: 0,75</color>"
   itemType: 1
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 2e72ba3ea9515444bb715645aaf919a6, type: 3}
   amount: 1
   uniqueID: f12e72188965478183bc035571a06f00_194234209_0
   weaponType: 5
   maxMunition: 8
-  cadence: 0.1
-  reloadSpeed: 1.25
-  spread: 0.01
-  bulletPerShoot: 2
-  damage: 25
-  defensePenetration: 0
+  cadence: 0.75
+  reloadSpeed: 2
+  spread: 0.2
+  bulletPerShoot: 6
+  damage: 30
+  defensePenetration: 10
   isAutomatic: 0
   spawnPosition: {x: 0, y: 0, z: 0}
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 8961344260746808799, guid: 20259a7b27ca80f4ab44e82ebffb20e1, type: 3}
   effects: []
-  animatorParameter: 
+  animatorParameter: Fuzil
   weaponState: 0

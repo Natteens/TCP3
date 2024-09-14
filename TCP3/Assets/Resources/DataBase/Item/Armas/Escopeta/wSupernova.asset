@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9d3cd2188aff049a758c0f86bae895, type: 3}
   m_Name: wSupernova
   m_EditorClassIdentifier: 
-  itemName: Default Item Name
-  itemDescription: "<color=red>Dano: 40\nPenetra\xE7\xE3o de Armadura: 0\nMuni\xE7\xE3o
-    m\xE1xima: 4\nVelocidade de Recarga: 1,25\nCad\xEAncia: 0,1</color>"
+  itemName: Supernova
+  itemDescription: "<color=red>Modelo:Escopeta\nDano: 55\nPenetra\xE7\xE3o de Armadura:
+    25\nMuni\xE7\xE3o m\xE1xima: 4\nVelocidade de Recarga: 1,5\nCad\xEAncia: 0,5</color>"
   itemType: 1
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 2e72ba3ea9515444bb715645aaf919a6, type: 3}
   amount: 1
   uniqueID: f12e72188965478183bc035571a06f00_194234209_0
   weaponType: 5
   maxMunition: 4
-  cadence: 0.1
-  reloadSpeed: 1.25
-  spread: 0.01
-  bulletPerShoot: 2
-  damage: 40
-  defensePenetration: 0
+  cadence: 0.5
+  reloadSpeed: 1.5
+  spread: 0.1
+  bulletPerShoot: 8
+  damage: 55
+  defensePenetration: 25
   isAutomatic: 0
   spawnPosition: {x: 0, y: 0, z: 0}
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 2337066583339238774, guid: 15cf1917d54b4944185b277f03984109, type: 3}
   effects: []
-  animatorParameter: 
+  animatorParameter: Fuzil
   weaponState: 0

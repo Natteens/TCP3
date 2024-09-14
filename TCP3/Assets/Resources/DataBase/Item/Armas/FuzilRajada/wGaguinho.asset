@@ -13,23 +13,24 @@ MonoBehaviour:
   m_Name: wGaguinho
   m_EditorClassIdentifier: 
   itemName: Gaguinho
-  itemDescription: "<color=red>Dano: 15\nPenetra\xE7\xE3o de Armadura: 3\nMuni\xE7\xE3o
-    m\xE1xima: 33\nVelocidade de Recarga: 1,25\nCad\xEAncia: 0,1</color>"
+  itemDescription: "<color=red>Modelo:FuzilRajada\nDano: 15\nPenetra\xE7\xE3o de
+    Armadura: 3\nMuni\xE7\xE3o m\xE1xima: 5\nVelocidade de Recarga: 1\nCad\xEAncia:
+    0,5</color>"
   itemType: 1
-  itemSprite: {fileID: 21300000, guid: 77d0b6ca571aefa49a68e29c8d2d4de4, type: 3}
+  itemSprite: {fileID: 21300000, guid: f6d972f65dd6f704581d0fabed8b3071, type: 3}
   amount: 1
   uniqueID: 6ea935b7367b4d6583309a52ff0a7651_194234209_0
   weaponType: 1
-  maxMunition: 33
-  cadence: 0.1
-  reloadSpeed: 1.25
+  maxMunition: 5
+  cadence: 0.5
+  reloadSpeed: 1
   spread: 0.01
   bulletPerShoot: 3
   damage: 15
   defensePenetration: 3
   isAutomatic: 0
   spawnPosition: {x: 0, y: 0, z: 0}
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 930696269855422731, guid: 9fc5bf94c37f1d84899f0af0cba92490, type: 3}
   effects: []
-  animatorParameter: 
+  animatorParameter: Fuzil
   weaponState: 0
