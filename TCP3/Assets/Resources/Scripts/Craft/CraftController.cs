@@ -24,7 +24,7 @@ public class CraftController : NetworkBehaviour
     private void Update()
     {
         //DEBUG
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && GameManager.Instance.isDebugActive)
         { 
             foreach (Craft craft in debugcrafts) { SetCraft(craft); }
         }

@@ -19,6 +19,8 @@ public class UI_Inventory : MonoBehaviour
     [SerializeField] private SlotExpandController expandController;
     private LocatePlayer player;
     public bool isVisible = false;
+    public List<Item> debugitems;
+
 
     private void Start()
     {
@@ -105,7 +107,13 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K) && GameManager.Instance.isDebugActive)
+        {
+            foreach (Item item in debugitems) { inventory.AddItem(item); }
+        }
+    }
 
     private void ConfigureItemSlot(Item item, RectTransform rect)
     {
@@ -222,6 +230,7 @@ public class UI_Inventory : MonoBehaviour
         if (id <= 0) return;
 
         ChangeHotbarBgColor(id-1);
+        ConfigureHotbar();
     }
 
     private void ChangeHotbarBgColor(int id)
@@ -238,7 +247,88 @@ public class UI_Inventory : MonoBehaviour
         currentSlotBg.color = Color.red;
         
     }
-    
+
+    private void ConfigureHotbar()
+    {
+        // Verificar o slot selecionado e pegar o item
+        for (int i = 0; i < SlotsHotbar.Length; i++)
+        {
+            // Verifica se o background do slot está vermelho (indica que foi selecionado)
+            Image bgImage = SlotsHotbar[i].Find("bg").GetComponent<Image>();
+            if (bgImage.color == Color.red)
+            {
+                // Pegue o item do slot
+                List<Item> itemList = inventory.GetItemList();
+                int hotbarStartIndex = Math.Max(0, itemList.Count - 5);
+                int itemIndex = hotbarStartIndex + i;
+
+                if (itemIndex < itemList.Count && itemList[itemIndex] != null)
+                {
+                    Item item = itemList[itemIndex];
+                    UseItem(item); // Usa o item
+                }
+            }
+        }
+    }
+
+    // Função para utilizar o item
+    private void UseItem(Item item)
+    {
+        if (item == null) return;
+
+        if (item.itemType == Item.Itemtype.Consumivel)
+        {
+            DeactiveWeapon();
+            Consume(item);
+        }
+        else if (item.itemType == Item.Itemtype.Arma)
+        {
+            Debug.Log($"Equipando arma: {item.itemName}");
+            ActiveWeapon(item);
+        }
+        else
+        {
+            Debug.Log($"Item {item.itemName} não é utilizável.");
+            DeactiveWeapon();
+        }
+    }
+
+    private void Consume(Item item)
+    {
+        Debug.Log($"Usando item consumível: {item.itemName}");
+        Consumable consumable = item as Consumable;
+
+        if (consumable != null)
+        {
+            SurvivalManager manager = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<SurvivalManager>();
+            manager.IncreaseStats(consumable);
+        }
+
+        item.amount--;
+        if (item.amount <= 0)
+        {
+            inventory.RemoveItem(item); // Remover o item do inventário se quantidade for 0
+        }
+        RefreshInventoryItems(); // Atualiza a interface do inventário
+    }
+
+    private void ActiveWeapon(Item item)
+    {
+        WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
+        WeaponInfo cWeapon = item as WeaponInfo;
+
+        weaponController.currentWeapon = cWeapon;
+        weaponController.StartingWeaponServerRpc();
+    }
+
+    private void DeactiveWeapon()
+    {
+        WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
+
+        weaponController.DeactivateCurrentWeapon();
+        weaponController.currentWeapon = null;
+    }
+
     public void ClearHotbarBg(int idForExclude)
     {
         for (int i = 0; i < SlotsHotbar.Length; i++)

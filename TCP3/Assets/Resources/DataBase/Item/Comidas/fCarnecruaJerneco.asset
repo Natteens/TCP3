@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 766da021aff1edd468e918dddcfcdf55, type: 3}
-  m_Name: fAgua
+  m_Name: fCarnecruaJerneco
   m_EditorClassIdentifier: 
-  itemName: Agua
-  itemDescription: <color=red>Restaura 2,5 de Sede</color>
+  itemName: Carne crua de Jerneco
+  itemDescription: <color=red>Restaura 7 de Fome</color>
   itemType: 2
-  itemSprite: {fileID: 21300000, guid: 12dfedbbec3c51d4486334396ccb154a, type: 3}
+  itemSprite: {fileID: 21300000, guid: b42765af77293584c8cdb731b7e20299, type: 3}
   amount: 1
-  uniqueID: d5647d77c2cd4499a014e2b09a6d6242_194234209_0
-  type: 1
-  restoreAmount: 2.5
-  effects:
-  - {fileID: 0}
+  uniqueID: 33dbad29b0344a04a8e4e38aa1150793_194234209_0
+  type: 0
+  restoreAmount: 7
+  effects: []

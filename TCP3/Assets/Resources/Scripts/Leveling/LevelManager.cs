@@ -27,9 +27,9 @@ public class LevelManager : NetworkBehaviour
 
     private void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.L)) { LevelUp();  }
-#endif
+
+        if (Input.GetKeyDown(KeyCode.L) && GameManager.Instance.isDebugActive) { LevelUp();  }
+
     }
 
     public void IncreaseXp(int amount)

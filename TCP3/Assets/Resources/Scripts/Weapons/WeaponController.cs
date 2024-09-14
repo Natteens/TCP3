@@ -6,7 +6,7 @@ using UnityEngine.Animations.Rigging;
 
 public class WeaponController : NetworkBehaviour
 {
-    [SerializeField] private WeaponInfo currentWeapon;
+    [SerializeField] public WeaponInfo currentWeapon;
     [SerializeField] private Transform weaponsContainer;
     [SerializeField] private Transform bulletSpawner;
     [SerializeField] private MultiAimConstraint torsoAimConstraint;
@@ -42,8 +42,9 @@ public class WeaponController : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void StartingWeaponServerRpc()
+    public void StartingWeaponServerRpc()
     {
+        if(currentWeapon != null)
         EquipWeapon(currentWeapon);
     }
 
@@ -173,11 +174,11 @@ public class WeaponController : NetworkBehaviour
         OnWeaponChanged?.Invoke();
     }
 
-    private void DeactivateCurrentWeapon()
+    public void DeactivateCurrentWeapon()
     {
         if (currentWeapon != null)
         {
-            Transform weaponTransform = FindWeaponTransform(currentWeapon.itemName);
+            Transform weaponTransform = FindWeaponTransform(currentWeapon.weaponType.ToString());
             if (weaponTransform != null)
             {
                 weaponTransform.gameObject.SetActive(false);

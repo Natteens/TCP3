@@ -46,6 +46,8 @@ public class GameManager : Singleton<GameManager>
     [ShowInInspector]
     public NetworkVariable<bool> isNight = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
+    public bool isDebugActive = false;
+
     private void Start()
     {
         waitForInitialize.SetActive(true);
@@ -53,6 +55,15 @@ public class GameManager : Singleton<GameManager>
         if (IsServer)
         {
             InvokeRepeating(nameof(UpdateDayTime), 0f, .05f);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F5) && Input.GetKeyDown(KeyCode.F6))
+        {
+            isDebugActive = true;
+            FeedbackManager.Instance.FeedbackText("Debug ativo!");
         }
     }
 
