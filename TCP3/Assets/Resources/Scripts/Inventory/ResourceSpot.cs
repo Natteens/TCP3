@@ -49,12 +49,12 @@ public class ResourceSpot : NetworkBehaviour, Interactable
     private MultiAimConstraint torsoAimConstraint;
     private WeightedTransformArray originalSourceObjects;
 
-    [SerializeField]
     private BoxCollider myCollider;
 
 
     private void Start()
     {
+        myCollider = GetComponent<BoxCollider>();
         GameManager.Instance.HarvestHolder.SetActive(false);
         currentResourceToHarvest = maxResourceToHarvest;
     }

@@ -60,7 +60,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F5) && Input.GetKeyDown(KeyCode.F6))
+        if (Input.GetKeyDown(KeyCode.F12))
         {
             isDebugActive = true;
             FeedbackManager.Instance.FeedbackText("Debug ativo!");

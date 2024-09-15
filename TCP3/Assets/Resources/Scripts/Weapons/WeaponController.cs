@@ -31,6 +31,13 @@ public class WeaponController : NetworkBehaviour
     public event Action OnWeaponChanged;
     public event Action OnShoot;
 
+    public GameObject fuzilWeapon;
+    public GameObject fuzilRajadaWeapon;
+    public GameObject revolverWeapon;
+    public GameObject subMetralhadoraWeapon;
+    public GameObject rifleWeapon;
+    public GameObject escopetaWeapon;
+
     private void Awake()
     {
         input = GetComponent<StarterAssetsInputs>();
@@ -197,39 +204,51 @@ public class WeaponController : NetworkBehaviour
 
     public void DeactivateCurrentWeapon()
     {
-        if (currentWeapon != null)
-        {
-            Transform weaponTransform = FindWeaponTransform(currentWeapon.weaponType.ToString());
-            if (weaponTransform != null)
-            {
-                weaponTransform.gameObject.SetActive(false);
-            }
-        }
+        DeactivateAllWeapons();
     }
 
     private void ActivateNewWeapon()
     {
         if (currentWeapon != null)
         {
-            Transform weaponTransform = FindWeaponTransform(currentWeapon.itemName);
-            if (weaponTransform != null)
+            DeactivateAllWeapons();
+
+            switch (currentWeapon.weaponType)
             {
-                weaponTransform.gameObject.SetActive(true);
+                case WeaponType.Fuzil:
+                    fuzilWeapon.SetActive(true);
+                    break;
+                case WeaponType.FuzilRajada:
+                    fuzilRajadaWeapon.SetActive(true);
+                    break;
+                case WeaponType.Revolver:
+                    revolverWeapon.SetActive(true);
+                    break;
+                case WeaponType.SubMetralhadora:
+                    subMetralhadoraWeapon.SetActive(true);
+                    break;
+                case WeaponType.Rifle:
+                    rifleWeapon.SetActive(true);
+                    break;
+                case WeaponType.Escopeta:
+                    escopetaWeapon.SetActive(true);
+                    break;
+                default:
+                    break;
             }
         }
     }
 
-    private Transform FindWeaponTransform(string weaponModelName)
+    private void DeactivateAllWeapons()
     {
-        foreach (Transform weapon in weaponsContainer.GetComponentsInChildren<Transform>(true))
-        {
-            if (weapon.name == weaponModelName)
-            {
-                return weapon;
-            }
-        }
-        return null;
+        fuzilWeapon.SetActive(false);
+        fuzilRajadaWeapon.SetActive(false);
+        revolverWeapon.SetActive(false);
+        subMetralhadoraWeapon.SetActive(false);
+        rifleWeapon.SetActive(false);
+        escopetaWeapon.SetActive(false);
     }
+
 
     private void HandleInput()
     {
@@ -286,7 +305,6 @@ public class WeaponController : NetworkBehaviour
         }
         torsoAimConstraint.data.offset = new Vector3(0f, currentAimOffsetY, 0f);
     }
-
 
     public void EnableShooting()
     {
