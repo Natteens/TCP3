@@ -125,7 +125,7 @@ public class Spawner : Singleton<Spawner>
 
     #region Constructions
 
-        [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false)]
     public void SpawnConstructionInWorldServerRpc(Vector3 position, Quaternion rotation,string prefabId)
     {
         SpawnConstructionInWorld(position, rotation, prefabId);
