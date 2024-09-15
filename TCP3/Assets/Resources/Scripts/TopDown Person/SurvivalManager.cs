@@ -40,7 +40,7 @@ public class SurvivalManager : NetworkBehaviour
     }
     void Hungry()
     {
-        CurrentHungry -= Time.deltaTime;
+        CurrentHungry -= (1 - (statusComponent.GetStatus(StatusType.Satiaty) / 100f)) * CurrentHungry;
         if (CurrentHungry >= MaxHunger)
         {
             CurrentHungry = MaxHunger;
