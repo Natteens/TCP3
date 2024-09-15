@@ -15,11 +15,9 @@ public class NPC : BaseEntity
     [Header("States")]
     [SerializeField] private IdleStateSOBase idle;
     [SerializeField] private ChaseStateSOBase chase;
-    [SerializeField] private AttackStateSOBase attack;
 
     [HideInInspector] public IdleStateSOBase Idle { get; set; }
     [HideInInspector] public ChaseStateSOBase Chase { get; set; }
-    [HideInInspector] public AttackStateSOBase Attack { get; set; }
 
     [Space(10f)]
     [Header("States")]
@@ -46,14 +44,9 @@ public class NPC : BaseEntity
         {
             Chase = Instantiate(chase);
         }   
-        if (attack != null)
-        {
-            Attack = Instantiate(attack);
-        }
-
+    
         Idle?.Initialize(gameObject);
         Chase?.Initialize(gameObject);
-        Attack?.Initialize(gameObject);
 
         stateMachine.Initialize(Idle);
         dropTotalChance = GetTotalChance();

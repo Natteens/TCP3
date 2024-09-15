@@ -66,24 +66,18 @@ public abstract class BaseEntity : NetworkBehaviour
 
     public void MoveAndRotate(Vector3 dir, float speed)
     {
-        // Normalize a direção do movimento apenas no plano XZ
         Vector3 normalizedDirection = new Vector3(dir.x, 0, dir.z).normalized;
         Vector3 movement = normalizedDirection * speed;
-
-        // Ajusta a velocidade no rigidbody mantendo a componente Y inalterada
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
 
-        // Rotaciona apenas se houver movimento (direção não nula)
         if (normalizedDirection != Vector3.zero)
         {
-            // Calcula a rotação alvo no plano XZ
             Quaternion targetRotation = Quaternion.LookRotation(normalizedDirection);
-
-            // Interpola suavemente a rotação atual para a rotação alvo no eixo Y
             Quaternion newRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
             rb.MoveRotation(Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * speed));
         }
+
+        float blendSpeed = (speed == 0) ? 0f : (speed > 0 && speed < 3) ? 0.5f : 1f;
+        anim.SetFloat("Speed", blendSpeed);
     }
-
-
 }

@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2366157540
+  GlobalObjectIdHash: 1437510682
   InScenePlacedSourceGlobalObjectIdHash: 3883123480
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -656,7 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showGizmos: 0
   idle: {fileID: 11400000, guid: 53d39110b1e4a1340bac1438f8501ad9, type: 2}
-  chase: {fileID: 0}
+  chase: {fileID: 11400000, guid: d5288889ceb1bbd4385bb41a3d1c74ed, type: 2}
   attack: {fileID: 0}
   dropItemList: []
   dropTotalChance: 0

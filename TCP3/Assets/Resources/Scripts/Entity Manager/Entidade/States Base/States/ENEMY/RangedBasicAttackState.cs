@@ -62,17 +62,10 @@ public class RangedBasicAttackState : EnemyAttackStateSOBase
 
     private void Attack(GameObject player)
     {
-        // Para o inimigo de se mover
+        // Ativar animação de ataque (isShooting)
+        enemy.anim.SetTrigger("isShooting");
         enemy.Movement(Vector2.zero);
-
-        // Roda o firePoint em direção ao jogador (apenas no eixo Y)
         RotateFirePointTowardsTarget(player.transform);
-
-        // Debug para simular o tiro
-        Debug.Log("Inimigo atirando no jogador!");
-
-        // Aqui você pode adicionar a lógica de criar um projétil e fazer o tiro real
-        // Por exemplo:
         FireProjectile();
     }
 
@@ -81,12 +74,11 @@ public class RangedBasicAttackState : EnemyAttackStateSOBase
         if (target != null && enemy.firePoint != null)
         {
             Vector3 direction = target.position - enemy.transform.position;
-            direction.y = 0; // Ignora a diferença no eixo Y, para rotacionar apenas no plano horizontal
+            direction.y = 0; // Garante que o inimigo só rotacione no plano XZ
             enemy.firePoint.rotation = Quaternion.LookRotation(direction);
         }
     }
 
-    // Se quiser implementar a lógica de disparar projéteis, adicione aqui
     private void FireProjectile()
     {
         if (enemy.firePoint != null && projectilePrefab != null)
@@ -96,5 +88,4 @@ public class RangedBasicAttackState : EnemyAttackStateSOBase
             Spawner.Instance.SpawnProjectilesServerRpc(enemy.firePoint.position, shootDirection, "projectileBasic", 20, shooterId);
         }
     }
-
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class ChaseStateSOBase : ScriptableObject, IState
 {
-    protected Enemy enemy;
+    protected NPC npc;
     protected Transform transform;
     protected GameObject gameObject;
     protected Transform playerTransform;
@@ -11,7 +11,7 @@ public abstract class ChaseStateSOBase : ScriptableObject, IState
     {
         this.gameObject = gameObject;
         transform = gameObject.transform;
-        this.enemy = gameObject.GetComponent<Enemy>();
+        this.npc = gameObject.GetComponent<NPC>();
     }
 
     public virtual void DoEnterLogic() { }

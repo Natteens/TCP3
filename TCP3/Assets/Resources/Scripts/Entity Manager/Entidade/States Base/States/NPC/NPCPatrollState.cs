@@ -8,15 +8,18 @@ public class NPCPatrollState : IdleStateSOBase
     [SerializeField] private float patrolRadius = 5f;
     [SerializeField] private float patrolPointReachThreshold = 0.5f;
     [SerializeField] private float maxPatrolTime = 3f;
+    [SerializeField] private float detectionRadius = 10f; // Raio para detectar o jogador
 
     private Vector3 patrolPoint;
     private float patrolTimer;
+    private Transform player;
 
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
         ChoosePatrolPoint();
         patrolTimer = maxPatrolTime;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform; // Assume que o jogador tem a tag "Player"
     }
 
     public override void DoExitLogic()
@@ -29,24 +32,19 @@ public class NPCPatrollState : IdleStateSOBase
     {
         base.DoPhysicsLogic();
 
-        // Verifica a distância entre o inimigo e o jogador
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        // Verifica se o jogador está no range de detecção
+        if (player != null && Vector3.Distance(npc.transform.position, player.position) <= detectionRadius)
         {
-            float distanceToPlayer = Vector3.Distance(enemy.transform.position, player.transform.position);
-
-            if (distanceToPlayer <= patrolRadius) // Se o jogador estiver perto, mudar para o estado de perseguição
-            {
-                enemy.ChangeState(enemy.Chase);
-                return;
-            }
+            // Troca para o estado de fuga
+            npc.ChangeState(npc.Chase);
+            return; // Não continua a lógica de patrulha se o jogador estiver no range
         }
 
-        // Código de patrulha continua...
-        Vector3 moveDirection = (patrolPoint - enemy.transform.position).normalized;
-        enemy.Movement(moveDirection);
+        // Lógica de patrulha
+        Vector3 moveDirection = (patrolPoint - npc.transform.position).normalized;
+        npc.Movement(moveDirection);
 
-        float distanceToPatrolPoint = Vector3.Distance(enemy.transform.position, patrolPoint);
+        float distanceToPatrolPoint = Vector3.Distance(npc.transform.position, patrolPoint);
         patrolTimer -= Time.deltaTime;
 
         if (distanceToPatrolPoint <= patrolPointReachThreshold || patrolTimer <= 0)
@@ -56,10 +54,10 @@ public class NPCPatrollState : IdleStateSOBase
         }
     }
 
-
     private void ChoosePatrolPoint()
     {
         Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
-        patrolPoint = enemy.transform.position + randomDirection;
+        randomDirection.y = 0; // Para evitar que o NPC se mova no eixo Y
+        patrolPoint = npc.transform.position + randomDirection;
     }
 }
