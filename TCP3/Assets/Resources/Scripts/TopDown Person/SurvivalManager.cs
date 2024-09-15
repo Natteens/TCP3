@@ -15,6 +15,7 @@ public class SurvivalManager : NetworkBehaviour
     private bool WhithoutStamina = false;
     private float HungryTimer, ThirstyTimer;
     [SerializeField] private HealthComponent healthComponent;
+    [SerializeField] private StatusComponent statusComponent;
     public event Action OnStatusChanged;
     
     void Start()
@@ -63,7 +64,7 @@ public class SurvivalManager : NetworkBehaviour
     }
     void Thirsty()
     {
-        CurrentThirsty -= Time.deltaTime;
+        CurrentThirsty -= (1 - (statusComponent.GetStatus(StatusType.Satiaty) / 100f)) * CurrentThirsty;
         if (CurrentThirsty >= MaxThirsty)
         {
             CurrentThirsty = MaxThirsty;

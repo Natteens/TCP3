@@ -24,12 +24,12 @@ MonoBehaviour:
   maxMunition: 30
   cadence: 0.05
   reloadSpeed: 0.6
-  spread: 0.01
-  bulletPerShoot: 10
+  spread: 0.3
+  bulletPerShoot: 1
   damage: 3
   defensePenetration: 10
   isAutomatic: 0
-  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnPosition: {x: 0, y: 2, z: 3}
   bulletPrefab: {fileID: 859511144445963057, guid: d7e6c9bd2ac3e5b4faacc32a2df245ff, type: 3}
   effects: []
   animatorParameter: Fuzil

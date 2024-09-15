@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: wTampinha
   m_EditorClassIdentifier: 
   itemName: Tampinha
-  itemDescription: "<color=red>Modelo:Revolver\nDano: 25\nPenetra\xE7\xE3o de Armadura:
+  itemDescription: "<color=red>Modelo:Revolver\nDano: 30\nPenetra\xE7\xE3o de Armadura:
     15\nMuni\xE7\xE3o m\xE1xima: 6\nVelocidade de Recarga: 0,1\nCad\xEAncia: 0,15</color>"
   itemType: 1
   itemSprite: {fileID: 21300000, guid: 252f79e3b23bff24e9b50936843a396f, type: 3}
@@ -25,10 +25,10 @@ MonoBehaviour:
   reloadSpeed: 0.1
   spread: 0.01
   bulletPerShoot: 1
-  damage: 25
+  damage: 30
   defensePenetration: 15
   isAutomatic: 0
-  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnPosition: {x: 0, y: 2, z: 1.5}
   bulletPrefab: {fileID: 930696269855422731, guid: 9fc5bf94c37f1d84899f0af0cba92490, type: 3}
   effects: []
   animatorParameter: Fuzil
