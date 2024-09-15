@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bcdc3fed71bac544ba88e25ac9c1bd3, type: 3}
   m_Name: Lagarix Ranged Attack
   m_EditorClassIdentifier: 
-  minAttackRange: 1.5
-  maxAttackRange: 4
+  minAttackRange: 5
+  maxAttackRange: 8
+  projectilePrefab: {fileID: 936742529699111999, guid: 9fc5bf94c37f1d84899f0af0cba92490, type: 3}
   attackCooldown: 1
   projectileSpeed: 10
   projectileDamage: 10

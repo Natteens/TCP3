@@ -4304,7 +4304,6 @@ GameObject:
   - component: {fileID: 2846663491371457789}
   - component: {fileID: 8954243456720647014}
   - component: {fileID: 8954243456720647009}
-  - component: {fileID: 8954243456720647008}
   - component: {fileID: 2065426453}
   - component: {fileID: 5748093040636248968}
   m_Layer: 10
@@ -4431,21 +4430,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseStatus: {fileID: 11400000, guid: a1caa0dd874ca1448ad4bdd346670ce5, type: 2}
   activeEffects: []
---- !u!114 &8954243456720647008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8954243456720646937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56adfafa375598f41923445708bbe08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets: []
-  obstacles: []
-  currentTarget: {fileID: 0}
 --- !u!114 &2065426453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4458,21 +4442,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30df2221b84bf414cbef520291a3eed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectors:
-  - {fileID: 11400000, guid: 52c0969013e41e24bacf516340cfa586, type: 2}
-  - {fileID: 11400000, guid: 0ac62a8925456b344b74527fc82a1e75, type: 2}
-  steeringBehaviours:
-  - {fileID: 11400000, guid: 28fbfc1d9615ac147bbc858a0cfe84bd, type: 2}
-  - {fileID: 11400000, guid: 89622f18ab057ae46b86636e202cdd8a, type: 2}
-  contextSolver: {fileID: 11400000, guid: 70e39c1b0f781bf4eb3feb4ad1536d63, type: 2}
-  _aiData: {fileID: 8954243456720647008}
-  detectionDelay: 0.05
-  detectionRange: 15
-  hasIncreasedDetectionRange: 1
   showGizmos: 1
   firePoint: {fileID: 1464951903}
   attackCollider: {fileID: 0}
-  enemyEffect: {fileID: 0}
   idle: {fileID: 11400000, guid: 4184bd3688ce5724dbcdc21a65ba55a7, type: 2}
   chase: {fileID: 11400000, guid: 076ca20f56237e542bea7cfe89fdcf5d, type: 2}
   attack: {fileID: 11400000, guid: cd0c6edd4ea449f43b8a192c70bf352c, type: 2}

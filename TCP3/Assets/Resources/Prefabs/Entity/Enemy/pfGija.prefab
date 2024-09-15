@@ -485,7 +485,6 @@ GameObject:
   - component: {fileID: 2846663491371457789}
   - component: {fileID: 8954243456720647014}
   - component: {fileID: 8954243456720647009}
-  - component: {fileID: 8954243456720647008}
   - component: {fileID: 5748093040636248968}
   m_Layer: 10
   m_Name: pfGija
@@ -576,8 +575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Gija
-  level:
-    m_InternalValue: 1
+  level: 0
   giveXp: 10
   nameAndLevelText: {fileID: 3849179495277918829}
   healthMultiplier: 30
@@ -612,21 +610,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseStatus: {fileID: 11400000, guid: a1caa0dd874ca1448ad4bdd346670ce5, type: 2}
   activeEffects: []
---- !u!114 &8954243456720647008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8954243456720646937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56adfafa375598f41923445708bbe08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets: []
-  obstacles: []
-  currentTarget: {fileID: 0}
 --- !u!114 &5748093040636248968
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4786,7 +4786,6 @@ GameObject:
   - component: {fileID: 8954243456720647014}
   - component: {fileID: 8954243456720647009}
   - component: {fileID: 5157983853005509655}
-  - component: {fileID: 8954243456720647008}
   - component: {fileID: 5748093040636248968}
   m_Layer: 10
   m_Name: pfPanguma
@@ -4855,7 +4854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 819299099
+  GlobalObjectIdHash: 3891336440
   InScenePlacedSourceGlobalObjectIdHash: 3883123480
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -4882,7 +4881,7 @@ MonoBehaviour:
   nameAndLevelText: {fileID: 3849179495277918829}
   healthMultiplier: 30
   defenseMultiplier: 1.5
-  uiOffset: {x: 0, y: 3, z: 0}
+  uiOffset: {x: 0, y: 5, z: 0}
   statusComponent: {fileID: 8954243456720647009}
   healthComponent: {fileID: 8954243456720647014}
   healthBar: {fileID: 3368803503377620635}
@@ -4910,41 +4909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de06847979b29484ea77e32d7b783819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentStatus
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[StatusType, Assembly-CSharp],[System.Single,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[StatusType, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
   baseStatus: {fileID: 11400000, guid: a1caa0dd874ca1448ad4bdd346670ce5, type: 2}
   activeEffects: []
 --- !u!114 &5157983853005509655
@@ -4959,21 +4923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fe084a32f381e4caf583be6c764ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectors:
-  - {fileID: 11400000, guid: 52c0969013e41e24bacf516340cfa586, type: 2}
-  - {fileID: 11400000, guid: 0ac62a8925456b344b74527fc82a1e75, type: 2}
-  steeringBehaviours:
-  - {fileID: 11400000, guid: 28fbfc1d9615ac147bbc858a0cfe84bd, type: 2}
-  - {fileID: 11400000, guid: 89622f18ab057ae46b86636e202cdd8a, type: 2}
-  contextSolver: {fileID: 11400000, guid: 70e39c1b0f781bf4eb3feb4ad1536d63, type: 2}
-  _aiData: {fileID: 8954243456720647008}
-  detectionDelay: 0.05
-  detectionRange: 15
-  hasIncreasedDetectionRange: 0
   showGizmos: 0
   firePoint: {fileID: 1464951903}
   attackCollider: {fileID: 0}
-  enemyEffect: {fileID: 0}
   idle: {fileID: 11400000, guid: a65a601dcab476e44aa82d98b9733dbe, type: 2}
   chase: {fileID: 11400000, guid: ef1d5348f92753e4cb625ae4c313c3ce, type: 2}
   attack: {fileID: 11400000, guid: 3e0dea59b23af3046a7e06ddb9469809, type: 2}
@@ -4985,21 +4937,6 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 995c13c71540323448a847b63dd862c8, type: 2}
     dropChance: 5
   dropTotalChance: 0
---- !u!114 &8954243456720647008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8954243456720646937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56adfafa375598f41923445708bbe08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets: []
-  obstacles: []
-  currentTarget: {fileID: 0}
 --- !u!114 &5748093040636248968
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,7 +10,6 @@ public abstract class Enemy : BaseEntity
     [Header("States Configs")]
     [field: SerializeField] private bool showGizmos;
     [field: SerializeField] public Transform firePoint;
-    [field: SerializeField] public Collider attackCollider;
 
     [Space(10f)]
     [Header("States")]
