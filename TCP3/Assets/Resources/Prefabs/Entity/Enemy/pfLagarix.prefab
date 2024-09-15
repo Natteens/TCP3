@@ -4357,10 +4357,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3687744
-  m_Height: 2.4374542
+  m_Radius: 0.72089255
+  m_Height: 3.120204
   m_Direction: 1
-  m_Center: {x: -0.01940918, y: 1.2047882, z: 0}
+  m_Center: {x: 0.022661328, y: 1.5461631, z: 0}
 --- !u!114 &8954243456720647015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4373,7 +4373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1458061301
+  GlobalObjectIdHash: 2509473657
   InScenePlacedSourceGlobalObjectIdHash: 3883123480
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -4444,7 +4444,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showGizmos: 1
   firePoint: {fileID: 1464951903}
-  attackCollider: {fileID: 0}
   idle: {fileID: 11400000, guid: 4184bd3688ce5724dbcdc21a65ba55a7, type: 2}
   chase: {fileID: 11400000, guid: 076ca20f56237e542bea7cfe89fdcf5d, type: 2}
   attack: {fileID: 11400000, guid: cd0c6edd4ea449f43b8a192c70bf352c, type: 2}

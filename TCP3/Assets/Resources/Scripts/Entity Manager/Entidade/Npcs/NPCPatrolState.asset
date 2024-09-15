@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a475c5474f0a1d4dbb15f835e8b1006, type: 3}
   m_Name: NPCPatrolState
   m_EditorClassIdentifier: 
-  patrolRadius: 5
-  patrolPointReachThreshold: 0.5
-  maxPatrolTime: 3
+  patrolRadius: 30
+  patrolPointReachThreshold: 3
+  maxPatrolTime: 5
