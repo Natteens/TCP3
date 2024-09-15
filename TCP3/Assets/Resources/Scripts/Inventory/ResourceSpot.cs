@@ -57,6 +57,7 @@ public class ResourceSpot : NetworkBehaviour, Interactable
         myCollider = GetComponent<BoxCollider>();
         GameManager.Instance.HarvestHolder.SetActive(false);
         currentResourceToHarvest = maxResourceToHarvest;
+        currentTime = 0f;
     }
 
     void Update()
@@ -115,11 +116,11 @@ public class ResourceSpot : NetworkBehaviour, Interactable
     {
         //StartCoroutine(SetLayerWeight(anim, 2, 0f, .5f));
         //anim.SetBool("Collection", false);
+        GameManager.Instance.HarvestHolder.SetActive(false);
         isHarvesting = false;
         currentTime = 0f;
         inputs = null;
         RestoreOriginalAimSource();
-        GameManager.Instance.HarvestHolder.SetActive(false);
     }
 
     public void Countdown()
@@ -164,7 +165,7 @@ public class ResourceSpot : NetworkBehaviour, Interactable
             UpdateAimSource();
 
             StartHarvesting();
-            maxTime = baseTimeToHarvest - (interactor.GetComponent<StatusComponent>().GetStatus(StatusType.GatheringSpeed) / 10f);
+            maxTime = baseTimeToHarvest - (interactor.GetComponent<StatusComponent>().GetStatus(StatusType.GatheringSpeed) / 15f);
         }
         else
         {
