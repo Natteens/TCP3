@@ -1,102 +1,100 @@
-using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RangedAttack", menuName = "Enemy/States/Ranged Basic Attack State")]
 public class RangedBasicAttackState : EnemyAttackStateSOBase
 {
-
     [SerializeField] private float minAttackRange = 1.5f;
     [SerializeField] private float maxAttackRange = 4f;
- //   [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float attackCooldown = 1.0f;
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private float projectileDamage = 10f;
     [SerializeField] private float projectileRange = 5f;
 
     private bool isOnCooldown = false;
+    private float cooldownTimer = 0f; // Timer para gerenciar cooldown
 
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
         isOnCooldown = false;
+        cooldownTimer = attackCooldown; // Reseta o cooldown
     }
 
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-        if (enemy.aiData.currentTarget != null)
-        {
-            float distanceToTarget = Vector2.Distance(enemy.transform.position, enemy.aiData.currentTarget.position);
 
-            RangeToAttack(distanceToTarget);
-        }
-        else
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return;
+
+        float distanceToPlayer = Vector3.Distance(enemy.transform.position, player.transform.position);
+
+        // Se o inimigo está no alcance para atacar
+        if (distanceToPlayer <= maxAttackRange)
         {
-            enemy.ChangeState(enemy.Idle);
+            // Se não estiver em cooldown, atira
+            if (!isOnCooldown)
+            {
+                Attack(player);
+                isOnCooldown = true;
+            }
+        }
+        // Se o jogador sair do alcance, mudar para o estado de perseguição
+        else if (distanceToPlayer > maxAttackRange)
+        {
+            enemy.ChangeState(enemy.Chase);
+        }
+
+        // Se estiver em cooldown, atualiza o timer
+        if (isOnCooldown)
+        {
+            cooldownTimer -= Time.deltaTime;
+
+            if (cooldownTimer <= 0f)
+            {
+                isOnCooldown = false;
+                cooldownTimer = attackCooldown; // Reseta o cooldown
+            }
         }
     }
 
-    private void RangeToAttack(float distanceToTarget)
+    private void Attack(GameObject player)
     {
-        if (enemy.attackRangeInUse)
-        {
-            if (distanceToTarget <= minAttackRange && !isOnCooldown)
-            {
-                RotateFirePointTowardsTarget(enemy.aiData.currentTarget);
-                enemy.StartCoroutine(Attack());
-            }
-            else if (distanceToTarget > minAttackRange)
-            {
-                enemy.ChangeState(enemy.Chase);
-            }
-        }
-        else
-        {
-            if (distanceToTarget <= maxAttackRange && !isOnCooldown)
-            {
-                RotateFirePointTowardsTarget(enemy.aiData.currentTarget);
-                enemy.StartCoroutine(Attack());
-            }
-            else if (distanceToTarget > maxAttackRange)
-            {
-                enemy.ChangeState(enemy.Chase);
-            }
-        }
+        // Para o inimigo de se mover
+        enemy.Movement(Vector2.zero);
+
+        // Roda o firePoint em direção ao jogador (apenas no eixo Y)
+        RotateFirePointTowardsTarget(player.transform);
+
+        // Debug para simular o tiro
+        Debug.Log("Inimigo atirando no jogador!");
+
+        // Aqui você pode adicionar a lógica de criar um projétil e fazer o tiro real
+        // Por exemplo:
+        FireProjectile();
     }
 
     private void RotateFirePointTowardsTarget(Transform target)
     {
         if (target != null && enemy.firePoint != null)
         {
-            Vector2 direction = target.position - enemy.transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            enemy.firePoint.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            Vector3 direction = target.position - enemy.transform.position;
+            direction.y = 0; // Ignora a diferença no eixo Y, para rotacionar apenas no plano horizontal
+            enemy.firePoint.rotation = Quaternion.LookRotation(direction);
         }
     }
 
-    private IEnumerator Attack()
-    {
-        enemy.Movement(Vector2.zero);
-        isOnCooldown = true;
-        enemy.anim.SetTrigger("RangedAttack");
-        yield return new WaitUntil(() => enemy.anim.GetCurrentAnimatorStateInfo(0).IsName("RangedAttack"));
-        yield return new WaitUntil(() => enemy.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
-        yield return new WaitForSeconds(attackCooldown);
-        isOnCooldown = false;
-    }
-
+    // Se quiser implementar a lógica de disparar projéteis, adicione aqui
     private void FireProjectile()
     {
-        if (enemy.firePoint != null)
+        if (enemy.firePoint != null && projectilePrefab != null)
         {
-          //  Projectile projectile = Instantiate(projectilePrefab, enemy.firePoint.position, enemy.firePoint.rotation);
-         //   projectile.UpdateProjectile(projectileRange, projectileSpeed, projectileDamage);
-         //   projectile.GetComponent<EnemyDamageSource>().attacker = enemy;
+            ulong shooterId = enemy.GetComponent<NetworkObject>().NetworkObjectId;
+            Vector3 shootDirection = enemy.firePoint.forward;
+            Spawner.Instance.SpawnProjectilesServerRpc(enemy.firePoint.position, shootDirection, "projectileBasic", 20, shooterId);
         }
     }
 
-    public override void EventOnAttackAnimationIn()
-    {
-        FireProjectile();
-    }
 }

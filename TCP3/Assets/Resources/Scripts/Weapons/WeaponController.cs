@@ -243,7 +243,14 @@ public class WeaponController : NetworkBehaviour
 
     private bool CanShoot()
     {
-        return input.shoot && input.aim && fireRateCounter >= currentWeapon.cadence && currentWeapon != null && canShoot;
+        if (input.shoot && input.aim && fireRateCounter >= currentWeapon.cadence && currentWeapon != null && canShoot)
+        {
+             return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private Vector3 GetShootDirection(Vector3 aimPoint)

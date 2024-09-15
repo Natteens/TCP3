@@ -28,7 +28,20 @@ public class IdlePatrollState : EnemyIdleStateSOBase
     {
         base.DoPhysicsLogic();
 
-        //Debug.Log("Movimentando");
+        // Verifica a distância entre o inimigo e o jogador
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            float distanceToPlayer = Vector3.Distance(enemy.transform.position, player.transform.position);
+
+            if (distanceToPlayer <= patrolRadius) // Se o jogador estiver perto, mudar para o estado de perseguição
+            {
+                enemy.ChangeState(enemy.Chase);
+                return;
+            }
+        }
+
+        // Código de patrulha continua...
         Vector3 moveDirection = (patrolPoint - enemy.transform.position).normalized;
         enemy.Movement(moveDirection);
 
@@ -40,18 +53,12 @@ public class IdlePatrollState : EnemyIdleStateSOBase
             ChoosePatrolPoint();
             patrolTimer = maxPatrolTime;
         }
-
-        if (enemy.aiData.GetTargetsCount() > 0)
-        {
-            enemy.ChangeState(enemy.Chase);
-        }
     }
+
 
     private void ChoosePatrolPoint()
     {
-        // Generate a random point within the patrol radius in 3D space
         Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
-        randomDirection.y = 0; // Keep the patrol on the ground plane, assuming y is up
         patrolPoint = enemy.transform.position + randomDirection;
     }
 }
