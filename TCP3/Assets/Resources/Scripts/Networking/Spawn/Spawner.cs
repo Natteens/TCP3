@@ -1,3 +1,4 @@
+using DamageNumbersPro;
 using EasyBuildSystem.Features.Runtime.Buildings.Part;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,7 +59,6 @@ public class Spawner : Singleton<Spawner>
         if (worldInstance.TryGetComponent<NetworkObject>(out var networkObject))
         {
             networkObject.Spawn();
-            // Adiciona o objeto ao HashSet
             spawnedObjects.Add(networkObject);
         }
     }

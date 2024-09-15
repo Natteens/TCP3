@@ -98,7 +98,9 @@ public class ProjectileMover : MonoBehaviour
                     // Instancia o número de dano
                     if (numberPrefab != null)
                     {
-                        DamageNumber damageNumber = numberPrefab.Spawn(pos, finalDamage);
+                        DamageNumber damageNumber = Instantiate(numberPrefab, contact.point, Quaternion.identity);
+                        damageNumber.Spawn(pos, finalDamage);
+                        Destroy(damageNumber.gameObject, 2f);
                     }
 
                     // Caso a entidade morra, o atirador ganha XP
