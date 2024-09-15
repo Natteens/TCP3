@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using DamageNumbersPro;
 
 public class ProjectileMover : MonoBehaviour
 {
-    public float Damage; 
+    public float Damage;
     public float speed = 15f;
     public float hitOffset = 0f;
     public bool UseFirePointRotation;
+    public DamageNumber numberPrefab; // Prefab de número de dano
     public Vector3 rotationOffset = new Vector3(0, 0, 0);
     public GameObject hit;
     public GameObject flash;
@@ -16,7 +18,11 @@ public class ProjectileMover : MonoBehaviour
     public GameObject[] Detached;
     public Transform shooter;
     public LayerMask Layer;
-    public void InitializeProjectile(int amount) { Damage = amount; }
+
+    public void InitializeProjectile(int amount)
+    {
+        Damage = amount;
+    }
 
     void Start()
     {
@@ -36,22 +42,20 @@ public class ProjectileMover : MonoBehaviour
                 Destroy(flashInstance, flashPsParts.main.duration);
             }
         }
-        Destroy(gameObject,5);
-	}
+        Destroy(gameObject, 5); // Destroi após 5 segundos
+    }
 
-
-    void FixedUpdate ()
+    void FixedUpdate()
     {
-		if (speed != 0)
+        if (speed != 0)
         {
             rb.velocity = transform.forward * speed;
-            //transform.position += transform.forward * (speed * Time.deltaTime);         
         }
-	}
+    }
 
     void OnCollisionEnter(Collision collision)
     {
-        //Lock all axes movement and rotation
+        // Trava o movimento e a rotação do projétil após a colisão
         rb.constraints = RigidbodyConstraints.FreezeAll;
         speed = 0;
 
@@ -62,31 +66,53 @@ public class ProjectileMover : MonoBehaviour
         if (hit != null)
         {
             var hitInstance = Instantiate(hit, pos, rot);
-            if (UseFirePointRotation) { hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
-            else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
-            else { hitInstance.transform.LookAt(contact.point + contact.normal); }
+            if (UseFirePointRotation)
+            {
+                hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0);
+            }
+            else if (rotationOffset != Vector3.zero)
+            {
+                hitInstance.transform.rotation = Quaternion.Euler(rotationOffset);
+            }
+            else
+            {
+                hitInstance.transform.LookAt(contact.point + contact.normal);
+            }
 
+            // Se colidiu com um objeto que faz parte da camada definida
             if ((Layer & (1 << collision.gameObject.layer)) != 0)
             {
                 Debug.Log("Colidiu com: " + collision.gameObject.name);
+                HealthComponent health = collision.gameObject.GetComponent<HealthComponent>();
+                StatusComponent status = collision.gameObject.GetComponent<StatusComponent>();
 
-                //Caso a entidade morra, dar xp ao atirador do projetil. Vai permitir compartilhar xp mas paciencia :p
-                collision.gameObject.GetComponent<HealthComponent>().OnDeath += () =>
+                if (health != null && status != null)
                 {
-                    shooter.GetComponent<LevelManager>().IncreaseXp(collision.gameObject.GetComponent<EnemySettings>().giveXp);
-                };
+                    // Cálculo do dano com defesa
+                    float targetDefense = status.GetStatus(StatusType.Defense);
+                    int finalDamage = DamageCalculator.CalculateWithDefense(targetDefense, Damage);
 
-                float targetDefense = collision.gameObject.GetComponent<StatusComponent>().GetStatus(StatusType.Defense);
-                int finalDamage = DamageCalculator.CalculateWithDefense(targetDefense, Damage);
-                collision.gameObject.GetComponent<HealthComponent>().TakeDamage(finalDamage);
+                    // Aplica o dano à saúde do alvo
+                    health.TakeDamage(finalDamage);
 
+                    // Instancia o número de dano
+                    if (numberPrefab != null)
+                    {
+                        DamageNumber damageNumber = numberPrefab.Spawn(pos, finalDamage);
+                    }
+
+                    // Caso a entidade morra, o atirador ganha XP
+                    if (health.CurrentHealth <= 0)
+                    {
+                        shooter.GetComponent<LevelManager>().IncreaseXp(collision.gameObject.GetComponent<EnemySettings>().giveXp);
+                    }
+                }
             }
 
+            // Destroi a hit instance após o término da partícula
             var hitPs = hitInstance.GetComponent<ParticleSystem>();
-
             if (hitPs != null)
             {
-                
                 Destroy(hitInstance, hitPs.main.duration);
             }
             else
@@ -95,6 +121,8 @@ public class ProjectileMover : MonoBehaviour
                 Destroy(hitInstance, hitPsParts.main.duration);
             }
         }
+
+        // Solta os objetos "Detached"
         foreach (var detachedPrefab in Detached)
         {
             if (detachedPrefab != null)
@@ -102,6 +130,8 @@ public class ProjectileMover : MonoBehaviour
                 detachedPrefab.transform.parent = null;
             }
         }
+
+        // Despawning e destruição do projétil
         Spawner.Instance.DespawnInWorld(this.GetComponent<NetworkObject>());
         Destroy(gameObject);
     }

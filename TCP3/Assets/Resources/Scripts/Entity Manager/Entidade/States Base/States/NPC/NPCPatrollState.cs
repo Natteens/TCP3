@@ -12,13 +12,14 @@ public class NPCPatrollState : IdleStateSOBase
 
     private Vector3 patrolPoint;
     private float patrolTimer;
-    private Transform player;
+    private Transform player = null;
 
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
         ChoosePatrolPoint();
         patrolTimer = maxPatrolTime;
+        player = null;
         player = GameObject.FindGameObjectWithTag("Player")?.transform; // Assume que o jogador tem a tag "Player"
     }
 

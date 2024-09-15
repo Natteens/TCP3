@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 199612730937394052}
   - component: {fileID: 760305834699641099}
   - component: {fileID: -4597018642996658001}
+  - component: {fileID: -6907320540313822321}
   m_Layer: 0
   m_Name: Flash 13
   m_TagString: Untagged
@@ -4948,6 +4949,19 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-6907320540313822321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367027481643288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e694814bbc343aa44b38d93b0052c027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 1
 --- !u!1 &1376986803373142
 GameObject:
   m_ObjectHideFlags: 0

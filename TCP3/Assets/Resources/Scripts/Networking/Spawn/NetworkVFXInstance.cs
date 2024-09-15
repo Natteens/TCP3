@@ -12,6 +12,7 @@ public class NetworkVFXInstance : MonoBehaviour
     {
         netObj = GetComponent<NetworkObject>();
         Despawn();
+        Destroy(gameObject, timer);
     }
 
     private void Despawn()

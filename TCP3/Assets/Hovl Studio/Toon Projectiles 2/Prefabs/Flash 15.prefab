@@ -9797,6 +9797,7 @@ GameObject:
   - component: {fileID: 199834584266395504}
   - component: {fileID: 654509189424913748}
   - component: {fileID: -277750809330208393}
+  - component: {fileID: -2730438543807743779}
   m_Layer: 0
   m_Name: Flash 15
   m_TagString: Untagged
@@ -14732,3 +14733,16 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-2730438543807743779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460800425478370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e694814bbc343aa44b38d93b0052c027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 1

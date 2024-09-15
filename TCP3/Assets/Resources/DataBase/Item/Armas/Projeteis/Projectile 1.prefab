@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 943727127833197691}
   - component: {fileID: 6975147266981734594}
   - component: {fileID: 4542647401983483031}
+  - component: {fileID: 1267983988348589974}
   m_Layer: 7
   m_Name: Projectile 1
   m_TagString: Untagged
@@ -4831,6 +4832,7 @@ MonoBehaviour:
   speed: 35
   hitOffset: 0.05
   UseFirePointRotation: 0
+  numberPrefab: {fileID: 1720627775375863164, guid: da7f119637c0cc14ba78ddea5fae8de8, type: 3}
   rotationOffset: {x: 0, y: 0, z: 0}
   hit: {fileID: 1096352044232144, guid: 6e4b9c1925f0d3f4d8446e551a2e20d3, type: 3}
   flash: {fileID: 1069073989498846, guid: 7658ae01d0a0655468898c47617f4de6, type: 3}
@@ -4952,7 +4954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2984846738
+  GlobalObjectIdHash: 3458577771
   InScenePlacedSourceGlobalObjectIdHash: 439729947
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -4992,3 +4994,16 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &1267983988348589974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936742529699111999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e694814bbc343aa44b38d93b0052c027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 1

@@ -9788,6 +9788,7 @@ GameObject:
   - component: {fileID: 199824356277152476}
   - component: {fileID: 2625491361103519071}
   - component: {fileID: 3623398088385413184}
+  - component: {fileID: -9186423691388721227}
   m_Layer: 0
   m_Name: Flash 8
   m_TagString: Untagged
@@ -14724,6 +14725,19 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-9186423691388721227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777536642811984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e694814bbc343aa44b38d93b0052c027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 1
 --- !u!1 &1979895552908364
 GameObject:
   m_ObjectHideFlags: 0
