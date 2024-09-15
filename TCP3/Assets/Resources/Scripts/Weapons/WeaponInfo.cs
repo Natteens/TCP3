@@ -9,7 +9,7 @@ using UnityEngine;
         Revolver,
         SubMetralhadora,
         Rifle,
-        Escopeta
+        Escopeta,
     }
 [CreateAssetMenu(fileName = "Weapon", menuName = "Item/Create Weapon")]
 public class WeaponInfo : Item
@@ -19,7 +19,7 @@ public class WeaponInfo : Item
     public int maxMunition;
     public float cadence;
     public float reloadSpeed;
-   [Range(0.01f, 1f)] public float spread;
+    public float spread;
     public int bulletPerShoot;
     public int damage;
     public int defensePenetration;

@@ -52,7 +52,7 @@ public class WeaponController : NetworkBehaviour
 
     private void Update()
     {
-        if (currentWeapon == null) return;
+        if (currentWeapon == null || !IsOwner) return;
         HandleInput();
 
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
@@ -92,11 +92,11 @@ public class WeaponController : NetworkBehaviour
             if (currentAmmo > 0)
             {
                 if (!isShooting) isShooting = true;
-                Vector3 shootDirection = GetShootDirection(aimPoint);
                 ulong shooterId = GetComponent<NetworkObject>().NetworkObjectId;
                 string projectileName = Projectile(); 
                 for (int i = 0; i < currentWeapon.bulletPerShoot; i++)
                 {
+                    Vector3 shootDirection = GetShootDirection(aimPoint, i, currentWeapon.bulletPerShoot, currentWeapon.spread);
                     Spawner.Instance.SpawnProjectilesServerRpc(bulletSpawner.position, shootDirection, projectileName, currentWeapon.damage, shooterId); 
                 }
                 currentAmmo--;
@@ -125,12 +125,15 @@ public class WeaponController : NetworkBehaviour
             case WeaponType.Rifle:
                 return "projectile4";
             case WeaponType.Escopeta:
-                return "projectile5";
+                if (currentWeapon.itemName == "Supernova")
+                {
+                  return"projectile2";
+                }   
+                  return "projectile5";
             default:
                 return "projectileBasic"; 
         }
     }
-
 
     private void StopShooting()
     {
@@ -205,6 +208,7 @@ public class WeaponController : NetworkBehaviour
 
     public void DeactivateCurrentWeapon()
     {
+        currentWeapon = null;
         DeactivateAllWeapons();
     }
 
@@ -272,14 +276,23 @@ public class WeaponController : NetworkBehaviour
         }
     }
 
-    private Vector3 GetShootDirection(Vector3 aimPoint)
+    private Vector3 GetShootDirection(Vector3 aimPoint, int bulletIndex, int totalBullets, float spread)
     {
+        // Direção padrão do tiro
         Vector3 shootDirection = (aimPoint - bulletSpawner.position).normalized;
+
+        // Aplica spread apenas para armas com mais de um tiro por disparo
+        if (totalBullets > 1)
+        {
+            float spreadFactor = spread * ((float)bulletIndex / (totalBullets - 1)) - spread / 2;
+            shootDirection = Quaternion.Euler(0, spreadFactor * 15, 0) * shootDirection; // Spread moderado
+        }
+
+        // Garante que o Y seja sempre 0 para que o tiro permaneça no plano XZ
         shootDirection.y = 0;
-        float spreadFactor = UnityEngine.Random.Range(-currentWeapon.spread, currentWeapon.spread);
-        shootDirection += new Vector3(spreadFactor, 0, spreadFactor);
         return shootDirection.normalized;
     }
+
 
     private IEnumerator Reload()
     {
@@ -332,44 +345,9 @@ public class WeaponController : NetworkBehaviour
         if (bulletSpawner != null)
         {
             Gizmos.color = Color.red;
-            Vector3 shootDirection = GetShootDirection(Vector3.zero); 
+            Vector3 shootDirection = GetShootDirection(Vector3.zero, 0, currentWeapon.bulletPerShoot, currentWeapon.spread);
             Gizmos.DrawLine(bulletSpawner.position, bulletSpawner.position + shootDirection * 10f);
             Gizmos.DrawSphere(bulletSpawner.position + shootDirection * 10f, 0.1f);
         }
-
-        // Desenhar o ponto de mira
-        if (torsoAimConstraint != null)
-        {
-            Gizmos.color = Color.blue;
-            Vector3 aimPoint = torsoAimConstraint.data.offset;
-            Gizmos.DrawSphere(transform.position + aimPoint, 0.1f);
-            Gizmos.DrawLine(transform.position, transform.position + aimPoint);
-        }
-
-        var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
-        if (success)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(position, 0.2f);
-            Gizmos.DrawLine(transform.position, position);
-        }
-
-        Gizmos.color = Color.cyan;
-        Vector3 directionToAim = (position - transform.position).normalized;
-        Gizmos.DrawLine(transform.position, transform.position + directionToAim * 10f);
-
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawRay(transform.position, transform.forward * 10f);
-
-        if (bulletSpawner != null)
-        {
-            Gizmos.color = Color.yellow;
-            Vector3 bulletSpawnerDirection = (position - bulletSpawner.position).normalized;
-            bulletSpawnerDirection.y = 0;
-            Debug.DrawRay(bulletSpawner.position, bulletSpawnerDirection * 10f);
-        }
-
-        Gizmos.color = Color.white;
-        Gizmos.DrawRay(transform.position, Vector3.up * currentAimOffsetY);
     }
 }
