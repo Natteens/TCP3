@@ -39,6 +39,7 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
         BuildMode m_BuildMode;
         public BuildMode GetBuildMode { get { return m_BuildMode; } }
 
+
         [SerializeField] BaseInputHandler m_InputHandler;
         public BaseInputHandler GetInputHandler
         {
@@ -552,6 +553,7 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
         /// <returns>True if the placement conditions are satisfied, false otherwise.</returns>
         public bool CheckPlacingCondition()
         {
+
             if (m_CurrentPreview == null)
             {
                 return false;

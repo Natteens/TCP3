@@ -43,11 +43,19 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Part
             [SerializeField, BuildingType] string m_Type;
             public string Type { get { return m_Type; } set { m_Type = value; } }
 
+            [SerializeField] string m_ItemToCraft = "Madeira";
+            public string ItemToCraft { get { return m_ItemToCraft; } set { m_ItemToCraft = value; } }
+
+            [SerializeField] int m_QuantityItemToCraft = 5;
+            public int QuantityItemToCraft { get { return m_QuantityItemToCraft; } set { m_QuantityItemToCraft = value; } }
+
             [SerializeField] Texture2D m_Thumbnail;
             public Texture2D Thumbnail { get { return m_Thumbnail; } set { m_Thumbnail = value; } }
 
             [SerializeField] string m_Identifier;
             public string Identifier { get { return m_Identifier; } set { m_Identifier = value; } }
+
+            
         }
         [SerializeField] GeneralSettings m_GeneralSettings = new GeneralSettings();
         public GeneralSettings GetGeneralSettings { get { return m_GeneralSettings; } }
@@ -1053,6 +1061,7 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Part
         /// </summary>
         public void ShowPreviewIndicator()
         {
+            
             if (!m_PreviewSettings.Indicator)
             {
                 return;
@@ -1103,6 +1112,7 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Part
         /// </summary>
         public void HidePreviewIndicator()
         {
+            
 #if UNITY_EDITOR
             EditorApplication.delayCall += () =>
             {

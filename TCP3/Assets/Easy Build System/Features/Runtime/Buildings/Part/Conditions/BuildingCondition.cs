@@ -13,6 +13,8 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Part.Conditions
     {
         #region Fields
 
+        
+
         BuildingPart m_BuildingPart;
         public BuildingPart GetBuildingPart
         {

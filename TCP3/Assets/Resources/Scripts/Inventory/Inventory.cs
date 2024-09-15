@@ -162,6 +162,12 @@ public class Inventory
         return itemList.FirstOrDefault(i => i != null && i.uniqueID == item.uniqueID);
     }
 
+    public Item SearchItemByName(string name)
+    {
+        //espero que isso funcione
+        return itemList.FirstOrDefault(i => i != null && i.itemName == name);
+    }
+
     public int CountItem(Item item)
     {
         var foundItem = SearchItem(item);

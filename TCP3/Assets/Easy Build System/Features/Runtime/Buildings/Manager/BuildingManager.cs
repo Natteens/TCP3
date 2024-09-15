@@ -350,7 +350,22 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Manager
 
             string buildName = buildingPart.GetComponent<BuildingPart>().GetBuildingName();
 
-            Spawner.Instance.SpawnConstructionInWorldServerRpc(position, Quaternion.Euler(rotation), buildName);
+            Inventory inventory = GameManager.Instance.uiInventory.GetInventory();
+            Item itemToCraft = inventory.SearchItemByName(buildingPart.GetComponent<BuildingPart>().GetGeneralSettings.ItemToCraft);
+            int Quantity = 5;
+            int currentQuantity = inventory.CountItem(itemToCraft);
+
+            if (itemToCraft != null && currentQuantity >= Quantity)
+            {
+                Spawner.Instance.SpawnConstructionInWorldServerRpc(position, Quaternion.Euler(rotation), buildName);
+            }
+            else
+            {
+                FeedbackManager.Instance.FeedbackText("Precisa de: " + Quantity.ToString() + "x " + itemToCraft.itemName);
+                return null;
+            }
+
+            
 
             BuildingPart instancedBuildingPart = Spawner.Instance.GetLastConstruction();
 
