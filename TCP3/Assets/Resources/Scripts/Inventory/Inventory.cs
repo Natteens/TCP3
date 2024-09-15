@@ -164,8 +164,14 @@ public class Inventory
 
     public Item SearchItemByName(string name)
     {
-        //espero que isso funcione
-        return itemList.FirstOrDefault(i => i != null && i.itemName == name);
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i] != null && itemList[i].itemName == name)
+            {
+                return itemList[i];
+            }
+        }
+        return null; // Retorna null se o item não for encontrado
     }
 
     public int CountItem(Item item)

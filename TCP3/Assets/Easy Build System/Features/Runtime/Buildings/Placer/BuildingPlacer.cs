@@ -583,6 +583,26 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
         /// <returns>True if the Building Part was successfully placed, false otherwise.</returns>
         public virtual bool PlacingBuildingPart()
         {
+            Inventory inventory = GameManager.Instance.uiInventory.GetInventory();
+            Item itemToCraft = inventory.SearchItemByName("Madeira");
+
+            if (itemToCraft == null)
+            {
+                FeedbackManager.Instance.FeedbackText("Madeira não encontrada no inventário.");
+                return false;
+            }
+
+            Debug.Log("Achei o item... " + itemToCraft.itemName);
+
+            int Quantity = 5;
+            int currentQuantity = inventory.CountItem(itemToCraft);
+
+            if (currentQuantity < Quantity)
+            {
+                FeedbackManager.Instance.FeedbackText("Necessário: x5 Madeira");
+                return false;
+            }
+
             if (!HasPreview())
             {
                 return false;
@@ -592,6 +612,8 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
             {
                 return false;
             }
+
+            inventory.RemoveItemByAmount(itemToCraft, Quantity);
 
             BuildingManager.Instance.PlaceBuildingPart(GetSelectedBuildingPart,
                 m_CurrentPreview.transform.position,

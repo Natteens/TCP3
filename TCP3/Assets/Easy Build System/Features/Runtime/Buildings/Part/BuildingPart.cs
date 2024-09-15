@@ -43,12 +43,6 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Part
             [SerializeField, BuildingType] string m_Type;
             public string Type { get { return m_Type; } set { m_Type = value; } }
 
-            [SerializeField] string m_ItemToCraft = "Madeira";
-            public string ItemToCraft { get { return m_ItemToCraft; } set { m_ItemToCraft = value; } }
-
-            [SerializeField] int m_QuantityItemToCraft = 5;
-            public int QuantityItemToCraft { get { return m_QuantityItemToCraft; } set { m_QuantityItemToCraft = value; } }
-
             [SerializeField] Texture2D m_Thumbnail;
             public Texture2D Thumbnail { get { return m_Thumbnail; } set { m_Thumbnail = value; } }
 
