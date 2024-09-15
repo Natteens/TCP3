@@ -760,9 +760,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3689332478174221290, guid: 827e2a248ee396041bdb366844a2c776, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 827e2a248ee396041bdb366844a2c776, type: 3}
       propertyPath: m_Name
       value: MAPA_SEM_CIDADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 827e2a248ee396041bdb366844a2c776, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2097717344963911978, guid: 827e2a248ee396041bdb366844a2c776, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5696,6 +5704,8 @@ MonoBehaviour:
     prefab: {fileID: 857637018432462905, guid: d7e6c9bd2ac3e5b4faacc32a2df245ff, type: 3}
   - id: projectile6
     prefab: {fileID: 8956453548637870513, guid: 20259a7b27ca80f4ab44e82ebffb20e1, type: 3}
+  - id: dmgpopup
+    prefab: {fileID: 7179298980952126010, guid: da7f119637c0cc14ba78ddea5fae8de8, type: 3}
 --- !u!114 &330108345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28622,7 +28632,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622174032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 11.3, z: 0}
+  m_LocalPosition: {x: 0, y: 12, z: 0}
   m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
