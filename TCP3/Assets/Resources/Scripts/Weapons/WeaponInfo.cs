@@ -37,12 +37,13 @@ public class WeaponInfo : Item
         amount = 1;
         itemType = Itemtype.Arma;
 
-        string newInfos =     "<color=red>Modelo:"+weaponType.ToString() +
+        string newInfos =     "<b>\n" +
+                              "Modelo: "+weaponType.ToString() +
                               "\nDano: " + damage.ToString() +
                               "\nPenetração de Armadura: " + defensePenetration.ToString() +
                               "\nMunição máxima: " + maxMunition.ToString() +
                               "\nVelocidade de Recarga: " + reloadSpeed.ToString() +
-                              "\nCadência: " + cadence.ToString() + "</color>";
+                              "\nCadência: " + cadence.ToString() + "</b>";
 
         itemDescription = newInfos;
     }

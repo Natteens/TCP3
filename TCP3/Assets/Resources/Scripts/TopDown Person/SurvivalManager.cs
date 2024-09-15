@@ -40,7 +40,11 @@ public class SurvivalManager : NetworkBehaviour
     }
     void Hungry()
     {
-        CurrentHungry -= (1 - (statusComponent.GetStatus(StatusType.Satiaty) / 100f)) * CurrentHungry;
+        float hungryDecrease = Mathf.Max(0.003f, (0.3f - (statusComponent.GetStatus(StatusType.Satiaty) / 100f))) * Time.deltaTime;
+
+        CurrentHungry -= hungryDecrease;
+        Debug.Log($"Hungry Decrease: {hungryDecrease}");
+
         if (CurrentHungry >= MaxHunger)
         {
             CurrentHungry = MaxHunger;
@@ -62,9 +66,13 @@ public class SurvivalManager : NetworkBehaviour
         }
         StatusChanged();
     }
+
     void Thirsty()
     {
-        CurrentThirsty -= (1 - (statusComponent.GetStatus(StatusType.Satiaty) / 100f)) * CurrentThirsty;
+        float thirstyDecrease = Mathf.Max(0.006f, (0.6f - (statusComponent.GetStatus(StatusType.Satiaty) / 100f))) * Time.deltaTime;
+        CurrentThirsty -= thirstyDecrease;
+        Debug.Log($"Thirsty Decrease: {thirstyDecrease}");
+
         if (CurrentThirsty >= MaxThirsty)
         {
             CurrentThirsty = MaxThirsty;
@@ -86,6 +94,7 @@ public class SurvivalManager : NetworkBehaviour
         }
         StatusChanged();
     }
+
     void Stamina()
     {
         float multEuler = ((1 / MaxStamina) * CurrentStamina) * ((1 / MaxHunger) * CurrentHungry);

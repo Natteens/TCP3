@@ -23,6 +23,9 @@ public class LevelManager : NetworkBehaviour
 
         nextLevelXp = 150 + (int)(Mathf.Pow(level, 2f) * 10);
         myStatus = GetComponent<StatusComponent>();
+
+        //Crafts iniciais
+        foreach (Craft craft in GameManager.Instance.uiCraft.Level1_4) { GameManager.Instance.uiCraft.GetInventory().AddCraft(craft); }
     }
 
     private void Update()
@@ -48,6 +51,17 @@ public class LevelManager : NetworkBehaviour
         skillPoints++;
         nextLevelXp = 150 + (int)(Mathf.Pow(level, 2f) * 10);
         OnXpChanged.Invoke(); //COXAS CODE MAS FÉ
+
+        switch (level)
+        {
+            case 5:
+                foreach (Craft craft in GameManager.Instance.uiCraft.Level5_9) { GameManager.Instance.uiCraft.GetInventory().AddCraft(craft); }
+                break;
+
+            case 10:
+                foreach (Craft craft in GameManager.Instance.uiCraft.Level10_15) { GameManager.Instance.uiCraft.GetInventory().AddCraft(craft); }
+                break;
+        }
     }
 
     public void ApplyStatusChanges(int consPoints, int destPoints, int sobrePoints, int sortePoints)

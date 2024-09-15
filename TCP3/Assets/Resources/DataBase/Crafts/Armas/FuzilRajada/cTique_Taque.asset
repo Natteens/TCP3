@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad301b392d51a1044aa283facd796096, type: 3}
+  m_Name: cTique_Taque
+  m_EditorClassIdentifier: 
+  recipes:
+  - item: {fileID: 11400000, guid: 1e39ed4d8d8866347a5b50ab8f62083c, type: 2}
+    needQuantity: 10
+  - item: {fileID: 11400000, guid: 2cb9a8093b37bd0489367d5ef9904421, type: 2}
+    needQuantity: 5
+  - item: {fileID: 11400000, guid: 96c8da7c64b7beb47a76f41bb4802c72, type: 2}
+    needQuantity: 10
+  - item: {fileID: 11400000, guid: 5b6d5106d6b63ff4aa3af6d0d536f409, type: 2}
+    needQuantity: 20
+  - item: {fileID: 11400000, guid: 995c13c71540323448a847b63dd862c8, type: 2}
+    needQuantity: 15
+  - item: {fileID: 11400000, guid: 340c3e52824d205498cf44c0deab8a6c, type: 2}
+    needQuantity: 15
+  outputItem: {fileID: 11400000, guid: 23912ec850121124180822429f880497, type: 2}

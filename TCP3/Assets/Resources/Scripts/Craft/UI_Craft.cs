@@ -21,6 +21,11 @@ public class UI_Craft : MonoBehaviour
     private Item.Itemtype actualFilter;
     private bool hasExpanded = false;
 
+    //DEBUG
+    public List<Craft> Level1_4;
+    public List<Craft> Level5_9;
+    public List<Craft> Level10_15;
+
 
     private void Awake()
     {
@@ -228,6 +233,11 @@ public class UI_Craft : MonoBehaviour
             txt.text = "<color=red>" + actualQuantity.ToString() + "/" + recipe.needQuantity + "</color>";
         }
 
+    }
+
+    public CraftInventory GetInventory()
+    {
+        return craftInventory;
     }
 
 }

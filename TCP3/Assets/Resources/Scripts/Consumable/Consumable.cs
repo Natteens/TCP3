@@ -15,7 +15,7 @@ public class Consumable : Item, INetworkSerializable
     {
         itemType = Itemtype.Consumivel;
 
-        string newInfos = "<color=red>Restaura " + restoreAmount.ToString() + " de " + type.ToString() + "</color>";
+        string newInfos = "<b>Restaura " + restoreAmount.ToString() + " de " + type.ToString() + "</b>";
 
         itemDescription = newInfos;
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: wNanico
   m_EditorClassIdentifier: 
   itemName: Nanico
-  itemDescription: "<color=red>Modelo:Revolver\nDano: 15\nPenetra\xE7\xE3o de Armadura:
+  itemDescription: "<color=red>Modelo:Revolver\nDano: 20\nPenetra\xE7\xE3o de Armadura:
     15\nMuni\xE7\xE3o m\xE1xima: 6\nVelocidade de Recarga: 0,25\nCad\xEAncia: 0,15</color>"
   itemType: 1
   itemSprite: {fileID: 21300000, guid: 252f79e3b23bff24e9b50936843a396f, type: 3}
@@ -23,9 +23,9 @@ MonoBehaviour:
   maxMunition: 6
   cadence: 0.15
   reloadSpeed: 0.25
-  spread: 0.5
+  spread: 0.02
   bulletPerShoot: 1
-  damage: 15
+  damage: 20
   defensePenetration: 15
   isAutomatic: 0
   spawnPosition: {x: 0, y: 2, z: 1.5}
