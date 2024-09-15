@@ -2,11 +2,16 @@ using UnityEngine;
 using Unity.Netcode;
 using CodeMonkey.Utils;
 using EasyBuildSystem.Packages.Addons.AdvancedBuilding;
+using System.Collections;
 
 public class ItemWorld : NetworkBehaviour, Interactable
 {
     [SerializeField] private Item item;
 
+    private void Start()
+    {
+        StartCoroutine(Lifetime());
+    }
     public void SetItem(Item item)
     {
         if (item == null)
@@ -22,6 +27,12 @@ public class ItemWorld : NetworkBehaviour, Interactable
     public Item GetItem()
     {
         return item;
+    }
+
+    public IEnumerator Lifetime()
+    {
+        yield return new WaitForSeconds(30f);
+        DestroySelf();
     }
 
     public void OnInteract(Transform interactor)

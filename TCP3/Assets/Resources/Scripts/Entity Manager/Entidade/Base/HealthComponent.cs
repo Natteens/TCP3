@@ -108,6 +108,14 @@ public class HealthComponent : NetworkBehaviour, IHealth
         //Vai ficar assim e fé!
         if (gameObject.CompareTag("Player"))
         {
+            Inventory inventory = GameManager.Instance.uiInventory.GetInventory();
+            int amountToDrop = UnityEngine.Random.Range(0, inventory.GetItemList().Count);
+
+            for (int i = 0; i < amountToDrop; i++)
+            {
+                inventory.DropRandomItem();
+            }
+
             Revive();
             return;
         }

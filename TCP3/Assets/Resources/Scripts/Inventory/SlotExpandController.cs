@@ -273,17 +273,20 @@ public class SlotExpandController : MonoBehaviour
             {
                 int amount = int.Parse(sliderAmount.text);
 
-                // Crie uma cópia do item antes de alterar o valor
-                Item itemToDrop = ScriptableObjectUtility.Clone(selectedItem);
-                itemToDrop.amount = amount;
+                if (amount > 0)
+                {
+                    // Crie uma cópia do item antes de alterar o valor
+                    Item itemToDrop = ScriptableObjectUtility.Clone(selectedItem);
+                    itemToDrop.amount = amount;
 
-                // Dropa a cópia do item com o valor atualizado
-                Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop.uniqueID);
+                    // Dropa a cópia do item com o valor atualizado
+                    Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition() + new Vector3(0f, 5f, 0f), itemToDrop.uniqueID);
 
-                // Remove a quantidade correta do inventário
-                GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amount);
+                    // Remove a quantidade correta do inventário
+                    GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amount);
 
-                Clean();
+                    Clean();
+                }
                 return;
             }
 

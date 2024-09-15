@@ -25,12 +25,11 @@ public class Inventory
         
         if (newItem.IsStackable())
         {
-            // Tenta encontrar um item igual para acumular
             for (int i = 0; i < itemList.Count; i++)
             {
                 if (itemList[i] != null && itemList[i].uniqueID == newItem.uniqueID)
                 {
-                    itemList[i].amount += newItem.amount;
+                    itemList[i].amount += 1;
                     OnItemListChanged?.Invoke(this, EventArgs.Empty);
                     return;
                 }
@@ -92,6 +91,48 @@ public class Inventory
         }
     }
 
+    public void RemoveItemByAmount(Item item, int amount)
+    {
+        TooltipScreenSpaceUI.HideTooltip_Static();
+
+        for (int i = 0; i < amount; i++)
+        {
+            RemoveItem(item);
+        }
+    }
+
+    public void DropRandomItem()
+    {
+        // Cria uma lista de índices de itens válidos (não nulos)
+        List<int> validItemIndexes = new List<int>();
+
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i] != null)
+            {
+                validItemIndexes.Add(i);
+            }
+        }
+
+        // Se não houver itens, não faz nada
+        if (validItemIndexes.Count == 0)
+        {
+            Debug.LogWarning("Nenhum item para remover");
+            return;
+        }
+
+        // Escolhe um índice aleatório da lista de itens válidos
+        int randomIndex = validItemIndexes[UnityEngine.Random.Range(0, validItemIndexes.Count)];
+
+        // Crie uma cópia do item antes de alterar o valor
+        Item itemToDrop = ScriptableObjectUtility.Clone(itemList[randomIndex]);
+
+        Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop.uniqueID);
+
+        // Remove o item do índice aleatório
+        RemoveItem(itemList[randomIndex]);
+    }
+
     private void ReorganizeInventory(int emptyIndex)
     {
         for (int i = emptyIndex; i < itemList.Count - 1; i++)
@@ -102,43 +143,6 @@ public class Inventory
                 itemList[i] = itemList[i + 1];
                 itemList[i + 1] = null;
             }
-        }
-    }
-
-    public void RemoveItemByAmount(Item item, int amount)
-    {
-        TooltipScreenSpaceUI.HideTooltip_Static();
-        // Verifica se o item está no inventário
-        if (HasItem(item))
-        {
-            Item _itemInInventory = SearchItem(item);
-            if (_itemInInventory != null && _itemInInventory.amount >= amount)
-            {
-                
-                for (int i = 0; i < amount; i++)
-                {
-                    _itemInInventory.amount -= 1;
-
-                    if (_itemInInventory.amount <= 0)
-                    {
-                        slotsWithItem--;
-                        itemList.Remove(_itemInInventory);
-                        TooltipScreenSpaceUI.HideTooltip_Static();
-                        break;
-                    }
-                }
-                
-                // Notifica a UI sobre a mudança no inventário
-                OnItemListChanged?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                Debug.LogWarning("Quantidade insuficiente para remover");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Inventário não contém este item");
         }
     }
 

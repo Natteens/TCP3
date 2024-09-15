@@ -41,6 +41,7 @@ public class Item : ScriptableObject, INetworkSerializable
         }
     }
 
+
     public void Initialize(Item item)
     {
         this.itemName = item.itemName;
