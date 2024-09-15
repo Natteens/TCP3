@@ -117,7 +117,7 @@ public class WeaponController : NetworkBehaviour
             case WeaponType.Rifle:
                 return "projectile4";
             case WeaponType.Escopeta:
-                return "projectile6";
+                return "projectile5";
             default:
                 return "projectileBasic"; 
         }

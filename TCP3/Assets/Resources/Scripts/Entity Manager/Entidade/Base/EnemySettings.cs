@@ -9,10 +9,6 @@ public class EnemySettings : NetworkBehaviour
 {
     [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nome do Inimigo")]
-    private NetworkVariable<string> networkEnemyName = new NetworkVariable<string>("Inimigo", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
-    [BoxGroup("Configurações do Inimigo")]
-    [LabelText("Nome do Inimigo")]
     [SerializeField] private string enemyName;
 
     [BoxGroup("Configurações do Inimigo")]
@@ -49,19 +45,6 @@ public class EnemySettings : NetworkBehaviour
     private Camera mainCamera;
 
     [BoxGroup("Configurações do Inimigo")]
-    [LabelText("Nome do Inimigo")]
-    public string EnemyName
-    {
-        get => networkEnemyName.Value;
-        set
-        {
-            enemyName = value;
-            networkEnemyName.Value = value;
-            
-        }
-    }
-
-    [BoxGroup("Configurações do Inimigo")]
     [LabelText("Nível do Inimigo")]
     public int Level
     {
@@ -76,7 +59,6 @@ public class EnemySettings : NetworkBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        EnemyName = enemyName;
         ApplyLevelScaling();
         UpdateNameAndLevelUI();
     }
@@ -121,7 +103,7 @@ public class EnemySettings : NetworkBehaviour
     {
         if (nameAndLevelText != null)
         {
-            nameAndLevelText.text = $"{EnemyName} - Nv. {Level}";
+            nameAndLevelText.text = $"{enemyName} - Nv. {Level}";
         }
     }
 
@@ -139,7 +121,7 @@ public class EnemySettings : NetworkBehaviour
     [Button("Definir Nome")]
     public void SetName(string newName)
     {
-        EnemyName = newName;
+        enemyName = newName;
     }
 
     public int GetLevel()
