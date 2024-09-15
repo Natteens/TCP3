@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon", menuName = "Item/Create Weapon")]
-public class WeaponInfo : Item
-{
     public enum WeaponType
     {
         Fuzil,
@@ -14,6 +11,9 @@ public class WeaponInfo : Item
         Rifle,
         Escopeta
     }
+[CreateAssetMenu(fileName = "Weapon", menuName = "Item/Create Weapon")]
+public class WeaponInfo : Item
+{
     [Header("Weapon Configs")]
     public WeaponType weaponType;
     public int maxMunition;

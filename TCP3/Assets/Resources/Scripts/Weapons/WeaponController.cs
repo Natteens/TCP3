@@ -36,11 +36,6 @@ public class WeaponController : NetworkBehaviour
         input = GetComponent<StarterAssetsInputs>();
     }
 
-    private void Start()
-    {
-        StartingWeaponServerRpc();
-    }
-
     [ServerRpc(RequireOwnership = false)]
     public void StartingWeaponServerRpc()
     {
@@ -91,7 +86,8 @@ public class WeaponController : NetworkBehaviour
                 if (!isShooting) isShooting = true;
                 Vector3 shootDirection = GetShootDirection(aimPoint);
                 ulong shooterId = GetComponent<NetworkObject>().NetworkObjectId;
-                Spawner.Instance.SpawnProjectilesServerRpc(bulletSpawner.position, shootDirection, "projectileBasic", currentWeapon.damage, shooterId);
+                string projectileName = Projectile();
+                Spawner.Instance.SpawnProjectilesServerRpc(bulletSpawner.position, shootDirection, projectileName, currentWeapon.damage, shooterId);
                 currentAmmo -= currentWeapon.bulletPerShoot;
                 fireRateCounter = 0f;
                 OnShoot?.Invoke();
@@ -102,6 +98,28 @@ public class WeaponController : NetworkBehaviour
             }
         }
     }
+
+    private string Projectile()
+    {
+        switch (currentWeapon.weaponType)
+        {
+            case WeaponType.Fuzil:
+                return "projectileBasic";
+            case WeaponType.FuzilRajada:
+                return "projectileBasic";
+            case WeaponType.Revolver:
+                return "projectileBasic";
+            case WeaponType.SubMetralhadora:
+                return "projectile5";
+            case WeaponType.Rifle:
+                return "projectile4";
+            case WeaponType.Escopeta:
+                return "projectile6";
+            default:
+                return "projectileBasic"; 
+        }
+    }
+
 
     private void StopShooting()
     {
@@ -200,7 +218,14 @@ public class WeaponController : NetworkBehaviour
 
     private Transform FindWeaponTransform(string weaponModelName)
     {
-        return weaponsContainer.Find(weaponModelName);
+        foreach (Transform weapon in weaponsContainer.GetComponentsInChildren<Transform>(true))
+        {
+            if (weapon.name == weaponModelName)
+            {
+                return weapon;
+            }
+        }
+        return null;
     }
 
     private void HandleInput()

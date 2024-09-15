@@ -291,6 +291,7 @@ public class UI_Inventory : MonoBehaviour
         else
         {
             Debug.Log($"Item {item.itemName} não é utilizável.");
+            DeactiveWeapon();
         }
     }
 
