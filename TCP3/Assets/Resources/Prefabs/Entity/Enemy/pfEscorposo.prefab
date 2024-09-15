@@ -486,6 +486,7 @@ GameObject:
   - component: {fileID: 8954243456720647014}
   - component: {fileID: 8954243456720647009}
   - component: {fileID: 5748093040636248968}
+  - component: {fileID: 8174009180879975809}
   m_Layer: 10
   m_Name: pfEscorposo
   m_TagString: Untagged
@@ -641,6 +642,24 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &8174009180879975809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954243456720646937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25262e7adc8fd2a4c9501fc8aab84069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showGizmos: 0
+  idle: {fileID: 11400000, guid: 53d39110b1e4a1340bac1438f8501ad9, type: 2}
+  chase: {fileID: 0}
+  attack: {fileID: 0}
+  dropItemList: []
+  dropTotalChance: 0
 --- !u!1001 &8546902688997915206
 PrefabInstance:
   m_ObjectHideFlags: 0

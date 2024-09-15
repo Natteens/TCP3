@@ -13818,7 +13818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 958174083
+  GlobalObjectIdHash: 1170836689
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -14041,11 +14041,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCraft: {fileID: 0}
-  debugcrafts:
-  - {fileID: 11400000, guid: 632818e901508184dac2e6011dc90fc7, type: 2}
-  - {fileID: 11400000, guid: c7a6b2c76ae161546b9d7d9e6f538355, type: 2}
-  - {fileID: 11400000, guid: b966ee112330c92439f99f8e0ed296c9, type: 2}
-  - {fileID: 11400000, guid: 37f0edc058611c94c9e5dcb476d0c9c7, type: 2}
 --- !u!114 &8664087164105426228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14070,6 +14065,12 @@ MonoBehaviour:
   events: {fileID: 4804455592028902273}
   rotationSpeed: 10
   defaultAimOffsetY: -30
+  fuzilWeapon: {fileID: 7332533242551750052}
+  fuzilRajadaWeapon: {fileID: 116869143602372741}
+  revolverWeapon: {fileID: 8470502844722653815}
+  subMetralhadoraWeapon: {fileID: 5590674046902793136}
+  rifleWeapon: {fileID: 2007582597703331215}
+  escopetaWeapon: {fileID: 4042888306797200203}
 --- !u!114 &8664087164105426229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14166,7 +14167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallMask:
     serializedVersion: 2
-    m_Bits: 8193
+    m_Bits: 8192
   mainCamera: {fileID: 0}
   wallMaterial: {fileID: 2100000, guid: 251ea43fc0dd69445a8743f632a83f2b, type: 2}
   raycastDistance: 40

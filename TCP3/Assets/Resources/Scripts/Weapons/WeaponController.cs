@@ -52,6 +52,7 @@ public class WeaponController : NetworkBehaviour
 
     private void Update()
     {
+        if (currentWeapon == null) return;
         HandleInput();
 
         var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
@@ -248,7 +249,6 @@ public class WeaponController : NetworkBehaviour
         rifleWeapon.SetActive(false);
         escopetaWeapon.SetActive(false);
     }
-
 
     private void HandleInput()
     {

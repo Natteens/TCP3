@@ -1,25 +1,25 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public abstract class Enemy : BaseEntity
+public class NPC : BaseEntity
 {
+
     [Space(10f)]
     [Header("States Configs")]
     [field: SerializeField] private bool showGizmos;
-    [field: SerializeField] public Transform firePoint;
 
     [Space(10f)]
     [Header("States")]
-    [SerializeField] private EnemyIdleStateSOBase idle;
-    [SerializeField] private EnemyChaseStateSOBase chase;
-    [SerializeField] private EnemyAttackStateSOBase attack;
+    [SerializeField] private IdleStateSOBase idle;
+    [SerializeField] private ChaseStateSOBase chase;
+    [SerializeField] private AttackStateSOBase attack;
 
-    [HideInInspector] public EnemyIdleStateSOBase Idle { get; set; }
-    [HideInInspector] public EnemyChaseStateSOBase Chase { get; set; }
-    [HideInInspector] public EnemyAttackStateSOBase Attack { get; set; }
+    [HideInInspector] public IdleStateSOBase Idle { get; set; }
+    [HideInInspector] public ChaseStateSOBase Chase { get; set; }
+    [HideInInspector] public AttackStateSOBase Attack { get; set; }
 
     [Space(10f)]
     [Header("States")]
@@ -41,14 +41,11 @@ public abstract class Enemy : BaseEntity
     {
         stateMachine = new StateMachine();
 
-        if (idle != null)
-        {
-            Idle = Instantiate(idle); 
-        }
+        Idle = Instantiate(idle);
         if (chase != null)
         {
             Chase = Instantiate(chase);
-        }
+        }   
         if (attack != null)
         {
             Attack = Instantiate(attack);
@@ -112,7 +109,7 @@ public abstract class Enemy : BaseEntity
             }
         }
 
-        return null; 
+        return null;
     }
 
     private float GetTotalChance()
@@ -127,7 +124,7 @@ public abstract class Enemy : BaseEntity
     public void DropEnemyItem(int myLevel)
     {
         Item dropItem = GetRandomItem();
-        int dropAmount = Random.Range(1, 3); 
+        int dropAmount = Random.Range(1, 3);
 
         for (int i = 0; i < dropAmount; i++)
         {

@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public abstract class EnemyChaseStateSOBase : ScriptableObject, IEnemyState
+public abstract class EnemyAttackStateSOBase : ScriptableObject, IState
 {
     protected Enemy enemy;
     protected Transform transform;
     protected GameObject gameObject;
     protected Transform playerTransform;
+  //  protected StatusEffect damageEffect;
 
-    public virtual void Initialize(GameObject gameObject, Enemy enemy)
+    public virtual void Initialize(GameObject gameObject)
     {
         this.gameObject = gameObject;
         transform = gameObject.transform;
-        this.enemy = enemy;
-      //  playerTransform = Player.Instance.transform;
+        this.enemy = gameObject.GetComponent<Enemy>();
     }
 
     public virtual void DoEnterLogic() { }
@@ -20,4 +20,6 @@ public abstract class EnemyChaseStateSOBase : ScriptableObject, IEnemyState
     public virtual void DoFrameUpdateLogic() { }
     public virtual void DoPhysicsLogic() { }
     public virtual void ResetValues() { }
+    public virtual void EventOnAttackAnimationIn() { }
+    public virtual void EventOnAttackAnimationOut() { }
 }
