@@ -27,7 +27,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -47,14 +47,29 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip: 1
+    - _Blend: 0
     - _BottomStrength: 0.32
+    - _CastShadows: 1
+    - _Cull: 0
+    - _DstBlend: 0
+    - _Float: 0.55
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RipplesAmount: 4
-    - _VertexOffsetAmount: 2
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _VertexOffsetAmount: 0.2
     - _VoronoiScale: 12
     - _VoronoiSpeed: 4
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
+    - _transpAlph: 0
+    - _transpF: 0
     m_Colors:
-    - _RippleColor: {r: 0.094918124, g: 0.745283, b: 0.6244188, a: 0.6039216}
+    - _Color: {r: 0.20278567, g: 0.7345077, b: 0.8773585, a: 1}
+    - _Color_1: {r: 0.03964933, g: 0.21972746, b: 0.9339623, a: 1}
+    - _RippleColor: {r: 0, g: 1, b: 0.8117647, a: 1}
     - _RipplesSpeed: {r: 0, g: 0.4, b: 0, a: 0}
   m_BuildTextureStacks: []

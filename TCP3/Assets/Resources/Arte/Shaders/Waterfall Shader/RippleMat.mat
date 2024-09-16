@@ -22,13 +22,15 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: RippleMat
   m_Shader: {fileID: -6465566751694194690, guid: 55073c16e68646a48b440fd9771be6eb, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ALPHATEST_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -47,14 +49,27 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BottomStrength: 0.5
+    - _AlphaClip: 1
+    - _Blend: 0
+    - _BottomStrength: 0.25
+    - _CastShadows: 1
+    - _Cull: 0
+    - _DstBlend: 0
+    - _Float: 5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RipplesAmount: 8
-    - _VertexOffsetAmount: 2.58
-    - _VoronoiScale: 12
-    - _VoronoiSpeed: 5
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _VertexOffsetAmount: 0.1
+    - _VoronoiScale: 10
+    - _VoronoiSpeed: 8
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
-    - _RippleColor: {r: 0.09411765, g: 0.74509805, b: 0.62352943, a: 0.6039216}
+    - _Color: {r: 0.20278567, g: 0.7345077, b: 0.8773585, a: 1}
+    - _Color_1: {r: 0.03964933, g: 0.21972746, b: 0.9339623, a: 1}
+    - _RippleColor: {r: 0.47685865, g: 1.518, b: 1.3590472, a: 1}
     - _RipplesSpeed: {r: 0, g: -0.4, b: 0, a: 0}
   m_BuildTextureStacks: []
