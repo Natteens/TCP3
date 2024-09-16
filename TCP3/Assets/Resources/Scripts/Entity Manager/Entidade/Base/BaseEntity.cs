@@ -11,6 +11,8 @@ public abstract class BaseEntity : NetworkBehaviour
     public  Rigidbody rb { get; private set; }
     public  Collider coll { get; private set; }
 
+    public int lootBuff = 0;
+
     public bool IsAlive => healthComponent.IsAlive;
 
     public virtual void Awake()

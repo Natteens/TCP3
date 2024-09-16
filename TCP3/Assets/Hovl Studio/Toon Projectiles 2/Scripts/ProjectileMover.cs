@@ -89,6 +89,9 @@ public class ProjectileMover : MonoBehaviour
             {
                 Debug.Log("Colidiu com: " + collision.gameObject.name);
 
+                BaseEntity enemy = collision.gameObject.GetComponent<BaseEntity>();
+                if (enemy != null) enemy.lootBuff = Mathf.CeilToInt(shooter.GetComponent<StatusComponent>().GetStatus(StatusType.LootChance) / 10);
+
                 // Caso a entidade morra, dar XP ao atirador do projetil.
                 HealthComponent healthComponent = collision.gameObject.GetComponent<HealthComponent>();
                 if (healthComponent != null)

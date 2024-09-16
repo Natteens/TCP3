@@ -27,6 +27,7 @@ public abstract class Enemy : BaseEntity
 
     [Header("Drop")]
     public List<DropItem> dropItemList = new List<DropItem>();
+    
     [Sirenix.OdinInspector.ReadOnly, SerializeField] private float dropTotalChance;
 
     [System.Serializable]
@@ -127,7 +128,7 @@ public abstract class Enemy : BaseEntity
     public void DropEnemyItem(int myLevel)
     {
         Item dropItem = GetRandomItem();
-        int dropAmount = Random.Range(1, 3); 
+        int dropAmount = Random.Range(1, 3 + lootBuff); 
 
         for (int i = 0; i < dropAmount; i++)
         {
