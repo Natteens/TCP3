@@ -3773,7 +3773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2509473657
+  GlobalObjectIdHash: 1458061301
   InScenePlacedSourceGlobalObjectIdHash: 3883123480
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -3797,6 +3797,7 @@ MonoBehaviour:
   enemyName: Lagarix
   level: 30
   giveXp: 10
+  baseEnemyXp: 25
   nameAndLevelText: {fileID: 3849179495277918829}
   healthMultiplier: 30
   defenseMultiplier: 1.5
@@ -3816,6 +3817,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466943f569509f641bf5ed646bd0e0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth:
+    m_InternalValue: 0
+  maxHealth:
+    m_InternalValue: 0
 --- !u!114 &8954243456720647009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3842,6 +3847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30df2221b84bf414cbef520291a3eed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lootBuff: 0
   showGizmos: 1
   firePoint: {fileID: 1464951903}
   idle: {fileID: 11400000, guid: 4184bd3688ce5724dbcdc21a65ba55a7, type: 2}
