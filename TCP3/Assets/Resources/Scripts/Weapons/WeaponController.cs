@@ -23,6 +23,7 @@ public class WeaponController : NetworkBehaviour
     private float fireRateCounter;
     private bool canShoot;
     private float currentAimOffsetY;
+    private bool isReloading = false;
 
     private const float ANIM_STATE_EQUIP = 0f;
     private const float ANIM_STATE_HOLD = 1f;
@@ -106,8 +107,9 @@ public class WeaponController : NetworkBehaviour
                 fireRateCounter = 0f;
                 OnShoot?.Invoke();
             }
-            else
+            else if (!isReloading)
             {
+                isReloading = true;
                 StartCoroutine(Reload());
             }
         }
@@ -265,8 +267,9 @@ public class WeaponController : NetworkBehaviour
     {
         if (currentWeapon == null) return;
 
-        if (input.reload && currentAmmo < currentWeapon.maxMunition)
+        if (input.reload && currentAmmo < currentWeapon.maxMunition && !isReloading)
         {
+            isReloading = true;
             StartCoroutine(Reload());
         }
     }
@@ -306,6 +309,7 @@ public class WeaponController : NetworkBehaviour
         yield return new WaitForSeconds(currentWeapon.reloadSpeed - (GetComponent<StatusComponent>().GetStatus(StatusType.CooldownReload) / 50f));
         currentAmmo = currentWeapon.maxMunition;
         anim.SetFloat("WeaponState", ANIM_STATE_HOLD, 0.1f, Time.deltaTime);
+        isReloading = false;
     }
 
     private void AdjustTorsoAimWeight()
