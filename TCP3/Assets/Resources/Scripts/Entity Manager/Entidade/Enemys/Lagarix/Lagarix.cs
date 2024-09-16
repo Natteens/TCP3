@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Lagarix : Enemy
 {
+
+    public bool canDealDamage = false;
+
     protected override void OnDeath()
     {
         base.OnDeath();
@@ -15,7 +18,9 @@ public class Lagarix : Enemy
     public override void EventActionOnAttack()
     {
         base.EventActionOnAttack();
+        canDealDamage = true;
         Destroy(gameObject, 1f);
+        canDealDamage = false;
     }
 
     public override void EventActionOnDeath()
@@ -24,5 +29,15 @@ public class Lagarix : Enemy
         DropEnemyItem(GetComponent<EnemySettings>().GetLevel());
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (canDealDamage && other != null)
+        {
+            HealthComponent health = other.GetComponent<HealthComponent>();
+            if (health != null)
+            {
+                health.TakeDamage(20);
+            }
+        }
+    }
 }
