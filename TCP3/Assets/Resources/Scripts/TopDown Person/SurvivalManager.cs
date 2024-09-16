@@ -43,7 +43,12 @@ public class SurvivalManager : NetworkBehaviour
         float hungryDecrease = Mathf.Max(0.003f, (0.3f - (statusComponent.GetStatus(StatusType.Satiaty) / 100f))) * Time.deltaTime;
 
         CurrentHungry -= hungryDecrease;
-       // Debug.Log($"Hungry Decrease: {hungryDecrease}");
+        // Debug.Log($"Hungry Decrease: {hungryDecrease}");
+
+        if (CurrentHungry >= MaxHunger / 2)
+        {
+            healthComponent?.Heal(healthComponent.MaxHealth * 0.005f);
+        }
 
         if (CurrentHungry >= MaxHunger)
         {
