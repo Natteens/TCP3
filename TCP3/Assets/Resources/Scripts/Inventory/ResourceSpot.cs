@@ -219,13 +219,13 @@ public class ResourceSpot : NetworkBehaviour, Interactable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && IsOwner)
             ControlUI();
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && IsOwner)
         {
             ControlUI();
 

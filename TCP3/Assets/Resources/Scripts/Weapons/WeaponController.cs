@@ -342,7 +342,7 @@ public class WeaponController : NetworkBehaviour
     {
         if (!Application.isPlaying) return;
 
-        if (bulletSpawner != null)
+        if (bulletSpawner != null && currentWeapon != null)
         {
             Gizmos.color = Color.red;
             Vector3 shootDirection = GetShootDirection(Vector3.zero, 0, currentWeapon.bulletPerShoot, currentWeapon.spread);

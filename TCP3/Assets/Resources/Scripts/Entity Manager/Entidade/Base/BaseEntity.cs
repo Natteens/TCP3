@@ -86,9 +86,22 @@ public abstract class BaseEntity : NetworkBehaviour
             rb.MoveRotation(Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 10f)); // Aumenta a suavidade da rotação
         }
 
+        // Verifica a velocidade real do rigidbody no plano XZ
+        float velocityMagnitude = new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude;
+
         // Corrige o blendSpeed da animação com base na magnitude da velocidade
-        float blendSpeed = (movement.magnitude > 0.1f) ? Mathf.Clamp(speed / 5f, 0f, 1f) : 0f;
-        anim.SetFloat("Speed", blendSpeed);
+        if (velocityMagnitude < 0.1f) // Parado
+        {
+            anim.SetFloat("Speed", 0f);
+        }
+        else if (velocityMagnitude < 3f) // Andando
+        {
+            anim.SetFloat("Speed", 0.5f);
+        }
+        else // Correndo
+        {
+            anim.SetFloat("Speed", 1f);
+        }
     }
 
 }
