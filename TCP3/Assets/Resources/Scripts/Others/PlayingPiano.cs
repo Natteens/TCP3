@@ -18,6 +18,20 @@ public class PlayingPiano : MonoBehaviour
     public float detectionRange = 5f;
     private bool isPlayerNear = false;
 
+    void Start()
+    {
+        onKey1.AddListener(() => PianoKey("piano1"));
+        onKey2.AddListener(() => PianoKey("piano2"));
+        onKey3.AddListener(() => PianoKey("piano3"));
+        onKey4.AddListener(() => PianoKey("piano4"));
+        onKey5.AddListener(() => PianoKey("piano5"));
+        onKey6.AddListener(() => PianoKey("piano6"));
+        onKey7.AddListener(() => PianoKey("piano7"));
+        onKey8.AddListener(() => PianoKey("piano8"));
+        onKey9.AddListener(() => PianoKey("piano9"));
+        onKey0.AddListener(() => PianoKey("piano0"));
+    }
+
     void Update()
     {
         if (isPlayerNear)
@@ -42,7 +56,6 @@ public class PlayingPiano : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Verifica se o jogador entrou na área de detecção
         if (other.CompareTag("Player"))
         {
             isPlayerNear = true;
@@ -51,7 +64,6 @@ public class PlayingPiano : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        // Verifica se o jogador saiu da área de detecção
         if (other.CompareTag("Player"))
         {
             isPlayerNear = false;
