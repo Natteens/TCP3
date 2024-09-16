@@ -2,6 +2,7 @@ using CodeMonkey.Utils;
 using System.Collections.Generic;
 using System;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -9,7 +10,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using Unity.Services.Lobbies.Models;
 
-public class UI_Inventory : MonoBehaviour
+public class UI_Inventory : NetworkBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform inventoryHolder;
@@ -316,6 +317,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void ActiveWeapon(Item item)
     {
+        if(!IsOwner) return;
         WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
         WeaponInfo cWeapon = item as WeaponInfo;
 

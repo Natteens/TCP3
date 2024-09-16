@@ -183,35 +183,45 @@ public class WeaponController : NetworkBehaviour
         bulletSpawner.forward = directionToAim; 
     }
 
+    public void EquipWeapon(WeaponInfo newWeapon)
+    {
+        if (!IsOwner) return;
+
+        EquipWeaponServerRpc(newWeapon);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void EquipWeaponServerRpc(WeaponInfo newWeapon)
+    {
+        currentWeapon = newWeapon;
+        currentAmmo = newWeapon != null ? newWeapon.maxMunition : 0;
+        fireRateCounter = 0f;
+        isShooting = false;
+        canShoot = false;
+        ActivateNewWeapon();
+
+        EquipWeaponClientRpc(newWeapon);
+    }
+
     [ClientRpc]
     public void EquipWeaponClientRpc(WeaponInfo newWeapon)
     {
-        DeactivateCurrentWeaponServerRpc();
+        if (!IsOwner) return;
 
         currentWeapon = newWeapon;
         currentAmmo = newWeapon != null ? newWeapon.maxMunition : 0;
         fireRateCounter = 0f;
         isShooting = false;
         canShoot = false;
+        ActivateNewWeapon();
 
-        if (currentWeapon != null)
-        {
-            ActivateNewWeapon();
-
-            anim.SetLayerWeight(1, 1f);
-            anim.SetBool("withoutWeapon", false);
-            anim.SetFloat("WeaponState", ANIM_STATE_EQUIP, 0.1f, Time.deltaTime);
-            anim.SetBool(currentWeapon.animatorParameter, true);
-        }
-        else
-        {
-            anim.SetLayerWeight(1, 0f);
-            anim.SetBool("withoutWeapon", true);
-        }
+        anim.SetLayerWeight(1, currentWeapon != null ? 1f : 0f);
+        anim.SetBool("withoutWeapon", currentWeapon == null);
+        anim.SetFloat("WeaponState", currentWeapon != null ? ANIM_STATE_EQUIP : ANIM_STATE_HOLD, 0.1f, Time.deltaTime);
+        anim.SetBool(currentWeapon?.animatorParameter ?? "", true);
 
         OnWeaponChanged?.Invoke();
     }
-
 
     [ServerRpc(RequireOwnership = false)]
     public void DeactivateCurrentWeaponServerRpc()

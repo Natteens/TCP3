@@ -6,11 +6,11 @@ using Unity.Netcode;
 
 public class HealthComponent : NetworkBehaviour, IHealth
 {
-    
-    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    private NetworkVariable<float> maxHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-     [SerializeField]
+    [field: SerializeField] private NetworkVariable<float> currentHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [field: SerializeField] private NetworkVariable<float> maxHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    [SerializeField]
     public float CurrentHealth
     {
         get => currentHealth.Value;
