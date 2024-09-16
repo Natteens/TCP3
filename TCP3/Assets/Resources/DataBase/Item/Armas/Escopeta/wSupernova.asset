@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: wSupernova
   m_EditorClassIdentifier: 
   itemName: Supernova
-  itemDescription: "<b>\nModelo: Escopeta\nDano: 55\nPenetra\xE7\xE3o de Armadura:
-    25\nMuni\xE7\xE3o m\xE1xima: 4\nVelocidade de Recarga: 1,5\nCad\xEAncia: 0,5</b>"
+  itemDescription: "<b>\nModelo: Escopeta\nDano: 50\nPenetra\xE7\xE3o de Armadura:
+    20\nMuni\xE7\xE3o m\xE1xima: 4\nVelocidade de Recarga: 3\nCad\xEAncia: 0,5</b>"
   itemType: 1
   itemSprite: {fileID: 21300000, guid: 2e72ba3ea9515444bb715645aaf919a6, type: 3}
   amount: 1
@@ -22,12 +22,12 @@ MonoBehaviour:
   weaponType: 5
   maxMunition: 4
   cadence: 0.5
-  reloadSpeed: 1.5
+  reloadSpeed: 3
   spread: 1
-  bulletPerShoot: 8
-  damage: 55
-  defensePenetration: 25
-  isAutomatic: 1
+  bulletPerShoot: 9
+  damage: 50
+  defensePenetration: 20
+  isAutomatic: 0
   spawnPosition: {x: 0, y: 2, z: 6}
   bulletPrefab: {fileID: 2337066583339238774, guid: 15cf1917d54b4944185b277f03984109, type: 3}
   effects: []

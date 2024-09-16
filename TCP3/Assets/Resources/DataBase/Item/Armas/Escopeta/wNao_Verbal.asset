@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: wNao_Verbal
   m_EditorClassIdentifier: 
   itemName: "N\xE3o Verbal"
-  itemDescription: "<color=red>Modelo:Escopeta\nDano: 35\nPenetra\xE7\xE3o de Armadura:
-    15\nMuni\xE7\xE3o m\xE1xima: 6\nVelocidade de Recarga: 2\nCad\xEAncia: 0,65</color>"
+  itemDescription: "<b>\nModelo: Escopeta\nDano: 35\nPenetra\xE7\xE3o de Armadura:
+    15\nMuni\xE7\xE3o m\xE1xima: 4\nVelocidade de Recarga: 4\nCad\xEAncia: 0,65</b>"
   itemType: 1
   itemSprite: {fileID: 21300000, guid: 2e72ba3ea9515444bb715645aaf919a6, type: 3}
   amount: 1
   uniqueID: f12e72188965478183bc035571a06f00_194234209_0
   weaponType: 5
-  maxMunition: 6
+  maxMunition: 4
   cadence: 0.65
-  reloadSpeed: 2
-  spread: 0.5
-  bulletPerShoot: 7
+  reloadSpeed: 4
+  spread: 1
+  bulletPerShoot: 6
   damage: 35
   defensePenetration: 15
   isAutomatic: 0

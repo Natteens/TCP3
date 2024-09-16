@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: wEspalha_Ideia
   m_EditorClassIdentifier: 
   itemName: Espalha-Ideia
-  itemDescription: "<color=red>Modelo:Escopeta\nDano: 25\nPenetra\xE7\xE3o de Armadura:
-    5\nMuni\xE7\xE3o m\xE1xima: 12\nVelocidade de Recarga: 2\nCad\xEAncia: 1</color>"
+  itemDescription: "<b>\nModelo: Escopeta\nDano: 25\nPenetra\xE7\xE3o de Armadura:
+    5\nMuni\xE7\xE3o m\xE1xima: 4\nVelocidade de Recarga: 5\nCad\xEAncia: 1</b>"
   itemType: 1
   itemSprite: {fileID: 21300000, guid: 2e72ba3ea9515444bb715645aaf919a6, type: 3}
   amount: 1
   uniqueID: f12e72188965478183bc035571a06f00_194234209_0
   weaponType: 5
-  maxMunition: 12
+  maxMunition: 4
   cadence: 1
-  reloadSpeed: 2
-  spread: 0.7
-  bulletPerShoot: 5
+  reloadSpeed: 5
+  spread: 1
+  bulletPerShoot: 3
   damage: 25
   defensePenetration: 5
   isAutomatic: 0

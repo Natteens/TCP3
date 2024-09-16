@@ -295,7 +295,8 @@ public class WeaponController : NetworkBehaviour
 
     private IEnumerator Reload()
     {
-        yield return new WaitForSeconds(currentWeapon.reloadSpeed);
+        FeedbackManager.Instance.FeedbackText("Recarregando...");
+        yield return new WaitForSeconds(currentWeapon.reloadSpeed - (GetComponent<StatusComponent>().GetStatus(StatusType.CooldownReload) / 50f));
         currentAmmo = currentWeapon.maxMunition;
         anim.SetFloat("WeaponState", ANIM_STATE_HOLD, 0.1f, Time.deltaTime);
     }
