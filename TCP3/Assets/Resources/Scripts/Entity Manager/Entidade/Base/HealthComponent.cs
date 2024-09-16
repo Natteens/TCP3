@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Unity.Netcode;
+using System.Linq;
 
 public class HealthComponent : NetworkBehaviour, IHealth
 {
@@ -61,6 +62,11 @@ public class HealthComponent : NetworkBehaviour, IHealth
         statusComponent.OnEffectApplied += HandleEffectApplied;
         MaxHealth = statusComponent.GetStatus(StatusType.Health);
         CurrentHealth = MaxHealth; // Atribui o valor inicial usando a propriedade
+    }
+
+    public bool IsOnDeathSubscribed(Action action)
+    {
+        return OnDeath != null && OnDeath.GetInvocationList().Contains(action);
     }
 
     private void HandleStatusChanged(Dictionary<StatusType, float> currentStatus)

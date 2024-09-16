@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using DamageNumbersPro;
+using System;
 
 public class ProjectileMover : MonoBehaviour
 {
@@ -94,9 +95,10 @@ public class ProjectileMover : MonoBehaviour
 
                 // Caso a entidade morra, dar XP ao atirador do projetil.
                 HealthComponent healthComponent = collision.gameObject.GetComponent<HealthComponent>();
+
                 if (healthComponent != null)
                 {
-                    healthComponent.OnDeath += () =>
+                    Action onDeathAction = () =>
                     {
                         LevelManager levelManager = shooter.GetComponent<LevelManager>();
                         if (levelManager != null)
@@ -104,6 +106,12 @@ public class ProjectileMover : MonoBehaviour
                             levelManager.IncreaseXp(collision.gameObject.GetComponent<EnemySettings>().giveXp);
                         }
                     };
+
+                    // Verifica se a função já está inscrita
+                    if (!healthComponent.IsOnDeathSubscribed(onDeathAction))
+                    {
+                        healthComponent.OnDeath += onDeathAction;
+                    }
 
                     StatusComponent statusComponent = collision.gameObject.GetComponent<StatusComponent>();
                     if (statusComponent != null)
@@ -122,6 +130,8 @@ public class ProjectileMover : MonoBehaviour
                         }
                     }
                 }
+
+
             }
 
             var hitPs = hitInstance.GetComponent<ParticleSystem>();
