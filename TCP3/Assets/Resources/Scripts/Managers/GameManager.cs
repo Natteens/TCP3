@@ -20,6 +20,8 @@ public class GameManager : Singleton<GameManager>
     [BoxGroup("UI References")] public GameObject interactMSG;
     [BoxGroup("UI References")] public GameObject HarvestHolder;
     [BoxGroup("UI References")] public GameObject waitForInitialize;
+    [BoxGroup("UI References")] public GameObject menu;
+    [BoxGroup("UI References")] public bool isMenuOpen = false;
     [Space(20)]
 
     [BoxGroup("UI References [LEVEL]")] public Image xpBar;
@@ -51,6 +53,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         waitForInitialize.SetActive(true);
+        menu.SetActive(isMenuOpen);
 
         if (IsServer)
         {
@@ -64,6 +67,12 @@ public class GameManager : Singleton<GameManager>
         {
             isDebugActive = true;
             FeedbackManager.Instance.FeedbackText("Debug ativo!");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isMenuOpen = !isMenuOpen;
+            menu.SetActive(isMenuOpen);
         }
     }
 
