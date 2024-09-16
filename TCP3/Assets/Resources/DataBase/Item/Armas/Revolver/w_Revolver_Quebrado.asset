@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d9d3cd2188aff049a758c0f86bae895, type: 3}
-  m_Name: wTampinha
+  m_Name: w_Revolver_Quebrado
   m_EditorClassIdentifier: 
-  itemName: Tampinha
-  itemDescription: "<b>\nModelo: Revolver\nDano: 35\nPenetra\xE7\xE3o de Armadura:
-    100\nMuni\xE7\xE3o m\xE1xima: 6\nVelocidade de Recarga: 0,1\nCad\xEAncia: 0,6</b>"
+  itemName: Revolver Quebrado
+  itemDescription: "<b>\nModelo: Revolver\nDano: 2\nPenetra\xE7\xE3o de Armadura:
+    0\nMuni\xE7\xE3o m\xE1xima: 6\nVelocidade de Recarga: 2\nCad\xEAncia: 1,5</b>"
   itemType: 1
   itemSprite: {fileID: 21300000, guid: 252f79e3b23bff24e9b50936843a396f, type: 3}
   amount: 1
   uniqueID: 11409656ab514ca290bc289ed9b7bf07_194234209_0
   weaponType: 2
   maxMunition: 6
-  cadence: 0.6
-  reloadSpeed: 0.1
-  spread: 0.01
+  cadence: 1.5
+  reloadSpeed: 2
+  spread: 0.03
   bulletPerShoot: 1
-  damage: 35
-  defensePenetration: 100
+  damage: 2
+  defensePenetration: 0
   isAutomatic: 0
   spawnPosition: {x: 0, y: 2, z: 1.5}
   bulletPrefab: {fileID: 930696269855422731, guid: 9fc5bf94c37f1d84899f0af0cba92490, type: 3}

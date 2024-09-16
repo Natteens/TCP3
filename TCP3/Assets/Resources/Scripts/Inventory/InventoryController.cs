@@ -9,6 +9,7 @@ public class InventoryController : NetworkBehaviour
     private Inventory inventory;
     [SerializeField] private StarterAssetsInputs starterAssetsInputs;
     [SerializeField] private UI_Inventory uiInventory;
+    [SerializeField] private WeaponInfo initialWeapon;
 
     private void Awake()
     {
@@ -25,6 +26,8 @@ public class InventoryController : NetworkBehaviour
     private void Start()
     {
         starterAssetsInputs.slot += SelectSlot;
+        inventory.AddItem(initialWeapon);
+
     }
 
     private void Update()
