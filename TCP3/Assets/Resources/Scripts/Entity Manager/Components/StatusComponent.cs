@@ -162,6 +162,7 @@ public class StatusComponent : NetworkBehaviour
     {
         ApplyModifier(StatusType.CooldownAbility, points);
         ApplyModifier(StatusType.CooldownReload, points);
+        ApplyModifier(StatusType.MoveSpeed, points / 10f);
     }
 
     public void ApplyLuck(int points)
