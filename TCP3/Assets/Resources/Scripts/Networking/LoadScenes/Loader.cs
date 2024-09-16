@@ -9,6 +9,7 @@ public enum gameScenes
     teste,
     Katalisya, //Cena do jogo
     MainMenu,
+    InitialMenu,
     Loading  //Cena de load
 }
 
