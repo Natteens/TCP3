@@ -317,7 +317,6 @@ public class UI_Inventory : NetworkBehaviour
 
     private void ActiveWeapon(Item item)
     {
-        if(!IsOwner) return;
         WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
         WeaponInfo cWeapon = item as WeaponInfo;
 
@@ -329,7 +328,7 @@ public class UI_Inventory : NetworkBehaviour
     {
         WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
 
-        weaponController.DeactivateCurrentWeaponServerRpc();
+        weaponController.DeactivateCurrentWeapon();
     }
 
     public void ClearHotbarBg(int idForExclude)

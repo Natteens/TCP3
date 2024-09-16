@@ -49,33 +49,63 @@ public class WeaponController : NetworkBehaviour
     {
         if (currentWeapon != null)
         {
-            EquipWeaponClientRpc(currentWeapon);
+            EquipWeapon(currentWeapon);
         }
        
     }
 
     private void Update()
     {
-        if (currentWeapon == null || !IsOwner) return;
-        HandleInput();
-
-        var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
-        if (success)
+        if (IsServer)
         {
-            HandleAiming(position);
-        }
-        AdjustTorsoAimWeight();
+            if (currentWeapon != null)
+            {
+                HandleInput();
 
-        if (CanShoot())
-        {
-            HandleShooting(position);
+                var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
+                if (success)
+                {
+                    HandleAiming(position);
+                }
+                AdjustTorsoAimWeight();
+
+                if (CanShoot())
+                {
+                    HandleShooting(position);
+                }
+                else
+                {
+                    StopShooting();
+                }
+
+                DisplayDebugRays(position);
+            }
         }
         else
         {
-            StopShooting();
-        }
+            if (currentWeapon != null)
+            {
+                HandleInput();
 
-        DisplayDebugRays(position);
+                var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
+                if (success)
+                {
+                    HandleAiming(position);
+                }
+                AdjustTorsoAimWeight();
+
+                if (CanShoot())
+                {
+                    HandleShooting(position);
+                }
+                else
+                {
+                    StopShooting();
+                }
+
+                DisplayDebugRays(position);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -185,29 +215,6 @@ public class WeaponController : NetworkBehaviour
 
     public void EquipWeapon(WeaponInfo newWeapon)
     {
-        if (!IsOwner) return;
-
-        EquipWeaponServerRpc(newWeapon);
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void EquipWeaponServerRpc(WeaponInfo newWeapon)
-    {
-        currentWeapon = newWeapon;
-        currentAmmo = newWeapon != null ? newWeapon.maxMunition : 0;
-        fireRateCounter = 0f;
-        isShooting = false;
-        canShoot = false;
-        ActivateNewWeapon();
-
-        EquipWeaponClientRpc(newWeapon);
-    }
-
-    [ClientRpc]
-    public void EquipWeaponClientRpc(WeaponInfo newWeapon)
-    {
-        if (!IsOwner) return;
-
         currentWeapon = newWeapon;
         currentAmmo = newWeapon != null ? newWeapon.maxMunition : 0;
         fireRateCounter = 0f;
@@ -223,18 +230,17 @@ public class WeaponController : NetworkBehaviour
         OnWeaponChanged?.Invoke();
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void DeactivateCurrentWeaponServerRpc()
+    public void DeactivateCurrentWeapon()
     {
         currentWeapon = null;
-        DeactivateAllWeaponsClientRpc();
+        DeactivateAllWeapons();
     }
 
     private void ActivateNewWeapon()
     {
         if (currentWeapon != null)
         {
-            DeactivateAllWeaponsClientRpc();
+            DeactivateAllWeapons();
 
             switch (currentWeapon.weaponType)
             {
@@ -262,8 +268,7 @@ public class WeaponController : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    private void DeactivateAllWeaponsClientRpc()
+    private void DeactivateAllWeapons()
     {
         fuzilWeapon.SetActive(false);
         fuzilRajadaWeapon.SetActive(false);

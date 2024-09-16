@@ -24,18 +24,20 @@ public static class MouseController
         Cursor.visible = visibility;
     }
 
-    public static (bool success, Vector3 position) GetMousePosition(Camera camera, LayerMask layer)
+    public static (bool success, Vector3 position) GetMousePosition(Camera camera, LayerMask layer, float maxDistance = Mathf.Infinity)
     {
+        // Cria um ray a partir da posição do mouse na tela
         var ray = camera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, layer))
+        // Realiza o Raycast e verifica se houve colisão
+        if (Physics.Raycast(ray, out var hitInfo, maxDistance, layer))
         {
-            // The Raycast hit something, return with the position.
+            // Se o Raycast acertou um objeto, retorna a posição do hit
             return (success: true, position: hitInfo.point);
         }
         else
         {
-            // The Raycast did not hit anything.
+            // Se não acertou nenhum objeto, retorna a posição zero
             return (success: false, position: Vector3.zero);
         }
     }
