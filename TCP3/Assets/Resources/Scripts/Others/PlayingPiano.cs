@@ -35,6 +35,11 @@ public class PlayingPiano : MonoBehaviour
         }
     }
 
+    public void PianoKey(string s)
+    {
+        Spawner.Instance.SpawnInWorldServerRpc(transform.position, s);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // Verifica se o jogador entrou na área de detecção
