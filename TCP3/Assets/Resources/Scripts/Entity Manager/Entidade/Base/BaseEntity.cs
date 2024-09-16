@@ -45,6 +45,8 @@ public abstract class BaseEntity : NetworkBehaviour
     {
         anim.SetTrigger("Death");
         coll.enabled = false;
+        rb.isKinematic = true;
+        Destroy(gameObject);
         UnsubscribeFromHealthEvents();
     }
 
@@ -60,6 +62,7 @@ public abstract class BaseEntity : NetworkBehaviour
     protected virtual void OnRevive()
     {
         coll.enabled = true;
+        rb.isKinematic = false;
         anim.SetTrigger("Revive");
         SubscribeToHealthEvents();
     }

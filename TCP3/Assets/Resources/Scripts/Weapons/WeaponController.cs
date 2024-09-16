@@ -293,7 +293,6 @@ public class WeaponController : NetworkBehaviour
         return shootDirection.normalized;
     }
 
-
     private IEnumerator Reload()
     {
         yield return new WaitForSeconds(currentWeapon.reloadSpeed);

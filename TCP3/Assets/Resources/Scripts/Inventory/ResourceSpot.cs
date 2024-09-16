@@ -114,8 +114,8 @@ public class ResourceSpot : NetworkBehaviour, Interactable
 
     public void CancelHarvesting()
     {
-        //StartCoroutine(SetLayerWeight(anim, 2, 0f, .5f));
-        //anim.SetBool("Collection", false);
+        StartCoroutine(SetLayerWeight(anim, 2, 0f, .5f));
+        anim.SetBool("Collection", false);
         GameManager.Instance.HarvestHolder.SetActive(false);
         isHarvesting = false;
         currentTime = 0f;

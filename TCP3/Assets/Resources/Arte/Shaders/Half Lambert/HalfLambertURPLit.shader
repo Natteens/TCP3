@@ -2,7 +2,7 @@ Shader "Custom/HalfLambertURPLit"
 {
     Properties
     {
-        [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
+        [MainTexture] _BaseMap("MainTexture", 2D) = "white" {}
         [MainColor] _BaseColor("Color", Color) = (1,1,1,1)
         
         _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5

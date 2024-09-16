@@ -21,7 +21,7 @@ public class LevelManager : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        nextLevelXp = 150 + (int)(Mathf.Pow(level, 2f) * 10);
+        nextLevelXp = 350 + (int)(Mathf.Pow(level, 2f) * 10);
         myStatus = GetComponent<StatusComponent>();
 
         //Crafts iniciais
@@ -40,6 +40,7 @@ public class LevelManager : NetworkBehaviour
         if (currentXp + amount > nextLevelXp) { LevelUp(); }
 
         currentXp += amount;
+        FeedbackManager.Instance.FeedbackText($"+{amount} Exp");
         OnXpChanged.Invoke();
     }
 
@@ -49,7 +50,7 @@ public class LevelManager : NetworkBehaviour
         currentXp = 0;
         level++;
         skillPoints++;
-        nextLevelXp = 150 + (int)(Mathf.Pow(level, 2f) * 10);
+        nextLevelXp = 350 + (int)(Mathf.Pow(level, 2f) * 10);
         OnXpChanged.Invoke(); //COXAS CODE MAS FÉ
 
         switch (level)
