@@ -46,8 +46,11 @@ public class WeaponController : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void StartingWeaponServerRpc()
     {
-        if(currentWeapon != null)
-        EquipWeapon(currentWeapon);
+        if (currentWeapon != null)
+        {
+            EquipWeaponClientRpc(currentWeapon);
+        }
+       
     }
 
     private void Update()
@@ -178,7 +181,8 @@ public class WeaponController : NetworkBehaviour
         bulletSpawner.forward = directionToAim; 
     }
 
-    public void EquipWeapon(WeaponInfo newWeapon)
+    [ClientRpc]
+    public void EquipWeaponClientRpc(WeaponInfo newWeapon)
     {
         DeactivateCurrentWeapon();
 
