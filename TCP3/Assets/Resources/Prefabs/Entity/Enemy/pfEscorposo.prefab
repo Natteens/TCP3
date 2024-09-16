@@ -657,7 +657,9 @@ MonoBehaviour:
   showGizmos: 0
   idle: {fileID: 11400000, guid: 53d39110b1e4a1340bac1438f8501ad9, type: 2}
   chase: {fileID: 11400000, guid: d5288889ceb1bbd4385bb41a3d1c74ed, type: 2}
-  dropItemList: []
+  dropItemList:
+  - item: {fileID: 11400000, guid: 6d513860107674f498be6711abc29e9f, type: 2}
+    dropChance: 100
   dropTotalChance: 0
 --- !u!1001 &8546902688997915206
 PrefabInstance:

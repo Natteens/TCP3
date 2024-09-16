@@ -4984,11 +4984,15 @@ MonoBehaviour:
   attack: {fileID: 11400000, guid: 3e0dea59b23af3046a7e06ddb9469809, type: 2}
   dropItemList:
   - item: {fileID: 11400000, guid: ff0853f01d2f6f74b9ebf72c50796028, type: 2}
-    dropChance: 90
+    dropChance: 60
   - item: {fileID: 11400000, guid: 340c3e52824d205498cf44c0deab8a6c, type: 2}
     dropChance: 20
   - item: {fileID: 11400000, guid: 995c13c71540323448a847b63dd862c8, type: 2}
     dropChance: 5
+  - item: {fileID: 11400000, guid: 3bbf5d3d788ce8e48ae1b0d5096459d4, type: 2}
+    dropChance: 3
+  - item: {fileID: 11400000, guid: 1e39ed4d8d8866347a5b50ab8f62083c, type: 2}
+    dropChance: 0.1
   dropTotalChance: 0
 --- !u!114 &5748093040636248968
 MonoBehaviour:
