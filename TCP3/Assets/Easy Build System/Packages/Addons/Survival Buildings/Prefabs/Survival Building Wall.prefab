@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 2590847861243481728}
   - component: {fileID: 3605094126602212928}
   - component: {fileID: -5085722644930944742}
+  - component: {fileID: -1337880612449917454}
+  - component: {fileID: 5712203758789595945}
   m_Layer: 13
   m_Name: Survival Building Wall
   m_TagString: Untagged
@@ -246,6 +248,32 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-1337880612449917454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54450192070756735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466943f569509f641bf5ed646bd0e0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5712203758789595945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54450192070756735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de06847979b29484ea77e32d7b783819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStatus: {fileID: 11400000, guid: cbe3d214d60b23d4391680b9ce0bfc12, type: 2}
+  activeEffects: []
 --- !u!1 &381799655419191262
 GameObject:
   m_ObjectHideFlags: 0

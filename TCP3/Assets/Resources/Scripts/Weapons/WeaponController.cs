@@ -184,7 +184,7 @@ public class WeaponController : NetworkBehaviour
     [ClientRpc]
     public void EquipWeaponClientRpc(WeaponInfo newWeapon)
     {
-        DeactivateCurrentWeapon();
+        DeactivateCurrentWeaponServerRpc();
 
         currentWeapon = newWeapon;
         currentAmmo = newWeapon != null ? newWeapon.maxMunition : 0;
@@ -210,17 +210,19 @@ public class WeaponController : NetworkBehaviour
         OnWeaponChanged?.Invoke();
     }
 
-    public void DeactivateCurrentWeapon()
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DeactivateCurrentWeaponServerRpc()
     {
         currentWeapon = null;
-        DeactivateAllWeapons();
+        DeactivateAllWeaponsClientRpc();
     }
 
     private void ActivateNewWeapon()
     {
         if (currentWeapon != null)
         {
-            DeactivateAllWeapons();
+            DeactivateAllWeaponsClientRpc();
 
             switch (currentWeapon.weaponType)
             {
@@ -248,7 +250,8 @@ public class WeaponController : NetworkBehaviour
         }
     }
 
-    private void DeactivateAllWeapons()
+    [ClientRpc]
+    private void DeactivateAllWeaponsClientRpc()
     {
         fuzilWeapon.SetActive(false);
         fuzilRajadaWeapon.SetActive(false);

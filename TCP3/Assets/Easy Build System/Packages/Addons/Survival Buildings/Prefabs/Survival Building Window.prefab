@@ -81,6 +81,8 @@ GameObject:
   - component: {fileID: 5169402569644850987}
   - component: {fileID: 6782038780746146245}
   - component: {fileID: -2681187859336870896}
+  - component: {fileID: -3595880428747936705}
+  - component: {fileID: 5874089288259922666}
   m_Layer: 13
   m_Name: Survival Building Window
   m_TagString: Untagged
@@ -312,6 +314,32 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-3595880428747936705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5329163899309534458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466943f569509f641bf5ed646bd0e0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5874089288259922666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5329163899309534458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de06847979b29484ea77e32d7b783819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStatus: {fileID: 11400000, guid: cbe3d214d60b23d4391680b9ce0bfc12, type: 2}
+  activeEffects: []
 --- !u!1 &5674933727522466237
 GameObject:
   m_ObjectHideFlags: 0

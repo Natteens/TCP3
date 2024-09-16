@@ -327,8 +327,7 @@ public class UI_Inventory : MonoBehaviour
     {
         WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
 
-        weaponController.DeactivateCurrentWeapon();
-        weaponController.currentWeapon = null;
+        weaponController.DeactivateCurrentWeaponServerRpc();
     }
 
     public void ClearHotbarBg(int idForExclude)
