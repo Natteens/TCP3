@@ -18,6 +18,8 @@ public class FeedbackManager : MonoBehaviour
 
     public void FeedbackItem(Item item)
     {
+        if (item == null) return;
+
         Transform instance = Instantiate(pfFeedbackMsg, transform);
         FeedbackLogic logic = Configure(instance);
 
@@ -27,6 +29,8 @@ public class FeedbackManager : MonoBehaviour
 
     public void FeedbackCraft(Craft craft)
     {
+        if (craft == null) return;
+
         Transform instance = Instantiate(pfFeedbackMsg, transform);
         FeedbackLogic logic = Configure(instance);
 
