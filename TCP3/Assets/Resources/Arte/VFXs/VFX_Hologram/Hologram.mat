@@ -9,19 +9,23 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Hologram
   m_Shader: {fileID: -6465566751694194690, guid: c34c86fb8750cf54ca3521ac22bc7735, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SPECULAR_SETUP
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _HologramScanlines:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5a3271c635810d04ebf066b26252831b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -38,17 +42,29 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _GlitchStrength: 0.1
+    - _AlphaClip: 0
+    - _Blend: 0
+    - _CastShadows: 1
+    - _Cull: 0
+    - _DstBlend: 10
+    - _GlitchStrength: 0.2
     - _NoiseScale: 500
     - _NoiseStrength: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _ScanlineOffset: 0
-    - _ScrollSpeed: 0.05
+    - _ScrollSpeed: 0.025
+    - _SrcBlend: 5
+    - _Surface: 1
+    - _WorkflowMode: 0
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
-    - _FresnelColor: {r: 2.996078, g: 2.996078, b: 2.996078, a: 1}
-    - _HologramTiling: {r: 64, g: 64, b: 0, a: 0}
-    - _MainColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
+    - _FresnelColor: {r: 0.3254902, g: 0, b: 0.7490196, a: 1}
+    - _HologramTiling: {r: 64, g: 128, b: 0, a: 0}
+    - _MainColor: {r: 0, g: 0.052355766, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1261335490703364412
 MonoBehaviour:
