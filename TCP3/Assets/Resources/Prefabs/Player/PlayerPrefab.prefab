@@ -13926,7 +13926,7 @@ MonoBehaviour:
   GroundedRadius: 0.16
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 9
+    m_Bits: 8201
   CinemachineCameraTarget: {fileID: 8664087165453625141}
   CameraAngleOverride: 0
   LockCameraPosition: 0
@@ -14011,6 +14011,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466943f569509f641bf5ed646bd0e0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth:
+    m_InternalValue: 0
+  maxHealth:
+    m_InternalValue: 0
 --- !u!114 &8664087164105426224
 MonoBehaviour:
   m_ObjectHideFlags: 0
