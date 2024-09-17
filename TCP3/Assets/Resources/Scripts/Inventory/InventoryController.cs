@@ -17,11 +17,10 @@ public class InventoryController : NetworkBehaviour
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         inventory = new Inventory();
 
-        if (IsOwner)
-        {
-            LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
-            uiInventory.SetPlayer(player);
-        }
+
+        LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
+        uiInventory.SetPlayer(player);
+        
         
 
         uiInventory.SetInventory(inventory);
