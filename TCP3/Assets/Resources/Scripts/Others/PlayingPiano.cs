@@ -27,9 +27,6 @@ public class PlayingPiano : MonoBehaviour
         onKey5.AddListener(() => PianoKey("piano5"));
         onKey6.AddListener(() => PianoKey("piano6"));
         onKey7.AddListener(() => PianoKey("piano7"));
-        onKey8.AddListener(() => PianoKey("piano8"));
-        onKey9.AddListener(() => PianoKey("piano9"));
-        onKey0.AddListener(() => PianoKey("piano0"));
     }
 
     void Update()
@@ -43,9 +40,6 @@ public class PlayingPiano : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha5)) onKey5?.Invoke();
             if (Input.GetKeyDown(KeyCode.Alpha6)) onKey6?.Invoke();
             if (Input.GetKeyDown(KeyCode.Alpha7)) onKey7?.Invoke();
-            if (Input.GetKeyDown(KeyCode.Alpha8)) onKey8?.Invoke();
-            if (Input.GetKeyDown(KeyCode.Alpha9)) onKey9?.Invoke();
-            if (Input.GetKeyDown(KeyCode.Alpha0)) onKey0?.Invoke();
         }
     }
 
