@@ -39,9 +39,12 @@ public class WeaponController : NetworkBehaviour
     public GameObject rifleWeapon;
     public GameObject escopetaWeapon;
 
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
-        input = GetComponent<StarterAssetsInputs>();
+        if (IsOwner)
+        {
+            input = GetComponent<StarterAssetsInputs>();
+        }
     }
 
     private void Update()
@@ -80,16 +83,14 @@ public class WeaponController : NetworkBehaviour
     [ServerRpc]
     public void EquipWeaponServerRpc(WeaponInfo newWeapon)
     {
+        currentWeapon = newWeapon;
         EquipWeaponClientRpc(newWeapon);
     }
 
     [ClientRpc]
     public void EquipWeaponClientRpc(WeaponInfo newWeapon)
     {
-        if (!IsOwner)
-        {
-            EquipWeapon(newWeapon); 
-        }
+        EquipWeapon(newWeapon);
     }
 
     public void EquipWeapon(WeaponInfo newWeapon)
@@ -120,10 +121,7 @@ public class WeaponController : NetworkBehaviour
     [ClientRpc]
     private void HandleAimingClientRpc(Vector3 aimPoint)
     {
-        if (!IsOwner)
-        {
-            HandleAiming(aimPoint); 
-        }
+        HandleAiming(aimPoint); 
     }
 
     private void HandleAiming(Vector3 aimPoint)
