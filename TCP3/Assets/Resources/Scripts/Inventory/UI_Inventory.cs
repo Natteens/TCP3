@@ -278,9 +278,9 @@ public class UI_Inventory : NetworkBehaviour
     {
         if (item == null)
         {
-            DeactiveWeapon();
             return;
         }
+        DeactiveWeapon();
 
         if (item.itemType == Item.Itemtype.Consumivel)
         {
