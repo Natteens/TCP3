@@ -321,7 +321,8 @@ public class UI_Inventory : NetworkBehaviour
         WeaponInfo cWeapon = item as WeaponInfo;
 
         weaponController.currentWeapon = cWeapon;
-        weaponController.StartingWeaponServerRpc();
+        weaponController.EquipWeapon(cWeapon);
+        weaponController.EquipWeaponServerRpc(cWeapon);
     }
 
     private void DeactiveWeapon()

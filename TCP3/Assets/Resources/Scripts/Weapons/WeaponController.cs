@@ -44,79 +44,113 @@ public class WeaponController : NetworkBehaviour
         input = GetComponent<StarterAssetsInputs>();
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void StartingWeaponServerRpc()
-    {
-        if (currentWeapon != null)
-        {
-            EquipWeapon(currentWeapon);
-        }
-       
-    }
-
     private void Update()
     {
-        if (IsServer)
+        if (!IsOwner)
+            return;
+
+        if (currentWeapon != null)
         {
-            if (currentWeapon != null)
+            HandleInput();
+
+            var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
+            if (success)
             {
-                HandleInput();
-
-                var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
-                if (success)
-                {
-                    HandleAiming(position);
-                }
-                AdjustTorsoAimWeight();
-
-                if (CanShoot())
-                {
-                    HandleShooting(position);
-                }
-                else
-                {
-                    StopShooting();
-                }
-
-                DisplayDebugRays(position);
+                HandleAiming(position);
+                HandleAimingServerRpc(position);
             }
-        }
-        else
-        {
-            if (currentWeapon != null)
+            AdjustTorsoAimWeight();
+
+            if (CanShoot())
             {
-                HandleInput();
-
-                var (success, position) = MouseController.GetMousePosition(Camera.main, layer);
-                if (success)
-                {
-                    HandleAiming(position);
-                }
-                AdjustTorsoAimWeight();
-
-                if (CanShoot())
-                {
-                    HandleShooting(position);
-                }
-                else
-                {
-                    StopShooting();
-                }
-
-                DisplayDebugRays(position);
+                HandleShooting(position);
+                HandleShootingServerRpc(position);
             }
-        }
-    }
+            else
+            {
+                StopShooting();
+            }
 
-    private void FixedUpdate()
-    {
+            DisplayDebugRays(position);
+        }
         FireCounterTimer();
     }
 
-    private void FireCounterTimer()
+    #region EQUIPAR ARMA
+    [ServerRpc]
+    public void EquipWeaponServerRpc(WeaponInfo newWeapon)
     {
-        if (currentWeapon != null && fireRateCounter < currentWeapon.cadence)
-            fireRateCounter += Time.fixedDeltaTime;
+        EquipWeaponClientRpc(newWeapon);
+    }
+
+    [ClientRpc]
+    public void EquipWeaponClientRpc(WeaponInfo newWeapon)
+    {
+        EquipWeapon(newWeapon);
+    }
+
+    public void EquipWeapon(WeaponInfo newWeapon)
+    {
+        currentWeapon = newWeapon;
+        currentAmmo = newWeapon != null ? newWeapon.maxMunition : 0;
+        fireRateCounter = 0f;
+        isShooting = false;
+        canShoot = false;
+        ActivateNewWeapon();
+
+        anim.SetLayerWeight(1, currentWeapon != null ? 1f : 0f);
+        anim.SetBool("withoutWeapon", currentWeapon == null);
+        anim.SetFloat("WeaponState", currentWeapon != null ? ANIM_STATE_EQUIP : ANIM_STATE_HOLD, 0.1f, Time.deltaTime);
+
+        OnWeaponChanged?.Invoke();
+    }
+
+    #endregion
+
+    #region MIRANDO
+    [ServerRpc]
+    private void HandleAimingServerRpc(Vector3 aimPoint)
+    {
+        HandleAimingClientRpc(aimPoint);
+    }
+
+    [ClientRpc]
+    private void HandleAimingClientRpc(Vector3 aimPoint)
+    {
+        HandleAiming(aimPoint);
+    }
+
+    private void HandleAiming(Vector3 aimPoint)
+    {
+        if (input.aim)
+        {
+            anim.SetLayerWeight(1, 1f);
+            anim.SetFloat("WeaponState", ANIM_STATE_AIM);
+            AdjustCharacterRotation(aimPoint);
+            AdjustBulletSpawnerRotation(aimPoint);
+            EnableShooting();
+        }
+        else
+        {
+            anim.SetLayerWeight(1, input.move != Vector2.zero ? 0f : 1f);
+            anim.SetFloat("WeaponState", input.move == Vector2.zero ? ANIM_STATE_HOLD : ANIM_STATE_EQUIP);
+            DisableShooting();
+        }
+        AdjustAimOffset();
+    } 
+    #endregion
+
+    #region ATIRANDO
+    [ServerRpc]
+    private void HandleShootingServerRpc(Vector3 aimPoint)
+    {
+        HandleShootingClientRpc(aimPoint);
+    }
+
+    [ClientRpc]
+    private void HandleShootingClientRpc(Vector3 aimPoint)
+    {
+        HandleShooting(aimPoint);
     }
 
     private void HandleShooting(Vector3 aimPoint)
@@ -127,11 +161,11 @@ public class WeaponController : NetworkBehaviour
             {
                 if (!isShooting) isShooting = true;
                 ulong shooterId = GetComponent<NetworkObject>().NetworkObjectId;
-                string projectileName = Projectile(); 
+                string projectileName = Projectile();
                 for (int i = 0; i < currentWeapon.bulletPerShoot; i++)
                 {
                     Vector3 shootDirection = GetShootDirection(aimPoint, i, currentWeapon.bulletPerShoot, currentWeapon.spread);
-                    Spawner.Instance.SpawnProjectilesServerRpc(bulletSpawner.position, shootDirection, projectileName, currentWeapon.damage, shooterId); 
+                    Spawner.Instance.SpawnProjectilesServerRpc(bulletSpawner.position, shootDirection, projectileName, currentWeapon.damage, shooterId);
                 }
                 currentAmmo--;
                 fireRateCounter = 0f;
@@ -143,6 +177,14 @@ public class WeaponController : NetworkBehaviour
                 StartCoroutine(Reload());
             }
         }
+    }
+
+    #endregion
+   
+    private void FireCounterTimer()
+    {
+        if (currentWeapon != null && fireRateCounter < currentWeapon.cadence)
+            fireRateCounter += Time.fixedDeltaTime;
     }
 
     private string Projectile()
@@ -179,25 +221,6 @@ public class WeaponController : NetworkBehaviour
         }
     }
 
-    private void HandleAiming(Vector3 aimPoint)
-    {
-        if (input.aim)
-        {
-            anim.SetLayerWeight(1, 1f);
-            anim.SetFloat("WeaponState", ANIM_STATE_AIM);
-            AdjustCharacterRotation(aimPoint);
-            AdjustBulletSpawnerRotation(aimPoint);
-            EnableShooting();
-        }
-        else
-        {
-            anim.SetLayerWeight(1, input.move != Vector2.zero ? 0f : 1f);
-            anim.SetFloat("WeaponState", input.move == Vector2.zero ? ANIM_STATE_HOLD : ANIM_STATE_EQUIP);
-            DisableShooting();
-        }
-        AdjustAimOffset();
-    }
-
     private void AdjustCharacterRotation(Vector3 aimPoint)
     {
         Vector3 directionToAim = (aimPoint - transform.position).normalized;
@@ -211,23 +234,6 @@ public class WeaponController : NetworkBehaviour
         Vector3 directionToAim = (aimPoint - bulletSpawner.position).normalized;
         directionToAim.y = 0; 
         bulletSpawner.forward = directionToAim; 
-    }
-
-    public void EquipWeapon(WeaponInfo newWeapon)
-    {
-        currentWeapon = newWeapon;
-        currentAmmo = newWeapon != null ? newWeapon.maxMunition : 0;
-        fireRateCounter = 0f;
-        isShooting = false;
-        canShoot = false;
-        ActivateNewWeapon();
-
-        anim.SetLayerWeight(1, currentWeapon != null ? 1f : 0f);
-        anim.SetBool("withoutWeapon", currentWeapon == null);
-        anim.SetFloat("WeaponState", currentWeapon != null ? ANIM_STATE_EQUIP : ANIM_STATE_HOLD, 0.1f, Time.deltaTime);
-        anim.SetBool(currentWeapon?.animatorParameter ?? "", true);
-
-        OnWeaponChanged?.Invoke();
     }
 
     public void DeactivateCurrentWeapon()
