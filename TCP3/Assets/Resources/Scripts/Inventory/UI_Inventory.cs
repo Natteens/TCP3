@@ -276,9 +276,11 @@ public class UI_Inventory : NetworkBehaviour
     // Função para utilizar o item da hotbar
     private void UseItem(Item item)
     {
-        if (item == null) return;
-
-        DeactiveWeapon();
+        if (item == null)
+        {
+            DeactiveWeapon();
+            return;
+        }
 
         if (item.itemType == Item.Itemtype.Consumivel)
         {
@@ -328,7 +330,6 @@ public class UI_Inventory : NetworkBehaviour
     private void DeactiveWeapon()
     {
         WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
-
         weaponController.DeactivateCurrentWeapon();
     }
 

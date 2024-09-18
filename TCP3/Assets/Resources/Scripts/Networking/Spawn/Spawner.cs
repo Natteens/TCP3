@@ -95,8 +95,14 @@ public class Spawner : Singleton<Spawner>
 
     #region Projectiles
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     public void SpawnProjectilesServerRpc(Vector3 position, Vector3 shootDirection, string prefabId, int damage, ulong shooterId)
+    {
+        SpawnProjectilesClientRpc(position, shootDirection, prefabId, damage, shooterId);
+    }
+
+    [ClientRpc]
+    private void SpawnProjectilesClientRpc(Vector3 position, Vector3 shootDirection, string prefabId, int damage, ulong shooterId)
     {
         SpawnProjectiles(position, shootDirection, prefabId, damage, shooterId);
     }
