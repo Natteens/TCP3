@@ -86,7 +86,10 @@ public class WeaponController : NetworkBehaviour
     [ClientRpc]
     public void EquipWeaponClientRpc(WeaponInfo newWeapon)
     {
-        EquipWeapon(newWeapon);
+        if (!IsOwner)
+        {
+            EquipWeapon(newWeapon); 
+        }
     }
 
     public void EquipWeapon(WeaponInfo newWeapon)
@@ -117,7 +120,10 @@ public class WeaponController : NetworkBehaviour
     [ClientRpc]
     private void HandleAimingClientRpc(Vector3 aimPoint)
     {
-        HandleAiming(aimPoint);
+        if (!IsOwner)
+        {
+            HandleAiming(aimPoint); 
+        }
     }
 
     private void HandleAiming(Vector3 aimPoint)
@@ -150,7 +156,10 @@ public class WeaponController : NetworkBehaviour
     [ClientRpc]
     private void HandleShootingClientRpc(Vector3 aimPoint)
     {
-        HandleShooting(aimPoint);
+        if (!IsOwner)
+        {
+            HandleShooting(aimPoint);
+        }
     }
 
     private void HandleShooting(Vector3 aimPoint)
