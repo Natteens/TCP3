@@ -193,7 +193,7 @@ public class SlotExpandController : MonoBehaviour
             Item itemToDrop = ScriptableObjectUtility.Clone(selectedItem);
             itemToDrop.amount = amountToDrop;
 
-            Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop.uniqueID);
+            Spawner.Instance.SpawnItemServerRpc(PlayersManager.Instance.GetMyPlayer().transform.position, itemToDrop.uniqueID);
             GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amountToDrop);
 
             Clean();
@@ -214,7 +214,7 @@ public class SlotExpandController : MonoBehaviour
             Consumable consumable = selectedItem as Consumable;
             if (consumable != null)
             {
-                SurvivalManager manager = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<SurvivalManager>();
+                SurvivalManager manager = PlayersManager.Instance.GetMyPlayer().GetComponent<SurvivalManager>();
                 manager.IncreaseStats(consumable);
                 GameManager.Instance.uiInventory.GetInventory().RemoveItem(selectedItem);
                 Clean();
@@ -252,7 +252,7 @@ public class SlotExpandController : MonoBehaviour
                 Consumable consumable = selectedItem as Consumable;
                 if (consumable != null)
                 {
-                    SurvivalManager manager = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<SurvivalManager>();
+                    SurvivalManager manager = PlayersManager.Instance.GetMyPlayer().GetComponent<SurvivalManager>();
                     int amount = int.Parse(sliderAmount.text);
                     for (int i = 0; i < amount; i++)
                     {
@@ -280,7 +280,7 @@ public class SlotExpandController : MonoBehaviour
                     itemToDrop.amount = amount;
 
                     // Dropa a cópia do item com o valor atualizado
-                    Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition() + new Vector3(0f, 5f, 0f), itemToDrop.uniqueID);
+                    Spawner.Instance.SpawnItemServerRpc(PlayersManager.Instance.GetMyPlayer().transform.position + new Vector3(0f, 5f, 0f), itemToDrop.uniqueID);
 
                     // Remove a quantidade correta do inventário
                     GameManager.Instance.uiInventory.GetInventory().RemoveItemByAmount(selectedItem, amount);

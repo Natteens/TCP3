@@ -142,7 +142,7 @@ public class ResourceSpot : NetworkBehaviour, Interactable
 
             if (currentTime > maxTime)
             {
-                GameManager.Instance.uiInventory.GetPlayer().GetComponent<InventoryController>().SetItem(item);
+                PlayersManager.Instance.GetMyPlayer().GetComponent<InventoryController>().SetItem(item);
                 currentResourceToHarvest--;
                 currentTime = 0f;
                 return;

@@ -10,7 +10,6 @@ public class FeedbackManager : MonoBehaviour
     public static FeedbackManager Instance { get; private set; }
     [SerializeField] private Transform pfFeedbackMsg;
 
-
     private void Awake()
     {
         Instance = this;

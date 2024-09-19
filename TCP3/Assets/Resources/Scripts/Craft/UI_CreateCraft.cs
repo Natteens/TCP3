@@ -6,19 +6,16 @@ public class UI_CreateCraft : MonoBehaviour
 {
     public Craft currentCraft;
     [SerializeField] private UI_Inventory uiInventory;
-    [SerializeField] private LocatePlayer player;
 
     public void Start()
     {
         uiInventory = GameManager.Instance.uiInventory;
-        player = uiInventory.GetPlayer();
     }
 
     public void CreateItem()
     {
-        if (player == null) player = uiInventory.GetPlayer();
 
-        InventoryController inventory = player.GetComponent<InventoryController>();
+        InventoryController inventory = PlayersManager.Instance.GetMyPlayer().GetComponent<InventoryController>();
 
         if (currentCraft == null)
         {

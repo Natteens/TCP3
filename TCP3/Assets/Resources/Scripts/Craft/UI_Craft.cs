@@ -17,7 +17,7 @@ public class UI_Craft : MonoBehaviour
     [SerializeField] private Transform requirementsContainer;
     [SerializeField] private Transform requirementsTemplate;
     [SerializeField] private UI_CreateCraft bttCreateCraft;
-    private LocatePlayer player;
+    private SetupPlayer player;
     private Item.Itemtype actualFilter;
     private bool hasExpanded = false;
 
@@ -52,7 +52,7 @@ public class UI_Craft : MonoBehaviour
         RefreshCraftInventoryItems();
     }
 
-    public void SetPlayer(LocatePlayer player)
+    public void SetPlayer(SetupPlayer player)
     {
         this.player = player;
     }

@@ -127,7 +127,7 @@ public class Inventory
         // Crie uma cópia do item antes de alterar o valor
         Item itemToDrop = ScriptableObjectUtility.Clone(itemList[randomIndex]);
 
-        Spawner.Instance.SpawnItemServerRpc(GameManager.Instance.uiInventory.GetPlayer().GetPosition(), itemToDrop.uniqueID);
+        Spawner.Instance.SpawnItemServerRpc(PlayersManager.Instance.GetMyPlayer().transform.position, itemToDrop.uniqueID);
 
         // Remove o item do índice aleatório
         RemoveItem(itemList[randomIndex]);

@@ -9,7 +9,7 @@ public class FeedbackLogic : MonoBehaviour
 {
     public TextMeshProUGUI myText;
     public Image myImage;
-    private float duration = 1.5f;
+    private float duration = 2f;
     private float moveDistance = 200f;
 
     private void Start()

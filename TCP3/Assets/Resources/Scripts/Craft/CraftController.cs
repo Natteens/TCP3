@@ -12,7 +12,7 @@ public class CraftController : NetworkBehaviour
     private void Awake()
     {
         uiCraft = GameManager.Instance.uiCraft;
-        LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
+        SetupPlayer player = gameObject.GetComponent<SetupPlayer>();
         inventory = new CraftInventory();
         uiCraft.SetPlayer(player);
         uiCraft.SetCraftInventory(inventory);

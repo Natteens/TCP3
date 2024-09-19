@@ -18,7 +18,6 @@ public class UI_Inventory : NetworkBehaviour
     [SerializeField] private RectTransform[] SlotsHotbar;
     [SerializeField] private GameObject itemSlotPrefab;
     [SerializeField] private SlotExpandController expandController;
-    private LocatePlayer player;
     public bool isVisible = false;
     public List<Item> debugitems;
 
@@ -172,15 +171,6 @@ public class UI_Inventory : NetworkBehaviour
         Destroy(obj.gameObject);
     }
 
-    public LocatePlayer GetPlayer()
-    {
-        return player;
-    }
-    public void SetPlayer(LocatePlayer player)
-    {
-        this.player = player;
-    }
-
     public void CheckVisibility()
     {
         isVisible = !isVisible;
@@ -305,7 +295,7 @@ public class UI_Inventory : NetworkBehaviour
 
         if (consumable != null)
         {
-            SurvivalManager manager = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<SurvivalManager>();
+            SurvivalManager manager = PlayersManager.Instance.GetMyPlayer().GetComponent<SurvivalManager>();
             manager.IncreaseStats(consumable);
         }
 
@@ -319,7 +309,7 @@ public class UI_Inventory : NetworkBehaviour
 
     private void ActiveWeapon(Item item)
     {
-        WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
+        WeaponController weaponController = PlayersManager.Instance.GetMyPlayer().GetComponent<WeaponController>();
         WeaponInfo cWeapon = item as WeaponInfo;
 
         weaponController.currentWeapon = cWeapon;
@@ -329,7 +319,7 @@ public class UI_Inventory : NetworkBehaviour
 
     private void DeactiveWeapon()
     {
-        WeaponController weaponController = GameManager.Instance.uiInventory.GetPlayer().gameObject.GetComponent<WeaponController>();
+        WeaponController weaponController = PlayersManager.Instance.GetMyPlayer().GetComponent<WeaponController>();
         weaponController.DeactivateCurrentWeapon();
     }
 

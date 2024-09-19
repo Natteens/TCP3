@@ -16,15 +16,7 @@ public class InventoryController : NetworkBehaviour
         uiInventory = GameManager.Instance.uiInventory;
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         inventory = new Inventory();
-
-
-        LocatePlayer player = gameObject.GetComponent<LocatePlayer>();
-        uiInventory.SetPlayer(player);
-        
-        
-
         uiInventory.SetInventory(inventory);
-
         MouseController.CursorVisibility(false);
     }
 
