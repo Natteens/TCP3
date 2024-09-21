@@ -57,8 +57,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 5e9cda599296bd74a9a45a7b3a63c0a9, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 0, y: 0}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -108,16 +108,16 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DistortionLerp: 0
+    - _DistortionLerp: 0.051
     - _Dst: 10
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _ErosionSmoothness: 0.1
+    - _ErosionSmoothness: 4.1
     - _FlatColor: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Intensity: 1
+    - _Intensity: 0.16
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -134,13 +134,13 @@ Material:
     - _ZTest: 2
     - _ZWrite: 1
     m_Colors:
-    - _B: {r: 0.5943396, g: 0.259371, b: 0.09812209, a: 0}
+    - _B: {r: 0.5943396, g: 0.259371, b: 0.09812209, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _G: {r: 1, g: 0.7230805, b: 0.25, a: 0}
-    - _Outline: {r: 0.2169811, g: 0.03320287, b: 0.02354041, a: 0}
-    - _R: {r: 1, g: 0.9719134, b: 0.5896226, a: 0}
+    - _G: {r: 1, g: 0.7230805, b: 0.25, a: 1}
+    - _Outline: {r: 0.2169811, g: 0.03320287, b: 0.02354041, a: 1}
+    - _R: {r: 1, g: 0.9719134, b: 0.5896226, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _UVDP: {r: 0.1, g: -0.2, b: 0, a: 0}
     - _UVDP1: {r: 0.1, g: -0.2, b: 0, a: 0}
