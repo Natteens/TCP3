@@ -47,7 +47,7 @@ public class SurvivalManager : NetworkBehaviour
 
         if (CurrentHungry >= MaxHunger / 2)
         {
-            healthComponent?.Heal(healthComponent.MaxHealth * 0.005f);
+            healthComponent?.Heal(5f / 5000f);
         }
 
         if (CurrentHungry >= MaxHunger)

@@ -20229,7 +20229,9 @@ PrefabInstance:
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 3110440969
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7672122871045059660, guid: d4e552f5fcba001408d9b60ce9d03cdf, type: 3}
+    - {fileID: 7672122871045059661, guid: d4e552f5fcba001408d9b60ce9d03cdf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d4e552f5fcba001408d9b60ce9d03cdf, type: 3}
 --- !u!4 &1118325684 stripped
 Transform:
