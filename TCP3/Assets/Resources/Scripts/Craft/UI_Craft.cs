@@ -62,6 +62,11 @@ public class UI_Craft : MonoBehaviour
         RefreshCraftInventoryItems();
         //Adicionar popUp da receita adicionada
     }
+
+    public void Refresh()
+    {
+        RefreshCraftInventoryItems();
+    }
     private void RefreshCraftInventoryItems()
     {
         if (actualFilter == Item.Itemtype.None)

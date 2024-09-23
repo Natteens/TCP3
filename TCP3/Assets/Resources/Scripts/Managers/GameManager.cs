@@ -73,6 +73,7 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isMenuOpen = !isMenuOpen;
+            MouseController.CursorVisibility(!isMenuOpen);
             menu.SetActive(isMenuOpen);
         }
     }
