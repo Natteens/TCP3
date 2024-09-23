@@ -20,6 +20,7 @@ public class GameManager : Singleton<GameManager>
     [BoxGroup("UI References")] public GameObject interactMSG;
     [BoxGroup("UI References")] public GameObject HarvestHolder;
     [BoxGroup("UI References")] public GameObject waitForInitialize;
+    [BoxGroup("UI References")] public GameObject aim;
     [BoxGroup("UI References")] public GameObject menu;
     [BoxGroup("UI References")] public bool isMenuOpen = false;
     [Space(20)]

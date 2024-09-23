@@ -9,6 +9,7 @@ public static class MouseController
     { 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        GameManager.Instance.aim.SetActive(true);
         Debug.Log("#Mouse Desativado#");
     }
 
@@ -16,6 +17,7 @@ public static class MouseController
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        GameManager.Instance.aim.SetActive(false);
         Debug.Log("#Mouse Ativado#");
     }
 
