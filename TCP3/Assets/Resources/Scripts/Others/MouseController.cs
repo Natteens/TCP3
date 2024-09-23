@@ -24,6 +24,7 @@ public static class MouseController
     public static void CursorVisibility(bool visibility)
     {
         Cursor.visible = visibility;
+        GameManager.Instance.aim.SetActive(!visibility);
     }
 
     public static (bool success, Vector3 position) GetMousePosition(Camera camera, LayerMask layer, float maxDistance = Mathf.Infinity)
